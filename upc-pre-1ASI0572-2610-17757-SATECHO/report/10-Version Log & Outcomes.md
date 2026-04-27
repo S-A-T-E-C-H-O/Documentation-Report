@@ -45,7 +45,7 @@ Para el presente desarrollo de la documentación de la idea del proyecto, se uti
 | Brenda Lucía Gamio Upiachihua | `B-Gamio` |
 | Raul Ronaldo Quispe Erasmo | `Raul-QE` |
 | Abraham Andrés Estrada Cajamune | `Abraham0310` |
-| Yasser Renteria Palacios | `petitavo` |
+| Yasser Renteria Palacios | `Mitos20` |
 
 ---
 
