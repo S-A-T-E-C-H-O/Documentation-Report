@@ -200,3 +200,18 @@ En cuanto al primer eje estratégico, el cual se titula **Adquisición y Adopci�
 Respecto al segundo eje llamado **Eficiencia Operativa y Diagnóstico Remoto**, la plataforma busca escalar la capacidad de gestión del ingeniero en un 50% mediante la implementación de herramientas de monitoreo de alta precisión. El núcleo técnico de esta solución reside en un Dashboard web centralizado con vista multi-cliente, el cual permite la supervisión simultánea de diversas parcelas e identifica anomalías críticas mediante un sistema de alertas visuales. Este diagnóstico se sustenta en un módulo de gráficos históricos avanzados que procesan variables críticas como humedad, conductividad eléctrica (EC) y pH, permitiendo un análisis científico de tendencias. Al integrar paneles de configuración de umbrales personalizados, el sistema automatiza la detección de estrés hídrico o salinidad, notificando al usuario en tiempo real cuando los niveles se desvían del rango óptimo, lo que transforma la consultoría presencial en una gestión basada en datos y respuesta inmediata.
 
 Finalmente, como úlimo eje asociado al ámbito de la **Automatización de Tareas y Profesionalización del Servicio**; el enfoque se dirige a la sustitución de registros manuales y hojas de cálculo por flujos de trabajo automatizados que aseguren un cumplimiento del 90% en la entrega de informes técnicos. La plataforma integra un generador automático de reportes PDF que sintetiza los datos agronómicos recolectados durante la semana en un entregable profesional listo para ser distribuido a través de canales de mensajería instantánea. Como complemento crítico para la gobernanza del riego, se incluye un registro de actividad (log) que monitorea el estado de las electroválvulas. Esta funcionalidad permite al agrónomo realizar una auditoría técnica sobre la ejecución de sus recomendaciones en el campo, verificando tiempos exactos de activación de bombas de agua y garantizando que el agricultor cumpla rigurosamente con las instrucciones de riego proporcionadas, elevando así el estándar de calidad del servicio de asesoría.
+
+## 3.3. Product Backlog
+
+En esta sección presentamos el motor estratégico de Satecho: nuestro **Product Backlog**. Más que un inventario de requerimientos gestionado a través de Jira, concebimos este espacio como una hoja de ruta viva y enfocada en la entrega de valor continuo. Para asegurar una planificación transparente y realista, hemos dimensionado cada historia de usuario utilizando la escala de Fibonacci (1, 2, 3, 5, 8). Esta técnica ágil nos permite estimar el esfuerzo y la complejidad de forma relativa, facilitando que tanto el equipo de desarrollo como los tomadores de decisiones compartan una misma perspectiva sobre lo que implica cada reto. En consecuencia, la estructura de nuestro backlog no es aleatoria; está rigurosamente priorizada de forma descendente.
+
+En la cúspide se posicionan las iniciativas de mayor impacto y criticidad para los objetivos del negocio, garantizando que nuestros recursos se dirijan siempre a construir primero lo que Satecho necesita con mayor urgencia.
+
+![Product Backlog-Satecho](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/product-backlog/product-backlog-satecho.png)
+
+Podrá observar el *Product Backlog*, desarrollado en Jira en el enlace que se presenta a continuación: [Product Backlog-Satecho](https://satecho.atlassian.net/issues?jql=)
+
+El _Product Backlog_ detallado lo puede observa en la siguiente tabla:
+
+| # Order | User Story ID | Title | Description | Story Points |
+| 
