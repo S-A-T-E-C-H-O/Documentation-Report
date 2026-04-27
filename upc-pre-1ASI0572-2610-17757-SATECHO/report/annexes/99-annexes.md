@@ -27,3 +27,9 @@ Por último, a medida que el proyecto crezca, recomendamos realizar sesiones per
 - Ministerio de Desarrollo Agrario y Riego. (2025). *Reporte de superficie cultivada de arándanos para exportación*. Dirección de Estadística Agraria. https://www.gob.pe/midagri
 
 - Organismo Supervisor de Inversión Privada en Telecomunicaciones. (2024). *Estudio de penetración de servicios de telecomunicaciones Erestel 2024*. https://www.osiptel.gob.pe/estadisticas/penetracion-de-servicios
+
+# Anexos
+
+| Sección | Características del video | Sobre el contenido | Entrega |
+| :-- | :-- | :-- | :--: |
+| Interviews Needfinding | **Cantidad de videos**: 1, **Nomenclartura:** upc-pre-202601-1asi0572-17757-Satecho-needfinding-sprint-1, **Formato:** .mp4, **Duración:** 27 minutos | Consolidado de entrevistas | **Enlace:** [https://n9.cl/0bz8yp](https://n9.cl/0bz8yp) |
