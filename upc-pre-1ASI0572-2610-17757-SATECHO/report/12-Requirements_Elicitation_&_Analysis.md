@@ -255,7 +255,93 @@ En esta sección, analizaremos las visiones directas de quienes enfrentan la cri
 - ¿Le resultaría útil tener acceso remoto al historial de datos del suelo de varios clientes desde una sola plataforma?
 - ¿Qué validación o certificación necesitaría ver en un sistema para recomendarlo con confianza profesional?
 
+### 2.2.2. Registro de entrevistas
 
+### Segmento Objetivo: Agricultor
+
+Entrevista 1:
+
+**Nombre completo:** Alicia Cajamunes Reyes
+
+**Edad:** 45 años
+
+**Localidad:** Trujillo
+
+![Evidencia_entrevista_alicia](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/evidence/Evidencia_entrevista_alicia.png)
+
+Resumen de la entrevista: Alicia Cajamunes Reyes, productora de 45 años en Virú (La Libertad) que gestiona 5 hectáreas de tomate mediante un encargado de campo y visitas semanales apoyadas en su celular, enfrenta desafíos críticos como la alta vulnerabilidad climática, el impacto devastador de plagas como la mosquita blanca, la salinidad del agua por proximidad al mar y un riesgo económico que puede representar hasta el 50% de su inversión. Aunque opera con riego tecnificado por goteo, sus decisiones de manejo siguen siendo empíricas, activando el riego o la fertilización solo ante síntomas visibles de marchitez o sequedad superficial, y se limita a consultar pronósticos climáticos genéricos e imprecisos ante la escasez de asesoría técnica constante. No obstante, muestra una clara apertura a la digitalización, estando dispuesta a invertir entre 30 y 50 soles mensuales en una aplicación que le envíe recomendaciones directas y oportunas para riegos, abonados y fumigaciones, siempre que pueda validar empíricamente los datos en terreno y, sobre todo, que la herramienta le permita proyectar con confiabilidad el rendimiento de su cosecha como garantía tangible de retorno de inversión.
+
+Entrevista 2:
+
+**Nombre completo:** Segundo Abraham Cajamune Chiroque
+
+**Edad:** 78 años
+
+**Localidad:** Trujillo
+
+![Evidencia_entrevista_segundo](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/evidence/Evidencia_entrevista_segundo.png)
+
+Resumen de la entrevista: Segundo Abraham Cajamune Chiroque, agricultor de 78 años con 20 hectáreas en Trujillo dedicadas a cultivos de consumo popular y caña de azúcar, representa la realidad de muchos productores que operan sin asesoría técnica y toman decisiones basadas únicamente en la experiencia empírica. Actualmente, riega solo cuando observa síntomas visibles de estrés o deshidratación en sus plantas y aplica fertilizantes salinos como la urea sin reincorporar rastrojos, prácticas que han elevado el pH y la salinidad de sus suelos, mermando su rendimiento. Aunque no utiliza herramientas digitales en su rutina diaria, considera que un sistema de monitoreo en tiempo real sería un avance fundamental y está dispuesto a pagar entre 30 y 40 soles mensuales, siempre que la solución demuestre claramente su rentabilidad y se adapte a la sencillez práctica que exige el manejo cotidiano del campo.
+
+### Segmento Objetivo: Agrónomo
+
+Entrevista 1:
+
+**Nombre completo:** Frank Varas
+
+**Edad:** 28 años
+
+**Localidad:** Trujillo
+
+**Resumen de la entrevista:** Frank Varas, ingeniero agrónomo de 28 años y consultor independiente en zonas agroexportadoras como Virú y Chao, identifica que el error más crítico es regar "al ojo" o por calendario y sobre-fertilizar bajo la creencia errónea de que esto acelera el crecimiento, cuando en realidad, una vez que la planta muestra síntomas visibles como marchitez o clorosis, el estrés hídrico o salino ya ha causado pérdidas irreversibles de rendimiento. Destaca especialmente el fenómeno del "bloqueo salino", una condición donde el suelo está húmedo pero las sales acumuladas impiden que las raíces absorban el agua, un diagnóstico que actualmente depende de métodos manuales y lentos como calicatas, tensiómetros y análisis de laboratorio que demoran días en llegar. Frank requiere urgentemente datos en tiempo real de humedad volumétrica y conductividad eléctrica para asesorar a distancia con precisión, pero exige hardware robusto que resista la corrosión química, una interfaz extremadamente simple basada en semáforos en lugar de gráficos complejos, y la capacidad de configurar umbrales agronómicos personalizados; además, solo recomendará la tecnología tras validar un piloto de un mes que confirme que sus lecturas coinciden con sus mediciones manuales.
+
+Entrevista 2:
+
+**Nombre completo:** Bruno Chaud
+
+**Edad:** 25 años
+
+**Localidad:** Lima
+
+Resumen de la entrevista: Bruno Chaud, ingeniero agrónomo egresado de la Cayetano y consultor independiente, identifica que el error más crítico que cometen los agricultores es regar o usar fertilizantes sin ningún tipo de guía, basándose solo en su criterio y no en datos estudiados. Esto lleva a la pérdida de nutrientes, estrés en las plantas y una disminución significativa del rendimiento del cultivo. Destaca que los problemas de acumulación de sales son muy comunes, especialmente en zonas con riego intensivo. Actualmente, recopila información mediante visitas físicas, observaciones directas y análisis puntuales del suelo, utilizando medidores portátiles de humedad y análisis de laboratorio. Bruno requiere urgentemente información en tiempo real del estado del suelo para una recomendación más precisa sin necesidad de estar físicamente en el campo. Considera indispensables para tomar decisiones de riego confiables la humedad del suelo, el pH, la temperatura y la conductividad eléctrica. Estaría dispuesto a colaborar con la calibración de umbrales por tipo de cultivo para un sistema de monitoreo de suelos, ya que esto mejoraría la precisión y la confianza en el sistema. Recomendaría activamente una herramienta de monitoreo de suelos a sus clientes si esta demuestra una mejor precisión, facilita el uso y da resultados reales en el campo. Sin embargo, cree que lo que frenaría a los agricultores a adoptar este sistema sería el costo, la resistencia al cambio y la desconfianza en la tecnología. Le resultaría muy útil tener acceso remoto al historial de datos del suelo de varios clientes desde una sola plataforma, ya que esto permitiría escalar las actividades y depender menos de las visitas físicas. Para recomendar un sistema con confianza profesional, necesitaría una validación física y técnica, con pruebas en campo que demuestren casos reales comprobados.
+
+### 2.2.3 Análisis de entrevistas
+
+**1. Herramientas de Monitoreo y Diagnóstico del Suelo**
+
+**Características Comunes:**
+
+- **Ausencia de tecnologías digitales en la gestión directa del campo:** Ninguno de los tres entrevistados cuenta actualmente con un sistema tecnológico integrado y automático para el manejo del cultivo, evidenciando un 100% de dependencia en evaluaciones manuales, visuales o de laboratorio. Segundo no utiliza ninguna herramienta o aplicación tecnológica para su trabajo. Alicia afirma no usar aplicativos para gestionar el campo, dependiendo únicamente de pronósticos del clima en su celular. Por su parte, el agrónomo Frank emplea métodos tradicionales como calicatas (hoyos con lampa), tensiómetros y conductivímetros manuales.
+
+**Desafíos Identificados:**
+
+- **Imprecisión y lentitud en los datos:** El 100% se ve afectado por la falta de precisión de las herramientas disponibles. Alicia menciona que las aplicaciones climáticas genéricas que consulta suelen ser imprecisas, lo cual es crítico al momento de decidir fumigar. Frank señala que depender de análisis físico-químicos de laboratorio es un problema porque los resultados tardan días en llegar, obligándolo a confiar excesivamente en su apreciación visual.
+
+**2. Toma de Decisiones y Manejo de Cultivos (Riego y Fertilización)**
+
+**Características Comunes:**
+
+- **Diagnóstico reactivo y empírico frente al estrés:** El 100% de las decisiones de los productores se basa en la experiencia empírica y la observación visual del daño inminente. Segundo decide regar cuando observa la planta estresada o deshidratada. Alicia y su equipo riegan por goteo cuando notan que la arena está seca o las hojas de la planta ya se están encogiendo o marchitando, y deciden cómo fertilizar basándose en la experiencia familiar heredada. Frank advierte que esta práctica es el error más frecuente, ya que cuando la planta (como el tomate) muestra hojas amarillas o marchitas, el estrés ya ocurrió y se mermó el rendimiento.
+- **Problemas críticos de salinidad:** Existe un 100% de coincidencia en que la salinidad es una gran amenaza. Segundo la atribuye al uso excesivo de fertilizantes químicos salinos y a la falta de rastrojos. Alicia explica que al sembrar cerca de la playa en Virú, el agua de los pozos subterráneos sale salada y pudre la planta, obligándolos a purificarla o hacer pozos más lejanos. Frank diagnostica frecuentemente casos de "bloqueo salino" por el agua de pozo y el mal manejo de fertilizantes, donde las sales impiden que la raíz absorba el agua disponible.
+
+**Desafíos Identificados:**
+
+- **Altas pérdidas económicas por factores incontrolables:** Una mala decisión empírica, las plagas o el clima pueden costar muy caro. Alicia señala que una mala campaña o caída de precios por sobreproducción puede representar perder más del 50% de la inversión (por ejemplo, invertir 45,000 soles y perder 25,000). Segundo coincide en que se puede perder todo lo invertido y no lograr recuperarlo. Frank advierte que el exceso de riego por decisiones "al ojo" genera falta de oxígeno y hongos mortales, mientras que el exceso de fertilizante quema las raíces.
+
+**3. Necesidades de Mejora y Adopción Tecnológica**
+
+**Características Comunes:**
+
+- **Alta disposición de adopción y pago (Suscripciones accesibles):** El 100% de los entrevistados expresa un alto interés por adoptar herramientas digitales de monitoreo en tiempo real. Tanto Segundo como Alicia concuerdan en un rango de precio asequible para ellos: Segundo pagaría una suscripción similar a un celular (30 a 40 soles), mientras que Alicia considera razonable pagar entre 30 y 50 soles mensuales por una app que le programe los riegos, abonados y fumigaciones. Frank se "apuntaría de inmediato" a un sistema que le permita introducir sus propios umbrales agronómicos.
+- **Exigencia absoluta de validación en campo:** Ningún entrevistado confiaría a ciegas en la tecnología; el 100% exige comprobar los datos empíricamente. Segundo evaluaría empíricamente su costo-beneficio. Alicia indica que si la app le arroja un porcentaje de humedad, ella misma iría a la arena a verificar si realmente está húmeda. Frank necesita ver un piloto funcionando durante un mes y cruzar los datos de la app con los de sus calicatas manuales antes de recomendarla.
+
+**Desafíos Identificados:**
+
+- **Sistemas predictivos y de fácil interpretación:** La tecnología no debe entregar solo datos crudos. Alicia demanda que la aplicación, si ella sigue las indicaciones, sea capaz de proyectarle estimaciones de producción (cuántos frutos rendirá la planta) y prefiere recomendaciones directas. Para asegurar la adopción en el agricultor pequeño, Frank insiste en que el hardware debe ser robusto e inoxidable (como el RS485) y la aplicación debe tener una interfaz extremadamente simple con notificaciones claras o un sistema de "semáforo" (rojo, amarillo, verde).
+
+**Conclusión**
+
+El análisis conjunto de los agricultores (Segundo y Alicia) y el especialista (Frank) revela que el sector agrícola de la región de La Libertad depende casi por completo de prácticas empíricas, reactivas y visuales ("al ojo"), lo que trae consigo vulnerabilidades graves como pérdidas financieras masivas, problemas de riego impreciso y estragos por salinización del suelo. Existe una gran oportunidad en el mercado para introducir tecnologías de monitoreo y recomendación en tiempo real por un ticket promedio de entre 30 y 50 soles mensuales. Sin embargo, para superar la barrera de la desconfianza, la solución debe ofrecer una interfaz simplificada (alertas directas, semáforos, predicciones de rendimiento) y, lo más importante, debe demostrar su efectividad previamente en el campo para que el agricultor y su asesor técnico validen que los datos digitales coinciden exactamente con la realidad física del terreno.
 
 ## 2.3. Needfinding
 
