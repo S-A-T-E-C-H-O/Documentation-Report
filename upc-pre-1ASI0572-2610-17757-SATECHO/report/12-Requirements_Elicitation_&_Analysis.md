@@ -267,7 +267,7 @@ Entrevista 1:
 
 **Localidad:** Trujillo
 
-![Evidencia_entrevista_alicia](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/evidence/Evidencia_entrevista_alicia.png)
+![Evidencia_entrevista_alicia](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/interviews/Evidencia_entrevista_alicia.jpeg)
 
 Resumen de la entrevista: Alicia Cajamunes Reyes, productora de 45 años en Virú (La Libertad) que gestiona 5 hectáreas de tomate mediante un encargado de campo y visitas semanales apoyadas en su celular, enfrenta desafíos críticos como la alta vulnerabilidad climática, el impacto devastador de plagas como la mosquita blanca, la salinidad del agua por proximidad al mar y un riesgo económico que puede representar hasta el 50% de su inversión. Aunque opera con riego tecnificado por goteo, sus decisiones de manejo siguen siendo empíricas, activando el riego o la fertilización solo ante síntomas visibles de marchitez o sequedad superficial, y se limita a consultar pronósticos climáticos genéricos e imprecisos ante la escasez de asesoría técnica constante. No obstante, muestra una clara apertura a la digitalización, estando dispuesta a invertir entre 30 y 50 soles mensuales en una aplicación que le envíe recomendaciones directas y oportunas para riegos, abonados y fumigaciones, siempre que pueda validar empíricamente los datos en terreno y, sobre todo, que la herramienta le permita proyectar con confiabilidad el rendimiento de su cosecha como garantía tangible de retorno de inversión.
 
@@ -279,7 +279,7 @@ Entrevista 2:
 
 **Localidad:** Trujillo
 
-![Evidencia_entrevista_segundo](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/evidence/Evidencia_entrevista_segundo.png)
+![Evidencia_entrevista_segundo](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/interviews/Evidencia_entrevista_segundo.jpeg)
 
 Resumen de la entrevista: Segundo Abraham Cajamune Chiroque, agricultor de 78 años con 20 hectáreas en Trujillo dedicadas a cultivos de consumo popular y caña de azúcar, representa la realidad de muchos productores que operan sin asesoría técnica y toman decisiones basadas únicamente en la experiencia empírica. Actualmente, riega solo cuando observa síntomas visibles de estrés o deshidratación en sus plantas y aplica fertilizantes salinos como la urea sin reincorporar rastrojos, prácticas que han elevado el pH y la salinidad de sus suelos, mermando su rendimiento. Aunque no utiliza herramientas digitales en su rutina diaria, considera que un sistema de monitoreo en tiempo real sería un avance fundamental y está dispuesto a pagar entre 30 y 40 soles mensuales, siempre que la solución demuestre claramente su rentabilidad y se adapte a la sencillez práctica que exige el manejo cotidiano del campo.
 
