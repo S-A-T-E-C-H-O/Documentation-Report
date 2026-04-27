@@ -414,8 +414,6 @@ Tras evaluar las alternativas, el equipo concluyó que la mejor aproximación es
 
     ![Context-Mapping-5](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/context-mapping/iot-device-management.png)
 
-
-
 ## 4.2. Strategic-Level Domain-Driven Design
 
 ### 4.2.1. Bounded Context: Onboarding
@@ -426,37 +424,37 @@ Este bounded context gestiona la experiencia del visitante desde que llega a la 
 
 ![Onboarding-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/dictionary-onboarding-1.png)
 
-![Onboarding-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/dictionary-onboarding-2.png)
+![Onboarding-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/dictionary-onboarding-2.png)
 
 ### 4.2.1.1. Domain Layer
 
-![Onboarding-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-domain-layer.png)
+![Onboarding-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-domain-layer.png)
 
 ### 4.2.1.2. Interface Layer
 
-![Onboarding-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-interface-layer.png)
+![Onboarding-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-interface-layer.png)
 
 ### 4.2.1.3. Application Layer
 
-![Onboarding-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-application-layer.png)
+![Onboarding-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-application-layer.png)
 
 ### 4.2.1.4. Infrastructure Layer
 
-![Onboarding-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-infrastructure-layer.png)
+![Onboarding-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-infrastructure-layer.png)
 
 ### 4.2.1.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Onboarding-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-component.png)
+![Onboarding-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-component.png)
 
 ### 4.2.1.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.1.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Onboarding-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-domain-layer-class-diagram.png)
+![Onboarding-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-domain-layer-class-diagram.png)
 
 ### 4.2.1.6.2 Bounded Context Database Design Diagram
 
-![Onboarding-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-database-design-diagram.png)
+![Onboarding-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/onboarding-database-design-diagram.png)
 
 ---
 
@@ -465,39 +463,39 @@ Este bounded context gestiona la experiencia del visitante desde que llega a la 
 Gestiona el registro de usuarios (agricultores y agrónomos), autenticación, verificación de email, restablecimiento de contraseña, y los flujos de suspensión, reactivación y desactivación de cuentas gestionados por el staff.
 #### Diccionario de Clases
 
-![Identity-Access-Management-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/dictionary-identity-access-management-1.png)
+![Identity-Access-Management-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/dictionary-identity-access-management-1.png)
 
-![Identity-Access-Management-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/dictionary-identity-access-management-2.png)
+![Identity-Access-Management-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/dictionary-identity-access-management-2.png)
 
 ### 4.2.2.1. Domain Layer
 
-![Identity-Access-Management-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-domain-layer.png)
+![Identity-Access-Management-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-domain-layer.png)
 
 ### 4.2.2.2. Interface Layer
 
-![Identity-Access-Management-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-interface-layer.png)
+![Identity-Access-Management-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-interface-layer.png)
 
 ### 4.2.2.3. Application Layer
 
-![Identity-Access-Management-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-application-layer.png)
+![Identity-Access-Management-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-application-layer.png)
 
 ### 4.2.2.4. Infrastructure Layer
 
-![Identity-Access-Management-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-infrastructure-layer.png)
+![Identity-Access-Management-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-infrastructure-layer.png)
 
 ### 4.2.2.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Identity-Access-Management-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-component.png)
+![Identity-Access-Management-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-component.png)
 
 ### 4.2.2.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.2.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Identity-Access-Management-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-domain-layer-class-diagram.png)
+![Identity-Access-Management-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-domain-layer-class-diagram.png)
 
 ### 4.2.2.6.2 Bounded Context Database Design Diagram
 
-![Identity-Access-Management-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-database-design-diagram.png)
+![Identity-Access-Management-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/identity-access-management/identity-access-management-database-design-diagram.png)
 
 ---
 
@@ -507,39 +505,39 @@ Gestiona los planes de suscripción, el procesamiento de pagos a través de un p
 
 #### Diccionario de Clases
 
-![Subscriptions-Payments-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/dictionary-subscriptions-payments-1.png)
+![Subscriptions-Payments-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/dictionary-subscriptions-payments-1.png)
 
-![Subscriptions-Payments-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/dictionary-subscriptions-payments-2.png)
+![Subscriptions-Payments-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/dictionary-subscriptions-payments-2.png)
 
 ### 4.2.3.1. Domain Layer
 
-![Subscriptions-Payments-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-domain-layer.png)
+![Subscriptions-Payments-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-domain-layer.png)
 
 ### 4.2.3.2. Interface Layer
 
-![Subscriptions-Payments-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-interface-layer.png)
+![Subscriptions-Payments-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-interface-layer.png)
 
 ### 4.2.3.3. Application Layer
 
-![Subscriptions-Payments-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-application-layer.png)
+![Subscriptions-Payments-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-application-layer.png)
 
 ### 4.2.3.4. Infrastructure Layer
 
-![Subscriptions-Payments-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-infrastructure-layer.png)
+![Subscriptions-Payments-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-infrastructure-layer.png)
 
 ### 4.2.3.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Subscriptions-Payments-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-component.png)
+![Subscriptions-Payments-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-component.png)
 
 ### 4.2.3.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.3.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Subscriptions-Payments-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-domain-layer-class-diagram.png)
+![Subscriptions-Payments-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-domain-layer-class-diagram.png)
 
 ### 4.2.3.6.2 Bounded Context Database Design Diagram
 
-![Subscriptions-Payments-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-database-design-diagram.png)
+![Subscriptions-Payments-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/subscriptions-payments/subscriptions-payments-database-design-diagram.png)
 
 ---
 
@@ -549,39 +547,39 @@ Este bounded context gestiona el despacho de alertas y notificaciones hacia los 
 
 #### Diccionario de Clases
 
-![Communication-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/dictionary-communication-1.png)
+![Communication-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/dictionary-communication-1.png)
 
-![Communication-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/dictionary-communication-2.png)
+![Communication-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/dictionary-communication-2.png)
 
 ### 4.2.4.1. Domain Layer
 
-![Communication-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-domain-layer.png)
+![Communication-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-domain-layer.png)
 
 ### 4.2.4.2. Interface Layer
 
-![Communication-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-interface-layer.png)
+![Communication-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-interface-layer.png)
 
 ### 4.2.4.3. Application Layer
 
-![Communication-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-application-layer.png)
+![Communication-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-application-layer.png)
 
 ### 4.2.4.4. Infrastructure Layer
 
-![Communication-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-infrastructure-layer.png)
+![Communication-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-infrastructure-layer.png)
 
 ### 4.2.4.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Communication-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-component.png)
+![Communication-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-component.png)
 
 ### 4.2.4.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.4.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Communication-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-domain-layer-class-diagram.png)
+![Communication-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-domain-layer-class-diagram.png)
 
 ### 4.2.4.6.2 Bounded Context Database Design Diagram  
 
-![Communication-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-database-design-diagram.png)
+![Communication-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/communication/communication-database-design-diagram.png)
 
 ---
 
@@ -591,39 +589,39 @@ Este bounded context gestiona el ciclo de vida completo de los dispositivos IoT 
 
 #### Diccionario de Clases
 
-![IoT-Device-Management-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/dictionary-iot-device-management-1.png)
+![IoT-Device-Management-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/dictionary-iot-device-management-1.png)
 
-![IoT-Device-Management-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/dictionary-iot-device-management-2.png)
+![IoT-Device-Management-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/dictionary-iot-device-management-2.png)
 
 ### 4.2.5.1. Domain Layer
 
-![IoT-Device-Management-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-domain-layer.png)
+![IoT-Device-Management-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-domain-layer.png)
 
 ### 4.2.5.2. Interface Layer
 
-![IoT-Device-Management-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-interface-layer.png)
+![IoT-Device-Management-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-interface-layer.png)
 
 ### 4.2.5.3. Application Layer
 
-![IoT-Device-Management-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-application-layer.png)
+![IoT-Device-Management-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-application-layer.png)
 
 ### 4.2.5.4. Infrastructure Layer
 
-![IoT-Device-Management-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-infrastructure-layer.png)
+![IoT-Device-Management-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-infrastructure-layer.png)
 
 ### 4.2.5.5. Bounded Context Software Architecture Component Level Diagrams
 
-![IoT-Device-Management-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-component.png)
+![IoT-Device-Management-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-component.png)
 
 ### 4.2.5.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.5.6.1 Bounded Context Domain Layer Class Diagrams
 
-![IoT-Device-Management-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-domain-layer-class-diagram.png)
+![IoT-Device-Management-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-domain-layer-class-diagram.png)
 
 ### 4.2.5.6.2 Bounded Context Database Design Diagram  
 
-![IoT-Device-Management-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-database-design-diagram.png)
+![IoT-Device-Management-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/iot-device-management/iot-device-management-database-design-diagram.png)
 
 ---
 
@@ -635,41 +633,41 @@ Este bounded context gestiona la experiencia del visitante desde que llega a la 
 
 ![Soil-Monitoring-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-1.png)
 
-![Soil-Monitoring-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-2.png)
+![Soil-Monitoring-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-2.png)
 
-![Soil-Monitoring-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-3.png)
+![Soil-Monitoring-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-3.png)
 
-![Soil-Monitoring-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-4.png)
+![Soil-Monitoring-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-4.png)
 
 ### 4.2.6.1. Domain Layer
 
-![Soil-Monitoring-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-domain-layer.png)
+![Soil-Monitoring-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-domain-layer.png)
 
 ### 4.2.6.2. Interface Layer
 
-![Soil-Monitoring-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-interface-layer.png)
+![Soil-Monitoring-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-interface-layer.png)
 
 ### 4.2.6.3. Application Layer
 
-![Soil-Monitoring-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-application-layer.png)
+![Soil-Monitoring-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-application-layer.png)
 
 ### 4.2.6.4. Infrastructure Layer
 
-![Soil-Monitoring-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-infrastructure-layer.png)
+![Soil-Monitoring-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-infrastructure-layer.png)
 
 ### 4.2.6.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Soil-Monitoring-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-component.png)
+![Soil-Monitoring-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-component.png)
 
 ### 4.2.6.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.6.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Soil-Monitoring-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-domain-layer-class-diagram.png)
+![Soil-Monitoring-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-domain-layer-class-diagram.png)
 
 ### 4.2.5.6.2 Bounded Context Database Design Diagram
 
-![Soil-Monitoring-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-database-design-diagram.png)
+![Soil-Monitoring-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/soil-monitoring-diagnosis-database-design-diagram.png)
 
 ---
 
@@ -679,39 +677,39 @@ Este bounded context gestiona el control físico de las electroválvulas de rieg
 
 #### Diccionario de Clases
 
-![Soil-Monitoring-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/dictionary-irrigation-acuator-control-1.png)
+![Soil-Monitoring-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/dictionary-irrigation-acuator-control-1.png)
 
-![Soil-Monitoring-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/dictionary-irrigation-acuator-control-2.png)
+![Soil-Monitoring-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/dictionary-irrigation-acuator-control-2.png)
 
 ### 4.2.7.1. Domain Layer
 
-![Irrigation-Actuator-Control-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-domain-layer.png)
+![Irrigation-Actuator-Control-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-domain-layer.png)
 
 ### 4.2.7.2. Interface Layer
 
-![Irrigation-Actuator-Control-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-interface-layer.png)
+![Irrigation-Actuator-Control-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-interface-layer.png)
 
 ### 4.2.7.3. Application Layer
 
-![Irrigation-Actuator-Control-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-application-layer.png)
+![Irrigation-Actuator-Control-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-application-layer.png)
 
 ### 4.2.7.4. Infrastructure Layer
 
-![Irrigation-Actuator-Control-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-infrastructure-layer.png)
+![Irrigation-Actuator-Control-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-infrastructure-layer.png)
 
 ### 4.2.7.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Irrigation-Actuator-Control-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-component.png)
+![Irrigation-Actuator-Control-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-component.png)
 
 ### 4.2.7.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.7.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Irrigation-Actuator-Control-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-domain-layer-class-diagram.png)
+![Irrigation-Actuator-Control-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-domain-layer-class-diagram.png)
 
 ### 4.2.7.6.2 Bounded Context Database Design Diagram  
 
-![Irrigation-Actuator-Control-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-database-design-diagram.png)
+![Irrigation-Actuator-Control-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/irrigation-acuator-control/irrigation-acuator-control-database-design-diagram.png)
 
 ---
 
@@ -721,39 +719,39 @@ Este bounded context gestiona la detección y clasificación de eventos perimetr
 
 #### Diccionario de Clases
 
-![Perimeter-Security-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/dictionary-perimeter-security-1.png)
+![Perimeter-Security-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/dictionary-perimeter-security-1.png)
 
-![Perimeter-Security-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/dictionary-perimeter-security-2.png)
+![Perimeter-Security-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/dictionary-perimeter-security-2.png)
 
 ### 4.2.8.1. Domain Layer
 
-![Perimeter-Security-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-domain-layer.png)
+![Perimeter-Security-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-domain-layer.png)
 
 ### 4.2.8.2. Interface Layer
 
-![Perimeter-Security-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-interface-layer.png)
+![Perimeter-Security-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-interface-layer.png)
 
 ### 4.2.8.3. Application Layer
 
-![Perimeter-Security-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-application-layer.png)
+![Perimeter-Security-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-application-layer.png)
 
 ### 4.2.8.4. Infrastructure Layer
 
-![Perimeter-Security-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-infrastructure-layer.png)
+![Perimeter-Security-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-infrastructure-layer.png)
 
 ### 4.2.8.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Perimeter-Security-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-component.png)
+![Perimeter-Security-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-component.png)
 
 ### 4.2.8.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.8.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Perimeter-Security-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-domain-layer-class-diagram.png)
+![Perimeter-Security-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-domain-layer-class-diagram.png)
 
 ### 4.2.8.6.2 Bounded Context Database Design Diagram
 
-![Perimeter-Security-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-database-design-diagram.png)
+![Perimeter-Security-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/perimeter-security/perimeter-security-database-design-diagram.png)
 
 ---
 
@@ -763,39 +761,39 @@ Este bounded context provee analítica estratégica para el Product Owner y el P
 
 #### Diccionario de Clases
 
-![Business-Intelligence-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/dictionary-business-intelligence-1.png)
+![Business-Intelligence-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/dictionary-business-intelligence-1.png)
 
-![Business-Intelligence-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/dictionary-business-intelligence-2.png)
+![Business-Intelligence-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/dictionary-business-intelligence-2.png)
 
 ### 4.2.9.1. Domain Layer
 
-![Business-Intelligence-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-domain-layer.png)
+![Business-Intelligence-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-domain-layer.png)
 
 ### 4.2.9.2. Interface Layer
 
-![Business-Intelligence-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-interface-layer.png)
+![Business-Intelligence-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-interface-layer.png)
 
 ### 4.2.9.3. Application Layer
 
-![Business-Intelligence-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-application-layer.png)
+![Business-Intelligence-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-application-layer.png)
 
 ### 4.2.9.4. Infrastructure Layer
 
-![Business-Intelligence-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-infrastructure-layer.png)
+![Business-Intelligence-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-infrastructure-layer.png)
 
 ### 4.2.9.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Business-Intelligence-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-component.png)
+![Business-Intelligence-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-component.png)
 
 ### 4.2.9.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.9.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Business-Intelligence-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-domain-layer-class-diagram.png)
+![Business-Intelligence-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-domain-layer-class-diagram.png)
 
 ### 4.2.9.6.2 Bounded Context Database Design Diagram
 
-![Business-Intelligence-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-database-design-diagram.png)
+![Business-Intelligence-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/business-intelligence/business-intelligence-database-design-diagram.png)
 
 ---
 
@@ -805,36 +803,36 @@ Este bounded context gestiona las capacidades profesionales del ingeniero agrón
 
 #### Diccionario de Clases
 
-![Agronomist-Advisory-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/dictionary-agronomist-advisory-1.png)
+![Agronomist-Advisory-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/dictionary-agronomist-advisory-1.png)
 
-![Agronomist-Advisory-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/dictionary-agronomist-advisory-2.png)
+![Agronomist-Advisory-Dictionary](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/dictionary-agronomist-advisory-2.png)
 
 ### 4.2.10.1. Domain Layer
 
-![Agronomist-Advisory-Domain-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-domain-layer.png)
+![Agronomist-Advisory-Domain-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-domain-layer.png)
 
 ### 4.2.10.2. Interface Layer
 
-![Agronomist-Advisory-Interface-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-interface-layer.png)
+![Agronomist-Advisory-Interface-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-interface-layer.png)
 
 ### 4.2.10.3. Application Layer
 
-![Agronomist-Advisory-Application-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-application-layer.png)
+![Agronomist-Advisory-Application-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-application-layer.png)
 
 ### 4.2.10.4. Infrastructure Layer
 
-![Agronomist-Advisory-Infrastructure-Layer](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-infrastructure-layer.png)
+![Agronomist-Advisory-Infrastructure-Layer](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-infrastructure-layer.png)
 
 ### 4.2.10.5. Bounded Context Software Architecture Component Level Diagrams
 
-![Agronomist-Advisory-Component-Level-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-component.png)
+![Agronomist-Advisory-Component-Level-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-component.png)
 
 ### 4.2.10.6 Bounded Context Software Architecture Code Level Diagrams
 
 ### 4.2.10.6.1 Bounded Context Domain Layer Class Diagrams
 
-![Agronomist-Advisory-Domain-Class-Diagram](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-domain-layer-class-diagram.png)
+![Agronomist-Advisory-Domain-Class-Diagram](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-domain-layer-class-diagram.png)
 
 ### 4.2.10.6.2 Bounded Context Database Design Diagram
 
-![Agronomist-Advisory-Database-Design](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-database-design-diagram.jpeg)
+![Agronomist-Advisory-Database-Design](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/agronomist-advisory/agronomist-advisory-database-design-diagram.jpeg)
