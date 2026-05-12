@@ -70,11 +70,11 @@ docs(user-stories): apply correction about the Epic ID associated with the User 
 
 **Resumenes de colaboración - Github Analytics Insights:**
 
-![Project Report Collaboration Insights - AV1](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/project-collaboration-insights/project-collaboration-insights-av1.png)
+![Project Report Collaboration Insights - AV1](./assets/images/project-collaboration-insights/project-collaboration-insights-av1.png)
 
 _Figura #1: Contribuciones por integrante realizados - AV1_
 
-![Commits History - AV1](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/project-collaboration-insights/commits-history-av1.png)
+![Commits History - AV1](./assets/images/project-collaboration-insights/commits-history-av1.png)
 
 _Figura #2: Historial de commits del repositorio - AV1_
 

@@ -181,7 +181,7 @@ En esta sección, presentamos el **Impact Mapping** el cual como finlidad alinea
 
 El Impact Mapping asociado a Danilo Subasto representa la alineación estratégica entre los objetivos de negocio planteados para la solución digital orientada al sector agrícola, las necesidades reales del usuario final y los entregables funcionales del producto de software que permitirán generar valor medible. Este mapa de impacto permite visualizar cómo cada iniciativa tecnológica responde directamente a los retos operativos del agricultor, asegurando que el desarrollo de la plataforma no se enfoque únicamente en funcionalidades aisladas, sino en resultados concretos que impulsen la adopción, eficiencia operativa y seguridad del usuario.
 
-![Impact Mapping - Agricultor](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/impact-mapping/impact-mapping-agricultor.png)
+![Impact Mapping - Agricultor](./assets/images/impact-mapping/impact-mapping-agricultor.png)
 
 En primer lugar, se establece como objetivo comercial la adquisición de 50 agricultores suscritos al plan Premium durante los primeros seis meses de operación. Para alcanzar esta meta, se identifica que Danilo Subasto necesita confiar en la solución antes de realizar una inversión económica, por lo que debe percibir beneficios claros, casos reales de éxito y una propuesta de valor transparente. En respuesta a ello, el producto contempla entregables clave como una landing page informativa, donde se explique el servicio de manera clara y se presenten testimonios verificables de otros productores; un formulario rápido para solicitar pilotos gratuitos, que reduzca barreras de entrada y facilite la prueba del sistema; y una página de precios estructurada, donde se comparen los planes Básico y Premium de forma sencilla. Estas funcionalidades buscan convertir el interés inicial en registros efectivos y futuras suscripciones pagadas.
 
@@ -193,7 +193,7 @@ Finalmente, el tercer objetivo de negocio consiste en reducir en un 40% los repo
 
 El Impact Mapping asociado a Nestor Campo representa la alineación estratégica entre nuestros objetivos de negocio y las necesidades reales de los ingenieros agrónomos independientes que interactuarán con el sistema. Este mapa visualiza de manera estructurada cómo el comportamiento de nuestro usuario clave impacta directamente en el éxito de la plataforma, y detalla qué entregables de software son necesarios para facilitar dicho comportamiento, garantizando que todo el esfuerzo de desarrollo esté justificado por el valor que aporta.
 
-![Impact Mapping - Agronomo](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/impact-mapping/impact-mapping-agronomo.png)
+![Impact Mapping - Agronomo](./assets/images/impact-mapping/impact-mapping-agronomo.png)
 
 En cuanto al primer eje estratégico, el cual se titula **Adquisición y Adopción Inicial de la Plataforma**, la estrategia se centra en la transición del agrónomo desde métodos tradicionales hacia un ecosistema digital centralizado. Para alcanzar la meta de 20 profesionales registrados y la vinculación efectiva de clientes en el primer semestre, el producto despliega una Landing Page B2B diseñada específicamente para asesores técnicos y cooperativas, actuando como el primer punto de contacto donde se comunica el valor de la escalabilidad operativa. Este proceso se consolida mediante un portal de Onboarding seguro que no solo gestiona la identidad del usuario, sino que le otorga la capacidad técnica de administrar múltiples perfiles de clientes desde una única cuenta centralizada, reduciendo significativamente la fricción de entrada y los costos de desplazamiento físico desde el primer día.
 
@@ -207,7 +207,7 @@ En esta sección presentamos el motor estratégico de Satecho: nuestro **Product
 
 En la cúspide se posicionan las iniciativas de mayor impacto y criticidad para los objetivos del negocio, garantizando que nuestros recursos se dirijan siempre a construir primero lo que Satecho necesita con mayor urgencia.
 
-![Product Backlog-Satecho](/upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/product-backlog/product-backlog-satecho.png)
+![Product Backlog-Satecho](./assets/images/product-backlog/product-backlog-satecho.png)
 
 Podrá observar el *Product Backlog*, desarrollado en Jira en el enlace que se presenta a continuación: [Product Backlog-Satecho](https://satecho.atlassian.net/issues?jql=)
 
