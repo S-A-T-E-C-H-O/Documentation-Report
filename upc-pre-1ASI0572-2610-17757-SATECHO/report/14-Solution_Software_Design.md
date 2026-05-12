@@ -5,11 +5,22 @@
 El diseño estratégico de la plataforma AgroSafe se abordó mediante un proceso estructurado de Diseño Orientado al Dominio (DDD). El equipo empleó EventStorming como técnica fundamental para explorar, modelar y comprender el dominio del negocio, seguido de pasos de refinamiento progresivo para identificar contextos delimitados, visualizar flujos de mensajes, definir lienzos de contexto y establecer relaciones de mapeo de contexto.
 
 ### 4.1.1. Design-Level EventStorming
-El proceso de Event Storming se realizó utilizando la herramienta MIRO, donde construimos todo el flujo de manera colaborativa. Iniciamos con la fase de Exploración No Estructurada, en la que analizamos e intercambiamos ideas sobre los eventos del dominio, siguiendo las buenas prácticas recomendadas. Para la identificación de estos eventos, consideramos criterios como su relevancia, frecuencia y temporalidad.
+El proceso de Event Storming se realizó utilizando la herramienta MIRO como lienzo colaborativo infinito, siguiendo la metodología estandarizada de Domain-Driven Design para descubrir, validar y estructurar el comportamiento del dominio de AgroSafe. Este enfoque permitió al equipo trascender la visión técnica inicial y centrarse en el lenguaje ubicuo, la causalidad entre eventos y las fronteras naturales del negocio. El flujo de trabajo se estructuró en **10 pasos secuenciales**, cada uno con un objetivo específico y un artefacto de salida:
 
-![EventStorming-step1](./assets/images/dl-eventstorming/es-events.png)
+![EventStorming-step1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/es-events.png)
 
 _Evidencia del desarrollo del primer paso del DDD._
+
+1. **Exploración No Estructurada (Eventos de Dominio):** Lluvia de ideas divergente donde se plasman todos los hechos relevantes del dominio en notas naranjas (`EventName`), redactados en tiempo pasado y validados por relevancia, frecuencia e impacto.
+2. **Ordenamiento Temporal (Timelines):** Organización cronológica de los eventos para construir narrativas causa-efecto. Se trazan flechas de dependencia y se agrupan en flujos de valor independientes.
+3. **Identificación de Pain Points (Puntos Críticos):** Marcado con notas rosas de áreas de fricción, riesgo operativo o pérdida de valor que requieren mitigación técnica o de negocio.
+4. **Detección de Pivotal Points (Puntos de Inflexión):** Identificación de eventos que marcan cambios irreversibles de estado o fronteras naturales entre contextos, usando notas lilas.
+5. **Definición de Comandos:** Notas azules que representan intenciones de acción (`CommandName`) emitidas por usuarios o sistemas para detonar eventos de dominio.
+6. **Formulación de Políticas:** Notas violetas que capturan reglas de negocio automatizadas o semiautomatizadas (`Si X entonces Y`), traduciendo lógica empresarial a comportamiento del sistema.
+7. **Modelos de Lectura (Read Models):** Notas verdes que representan proyecciones optimizadas de datos para consultas, dashboards o reportes, desacopladas del modelo transaccional.
+8. **Integración de Sistemas Externos:** Notas amarillas que delimitan servicios de terceros, hardware o APIs fuera del control del equipo, estableciendo límites de integración.
+9. **Identificación de Agregados:** Agrupación de entidades y value objects que comparten ciclo de vida y consistencia transaccional, marcando raíces de agregado (`Aggregate Root`).
+10. **Descubrimiento de Bounded Contexts:** Delimitación de fronteras funcionales basadas en lenguaje ubicuo, cohesión de responsabilidades y pivotal points, resultando en los módulos estratégicos del sistema.
 
 ---
 
