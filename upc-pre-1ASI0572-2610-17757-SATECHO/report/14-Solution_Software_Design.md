@@ -3557,29 +3557,751 @@ El generador de PDF (por ejemplo, una librería interna como iText, Apache PDFBo
 
 ---
 
-Después, se comenzó con la identificación de los Aggregates, para ello, tomamos criterios como granularidad, consistencia transaccional y estabilidad del ciclo de vida. Con esos criterios, se procedió a elegir los Aggregates principales.
+### Paso 9: Aggregates (Agregados)
 
-![EventStorming-step9.1](./assets/images/candidate-context-discovery/es-aggregates-1.png)
+**¿Qué es y cómo se hace?**  
+Los *Aggregates* son clusters de objetos de dominio tratados como una unidad para cambios de datos. Se identifican por consistencia transaccional, ciclo de vida compartido y raíz de agregado (`Aggregate Root`). El equipo los delimita preguntando: *"¿Qué entidades deben ser consistentes entre sí?"* y *"¿Dónde termina la transacción atómica?"*.
 
-![EventStorming-step9.2](./assets/images/candidate-context-discovery/es-aggregates-2.png)
+#### Aggregate 1: User (Usuario)
 
-![EventStorming-step9.3](./assets/images/candidate-context-discovery/es-aggregates-3.png)
+**Propósito:**  
+Gestionar el ciclo de vida de una cuenta de usuario en AgroSafe, ya sea agricultor (`Registered Farmer`) o agrónomo (`Registered Agronomist`). El agregado `User` es responsable de la creación de la cuenta, el almacenamiento de datos de perfil (nombre, email, teléfono, rol), la verificación del email, el cambio de rol (si aplica) y la vinculación con un agrónomo asesor (para agricultores) o con agricultores cliente (para agrónomos). También mantiene el progreso del wizard de configuración (`WizardProgress` como entidad interna o agregado separado, pero en este contexto puede ser un objeto de valor dentro de User).
 
-![EventStorming-step9.4](./assets/images/candidate-context-discovery/es-aggregates-4.png)
+**Eventos de dominio que genera:**
+- `Registered Farmer` (cuando se crea un usuario agricultor)
+- `Registered Agronomist` (cuando se crea un usuario agrónomo)
+- `Email verified by user` (cuando el usuario confirma su correo)
+- `Agronomist linked` (cuando un agricultor vincula a un agrónomo asesor)
+- `User profile updated` (cambios en nombre, teléfono, etc.)
+- `Starter guide complete` (cuando finaliza el wizard)
 
-![EventStorming-step9.5](./assets/images/candidate-context-discovery/es-aggregates-5.png)
+**Comandos que recibe:**
+- `Register Farmer` (datos del formulario)
+- `Register Agronomist` (datos del formulario)
+- `Verify Email` (con el token del enlace)
+- `Link Agronomist` (desde el dashboard del agricultor)
+- `Complete Wizard Step` (avanzar en el wizard)
+- `Update User Profile`
 
-![EventStorming-step9.6](./assets/images/candidate-context-discovery/es-aggregates-6.png)
+**Invariantes / reglas de negocio:**
+- El email debe ser único en todo el sistema.
+- La cuenta no se considera activa hasta que el email sea verificado (`Email verified by user`).
+- Un agricultor solo puede tener un agrónomo vinculado como asesor principal (aunque puede tener varios asesores secundarios).
+- Un agrónomo puede estar vinculado a múltiples agricultores.
+- El wizard de configuración debe ser persistente: no se puede saltar un paso sin completarlo.
 
-![EventStorming-step9.7](./assets/images/candidate-context-discovery/es-aggregates-7.png)
+**Relaciones:**
+- El agregado `User` referencia al agregado `Subscription` para conocer el plan activo.
+- Puede contener como objeto de valor `WizardProgress` (último paso, datos parciales).
+- Para agricultores, referencia al `agronomist_id` (raíz de otro `User` de tipo agrónomo).
 
-![EventStorming-step9.8](./assets/images/candidate-context-discovery/es-aggregates-8.png)
+![EventStorming-step9.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-1.png)
 
-![EventStorming-step9.9](./assets/images/candidate-context-discovery/es-aggregates-9.png)
+---
 
-![EventStorming-step9.10](./assets/images/candidate-context-discovery/es-aggregates-10.png)
+#### Aggregate 2: Subscription (Suscripción)
 
-![EventStorming-step9.11](./assets/images/candidate-context-discovery/es-aggregates-11.png)
+**Propósito:**  
+Gestionar el contrato de pago de un usuario (agricultor o agrónomo) con AgroSafe. El agregado `Subscription` controla la selección del plan (Básico, Premium, Empresa), el ciclo de facturación (mensual, anual), el estado de pago (activa, pendiente, suspendida, cancelada), y la interacción con el proveedor de pagos externo. Es responsable de registrar los eventos de pago exitoso o fallido y de disparar la suspensión o reactivación de la cuenta asociada.
+
+**Eventos de dominio que genera:**
+- `Subscription activated` (cuando se selecciona un plan y se procesa el primer pago)
+- `Payment processed` (pago recurrente exitoso)
+- `Payment failed` (pago recurrente fallido)
+- `Subscription suspended` (por impago o decisión administrativa)
+- `Subscription reactivated` (tras regularizar pagos)
+- `Plan changed` (cuando el usuario cambia de plan)
+- `Subscription cancelled` (cancelación por el usuario)
+
+**Comandos que recibe:**
+- `Select Plan` (desde el onboarding o desde el dashboard)
+- `Process Payment` (interno, invocado tras notificación del proveedor o por job programado)
+- `Suspend Subscription` (por fallo de pago o staff)
+- `Reactivate Subscription` (tras pago confirmado)
+- `Change Plan` (solicitud del usuario)
+- `Cancel Subscription`
+
+**Invariantes / reglas de negocio:**
+- Una suscripción siempre está asociada a un `user_id`.
+- No se puede activar una suscripción sin un método de pago válido.
+- Tras N fallos consecutivos de pago (ej. 3), la suscripción pasa automáticamente a estado `suspended`.
+- En estado `suspended`, el acceso del usuario al dashboard se bloquea, pero sus datos y dispositivos se retienen.
+- Al reactivar, se restaura el acceso completo y se sincronizan los dispositivos IoT.
+- El cambio de plan solo puede realizarse cuando la suscripción está activa y sin deuda pendiente.
+
+**Relaciones:**
+- Pertenece a un `User`.
+- Interactúa con el sistema externo `Payment Provider` a través de los comandos `Process Payment` y `Cancel Subscription`.
+
+![EventStorming-step9.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-2.png)
+
+---
+
+#### Aggregate 3: WizardProgress (Progreso del Wizard)
+
+**Nota:** Aunque puede ser un objeto de valor dentro del agregado `User`, se identifica como agregado separado cuando el wizard de configuración es complejo y requiere su propia consistencia transaccional (por ejemplo, si se guarda cada paso de forma independiente y se puede retomar desde diferentes dispositivos). En el diseño de AgroSafe, dado que el wizard puede ser abandonado y retomado, y debe persistir los datos parciales sin afectar al resto de la cuenta, se modela como un agregado propio.
+
+**Propósito:**  
+Mantener el estado del asistente de configuración inicial (`Starter Guide`) que el usuario debe completar tras verificar su email. Permite guardar el progreso paso a paso, almacenar los datos ingresados parcialmente (coordenadas de zona, ID de dispositivo, umbrales temporales) y determinar si el wizard ya fue completado. Este agregado asegura que el usuario pueda abandonar el wizard y luego retomarlo exactamente desde el último paso completado, incluso desde otro dispositivo (navegador o app móvil).
+
+**Eventos de dominio que genera:**
+- `Wizard step completed` (cada paso finalizado)
+- `Wizard abandoned` (se guarda el progreso actual al salir)
+- `Wizard resumed` (cuando se carga un progreso existente)
+- `Starter guide complete` (cuando se termina el último paso)
+
+**Comandos que recibe:**
+- `Start Wizard` (inicializa el progreso)
+- `Complete Step` (avanza al siguiente paso, guardando los datos de ese paso)
+- `Abandon Wizard` (persiste el estado actual)
+- `Resume Wizard` (recupera el último estado)
+- `Complete Wizard` (marca como finalizado y limpia el progreso)
+
+**Invariantes / reglas de negocio:**
+- El progreso solo existe para usuarios que aún no han completado el wizard.
+- No se puede completar un paso sin haber validado los datos ingresados en ese paso (ej. coordenadas de zona válidas, ID de dispositivo existente).
+- Una vez que el wizard se completa (`Starter guide complete`), el progreso se marca como finalizado y puede archivarse o eliminarse.
+- El progreso debe ser accesible desde cualquier dispositivo del usuario (por eso se persiste en el backend).
+
+**Relaciones:**
+- Pertenece a un `User`.
+- No depende de otros agregados, pero los datos almacenados (ej. `device_id`) deben referenciar agregados `Device` que se crearán al finalizar el paso correspondiente.
+
+![EventStorming-step9.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-1.png)
+
+---
+
+#### Aggregate 4: NotificationDispatch (Envío de Notificaciones)
+
+**Propósito:**  
+Gestionar el envío de alertas de seguridad a través de canales externos (WhatsApp, push, email) y el seguimiento de la confirmación por parte del usuario. Este agregado coordina la interacción con servicios como Twilio, registra los intentos de envío, maneja reintentos y procesa las respuestas de confirmación o descarte de alertas. Es el núcleo transaccional del Timeline 20 (Gestión de Alertas de Seguridad en Tiempo Real).
+
+**Eventos de dominio que genera:**
+- `Alert sent via WhatsApp` (cuando se envía la notificación)
+- `Alert confirmed as received` (cuando el usuario confirma lectura)
+- `Security alert dismissed` (cuando el usuario descarta la alerta tras verificar)
+
+**Comandos que recibe:**
+- `Send alert` (desencadenado por una intrusión humana confirmada)
+- `Confirm alert reception` (vía webhook de Twilio)
+- `Dismiss alert` (desde el dashboard o app)
+
+**Invariantes / reglas de negocio:**
+- Una alerta solo se envía si el evento de seguridad tiene alta confianza (clasificación `HUMAN` con confianza > 80%).
+- Si no se recibe confirmación en un tiempo límite (ej. 10 minutos), el sistema escala automáticamente (bloqueo parcial de cuenta, notificación a soporte).
+- No se pueden enviar alertas duplicadas para el mismo incidente en un período corto (ej. 1 hora).
+- El usuario puede descartar la alerta solo después de haberla confirmado o si verifica que es un falso positivo.
+
+**Relaciones:**
+- Depende del agregado `User` para obtener el número de teléfono y preferencias de notificación.
+- Se apoya en el sistema externo `Twilio`.
+- Se asocia a un evento de seguridad (`SecurityEventList` como read model).
+
+![EventStorming-step9.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-4.png)
+
+---
+
+#### Aggregate 5: CustomerAccount (Cuenta de Cliente)
+
+**Propósito:**  
+Administrar el ciclo de vida de la cuenta de un cliente desde la perspectiva administrativa y de facturación. Este agregado controla suspensiones por impago, reactivaciones, registro de pérdida de dispositivos, y la reposición automática de dispositivos. Garantiza que el historial de pagos completo sea revisado antes de suspender (Pivotal Point 2), y que al reactivar se restaure el acceso y se sincronicen todos los dispositivos IoT vinculados. También gestiona el log de auditoría de todas las acciones administrativas sobre la cuenta.
+
+**Eventos de dominio que genera:**
+- `Customer account suspended due to non-payment` (suspensión por impago)
+- `Account reactivated after payment was processed` (reactivación tras pago)
+- `Access restored and devices synchronized` (restauración completa)
+- `Device deactivated due to loss report` (desactivación por pérdida)
+- `Batch of IoT devices registered as available` (reaprovisionamiento de dispositivos)
+
+**Comandos que recibe:**
+- `Suspend account` (por staff o por fallo de pago)
+- `Activate account` (por staff o tras pago automático)
+- `Deactivate device due to loss` (por reporte del agricultor)
+- `Register batch of IoT devices` (para reaprovisionamiento)
+
+**Invariantes / reglas de negocio:**
+- Antes de suspender, el staff debe revisar el historial completo de pagos (visible en `Customer Account View`).
+- La suspensión no elimina los datos del cliente (solo bloquea acceso a dashboard y telemetría).
+- Al reactivar, todos los dispositivos asociados se sincronizan automáticamente.
+- Un dispositivo reportado como perdido desencadena la revocación inmediata de credenciales y su desactivación.
+- Todas las acciones administrativas quedan registradas en `Account Log View` para auditoría.
+
+**Relaciones:**
+- Se asocia a un `User` (relación uno a uno).
+- Contiene o referencia a múltiples agregados `Device`.
+- Sus eventos alimentan los read models `Customer Account View` y `Account Log View`.
+
+![EventStorming-step9.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-5.png)
+
+---
+
+#### Aggregate 6: Device (Dispositivo IoT)
+
+**Propósito:**  
+Modelar el ciclo de vida completo de un dispositivo IoT (sensor de humedad, pH, temperatura, actuador de válvula, etc.) dentro de AgroSafe: desde su registro inicial, pasando por la generación de credenciales, activación, configuración, operación normal, pérdida, desactivación y eventual desmantelamiento o reemplazo. Este agregado garantiza la consistencia del estado del dispositivo (registered, activated, configuring, ready, offline, degraded, deactivated, decommissioned) y la seguridad de sus credenciales criptográficas. También gestiona los heartbeats, la conectividad y la sincronización de datos tras periodos offline.
+
+**Eventos de dominio que genera:**
+- `Device Registered` (alta en inventario)
+- `Credentials Generated` (asignación de credenciales criptográficas)
+- `Device Activated` (primer handshake exitoso)
+- `Configuration Changed` (ajuste de parámetros)
+- `Ready for Operation` (estado operativo pleno)
+- `Heartbeat Received`, `Device Offline Detected`, `Device Online Restored`, `Sync Completed` (gestión de conectividad)
+- `Device Deactivated` (por pérdida o suspensión de cuenta)
+- `Credentials Revoked` (invalidación de credenciales)
+- `Telemetry Rejected` (rechazo de ingesta de datos)
+- `Device Decommissioned` (baja administrativa definitiva)
+- `Replacement Device Registered` (registro de dispositivo de reemplazo)
+
+**Comandos que recibe:**
+- `Register Device` (staff o agricultor)
+- `Activate Device` (primer handshake)
+- `Change Configuration` (ajustar parámetros)
+- `Report Device Lost` (agricultor)
+- `Deactivate Device` (staff, por suspensión de cuenta)
+- `Revoke Credentials` (automático tras suspensión o pérdida)
+- `Decommission Device` (baja administrativa)
+
+**Invariantes / reglas de negocio:**
+- Un dispositivo no puede pasar a `Ready for Operation` sin credenciales válidas y configuración completa.
+- Si se reporta pérdida, las credenciales se revocan de inmediato (Pivotal Point 3).
+- Si la cuenta asociada se suspende, todos los dispositivos de esa cuenta revocan credenciales y rechazan telemetría.
+- Un dispositivo desmantelado puede ser reemplazado por otro nuevo (`Replacement Device Registered`).
+- Los datos históricos del dispositivo nunca se eliminan, solo se archivan para auditoría.
+- El buffer local durante desconexiones debe preservar la integridad de los datos (checksum y orden cronológico).
+
+**Relaciones:**
+- Pertenece a un `User` (agricultor) y a una `Parcel` (objeto de valor dentro del contexto de cultivos).
+- Puede tener una referencia a un `ReplacementDevice` (otro agregado `Device`).
+- Sus eventos de telemetría alimentan el historial de sensores (read models).
+- Los eventos de conectividad actualizan el `Device Health Dashboard`.
+
+![EventStorming-step9.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-6.png)
+
+---
+
+#### Aggregate 7: CommandExecution (Ejecución de Comandos)
+
+**Propósito:**  
+Gestionar el ciclo de vida de un comando enviado desde la plataforma a un dispositivo IoT (abrir válvula, ajustar frecuencia, iniciar riego, etc.). Este agregado garantiza la consistencia transaccional del comando desde su encolado, pasando por el envío al Edge, la posible falla, el reintento automático, y la eventual finalización exitosa o degradación de salud del dispositivo. Es el núcleo del Timeline 10 (Ejecución de Comandos con Fallo y Recuperación).
+
+**Eventos de dominio que genera:**
+- `Command Queued` (comando encolado)
+- `Command Sent to Edge` (comando enviado al dispositivo)
+- `Command Failed` (fallo en la ejecución o falta de acuse)
+- `Sync Completed` (ejecución exitosa y sincronización)
+- `Device Health Degraded` (cuando el fallo persiste)
+- `Command Retried` (reintento automático)
+- `Command Discarded` (descartado por exceder reintentos o timeout)
+
+**Comandos que recibe:**
+- `Queue Command` (agricultor, agrónomo o sistema)
+- `Send to Edge` (sistema, durante la ventana de comunicación)
+- `Retry Command` (sistema, tras fallo)
+- `Discard Command` (sistema, si expira el timeout sin acuse)
+
+**Invariantes / reglas de negocio:**
+- Un comando tiene un tiempo límite de 30 minutos para recibir acuse de recibo (`Sync Completed`).
+- Si no hay acuse en 30 minutos, el sistema degrada la salud del dispositivo (`Device Health Degraded`) y reintenta hasta un máximo de 3 veces.
+- Tras 3 reintentos fallidos, el comando se descarta y se registra en el log de auditoría.
+- Los comandos duplicados sobre el mismo actuador en el mismo estado son bloqueados.
+- El log de comandos es inmutable y sirve como fuente de auditoría (`Command Execution Log`).
+
+**Relaciones:**
+- Pertenece a un agregado `Device` (el dispositivo destino).
+- Sus eventos alimentan el read model `Command Execution Log`.
+- Puede actualizar el estado de salud del dispositivo (a través del agregado `Device`).
+
+![EventStorming-step9.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-7.png)
+
+---
+
+### Aggregate 8a: ZoneThreshold (Umbrales de Zona)
+
+**Propósito:**  
+Gestionar los umbrales agronómicos específicos de una zona de cultivo dentro de una parcela. Este agregado es responsable de almacenar y validar los valores de humedad, pH, temperatura y conductividad configurados para una zona concreta. Permite la carga inicial desde el catálogo, modificaciones manuales (con confirmación explícita si el valor está fuera del rango seguro) y la notificación al otro actor (agricultor o agrónomo) sobre los cambios. Cada modificación queda registrada en auditoría para trazabilidad.
+
+**Eventos de dominio que genera:**
+- `Thresholds automatically loaded from catalog` (carga inicial desde catálogo)
+- `Threshold manually modified with a value outside the safe range` (intento de modificación fuera de rango)
+- `Threshold exception logged with user confirmation` (confirmación de modificación riesgosa)
+- `Threshold change recorded in audit` (registro del cambio en auditoría)
+- `Farmer notified of the change made by their agronomist` (notificación al agricultor cuando el cambio lo hace el agrónomo)
+
+**Comandos que recibe:**
+- `Select Zone` (agricultor)
+- `Select Crop Type` (agricultor, que dispara carga desde catálogo)
+- `Update Threshold` (agricultor o agrónomo)
+- `Confirm Out-of-Range Threshold` (confirmación de valor riesgoso)
+
+**Invariantes / reglas de negocio:**
+- Todo cambio de umbral fuera del rango seguro (según `CropCatalog`) requiere confirmación explícita del usuario y se registra como excepción.
+- El agricultor debe recibir una notificación detallada cuando su agrónomo modifica umbrales (con valor anterior, nuevo y justificación).
+- Cada cambio queda registrado en auditoría con usuario, timestamp y valores previos/nuevos.
+- Los umbrales actuales se proyectan en `Threshold Config View`.
+
+**Relaciones:**
+- Pertenece a un `User` (agricultor) y a una `Zone` (objeto de valor dentro de la parcela).
+- Depende del `CropCatalog` para obtener los rangos seguros por tipo de cultivo.
+- Puede ser actualizado por la aplicación de un `ThresholdTemplate`.
+
+### Aggregate 8b: ThresholdTemplate (Plantilla de Umbrales)
+
+**Propósito:**  
+Gestionar las plantillas de umbrales agronómicos creadas por un agrónomo para ser aplicadas de forma masiva a múltiples parcelas de sus clientes. Este agregado encapsula un conjunto de valores objetivo (humedad, pH, temperatura, etc.) para un tipo de cultivo y estadio fenológico específico. Permite la creación, edición, eliminación y aplicación controlada de plantillas, asegurando que el agricultor reciba notificación previa y pueda dar su consentimiento (Pivotal Point 8).
+
+**Eventos de dominio que genera:**
+- `Threshold template created by agronomist` (creación de plantilla)
+- `Threshold template updated` (edición de plantilla)
+- `Threshold template deleted` (eliminación lógica o física)
+- `Template applied to client plot` (aplicación de plantilla sobre una parcela)
+- `System processes each parcel` (procesamiento parcela por parcela durante la aplicación masiva)
+
+**Comandos que recibe:**
+- `Create Threshold Template` (agrónomo)
+- `Update Threshold Template` (agrónomo)
+- `Delete Threshold Template` (agrónomo)
+- `Select Plots` (agrónomo, para aplicar plantilla)
+- `Apply Template` (agrónomo)
+- `Farmer Accepts/Rejects Template Application` (respuesta del agricultor, según diseño colaborativo)
+
+**Invariantes / reglas de negocio:**
+- La aplicación masiva de una plantilla no sobrescribe silenciosamente los umbrales; requiere notificación previa y consentimiento del agricultor (por defecto, rechazo automático si no responde en 48h).
+- Cada aplicación de plantilla sobre una parcela genera un registro de auditoría individual.
+- Una plantilla puede reutilizarse en múltiples parcelas y agricultores.
+- El agrónomo puede previsualizar el impacto de aplicar una plantilla antes de confirmar.
+
+**Relaciones:**
+- Pertenece a un agregado `User` (agrónomo).
+- Sus valores se aplican sobre agregados `ZoneThreshold`.
+- Su historial de uso alimenta el read model `Template Library View`.
+
+#### Aggregate 8c: CropCatalog (Catálogo de Cultivos)
+
+**Propósito:**  
+Gestionar el catálogo agronómico maestro de AgroSafe, que contiene los umbrales seguros recomendados para cada tipo de cultivo y estadio fenológico (humedad mínima/máxima, pH óptimo, temperatura, conductividad, etc.). Este agregado es de solo lectura para los usuarios (agricultores y agrónomos) y solo puede ser modificado por el equipo agronómico de AgroSafe (administradores). Proporciona los valores de referencia que se cargan automáticamente al seleccionar un cultivo.
+
+**Eventos de dominio que genera:**
+- `Crop catalog updated` (cuando se añade, modifica o elimina una entrada del catálogo)
+- `Crop catalog entry retired` (para descontinuar cultivos o estadios obsoletos)
+
+**Comandos que recibe:**
+- `Add Crop Entry` (administrador)
+- `Update Crop Entry` (administrador)
+- `Retire Crop Entry` (administrador)
+
+**Invariantes / reglas de negocio:**
+- El catálogo es inmutable para agricultores y agrónomos (solo consulta).
+- Los cambios en el catálogo no modifican automáticamente los umbrales ya configurados en las zonas; solo afectan a nuevas configuraciones o a usuarios que decidan "restaurar desde catálogo".
+- Cada entrada del catálogo debe tener validación agronómica antes de ser publicada.
+
+**Relaciones:**
+- Es consultado por el agregado `ZoneThreshold` para cargar valores iniciales y validar rangos seguros.
+- Sus datos se exponen en el read model `Crop Threshold Catalog`.
+
+![EventStorming-step9.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-8.png)
+
+---
+
+#### Aggregate 9: MaintenanceTask (Firmware del Dispositivo)
+
+**Propósito:**  
+Gestionar el ciclo de actualización de firmware de un dispositivo IoT, incluyendo la detección de nuevas versiones, el inicio de la actualización, el seguimiento del progreso, la reversión automática ante fallos, y la notificación al staff. Este agregado también cubre las tareas de mantenimiento predictivo de batería (Timeline 7, Timeline 11 y Pivotal Point 6). Es responsable de la consistencia del estado del dispositivo durante y después de la actualización, y de programar las tareas de mantenimiento (reemplazo de batería, etc.).
+
+**Eventos de dominio que genera:**
+- `Firmware Update Available` (nueva versión liberada)
+- `Firmware Update Started` (inicio del proceso)
+- `Firmware Update Completed` (actualización exitosa)
+- `Firmware Update Failed` (fallo)
+- `Previous Version Restored` (reversión a versión anterior)
+- `Device Health Degraded` (degradación tras fallo)
+- `Device Health Restored` (recuperación tras mantenimiento o reversión exitosa)
+- `Heartbeat Received` (confirmación de operación con versión actual)
+- `Configuration Changed` (posible ajuste post-actualización)
+- `Maintenance Scheduled` (programación de tarea de mantenimiento, ej. reemplazo de batería)
+- `Maintenance Replaced` (ejecución del mantenimiento)
+
+**Comandos que recibe:**
+- `Request Firmware Update` (staff o sistema)
+- `Start Firmware Update` (sistema, cuando se autoriza)
+- `Rollback to Previous Version` (automático tras fallo)
+- `Schedule Maintenance` (sistema, tras batería crítica)
+- `Complete Maintenance` (staff o agricultor, tras reemplazo)
+
+**Invariantes / reglas de negocio:**
+- Si una actualización falla o excede el timeout, se ejecuta automáticamente reversión a la versión anterior.
+- Tras la reversión, la salud del dispositivo se degrada y se notifica al staff.
+- No se reintenta la misma versión de firmware en el mismo dispositivo si ya falló (cuarentena automática).
+- Los dispositivos con batería por debajo del 15 % disparan una alerta crítica y programan mantenimiento.
+- El mantenimiento programado debe incluir trazabilidad (técnico, lote de batería, voltaje post-instalación) – actualmente ausente como deuda técnica.
+- El read model `Firmware Version Report` refleja el estado actual y el historial de actualizaciones.
+
+**Relaciones:**
+- Pertenece a un agregado `Device` (cada dispositivo tiene una historia de firmware).
+- Sus eventos de mantenimiento alimentan el read model `Maintenance Schedule View`.
+- Interactúa con el staff a través de notificaciones y comandos.
+
+![EventStorming-step9.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-9.png)
+
+---
+
+#### Aggregate 10a: SoilMonitoring (Monitoreo de Suelo)
+
+**Propósito:**  
+Gestionar la ingesta y procesamiento de lecturas de sensores de suelo (humedad, pH, temperatura) en una parcela. Este agregado coordina la activación de sensores, el registro de lecturas, la evaluación contra umbrales, y la detección de condiciones anómalas (superación de umbrales). Es responsable de emitir eventos de alerta temprana que alimentan el diagnóstico agronómico.
+
+**Eventos de dominio que genera:**
+- `Humidity sensor activated` / `pH sensor activated` / `Temperature sensor activated`
+- `Recorded humidity reading` / `pH reading recorded` / `Temperature reading recorded`
+- `Humidity threshold exceeded` / `pH out of range detected` / `Temperature out of range detected`
+
+**Comandos que recibe:**
+- `Activate Sensors` (sistema, al iniciar monitoreo)
+- `Record Reading` (dispositivo IoT, periódicamente)
+- `Evaluate Thresholds` (sistema, tras cada lectura)
+
+**Invariantes / reglas de negocio:**
+- Cada lectura se valida contra los umbrales actuales de la zona (obtenidos del agregado `ZoneThreshold`).
+- Si se supera un umbral, se emite el evento correspondiente, que puede desencadenar un diagnóstico.
+- Las lecturas y alertas se almacenan en el historial de telemetría para consultas futuras.
+
+**Relaciones:**
+- Depende del agregado `ZoneThreshold` para conocer los umbrales activos.
+- Sus eventos de superación de umbrales son consumidos por `AgronomicDiagnosis`.
+
+### Aggregate 10b: AgronomicDiagnosis (Diagnóstico Agronómico)
+
+**Propósito:**  
+Gestionar la generación de diagnósticos agronómicos basados en las condiciones del suelo y los datos meteorológicos externos. Este agregado se activa cuando se superan umbrales críticos y calcula el índice de estrés hídrico, integrando lecturas de humedad, temperatura ambiente (desde Weather API), tipo de cultivo y estadio fenológico. Emite un diagnóstico estructurado y una recomendación de riego (o ajuste de pH) que puede ser ejecutada automáticamente por el sistema de riego.
+
+**Eventos de dominio que genera:**
+- `Water stress detected` (confirmación de estrés hídrico)
+- `Calculated water stress index` (índice de estrés cuantificado)
+- `Agronomic diagnosis generated` (diagnóstico completo generado)
+- `Irrigation recommendation issued` (recomendación de riego emitida)
+
+**Comandos que recibe:**
+- `Calculate Stress Index` (sistema, cuando se superan umbrales)
+- `Generate Diagnosis` (sistema, automático)
+- `Issue Irrigation Recommendation` (sistema, tras diagnóstico)
+
+**Invariantes / reglas de negocio:**
+- El índice de estrés hídrico combina: humedad del suelo (lectura más reciente), temperatura ambiente (Weather API), tipo de cultivo y estadio fenológico.
+- Si el índice supera un umbral crítico (configurado por defecto o por el usuario), se emite `Irrigation recommendation issued`.
+- Si el pH está fuera de rango, el diagnóstico incluye corrección de acidez.
+- Los diagnósticos se registran en el historial de la parcela.
+
+**Relaciones:**
+- Consume eventos de `SoilMonitoring` (superación de umbrales).
+- Depende del sistema externo `Weather API` para condiciones ambientales.
+- Puede invocar comandos sobre `IrrigationCommand` para riego automático.
+- Sus eventos alimentan el read model de diagnósticos y el historial de la parcela.
+
+![EventStorming-step9.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-10.png)
+
+---
+
+#### Aggregate 11a: ValveState (Estado de Válvula)
+
+**Propósito:**  
+Gestionar el estado actual de un actuador de válvula (solenoide) en una parcela: abierta, cerrada, en transición, o bloqueada por seguridad. Este agregado es la fuente de verdad para el estado del actuador y permite consultar el estado antes de enviar nuevos comandos, evitando acciones duplicadas o contradictorias. También registra el cierre automático por pérdida de conectividad con el backend (medida de seguridad).
+
+**Eventos de dominio que genera:**
+- `Solenoid valve open` (válvula abierta)
+- `Solenoid valve closed` (válvula cerrada)
+- `Valve automatically closed by Edge when connection with backend is lost` (cierre por seguridad)
+- `Irrigation started` (inicio de riego, confirma estado abierto)
+- `Irrigation completed` (fin de riego, confirma estado cerrado)
+
+**Comandos que recibe:**
+- `Open Valve` (sistema, desde `IrrigationCommand`)
+- `Close Valve` (sistema, desde `IrrigationCommand`)
+- `Safety Close Valve` (Edge, automático)
+
+**Invariantes / reglas de negocio:**
+- No se puede abrir una válvula ya abierta; el comando se bloquea y notifica al usuario.
+- Si el Edge detecta pérdida de conexión con el backend, cierra la válvula automáticamente y registra el evento.
+- El estado de la válvula se proyecta en `Valve State View` para consultas en tiempo real.
+- Cada cambio de estado queda registrado en el log de comandos.
+
+**Relaciones:**
+- Pertenece a un agregado `Device` (actuador específico).
+- Es actualizado por comandos de `IrrigationCommand`.
+- Su estado es consultado por el resolutor de conflictos.
+
+#### Aggregate 11b: IrrigationCommand (Comando de Riego)
+
+**Propósito:**  
+Gestionar el ciclo de vida de un comando de riego enviado desde la plataforma (agricultor, agrónomo o sistema) hacia un actuador de válvula. Este agregado coordina el encolado, validación, ejecución y seguimiento del comando, incluyendo la detección de conflictos (comandos duplicados o contradictorios) y la ejecución de reintentos ante fallos. Es el núcleo transaccional de la ejecución de riego.
+
+**Eventos de dominio que genera:**
+- `Irrigation command sent` (comando emitido, con o sin conectividad)
+- `Command Queued` (encolado en backend)
+- `Command Sent to Edge` (envío al dispositivo)
+- `Command Executed` (ejecución exitosa)
+- `Command Failed` (fallo en la ejecución)
+- `Attempt to activate already active irrigation, conflict detected` (conflicto detectado)
+- `Duplicate action blocked, user informed of current status` (bloqueo de duplicado)
+- `Sync Completed` (sincronización post-ejecución)
+
+**Comandos que recibe:**
+- `Send Irrigation Command` (agricultor, agrónomo o sistema)
+- `Retry Command` (sistema, tras fallo)
+- `Block Command` (sistema, por conflicto)
+- `Discard Command` (sistema, tras exceder reintentos)
+
+**Invariantes / reglas de negocio:**
+- Si se detecta un conflicto (ej. abrir una válvula ya abierta), el comando se bloquea y se notifica al usuario.
+- Si el comando falla, se reintenta hasta 3 veces antes de descartarlo.
+- Cada comando queda registrado en `Command Execution Log` para auditoría.
+- Los comandos se ejecutan sobre el agregado `ValveState`.
+
+**Relaciones:**
+- Depende de `ValveState` para conocer el estado actual y validar conflictos.
+- Sus eventos de éxito/fallo pueden actualizar `DeviceHealthDegraded`.
+- Puede ser invocado por `AgronomicDiagnosis` (riego automático).
+
+#### Aggregate 11c: OfflineCommandQueue (Cola de Comandos Offline)
+
+**Propósito:**  
+Gestionar los comandos de riego que fueron emitidos desde la aplicación móvil cuando el dispositivo del usuario no tenía conectividad. Este agregado almacena localmente (en el cliente y sincroniza con el backend) los comandos pendientes, con su timestamp original y el estado de validación. Al restaurarse la conectividad, valida cada comando contra el estado actual del suelo y la ventana temporal (máx. 30 minutos), ejecutando solo aquellos que siguen siendo necesarios y descartando los demás con notificación clara al usuario.
+
+**Eventos de dominio que genera:**
+- `Irrigation command sent without available connectivity` (comando emitido offline)
+- `Command queued locally in the mobile app` (encolado local)
+- `Connectivity restored, command validated before execution` (validación al reconectar)
+- `Command executed after successful validation` (ejecución tras validación)
+- `Command discarded, exceeded 30 min or condition already resolved` (descarte por tiempo o condición)
+- `Canceled Irrigation Command` (cancelación manual por el usuario)
+
+**Comandos que recibe:**
+- `Queue Command Locally` (app móvil)
+- `Validate Queued Command` (sistema, al restaurar conectividad)
+- `Execute Validated Command` (sistema, tras validación)
+- `Cancel Queued Command` (agricultor)
+- `Discard Expired Command` (sistema, automático)
+
+**Invariantes / reglas de negocio:**
+- Un comando encolado offline solo se ejecuta si, al restaurar la conectividad, el suelo sigue seco (o la condición que lo motivó persiste) Y el tiempo transcurrido es < 30 minutos.
+- Si se superan los 30 minutos o la condición ya se resolvió (ej. llovió), el comando se descarta y se notifica al agricultor con la razón exacta.
+- El agricultor puede cancelar manualmente cualquier comando pendiente antes de que sea procesado.
+- Los comandos descartados o cancelados se registran en el `Command Execution Log` con el motivo correspondiente.
+
+**Relaciones:**
+- Almacena comandos que serán enviados al agregado `IrrigationCommand`.
+- Se sincroniza entre cliente (app móvil) y backend.
+- Sus notificaciones de descarte alimentan la transparencia para el usuario.
+
+![EventStorming-step9.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-11.png)
+
+---
+
+#### Aggregate 12a: AgronomistRecommendation (Recomendación del Agrónomo)
+
+**Propósito:**  
+Gestionar las recomendaciones técnicas que un agrónomo envía a sus agricultores vinculados. Este agregado permite redactar una recomendación con texto libre, capturar automáticamente el contexto de telemetría relevante (últimas lecturas, alertas activas, gráficos de tendencia), adjuntar esos datos como evidencia, y notificar al agricultor. También mantiene el estado de la recomendación (enviada, leída, aceptada, rechazada) y el historial de comunicación entre agrónomo y agricultor.
+
+**Eventos de dominio que genera:**
+- `Agronomist writes a recommendation` (redacción, con contexto capturado)
+- `Technical recommendation sent to the farmer with attached sensor data` (envío con evidencia)
+- `Recommendation acknowledged by farmer` (agricultor confirma lectura)
+- `Recommendation action taken` (agricultor ejecuta la acción sugerida)
+
+**Comandos que recibe:**
+- `Write Recommendation` (agrónomo, con captura automática de telemetría)
+- `Send Recommendation` (agrónomo)
+- `Acknowledge Recommendation` (agricultor)
+- `Mark Action Taken` (agricultor)
+
+**Invariantes / reglas de negocio:**
+- Cada recomendación debe incluir automáticamente los datos de sensores que la respaldan (gráfico de tendencia, valores actuales vs. umbrales).
+- El agricultor recibe una notificación push y un mensaje en el dashboard con el texto y la evidencia adjunta.
+- El agrónomo puede ver si su recomendación fue leída o si el agricultor tomó acción.
+- Las recomendaciones quedan registradas en el historial de la parcela y en los informes mensuales.
+
+**Relaciones:**
+- Pertenece a la relación `(AgronomistId, FarmerId, ParcelId)`.
+- Depende de los read models de telemetría para capturar el contexto.
+- Sus eventos alimentan el `Technical Report View`.
+
+#### Aggregate 12b: TechnicalReport (Informe Técnico)
+
+**Propósito:**  
+Gestionar la generación y almacenamiento de informes técnicos mensuales (y bajo demanda) para una parcela. Este agregado coordina la compilación de datos desde múltiples fuentes (telemetría, alertas, riegos, fertilizaciones, cambios de umbrales, recomendaciones), la solicitud de generación de PDF al sistema externo (PDF Generator), y la disponibilidad del informe para consulta y descarga por parte del agricultor y el agrónomo.
+
+**Eventos de dominio que genera:**
+- `Request monthly report` (solicitud explícita o programada)
+- `System compiles data` (compilación de datos del período)
+- `Monthly technical report generated for a client` (informe generado y disponible)
+
+**Comandos que recibe:**
+- `Request Monthly Report` (agricultor o agrónomo)
+- `Compile Report Data` (sistema, interno)
+- `Generate Report PDF` (sistema, llama al PDF Generator)
+- `Store Report` (sistema, tras generación)
+
+**Invariantes / reglas de negocio:**
+- Los informes se generan bajo demanda, pero pueden programarse automáticamente al final de cada mes.
+- La generación de informes pesados debe ser asíncrona (cola de tareas) para no bloquear la interfaz.
+- El informe incluye gráficos de evolución de humedad, pH, temperatura, índice de estrés, tabla de eventos y resumen ejecutivo.
+- Los informes se almacenan con retención configurable (ej. 12 meses) y se pueden descargar en cualquier momento.
+- La generación de PDF se delega al sistema externo `PDF Generator`.
+
+**Relaciones:**
+- Depende del sistema externo `PDF Generator`.
+- Consume datos de los read models de telemetría, auditoría de umbrales, y recomendaciones.
+- Los informes generados se asocian a una parcela y a un período.
+
+![EventStorming-step9.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-12.png)
+
+---
+
+#### Aggregate 13a: PIRSecurityEvent (Evento de Seguridad PIR)
+
+**Propósito:**  
+Gestionar la detección y clasificación de eventos de movimiento en el perímetro de una parcela, utilizando un sensor PIR y el procesamiento en el borde (Edge). Este agregado es responsable de medir la intensidad de calor, compararla con umbrales configurados (estáticos o dinámicos), clasificar el evento como WIND, ANIMAL o HUMAN, y determinar el nivel de confianza. Los eventos con alta confianza de intrusión humana se envían al agregado `SecurityAlert` para notificación urgente; los de baja prioridad se registran en el historial sin alerta inmediata. Responde al Timeline 20 y al Pivotal Point 12.
+
+**Eventos de dominio que genera:**
+- `PIR sensor detects movement at the perimeter` (detección de movimiento)
+- `Heat intensity measured by ESP32 ADC` (medición de calor)
+- `Event classified as HUMAN` / `Event classified as WIND` / `Event classified as ANIMAL` (clasificación en el borde)
+- `High trust rating sent to the backend immediately` (evento con alta confianza, HUMAN)
+- `Low priority event logged in history without urgent notification` (evento de baja prioridad)
+
+**Comandos que recibe:**
+- `Configure PIR Sensitivity` (staff, durante instalación o recalibración)
+- `Measure Heat Intensity` (Edge, automático)
+- `Classify Event` (Edge, con umbrales dinámicos)
+- `Send High Trust Event` (Edge, cuando es HUMAN con confianza > umbral)
+
+**Invariantes / reglas de negocio:**
+- La clasificación en el borde debe completarse en menos de 5 segundos para eventos de alta confianza.
+- Los eventos clasificados como HUMAN con confianza superior al 80 % se envían inmediatamente al backend para activar alerta.
+- Los eventos de baja prioridad (WIND, ANIMAL o HUMAN con baja confianza) solo se registran, sin notificación urgente.
+- Los umbrales de clasificación pueden ser estáticos (configuración inicial) o dinámicos (aprendizaje en el borde, Pivotal Point 12).
+- Se debe evitar la fatiga de alertas: si un mismo sensor genera más de N eventos HUMAN en un período corto, se puede aplicar filtrado temporal.
+
+**Relaciones:**
+- Los eventos de alta confianza disparan la creación de un `SecurityAlert`.
+- Los umbrales de clasificación se configuran a través del comando `Configure PIR Sensitivity`.
+- Los eventos registrados alimentan los read models `Security Event List View`, `Security Event Filter View` y `Security Alert Feed`.
+
+#### Aggregate 13b: SecurityAlert (Alerta de Seguridad)
+
+**Propósito:**  
+Gestionar el ciclo de vida de una alerta de seguridad generada por un evento PIR clasificado como intrusión humana con alta confianza. Este agregado coordina el envío de notificaciones urgentes al agricultor (vía WhatsApp, push, etc.) a través del sistema externo Twilio, el seguimiento de confirmación de recepción por parte del usuario, y el eventual descarte de la alerta si se determina que es un falso positivo o la situación ya está bajo control. También maneja el escalado automático (bloqueo preventivo, notificación a staff) si el usuario no confirma en un plazo determinado.
+
+**Eventos de dominio que genera:**
+- `Human intrusion alert triggered` (alerta de intrusión humana generada)
+- `Alert sent via WhatsApp` (notificación enviada)
+- `Alert confirmed as received` (usuario confirma recepción)
+- `Security alert dismissed` (usuario descarta la alerta tras verificar)
+- `Escalation triggered` (si no hay confirmación en tiempo límite)
+
+**Comandos que recibe:**
+- `Create Security Alert` (sistema, desde `PIRSecurityEvent` con alta confianza)
+- `Send Alert via Twilio` (sistema)
+- `Confirm Alert Reception` (usuario, vía webhook de WhatsApp)
+- `Dismiss Alert` (usuario, desde dashboard o app)
+- `Escalate Alert` (sistema automático, tras timeout)
+
+**Invariantes / reglas de negocio:**
+- Una alerta solo se crea si el evento PIR tiene clasificación `HUMAN` y confianza > 80 %.
+- La alerta se envía al agricultor (y opcionalmente al agrónomo vinculado) en menos de 5 segundos tras la detección.
+- Si el usuario no confirma la recepción en un plazo configurable (ej. 10 minutos), el sistema escala automáticamente (bloqueo parcial de cuenta, notificación a staff).
+- Una vez confirmada, el usuario puede descartar la alerta si verifica que es un falso positivo o que la situación está controlada.
+- El estado de la alerta (nueva, confirmada, descartada, escalada) se refleja en el `Security Alert Feed` en tiempo real.
+
+**Relaciones:**
+- Depende del agregado `PIRSecurityEvent` para su activación.
+- Depende del sistema externo `Twilio` para el envío de mensajes por WhatsApp.
+- Los eventos de confirmación y descarte actualizan el read model `Security Alert Feed`.
+- Puede asociarse a un `User` (agricultor) y a una `Parcel`.
+
+![EventStorming-step9.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-13.png)
+
+---
+
+#### Aggregate 14a: BusinessMetrics (Métricas de Negocio)
+
+**Propósito:**  
+Gestionar el cálculo y almacenamiento de las métricas clave del negocio (KPIs) como MAU (usuarios activos mensuales), MRR (ingresos recurrentes mensuales), tasa de churn (cancelación), y conversión de prueba a pago (trial-to-paid). Este agregado procesa eventos de suscripción, pagos, registros y actividad de usuarios para producir agregaciones actualizadas periódicamente (diaria, semanal, mensual). Las métricas se exponen en el `Executive Dashboard` para que el Product Owner y los ejecutivos tomen decisiones estratégicas. Responde al Timeline 21.
+
+**Eventos de dominio que genera:**
+- `Calculated KPIs: MAU, MRR, churn, trial—paid conversion` (cálculo de KPIs)
+- `Comparison of metrics with previous period generated` (comparativa interperíodo)
+- `Churn analysis filtered by customer segment` (análisis de churn segmentado)
+
+**Comandos que recibe:**
+- `Calculate KPIs for Period` (sistema, batch programado o bajo demanda)
+- `Filter by Segment and Period` (Product Owner, desde dashboard)
+- `Generate Period Comparison` (Product Owner)
+
+**Invariantes / reglas de negocio:**
+- Los KPIs se calculan sobre períodos consistentes (diario, semanal, mensual, trimestral).
+- MAU se define como usuarios únicos que realizaron al menos una acción autenticada en el mes.
+- MRR suma los ingresos recurrentes de todas las suscripciones activas (sin cargos únicos).
+- El churn se calcula como el porcentaje de clientes que cancelaron sobre el total al inicio del período.
+- Las métricas deben estar disponibles en menos de 2 segundos para consultas en el dashboard.
+
+**Relaciones:**
+- Consume eventos de los agregados `Subscription`, `Payment`, `User`.
+- Alimenta los read models `Executive Dashboard` y `Churn Analysis View`.
+- Los análisis segmentados se realizan en colaboración con `ChurnRecord` y `FeatureUsageMetrics`.
+
+#### Aggregate 14b: ChurnRecord (Registro de Cancelación)
+
+**Propósito:**  
+Gestionar el registro detallado de cada cancelación de suscripción (churn), incluyendo metadatos del cliente (segmento, plan, antigüedad, método de pago), la fecha de cancelación, el motivo declarado (si se recoge en un survey de salida), y la correlación con datos de uso (últimas actividades, funcionalidades utilizadas o no utilizadas). Este agregado permite al equipo de producto identificar las causas raíz del abandono y diseñar intervenciones para reducir la tasa de cancelación. Está vinculado a `BusinessMetrics` y `FeatureUsageMetrics`.
+
+**Eventos de dominio que genera:**
+- `Subscription cancelled` (cancelación registrada)
+- `Churn analysis filtered by customer segment` (análisis segmentado)
+- `Churn reason captured` (motivo declarado por el cliente, opcional)
+
+**Comandos que recibe:**
+- `Record Subscription Cancellation` (sistema, desde el proveedor de pagos o desde el dashboard)
+- `Capture Churn Reason` (staff o sistema, mediante survey post-cancelación)
+- `Analyze Churn by Segment` (Product Owner/Manager)
+
+**Invariantes / reglas de negocio:**
+- Cada cancelación se registra con el plan y segmento del cliente en el momento del evento.
+- Se debe correlacionar la cancelación con el historial de uso de los últimos 30-90 días (para identificar patrones).
+- Si el cliente proporciona un motivo, este se almacena como texto estructurado o categorías.
+- Los datos de churn son inmutables una vez registrados.
+
+**Relaciones:**
+- Pertenece a un `User` y a una `Subscription`.
+- Se correlaciona con `FeatureUsageMetrics` para identificar si la baja adopción de ciertas funcionalidades es un factor de churn.
+- Los análisis alimentan el read model `Churn Analysis View`.
+
+#### Aggregate 14c: FeatureUsageMetrics (Métricas de Uso de Funcionalidades)
+
+**Propósito:**  
+Gestionar la recolección y agregación de métricas de adopción de funcionalidades por parte de los usuarios (agricultores y agrónomos). Este agregado registra cada evento de uso de una feature (ej. `Telemetry Received`, `Irrigation command`, `Monthly technical report generated`, `Human intrusion alert triggered`) y produce agregaciones por usuario, funcionalidad, período y segmento. Los datos se exponen como un mapa de calor (`Feature Adoption View`) y se correlacionan con `ChurnRecord` para identificar qué funcionalidades impactan la retención. También permite detectar embudos de abandono en flujos específicos (`Funnel Analysis View`).
+
+**Eventos de dominio que genera:**
+- `Feature usage event recorded` (registro de uso de una funcionalidad)
+- `Feature adoption heatmap generated` (mapa de calor de adopción)
+- `Abandonment funnel identified in a specific feature` (detección de embudo de abandono)
+
+**Comandos que recibe:**
+- `Record Feature Usage` (sistema, automático tras cada acción relevante del usuario)
+- `Generate Adoption Heatmap` (Product Manager, bajo demanda)
+- `Analyze Funnel` (Product Manager, para un flujo específico)
+
+**Invariantes / reglas de negocio:**
+- Cada evento de uso se registra con timestamp, user_id, feature_name, y metadatos de contexto (ej. paso del embudo).
+- La adopción se mide como uso al menos una vez en los últimos 30 días, y adopción temprana como uso en los primeros 7 días tras el registro.
+- Los embudos de abandono se calculan sobre secuencias de pasos predefinidas (ej. wizard, generación de informe).
+- Las métricas de uso se actualizan en tiempo real o con latencia de minutos.
+
+**Relaciones:**
+- Consume eventos de dominio de todos los agregados que representan acciones de usuario.
+- Se correlaciona con `ChurnRecord` para análisis de retención.
+- Alimenta los read models `Feature Adoption View` y `Funnel Analysis View`.
+
+![EventStorming-step9.14](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-14.png)
 
 ---
 
