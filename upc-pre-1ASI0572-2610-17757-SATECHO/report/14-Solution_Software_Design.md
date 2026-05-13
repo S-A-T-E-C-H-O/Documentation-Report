@@ -2774,30 +2774,701 @@ El sensor PIR instalado en el perímetro de una parcela de maíz detecta movimie
 ![EventStorming-step6.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-13.png)
 
 ---
+#### Paso 7: Read Models (Modelos de Lectura)
 
-Con ello procedemos a discutir los Read Models, es decir, representaciones visuales que comprenden el flujo del dominio y sirven como proyecciones optimizadas para consultas.
+**¿Qué es y cómo se hace?**  
+Los *Read Models* son proyecciones optimizadas de datos para consultas, dashboards o reportes. Se representan en notas verdes y se desacoplan del modelo transaccional para mejorar rendimiento y usabilidad. El equipo los define preguntando: *"¿Qué necesita ver el usuario para tomar una decisión rápida?"* y *"¿Qué datos se consultan frecuentemente sin modificarse?"*.
 
-![EventStorming-step7.1](./assets/images/candidate-context-discovery/es-read-models-1.png)
+#### Read Model: Landing Page View
 
-![EventStorming-step7.2](./assets/images/candidate-context-discovery/es-read-models-2.png)
+**Propósito:**  
+Mostrar al visitante anónimo la información pública de la plataforma AgroSafe (propuesta de valor, beneficios, testimonios) y, crucialmente, los **planes de suscripción disponibles** (Básico, Premium, Empresa) con sus precios y características. Esta vista permite al visitante explorar antes de decidir registrarse.
 
-![EventStorming-step7.3](./assets/images/candidate-context-discovery/es-read-models-3.png)
+**Eventos que lo alimentan:**
+- `Plan created` / `Plan updated` (eventos internos del catálogo de productos).
+- `Plan retired` (para ocultar planes descontinuados).
 
-![EventStorming-step7.4](./assets/images/candidate-context-discovery/es-read-models-4.png)
+**Estructura / proyección:**  
+Una vista estática o ligeramente cacheada que contiene: lista de planes (nombre, precio, lista de características, botón de “Seleccionar plan”), contenido de marketing (textos, imágenes), y un enlace que dirige al registro.
 
-![EventStorming-step7.5](./assets/images/candidate-context-discovery/es-read-models-5.png)
+**Uso y consultas típicas:**  
+Se consulta cada vez que un visitante accede a la URL principal. Requiere alta disponibilidad y baja latencia. No necesita datos del usuario autenticado. Se puede implementar como HTML estático con CDN o como una vista cacheada.
 
-![EventStorming-step7.6](./assets/images/candidate-context-discovery/es-read-models-6.png)
+#### Read Model: Registration Form View
 
-![EventStorming-step7.7](./assets/images/candidate-context-discovery/es-read-models-7.png)
+**Propósito:**  
+Presentar al visitante el formulario de registro dinámico, con campos según el rol seleccionado (agricultor o agrónomo), y con la capacidad de **recuperar datos previamente ingresados** si el usuario abandonó el formulario o hubo un error de validación. Responde a la nota *“It should be possible to pick up where you left off”*.
 
-![EventStorming-step7.8](./assets/images/candidate-context-discovery/es-read-models-8.png)
+**Eventos que lo alimentan:**
+- `Form field changed` (evento implícito que actualiza el almacenamiento local).
+- `Registration validation failed` (dispara la recuperación de los datos guardados).
+- `Registration completed` (limpia el progreso).
 
-![EventStorming-step7.9](./assets/images/candidate-context-discovery/es-read-models-9.png)
+**Estructura / proyección:**  
+Un objeto JSON almacenado en el cliente (localStorage/sessionStorage) con: `nombre`, `email`, `teléfono`, `rol` (agricultor/agrónomo), `plan_seleccionado_id`, `paso_actual`, y metadatos de validación. En el backend no se persiste hasta el envío final.
 
-![EventStorming-step7.10](./assets/images/candidate-context-discovery/es-read-models-10.png)
+**Uso y consultas típicas:**  
+Leído al cargar la página de registro para repoblar automáticamente los campos si existe progreso previo. Escrito continuamente mientras el usuario interactúa con el formulario. Es un read model efímero y específico del cliente.
 
-![EventStorming-step7.11](./assets/images/candidate-context-discovery/es-read-models-11.png)
+#### Read Model: Wizard Progress View
+
+**Propósito:**  
+Mantener el estado del asistente de configuración inicial (`Starter Guide`) que el usuario debe completar tras verificar su email. Permite que el usuario abandone el wizard en cualquier paso y luego **lo retome exactamente donde lo dejó**, sin tener que repetir pasos ya completados (por ejemplo, delimitación de zona, registro de primer dispositivo). Responde a la nota *“The wizard can be abandoned midway. It should be possible to resume where it was left off”*.
+
+**Eventos que lo alimentan:**
+- `Starter guide step completed` (señal que se emite al finalizar cada paso).
+- `Wizard abandoned` (se guarda el progreso actual al salir).
+- `Starter guide complete` (marca el wizard como finalizado y limpia el progreso).
+
+**Estructura / proyección:**  
+Persistida en el backend, asociada al `user_id`. Contiene: `último_paso_completado` (entero o identificador), `datos_parciales` (por ejemplo, coordenadas de la zona ya delimitada, ID del dispositivo ya registrado, umbrales temporales), `fecha_última_actividad`, `completado` (booleano). También puede incluir una versión de cliente para compatibilidad.
+
+**Uso y consultas típicas:**  
+Consultado cada vez que el usuario accede a la sección de configuración antes de completar el wizard. Si existe un progreso, se carga automáticamente el paso correspondiente. Si el wizard ya está completado, se redirige directamente al dashboard principal (`Access the dashboard`).
+
+![EventStorming-step7.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-1.png)
+
+---
+
+#### Read Model: Customer Account View
+
+**Propósito:**  
+Proporcionar al staff de soporte una vista consolidada y en tiempo real de la información clave de la cuenta de un cliente, incluyendo el estado actual (activa, suspendida, en mora), datos de facturación, historial resumido de pagos, dispositivos asociados y cualquier alerta activa. Esta vista es la que se muestra cuando el staff ejecuta `Staff searches and views customer account`. Debe permitir tomar decisiones informadas sobre suspensiones o reactivaciones, mostrando de forma clara si la cuenta tiene acuerdos de pago vigentes o notas relevantes de otros operadores.
+
+**Eventos que lo alimentan:**
+- `Registered Farmer` / `Registered Agronomist` (creación de la cuenta).
+- `Customer account suspended` (actualiza el estado a “suspendida”).
+- `Account reactivated after payment was processed` (restaura el estado a “activa”).
+- `Subscription activated` (para conocer el plan contratado).
+- `Payment processed` (evento del módulo de facturación, actualiza el saldo y la fecha de último pago).
+- `Agronomist linked to farmer as assigned advisor` (muestra el asesor vinculado).
+- `Device Registered` (para listar los dispositivos activos).
+- Notas internas del staff (eventos de tipo `Internal note added` que se asocian a la cuenta).
+
+**Estructura / proyección:**  
+Una vista desnormalizada, típicamente materializada en una tabla de base de datos relacional o en un documento, con la siguiente información por `account_id`:
+- Datos básicos: nombre, email, teléfono, rol (agricultor/agrónomo), fecha de registro.
+- Estado de la cuenta: `active`, `suspended`, `grace_period`, con fecha de último cambio y motivo.
+- Plan de suscripción: tipo (Básico, Premium, Empresa), ciclo de facturación (mensual/anual), fecha de próxima renovación, saldo pendiente.
+- Resumen de pagos: último pago (fecha, monto, método), historial de los últimos 3‑6 pagos (como lista abreviada).
+- Dispositivos asociados: lista de `device_id`, tipo, estado (activo, inactivo, perdido), última lectura.
+- Asesor vinculado (si es agricultor): nombre y contacto del agrónomo.
+- Alertas activas: contador y lista resumida (batería crítica, dispositivo offline, estrés hídrico).
+- Enlaces a vistas detalladas: Account Log View, Payment History View, Device Management View.
+
+**Uso y consultas típicas:**
+- **Staff:** Consulta esta vista antes de ejecutar `Suspend account` o `Activate account`. Debe mostrarse de forma rápida y con la información de pagos consolidada para cumplir con el Pivotal Point 2 (revisión obligatoria del historial antes de suspender).
+- **Sistema:** Se utiliza internamente para validar precondiciones de comandos (ej. no suspender una cuenta ya suspendida).
+- **Cliente:** Una versión reducida (sin datos internos de staff) podría exponerse al propio cliente en su perfil.
+
+#### Read Model: Account Log View
+
+**Propósito:**  
+Proporcionar al staff de soporte y al cliente (tras reactivación) una vista completa e inmutable de todas las acciones administrativas y eventos críticos ocurridos sobre una cuenta, incluyendo suspensiones, reactivaciones, notificaciones enviadas y cambios de estado. Esta vista respalda la auditoría, permite resolver disputas sobre suspensiones injustas y garantiza que el cliente recupere **todo su historial** al reactivar la cuenta, sin pérdida de datos. Responde a las notas *“The customer can reactivate and needs their entire history”* y *“Suspension should NOT erase data”*.
+
+**Eventos que lo alimentan:**
+- `It is recorded in a log` (evento genérico que persiste cada acción administrativa).
+- `Customer account suspended` (registro de la suspensión, con motivo y operador).
+- `Notify the customer` (registro de la notificación enviada, con fecha y contenido).
+- `Account reactivated after payment was processed` (registro de la reactivación, con operador y forma de pago validada).
+- `Staff searches and views customer account` (registro de consultas del staff, aunque no es un evento de dominio, puede logarse para auditoría).
+
+**Estructura / proyección:**  
+Una tabla (o colección) de registros inmutables, ordenados cronológicamente, asociados al `account_id`. Cada entrada contiene: `timestamp`, `tipo_de_evento` (suspensión, reactivación, notificación, consulta), `detalle` (motivo, operador responsable), `metadatos` (IP, si aplica). Para la suspensión, se incluye la evidencia de que se revisó el historial de pagos (si se implementó el Pivotal Point 2). Para la reactivación, se registra la restauración del acceso y la sincronización de dispositivos (`Restore access + trigger device synchronization`).
+
+**Uso y consultas típicas:**
+- **Staff:** Consulta el log antes de tomar decisiones de suspensión para ver el historial completo de la cuenta.
+- **Cliente:** Tras reactivación, puede consultar su propio log para entender qué ocurrió durante el período de suspensión.
+- **Auditoría:** Se utiliza para responder a reclamaciones legales o comerciales, demostrando que se siguieron los procedimientos.
+    
+![EventStorming-step7.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-2.png)
+
+---
+
+#### Read Model: Device Inventory View
+
+**Propósito:**  
+Proporcionar al staff de operaciones y soporte una vista centralizada y en tiempo real de todos los dispositivos IoT registrados en la plataforma AgroSafe, con su estado actual (registrado, activado, en configuración, listo para operación, desactivado, desmantelado), credenciales asociadas, historial de pérdidas o suspensiones, y su vinculación con agricultores y parcelas. Esta vista permite monitorizar la flota de dispositivos, detectar anomalías (ej. dispositivos con credenciales activas pero sin uso prolongado) y tomar acciones administrativas como desmantelar un dispositivo reportado como perdido o gestionar reemplazos.
+
+**Eventos que lo alimentan:**
+- `Device Registered` → añade un nuevo dispositivo al inventario.
+- `Credentials Generated` → registra que el dispositivo tiene credenciales asignadas.
+- `Device Activated` → actualiza el estado a “activado”.
+- `Configuration Changed` → marca que la configuración ha sido modificada.
+- `Ready for Operation` → indica que el dispositivo está plenamente operativo.
+- `Device Deactivated` (por suspensión de cuenta o por pérdida) → cambia el estado a “inactivo”.
+- `Device Decommissioned` → elimina lógicamente el dispositivo del inventario activo (lo archiva).
+- `Replacement Device Registered` → añade un nuevo dispositivo como reemplazo, vinculándolo a la misma parcela.
+- `Credentials Revoked` → registra que las credenciales han sido invalidadas (por suspensión o pérdida).
+
+**Estructura / proyección:**  
+Una tabla (o colección) con un registro por dispositivo, que incluye:
+- `device_id` (identificador único)
+- `estado` (registered, activated, configuring, ready, deactivated, decommissioned)
+- `credenciales_activas` (booleano)
+- `farmer_id` / `parcela_id` (a quién pertenece, si aplica)
+- `fecha_registro`, `fecha_activación`, `fecha_última_configuración`
+- `motivo_desactivación` (pérdida, suspensión, baja voluntaria)
+- `es_reemplazo_de` (referencia a otro device_id, si es un reemplazo)
+
+**Uso y consultas típicas:**
+- **Staff:** Consulta para ver todos los dispositivos de un agricultor, filtrar por estado (ej. “dispositivos con credenciales activas pero sin heartbeat reciente” para detectar vulnerabilidades), o revisar el historial de un dispositivo reportado como perdido.
+- **Sistema:** Utilizado internamente para validar si un dispositivo puede ser reemplazado o si sus credenciales siguen vigentes.
+
+![EventStorming-step7.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-3.png)
+
+---
+
+#### Read Model: Device Health Dashboard
+
+**Propósito:**  
+Proporcionar al agricultor, al agrónomo y al staff de soporte una vista en tiempo real del estado de conectividad y salud de cada dispositivo IoT desplegado en una parcela. Este dashboard consolida los heartbeats recibidos, las desconexiones detectadas, la actividad del buffer local durante periodos offline y la correcta sincronización de los datos al restaurarse la conectividad. Permite identificar rápidamente dispositivos que llevan más de 5 minutos sin enviar heartbeat, activando alertas y mostrando el historial de eventos de conectividad para prevenir pérdida de datos por desconexiones prolongadas.
+
+**Eventos que lo alimentan:**
+- `Heartbeat Received` → actualiza la última vez activo y el estado a “online”.
+- `Device Offline Detected` → cambia el estado a “offline” y registra el timestamp de caída.
+- `Device buffers data locally` → indica que el dispositivo está almacenando lecturas localmente.
+- `Device Online Restored` → marca la reconexión.
+- `Device Sync Completed` → confirma que los datos acumulados durante el periodo offline se han sincronizado correctamente y en orden cronológico.
+- `Telemetry Received` → confirma que el flujo de datos se ha reanudado normalmente.
+
+**Estructura / proyección:**  
+Una vista por dispositivo que incluye:
+- `device_id`, `parcela_id`
+- `estado_conectividad` (online, offline, sincronizando)
+- `último_heartbeat` (timestamp)
+- `tiempo_desde_último_heartbeat` (calculado)
+- `buffer_activo` (booleano: si está almacenando datos localmente)
+- `última_desconexión` (timestamp)
+- `duración_offline_acumulada` (último periodo o total del día)
+- `datos_pendientes_sincronización` (booleano o contador estimado)
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta para ver si sus sensores están conectados y si hay riesgo de pérdida de datos por desconexión prolongada.
+- **Agrónomo:** Supervisa la salud de conectividad de las parcelas de sus clientes, especialmente en zonas de cobertura inestable.
+- **Staff:** Utiliza el dashboard para detectar dispositivos que llevan más de 5 minutos sin heartbeat y activar procedimientos de verificación en campo.
+
+![EventStorming-step7.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-4.png)
+
+---
+
+#### Read Model: Command Execution Log
+
+**Propósito:**  
+Registrar de forma inmutable y cronológica todos los comandos enviados desde la plataforma hacia los dispositivos IoT, junto con su estado de ejecución (encolado, enviado, ejecutado con éxito, fallido, reintentado, descartado por timeout). Este read model permite al agricultor, al agrónomo y al staff de soporte auditar qué acciones se solicitaron sobre cada actuador (válvulas, dosificadores, configuraciones), cuándo se solicitaron, quién las solicitó (agricultor, agrónomo o sistema), y cuál fue el resultado final. Es esencial para diagnosticar fallos de comunicación, degradaciones de salud del dispositivo y para responder a preguntas del tipo “¿por qué no se abrió la válvula?”.
+
+**Eventos que lo alimentan:**
+- `Command Queued` (se registra la intención, el actor y el timestamp).
+- `Command Sent to Edge` (se registra el envío al dispositivo).
+- `Command Executed` o `Sync Completed` (se registra la ejecución exitosa).
+- `Command Failed` (se registra el fallo, con código de error si está disponible).
+- `Device Health Degraded` (cuando un fallo provoca degradación, se enlaza al comando correspondiente).
+- Timeout implícito: “no acknowledgment in 30 min” (se registra como fallo por falta de acuse).
+
+**Estructura / proyección:**  
+Una tabla (o colección) de registros inmutables, ordenados por timestamp, asociados a `device_id` y `comando_id`. Cada entrada contiene:
+- `command_id` (identificador único)
+- `device_id` y `actuador` (ej. válvula norte)
+- `tipo_comando` (abrir válvula, ajustar frecuencia, iniciar riego, etc.)
+- `actor` (farmer, agronomist, system)
+- `timestamp_encolado`, `timestamp_envío`, `timestamp_ejecución` (o `timestamp_fallo`)
+- `estado` (queued, sent, executed, failed, retried, discarded)
+- `motivo_fallo` (si aplica: timeout, checksum error, condición hardware no cumplida)
+- `número_reintentos`
+- `referencia_a_health_degradation` (si el fallo causó degradación)
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta el log para verificar si su comando de riego se ejecutó realmente o fue descartado por timeout.
+- **Agrónomo:** Revisa el log cuando observa un comportamiento anómalo en un actuador (válvula que no responde).
+- **Staff / Soporte:** Utiliza el log para diagnosticar problemas de conectividad o fallos sistemáticos en un dispositivo.
+- **Sistema:** El log alimenta el cálculo de métricas de fiabilidad de comandos por dispositivo y por zona.
+
+![EventStorming-step7.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-5.png)
+
+---
+
+#### Read Model: Firmware Version Report
+
+**Propósito:**  
+Proporcionar al staff de operaciones y soporte una vista actualizada de la versión de firmware que cada dispositivo IoT tiene instalada actualmente, junto con el historial de actualizaciones (intentos exitosos y fallidos), la versión anterior antes del último cambio, y el estado de salud del dispositivo tras cada intento. Este read model permite al staff monitorizar el despliegue de nuevas versiones, identificar dispositivos que han fallado al actualizar y han revertido a una versión anterior, y tomar decisiones sobre si reintentar la actualización, poner una versión en cuarentena o enviar un técnico a campo.
+
+**Eventos que lo alimentan:**
+- `Firmware Update Available` (nueva versión liberada para un modelo).
+- `Firmware Update Started` (inicio del proceso en un dispositivo específico).
+- `Firmware Update Completed` (actualización exitosa, se registra la nueva versión).
+- `Firmware Update Failed` (fallo, se registra la versión que se intentó instalar).
+- `Previous Version Restored` (reversión automática, se registra la versión activa actual).
+- `Device Health Degraded` (asociado al fallo, para contextualizar).
+- `Heartbeat Received` (confirma la versión activa tras reinicio o reversión).
+- `Configuration Changed` (puede ocurrir tras actualización exitosa).
+
+**Estructura / proyección:**  
+Una tabla (o colección) con un registro por dispositivo, que incluye:
+- `device_id`, `modelo_hardware`
+- `versión_actual` (ej. v2.1.3)
+- `versión_anterior` (ej. v2.1.2)
+- `fecha_última_actualización` (timestamp)
+- `estado_última_actualización` (success, failed, rolled_back)
+- `número_reintentos_fallidos` (contador para la versión actual)
+- `salud_dispositivo` (healthy, degraded)
+- `fecha_último_heartbeat`
+
+Adicionalmente, puede incluir un histórico de las últimas N actualizaciones por dispositivo.
+
+**Uso y consultas típicas:**
+- **Staff:** Consulta el reporte para ver qué porcentaje de dispositivos han actualizado correctamente a la nueva versión, cuáles han fallado y han revertido, y detectar patrones de fallo por modelo de hardware.
+- **Sistema:** Utiliza este read model para decidir si ofrecer nuevamente una actualización a un dispositivo (si la versión actual es anterior y no hay fallos recientes).
+- **Soporte:** Cuando un agricultor reporta un comportamiento extraño, el staff consulta la versión de firmware para saber si coincide con una versión problemática conocida.
+
+![EventStorming-step7.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-6.png)
+
+---
+
+#### Read Model: Maintenance Schedule View
+
+**Propósito:**  
+Proporcionar al staff de operaciones y al agricultor una vista organizada de todas las tareas de mantenimiento programadas para los dispositivos IoT, especialmente aquellas relacionadas con el reemplazo de baterías. Esta vista consolida los eventos de batería baja, alertas críticas, la programación de mantenimiento resultante y el estado de ejecución (pendiente, en curso, completado, cancelado). Permite planificar visitas a campo, asignar técnicos, y evitar la pérdida de telemetría por agotamiento total de batería. Adicionalmente, expone la **falta de trazabilidad** identificada como un punto de mejora (no registrar técnico, lote de batería, voltaje post-instalación) para que el equipo de producto pueda priorizar su solución.
+
+**Eventos que lo alimentan:**
+- `Low battery level` (umbral de advertencia, ej. 25 %).
+- `Battery Critical Alert` (umbral crítico, ej. 15 % → dispara la creación o priorización de una tarea).
+- `Maintenance Scheduled` (creación de la tarea: fecha sugerida, técnico asignado, dispositivo afectado).
+- `Maintenance Replaced` (ejecución del reemplazo, cierra la tarea).
+- `Device Health Restored` (confirma que el dispositivo volvió a estado saludable, cierra el incidente).
+- `Heartbeat Received` (aporta el nivel de batería actual para actualizar la urgencia).
+- `Silent battery degradation` (evento detectado por modelos predictivos, puede crear una tarea preventiva).
+
+**Estructura / proyección:**  
+Una tabla (o colección) de tareas de mantenimiento, cada una con:
+- `task_id` (identificador único)
+- `device_id`, `parcela_id`, `farmer_id`
+- `tipo_mantenimiento` (battery_replacement, firmware_recovery, physical_inspection, etc.)
+- `fecha_programada` y `ventana_horaria` (opcional)
+- `urgencia` (critical, high, medium, low) – calculada a partir del nivel de batería y la degradación silenciosa.
+- `estado` (pending, in_progress, completed, cancelled)
+- `técnico_asignado` (staff_id) – **actualmente sin trazabilidad, marcado como mejora pendiente**.
+- `fecha_creación`, `fecha_cierre`
+- `resultado` (notas del técnico, lote de batería nuevo, voltaje post-instalación – **campo ausente hoy**).
+
+**Uso y consultas típicas:**
+- **Staff / Operaciones:** Consulta la vista para ver todas las tareas pendientes por urgencia, asignar técnicos y planificar rutas de campo.
+- **Agricultor:** Consulta una versión reducida para saber cuándo se espera el mantenimiento de sus dispositivos y programar sus actividades.
+- **Sistema:** Utiliza la vista para decidir si reducir automáticamente la frecuencia de muestreo (cuando hay una tarea crítica pendiente).
+
+![EventStorming-step7.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-7.png)
+
+---
+
+#### Read Model: Threshold Config View
+
+**Propósito:**  
+Proporcionar al agricultor y al agrónomo vinculado una vista actualizada y configurable de los **umbrales agronómicos activos** para cada zona de cultivo (humedad mínima/máxima, pH, temperatura, conductividad, etc.). Esta vista no solo muestra los valores actuales, sino que también **indica si un umbral está dentro o fuera del rango seguro recomendado por el catálogo**, muestra el valor original del catálogo como referencia, y presenta el historial de cambios recientes. Permite modificar umbrales (con advertencia y confirmación explícita si se sale del rango seguro), notifica al otro actor (agricultor o agrónomo) sobre el cambio, y registra la modificación en auditoría. Es la pantalla central de la configuración colaborativa de parámetros de cultivo.
+
+**Eventos que lo alimentan:**
+- `Thresholds automatically loaded from catalog` (carga inicial desde el catálogo).
+- `Threshold manually modified with a value outside the safe range` (actualización con validación).
+- `Threshold exception logged with user confirmation` (registro tras confirmación).
+- `Threshold change recorded in audit` (consolidación del cambio).
+- `Farmer notified of the change made by their agronomist` (actualiza el estado de notificación).
+- `Template applied to client plot` (cuando se aplica una plantilla masiva, actualiza la vista parcela por parcela).
+
+**Estructura / proyección:**  
+Una vista desnormalizada por `(farmer_id, parcela_id, zona_id)`, con los siguientes campos:
+- Valores actuales de cada umbral: `humedad_min`, `humedad_max`, `ph_min`, `ph_max`, `temp_min`, `temp_max`, etc.
+- `rango_seguro_recomendado` (obtenido del catálogo).
+- `flag_out_of_range` (booleano calculado: si el valor actual está fuera del rango seguro).
+- `último_modificador` (farmer o agronomist).
+- `fecha_última_modificación`.
+- `pendiente_confirmación` (si el cambio fue fuera de rango y aún no se confirmó explícitamente).
+- `notificación_pendiente_para` (el actor que debe ser notificado del cambio del otro).
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta para ver y ajustar sus umbrales. Si un valor está fuera del rango seguro, el sistema muestra una advertencia y requiere confirmación explícita antes de aplicar el cambio.
+- **Agrónomo:** Consulta para revisar los umbrales de sus clientes y sugerir ajustes. Si modifica un valor, el agricultor recibe una notificación detallada (`Farmer notified of the change made by their agronomist`).
+- **Sistema:** Utiliza esta vista para evaluar si una lectura de sensor supera los umbrales (`Humidity threshold exceeded`, `pH out of range detected`).
+
+![EventStorming-step7.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-8.png)
+
+---
+
+#### Read Model: Template Library View
+
+**Propósito:**  
+Proporcionar al agrónomo una vista organizada y reutilizable de todas las **plantillas de umbrales agronómicos** que ha creado (`Threshold template created by agronomist`). Cada plantilla encapsula un conjunto de valores objetivo (humedad, pH, temperatura, conductividad, etc.) para un tipo de cultivo y estadio fenológico específico, y puede ser aplicada de forma masiva a múltiples parcelas de sus clientes (`Select plots` → `Apply Template`). Esta vista permite al agrónomo gestionar su biblioteca personal de buenas prácticas agronómicas, editar plantillas existentes, duplicarlas, eliminar las obsoletas, y previsualizar el impacto de aplicar una plantilla antes de ejecutarla. También muestra el historial de uso (cuántas parcelas han sido configuradas con cada plantilla) y los resultados de auditoría asociados.
+
+**Eventos que lo alimentan:**
+- `Threshold template created by agronomist` (nueva plantilla añadida a la biblioteca).
+- `Threshold template updated` (edición de una plantilla existente).
+- `Threshold template deleted` (eliminación lógica o física).
+- `Template applied to client plot` (incrementa el contador de usos de la plantilla).
+- `System processes each parcel` (registra qué parcelas específicas se configuraron con cada plantilla, para trazabilidad).
+- `Threshold change recorded in audit` (vinculado a la aplicación de la plantilla, para que el agrónomo pueda consultar el impacto).
+
+**Estructura / proyección:**  
+Una tabla o colección con un registro por plantilla, asociada al `agronomist_id`. Cada plantilla contiene:
+- `template_id`, `nombre`, `descripción`
+- `tipo_cultivo` (maíz, tomate, vid, etc.)
+- `estadio_fenológico` (opcional)
+- `umbrales` (objeto JSON: humedad_min, humedad_max, ph_min, ph_max, temp_min, temp_max, conductividad, etc.)
+- `fecha_creación`, `fecha_última_modificación`
+- `número_de_aplicaciones` (contador de cuántas parcelas han sido configuradas con esta plantilla)
+- `última_aplicación` (timestamp)
+- `activa` (booleano, para ocultar plantillas descontinuadas sin borrarlas)
+
+**Uso y consultas típicas:**
+- **Agrónomo:** Consulta su biblioteca para seleccionar una plantilla al aplicar configuración masiva a sus clientes. Filtra por cultivo o nombre. Previsualiza los valores antes de aplicar.
+- **Sistema:** No consulta directamente esta vista para la ejecución, pero se referencia cuando se aplica una plantilla (`Template applied to client plot`).
+
+![EventStorming-step7.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-9.png)
+
+---
+
+#### Read Model: Panel Quick View
+
+**Propósito:**  
+Proporcionar al agrónomo una vista rápida y resumida de todas las parcelas de sus clientes, mostrando los indicadores más críticos (estado de salud del cultivo, alertas activas, última telemetría) en un formato de alto nivel que permite una **priorización visual automática por urgencia** (“It needs automatic visual prioritization by urgency”). Este read model es el primer punto de contacto cuando el agrónomo accede al dashboard consolidado.
+
+**Eventos que lo alimentan:**
+- `Agronomist accesses the consolidated dashboard of his client plots` (dispara la consulta).
+- `Customer plot in critical condition visually highlighted` (marca de criticidad calculada por el sistema a partir de umbrales superados, estrés hídrico, dispositivos offline, etc.).
+- `Water stress detected`, `Device Health Degraded`, `Humidity threshold exceeded` (para actualizar el nivel de urgencia).
+- `Telemetry Received`, `Heartbeat Received` (para mostrar la última actividad).
+
+**Estructura / proyección:**  
+Una vista desnormalizada por `(agronomist_id, farmer_id, parcela_id)` con campos agregados:
+- `nombre_parcela`, `tipo_cultivo`
+- `estado_crítico` (rojo, naranja, verde) – calculado.
+- `última_lectura_resumen` (ej. humedad 28 %, pH 6.5)
+- `alertas_activas` (contador, lista de primeras 3)
+- `dispositivos_offline` (contador)
+- `última_actividad` (timestamp del último evento relevante)
+
+**Uso y consultas típicas:**
+- **Agrónomo:** Consulta al ingresar al dashboard. Los resultados se muestran ordenados por criticidad (crítico primero) y con colores de fondo. Al hacer clic en una parcela, se navega al `Access the plot history` para ver detalles.
+
+#### Read Model: Multiparcel Dashboard
+
+**Propósito:**  
+Proporcionar al agrónomo una vista intermedia entre el `Panel Quick View` (muy resumido) y el historial detallado de una parcela. El **Multiparcel Dashboard** permite visualizar simultáneamente varias parcelas seleccionadas (ej. todas las de un mismo agricultor o todas las que comparten un cultivo) con gráficos comparativos, tendencias y alertas agregadas. Es útil para el agrónomo que necesita detectar patrones regionales o comparar el desempeño de diferentes parcelas antes de decidir dónde profundizar.
+
+**Eventos que lo alimentan:**
+- Los mismos eventos que el `Panel Quick View`, pero además necesita datos históricos agregados (medias diarias, máximos, mínimos) para la comparación.
+- `Telemetry Received` (lecturas horarias).
+- `Irrigation completed`, `Fertilization adjustment recorded` (eventos de manejo).
+
+**Estructura / proyección:**  
+Una vista que puede construirse bajo demanda consultando el histórico de telemetría y los eventos de alerta. Para cada parcela en el conjunto seleccionado, se proyectan:
+- Nombre, cultivo, ubicación.
+- Gráfico miniatura de tendencia de humedad (últimos 7 días).
+- Indicadores: días fuera de rango en el mes, número de riegos automáticos ejecutados, batería promedio.
+- Alertas activas agrupadas por tipo.
+
+**Uso y consultas típicas:**
+- **Agrónomo:** Selecciona varias parcelas (ej. todas las de un cliente) y accede a este dashboard para compararlas. Puede filtrar por cultivo o por rango de fechas.
+
+#### Read Model: Technical Report View
+
+**Propósito:**  
+Proporcionar al agrónomo y al agricultor un **informe técnico estructurado, descargable en PDF** (o consultable en línea) que compila todos los datos agronómicos de una parcela durante un período específico (normalmente mensual). Contiene gráficos de evolución de sensores, resúmenes estadísticos, eventos de alerta, riegos y fertilizaciones aplicados, cambios de umbrales, y recomendaciones técnicas enviadas. Este read model es el resultado del comando `Request monthly report` y del procesamiento `System compiles data` → `Monthly technical report generated for a client`.
+
+**Eventos que lo alimentan:**
+- `Request monthly report` (solicitud explícita o programada).
+- `System compiles data` (el backend recolecta datos del período desde otros read models).
+- `Monthly technical report generated for a client` (evento que indica que el informe está listo).
+- `Telemetry Received` (para gráficos).
+- `Irrigation started`, `Irrigation completed` (para eventos de riego).
+- `Threshold change recorded in audit` (para cambios de configuración).
+- `Technical recommendation sent to the farmer with attached sensor data` (para incluir recomendaciones).
+
+**Estructura / proyección:**  
+No es una tabla viva, sino un **documento generado bajo demanda** con:
+- Cabecera: parcela, agricultor, agrónomo, período.
+- Resumen ejecutivo: tendencias, estrés hídrico, riegos, alertas.
+- Gráficos: humedad, pH, temperatura, estrés hídrico vs. tiempo.
+- Tablas: días fuera de rango, volumen de agua aplicado, fertilización.
+- Listado de recomendaciones enviadas y su estado.
+- Auditoría de cambios de umbrales.
+
+**Uso y consultas típicas:**
+- **Agrónomo:** Lo genera para enviar a sus clientes como evidencia de su trabajo.
+- **Agricultor:** Lo consulta (vista en línea o PDF) para entender la evolución de su cultivo.
+- **Sistema:** Puede generar informes automáticos al final de cada mes y almacenarlos para consulta posterior.
+
+![EventStorming-step7.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-10.png)
+
+---
+
+#### Read Model: Valve State View
+
+**Propósito:**  
+Proporcionar al agricultor, al agrónomo y al sistema una vista en tiempo real del **estado actual de cada actuador (válvula)** en una parcela: si está abierta, cerrada, en transición, o bloqueada por seguridad. Este read model es crítico para evitar comandos contradictorios (ej. intentar abrir una válvula ya abierta) y para que el agricultor sepa de inmediato si un riego está en curso. Responde a la necesidad de “clear visual confirmation of status” y evita la incertidumbre sobre si el comando se ejecutó o no.
+
+**Eventos que lo alimentan:**
+- `Solenoid valve open` → estado pasa a “open”.
+- `Solenoid valve closed` → estado pasa a “closed”.
+- `Irrigation started` → confirma “open” con metadato de inicio.
+- `Irrigation completed` → confirma “closed” con metadato de fin.
+- `Valve automatically closed by Edge when connection with backend is lost` → estado pasa a “closed_by_safety” con motivo.
+- `Attempt to activate already active irrigation, conflict detected` → no cambia el estado, pero se registra para notificación.
+
+**Estructura / proyección:**  
+Una vista por `(device_id, actuador_id)` con los siguientes campos:
+- `estado` (open, closed, opening, closing, safety_closed)
+- `último_cambio` (timestamp)
+- `comando_activo_id` (referencia al último comando aceptado)
+- `motivo_si_bloqueado` (por conflicto, por seguridad, por timeout)
+- `modo_control` (manual, automático, remoto)
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta antes de enviar un nuevo comando para no duplicar acciones.
+- **Agrónomo:** Supervisa el estado de las válvulas de sus clientes.
+- **Sistema (resolutor de conflictos):** Consulta esta vista para validar si un comando entrante es conflictivo (`Attempt to activate already active irrigation`).
+
+#### Read Model: Pending Command Queue
+
+**Propósito:**  
+Mostrar al agricultor y al sistema la lista de **comandos de riego que están pendientes de envío** porque fueron emitidos sin conectividad disponible (`Irrigation command sent without available connectivity` y almacenados localmente en la app móvil). Cada comando pendiente muestra su timestamp original, el actuador destino, y el estado actual (pendiente, validando, ejecutado, descartado). Este read model resuelve la incertidumbre del agricultor sobre si su comando se ejecutará o no, y permite cancelarlo manualmente antes de que se procese al restaurar la conectividad.
+
+**Eventos que lo alimentan:**
+- `Irrigation command sent without available connectivity` → comando añadido a la cola local con estado “pending”.
+- `Command queued locally in the mobile app` (registro persistente local).
+- `Connectivity restored, command validated before execution` → estado pasa a “validating”.
+- `Command executed after successful validation` → estado pasa a “executed” y se elimina de la cola pendiente.
+- `Command discarded, exceeded 30 min or condition already resolved` → estado pasa a “discarded” con motivo.
+- `Canceled Irrigation Command` (acción manual del agricultor) → estado “cancelled”.
+
+**Estructura / proyección:**  
+Un read model almacenado **tanto en el cliente (app móvil) como en el backend** (para sincronización entre dispositivos). Cada entrada contiene:
+- `command_id`, `device_id` (válvula), `tipo_comando` (abrir, cerrar)
+- `timestamp_encolado` (del momento de la orden)
+- `estado` (pending, validating, executed, discarded, cancelled)
+- `motivo_descarte` (si aplica: “timeout 30 min”, “soil already wet”, “cancelled by user”)
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta la cola pendiente en su app móvil para ver qué comandos están esperando conectividad, y puede cancelarlos si ya no son necesarios.
+- **Sistema:** Al restaurar conectividad, consulta esta cola para procesar los comandos pendientes en orden FIFO, aplicando las validaciones temporales y de condición.
+
+#### Read Model: Command Execution Log
+
+**Propósito:**  
+Registrar de forma inmutable y cronológica **todos los comandos de riego**, independientemente de si fueron exitosos, fallidos, descartados o cancelados, incluyendo los comandos que pasaron por la cola pendiente. Este read model es la fuente de verdad para auditar qué se ordenó, cuándo, quién lo ordenó, y cuál fue el resultado final. Permite responder preguntas como “¿se ejecutó el riego que pedí ayer a las 3 PM?” y diagnosticar por qué una válvula no se abrió (ej. comando descartado por timeout o por condición ya resuelta). También alimenta las notificaciones al agricultor con razones claras (“Condition already resolved”, “Command too old”).
+
+**Eventos que lo alimentan:**
+- `Irrigation command sent` (con o sin conectividad).
+- `Command queued locally` (cuando se almacena en la app).
+- `Command validated before execution` (cuando se recupera la conectividad).
+- `Command executed after successful validation`.
+- `Command discarded, exceeded 30 min or condition already resolved`.
+- `Duplicate action blocked, user informed of current status`.
+- `Canceled Irrigation Command` (por acción manual).
+- `Delete failed commands` (limpieza, pero se mantiene un registro resumido).
+
+**Estructura / proyección:**  
+Una tabla inmutable (append-only) con los siguientes campos:
+- `log_id`, `command_id`, `device_id` (válvula)
+- `actor` (farmer, agronomist, system)
+- `tipo_comando` (open, close, set_timer)
+- `timestamp_recibido` (cuando el backend lo vio por primera vez)
+- `timestamp_ejecución` o `timestamp_descarte`
+- `estado_final` (executed, discarded, blocked, cancelled)
+- `razón` (ej. “timeout 30 min”, “soil already wet”, “duplicate action”, “cancelled by user”)
+- `enlace_al_health_degradation` (si aplica)
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta para verificar si su comando fue ejecutado o descartado, y por qué motivo.
+- **Agrónomo:** Revisa el log cuando observa que una válvula no respondió como se esperaba.
+- **Staff / Soporte:** Utiliza el log para diagnosticar fallos sistemáticos en la comunicación con dispositivos.
+- **Sistema:** Puede consultar el log para calcular métricas de fiabilidad de comandos por parcela.
+
+![EventStorming-step7.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-11.png)
+
+---
+
+#### Read Model: Security Event List View
+
+**Propósito:**  
+Registrar de forma cronológica e inmutable todos los eventos de movimiento detectados por los sensores PIR en el perímetro de las parcelas, incluyendo su clasificación (WIND, ANIMAL, HUMAN), la intensidad de calor medida, el nivel de confianza asignado, y si el evento generó una alerta urgente o solo un registro de baja prioridad. Este read model permite al agricultor, al agrónomo y al staff de seguridad revisar el historial completo de incidentes perimetrales, auditorizar la efectividad de la clasificación y detectar patrones de falsos positivos o intrusiones reales no notificadas.
+
+**Eventos que lo alimentan:**
+- `PIR sensor detects movement at the perimeter` (disparador inicial).
+- `Heat intensity measured by the ESP32 ADC` (datos de la medición térmica).
+- `Event classified as WIND` / `Event classified as ANIMAL` / `Event classified as HUMAN` (resultado de la clasificación en el Edge).
+- `High trust rating sent to the backend immediately` (cuando la confianza es alta y es humano).
+- `Low priority event logged in history without urgent notification` (para eventos de baja prioridad).
+- `Human intrusion alert triggered` (cuando se emite una alerta urgente).
+
+**Estructura / proyección:**  
+Una tabla inmutable (append-only) con un registro por evento de movimiento detectado, que incluye:
+- `event_id`, `device_id` (sensor PIR), `parcela_id`
+- `timestamp_detección`, `timestamp_clasificación`
+- `intensidad_calor` (valor ADC crudo o normalizado)
+- `clasificación` (WIND, ANIMAL, HUMAN)
+- `confianza` (porcentaje, ej. 0–100 %)
+- `alerta_generada` (booleano, si se disparó `Human intrusion alert triggered`)
+- `umbrales_utilizados` (referencia a la configuración PIR activa en ese momento)
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta para revisar actividad perimetral reciente y verificar si hubo intrusiones reales.
+- **Agrónomo / Staff:** Utiliza para auditorías de seguridad y para ajustar la calibración de los sensores si detecta muchos falsos positivos.
+- **Sistema:** Alimenta otros read models como el Security Event Filter View y el Security Alert Feed.
+
+#### Read Model: Security Event Filter View
+
+**Propósito:**  
+Proporcionar al agricultor y al staff de seguridad una versión **filtrable y consultable** de la lista de eventos de seguridad, permitiendo seleccionar por rango de fechas, tipo de clasificación (solo HUMAN, solo WIND, etc.), nivel de confianza, parcela específica o dispositivo concreto. Este read model resuelve la necesidad de navegar grandes volúmenes de eventos (especialmente cuando hay muchas falsas alarmas por viento o animales) sin perder la capacidad de encontrar rápidamente intrusiones humanas reales o patrones de comportamiento anómalo.
+
+**Eventos que lo alimentan:**
+- Los mismos eventos que el `Security Event List View`, ya que este read model es una **proyección consultable** sobre la misma fuente de datos.
+
+**Estructura / proyección:**  
+No es una tabla separada, sino una **capa de consulta** (índices, vistas materializadas o API de búsqueda) sobre el `Security Event List View`. Permite filtros como:
+- `clasificación IN ('HUMAN')`
+- `confianza > 80`
+- `timestamp_detección BETWEEN '2025-01-01' AND '2025-01-31'`
+- `parcela_id = 'XYZ'`
+- `alerta_generada = true`
+
+**Uso y consultas típicas:**
+- **Agricultor:** Filtra solo eventos clasificados como HUMAN de los últimos 7 días para revisar si ha habido intrusiones.
+- **Staff:** Filtra eventos de baja confianza o clasificados como WIND para recalibrar los umbrales del sensor en una parcela específica.
+- **Auditoría:** Exporta eventos filtrados para análisis forense o cumplimiento normativo.
+
+#### Read Model: Security Alert Feed
+
+**Propósito:**  
+Proporcionar al agricultor (y opcionalmente al agrónomo o al staff) un **feed en tiempo real de alertas de seguridad urgentes**, específicamente aquellas generadas por eventos clasificados como HUMAN con alta confianza (`Human intrusion alert triggered`). Este feed es el equivalente a una “bandeja de entrada de seguridad”, donde las notificaciones push, los mensajes de WhatsApp y los registros en el dashboard se consolidan en una lista ordenada por gravedad y tiempo, permitiendo una reacción rápida ante intrusiones reales sin ser abrumado por eventos de baja prioridad (viento, animales). Responde a la necesidad de evitar la fatiga de alertas.
+
+**Eventos que lo alimentan:**
+- `Human intrusion alert triggered` (evento que indica una alerta urgente).
+- `High trust rating sent to the backend immediately` (puede ser el precursor, pero el feed se actualiza con la alerta consolidada).
+- Opcionalmente, eventos de resolución o confirmación (`Alert confirmed as received`, `Security alert dismissed`) pueden actualizar el estado de la alerta en el feed.
+
+**Estructura / proyección:**  
+Una vista optimizada para lecturas frecuentes, con baja latencia, que contiene solo las alertas activas o recientes (ej. últimas 48 horas). Cada entrada incluye:
+- `alert_id`, `event_id` (referencia al evento de movimiento original)
+- `timestamp_alerta`
+- `parcela_id`, `dispositivo_id`
+- `mensaje` (ej. “Intrusión humana detectada en parcela norte”)
+- `estado` (nueva, confirmada, descartada, en escalamiento)
+- `método_envío` (push, WhatsApp, dashboard)
+- `confirmada_por` (farmer, agronomist, system – si se confirmó recepción)
+
+**Uso y consultas típicas:**
+- **Agricultor:** Consulta el feed al recibir una notificación push para ver el detalle de la alerta y tomar acción (confirmar, descartar, escalar).
+- **Agrónomo (si tiene permisos):** Puede ver el feed de sus clientes para supervisar incidentes de seguridad.
+- **Staff:** Monitorea el feed agregado de todas las parcelas para detectar patrones de intrusión a nivel regional.
+
+![EventStorming-step7.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-12.png)
+
+---
+
+#### Read Model: Executive Dashboard
+
+**Propósito:**  
+Proporcionar al Product Owner y a los ejecutivos de AgroSafe una vista de alto nivel y consolidada de la salud del negocio, mostrando los KPIs clave (MAU, MRR, churn, conversión trial‑a‑pago) segmentables por tipo de cliente (agricultor/agrónomo), plan (Básico, Premium, Empresa), y período (diario, mensual, trimestral). Este dashboard es el punto de entrada para la toma de decisiones estratégicas y la priorización del roadmap, permitiendo detectar tendencias, anomalías y oportunidades de mejora. La nota *“Churn data should be cross-referenced with Subscriptions Information and usage data”* indica que el dashboard debe incluir correlaciones automáticas entre cancelaciones, suscripciones y adopción de funcionalidades.
+
+**Eventos que lo alimentan:**
+- `Subscription activated`, `Subscription cancelled` (del módulo de facturación).
+- `Payment processed`, `Payment failed` (para MRR y conversión).
+- `User registered`, `User verified` (para MAU y trial).
+- `User logged in`, `User accessed dashboard` (para métricas de actividad).
+- `Feature adoption event` (para cruzar con churn).
+- `Churn analysis filtered by customer segment` (resultado de consulta).
+- `Comparison of metrics with previous period generated` (resultado de comparativa).
+
+**Estructura / proyección:**  
+Una vista agregada y desnormalizada, calculada bajo demanda o mediante procesos batch periódicos. Contiene:
+- KPIs calculados: MAU, MRR, churn rate, trial‑to‑paid conversion rate.
+- Segmentación por: segmento (farmer/agronomist), plan, región geográfica, antigüedad de la cuenta.
+- Comparativas interperíodo (variación porcentual).
+- Correlaciones automáticas: “Clientes que no usaron la feature X tienen un churn 30% mayor”.
+
+**Uso y consultas típicas:**
+- **Product Owner:** Consulta semanal o trimestral para evaluar la evolución del negocio y detectar caídas de retención.
+- **Equipo de producto:** Utiliza los insights correlacionados para priorizar funcionalidades que impacten directamente en la reducción del churn.
+
+#### Read Model: Churn Analysis View
+
+**Propósito:**  
+Proporcionar al Product Owner y al Product Manager una vista detallada y segmentable de la tasa de cancelación de clientes, permitiendo analizar el churn por tipo de cliente (agricultor vs. agrónomo), plan contratado, antigüedad de la cuenta, método de pago, y período. Además, esta vista debe **correlacionar automáticamente** los clientes que cancelaron con su historial de uso de funcionalidades (adopción de features, completitud del wizard, frecuencia de acceso) y con sus datos de suscripción (plan, ciclo de facturación, forma de pago), para identificar las causas raíz del abandono. Responde a la nota *“Churn data should be cross-referenced with Subscriptions Information and usage data”*.
+
+**Eventos que lo alimentan:**
+- `Subscription cancelled` (evento central de cancelación).
+- `Registered Farmer`, `Registered Agronomist` (para antigüedad y segmento).
+- `Subscription activated` (para saber el plan en el momento de la cancelación).
+- Eventos de uso: `Access the dashboard`, `Starter guide complete`, `Telemetry Received`, `Irrigation command`, etc.
+- `Churn analysis filtered by customer segment` (solicitud de filtro).
+
+**Estructura / proyección:**  
+Una vista agregada por cliente y por cohorte, que permite profundizar desde el Executive Dashboard. Cada registro de cancelación incluye:
+- `customer_id`, `segmento`, `plan`, `antigüedad_días`
+- `fecha_cancelación`, `motivo_declarado` (si se recoge en survey de salida)
+- `última_actividad` (timestamp y tipo)
+- `features_utilizadas` (lista de features adoptadas en los últimos 30 días)
+- `wizard_completado` (booleano)
+- `método_pago` (tarjeta, transferencia)
+- `ciclo_facturación` (mensual, anual)
+
+**Uso y consultas típicas:**
+- **Product Owner:** Analiza el churn por segmento y plan para identificar qué cohortes son más propensas a cancelar.
+- **Product Manager:** Cruza con datos de uso para detectar correlaciones (ej. “el 80% de los que cancelaron nunca usaron los informes mensuales”).
+- **Customer Success:** Identifica clientes en riesgo antes de que cancelen, basándose en patrones de bajo uso.
+
+#### Read Model: Feature Adoption View
+
+**Propósito:**  
+Mostrar al Product Manager un mapa de calor y métricas de adopción de cada funcionalidad de AgroSafe (telemetría, riego automático, informes mensuales, alertas de seguridad, recomendaciones del agrónomo, etc.), segmentado por tipo de usuario (agricultor, agrónomo), plan, y período. Este read model responde preguntas como: ¿qué funcionalidades usan más los clientes retenidos? ¿cuáles están infrautilizadas? ¿existe una correlación entre la adopción de una feature específica y la retención a largo plazo? La nota *“Feature Adoption View”* y su conexión con el Churn Analysis View indican que es un insumo clave para decisiones de roadmap.
+
+**Eventos que lo alimentan:**
+- Eventos de dominio que representan el uso de una funcionalidad:
+    - `Telemetry Received` (adopción de monitoreo)
+    - `Irrigation command` (adopción de riego automático o manual)
+    - `Monthly technical report generated` (adopción de informes)
+    - `Human intrusion alert triggered` (adopción de seguridad perimetral)
+    - `Threshold change recorded` (adopción de configuración colaborativa)
+    - `Technical recommendation sent` (adopción de asesoría)
+- `Starter guide complete` (indica que el usuario completó la configuración básica).
+
+**Estructura / proyección:**  
+Una vista agregada por `(customer_id, feature_name, período)`, con:
+- `frecuencia_uso` (número de veces que se ejecutó la funcionalidad en el período)
+- `último_uso` (timestamp)
+- `primer_uso` (timestamp)
+- `adopción_sí/no` (booleano: si se usó al menos una vez en los últimos 30 días)
+- `adopción_temprana` (booleano: si se usó dentro de los primeros 7 días tras el registro)
+
+**Uso y consultas típicas:**
+- **Product Manager:** Consulta el mapa de calor para ver qué features están ganando tracción y cuáles están estancadas.
+- **Product Owner:** Utiliza los datos de adopción para priorizar inversiones o decidir la descontinuación de features de bajo uso.
+- **Sistema:** Alimenta al Churn Analysis View para correlacionar baja adopción con cancelaciones.
+
+#### Read Model: Funnel Analysis View
+
+**Propósito:**  
+Permitir al Product Manager identificar **embudos de conversión o de abandono** dentro de un flujo específico de funcionalidad. Por ejemplo, el embudo de generación de informes mensuales: (1) el usuario accede al dashboard, (2) hace clic en “Solicitar informe”, (3) selecciona el período, (4) espera la generación, (5) descarga el PDF. Si muchos usuarios abandonan en el paso 3, el sistema lo resalta como `Abandonment funnel identified in a specific feature`. Este read model responde a la necesidad de detectar puntos de fricción en la experiencia de usuario, priorizando mejoras que impacten directamente en la retención.
+
+**Eventos que lo alimentan:**
+- Eventos de paso dentro de un flujo:
+    - `Step entered: request monthly report`
+    - `Step completed: period selected`
+    - `Step completed: report generated`
+    - `Step completed: report downloaded`
+- `Abandonment funnel identified in a specific feature` (evento generado por el sistema al detectar un cuello de botella).
+
+**Estructura / proyección:**  
+Una vista por flujo funcional, que calcula:
+- `total_usuarios_inicio`
+- `total_usuarios_paso_1`, `total_usuarios_paso_2`, …, `total_usuarios_convertidos`
+- `porcentaje_abandono_entre_pasos`
+- `tiempo_medio_entre_pasos`
+- `punto_crítico` (el paso con mayor abandono)
+
+**Uso y consultas típicas:**
+- **Product Manager:** Consulta para cada flujo (registro, wizard, informes, riego automático) dónde se pierden más usuarios.
+- **Equipo de UX:** Utiliza los datos para rediseñar pasos con alto abandono.
+- **Sistema:** Puede generar alertas automáticas cuando un embudo supera un umbral de abandono.
+
+![EventStorming-step7.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-13.png)
 
 ---
 
