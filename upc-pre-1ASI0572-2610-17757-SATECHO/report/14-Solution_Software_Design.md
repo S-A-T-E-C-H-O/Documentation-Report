@@ -1148,7 +1148,7 @@ Estas dos decisiones convierten el onboarding en un proceso tolerante a fallos d
 - Mejora de la percepción de robustez y profesionalidad de la plataforma.
 - Disminución de tickets de soporte del tipo “perdí todos mis datos al registrarme” o “tengo que volver a empezar la configuración”.
 
-![EventStorming-step5.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-1.png)
+![EventStorming-step4.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-1.png)
 
 ---
 
@@ -1194,7 +1194,7 @@ La cascada posterior (`Client access disabled, data retained` → `Notify the cu
 - Auditoría más robusta que registra la revisión consciente del operador antes de una acción crítica.
 - Protección de la reputación de AgroSafe como plataforma confiable y justa en la gestión de cuentas.
 
-![EventStorming-step5.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-2.png)
+![EventStorming-step4.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-2.png)
 
 ---
 
@@ -1233,7 +1233,7 @@ Adicionalmente, se implementa una notificación proactiva al agricultor y al agr
 - Mejora de la postura de seguridad de AgroSafe frente a auditorías y certificaciones.
 - Mayor confianza del agricultor al saber que reportar una pérdida bloquea instantáneamente el dispositivo, protegiendo la integridad de sus datos agronómicos.
 
-![EventStorming-step5.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-3.png)
+![EventStorming-step4.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-3.png)
 
 ---
 
@@ -1281,7 +1281,7 @@ Esta separación garantiza que la ventana de vulnerabilidad con credenciales de 
 - Mejora de la postura de seguridad general del ecosistema de dispositivos IoT de AgroSafe.
 - Facilita auditorías de seguridad al demostrar que las credenciales operativas solo existen en dispositivos que han superado la fase de configuración validada.
 
-![EventStorming-step5.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-4.png)
+![EventStorming-step4.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-4.png)
 
 ---
 
@@ -1333,7 +1333,7 @@ Si el sistema detecta que los eventos `Device Offline Detected` y `Device Online
 - Mayor confianza del agricultor y del agrónomo en la fiabilidad de la telemetría incluso en zonas de cobertura difícil.
 - Disminución de la carga de procesamiento en el backend al evitar sincronizaciones redundantes y parciales.
 
-![EventStorming-step5.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-5.png)
+![EventStorming-step4.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-5.png)
 
 ---
 
@@ -1399,7 +1399,7 @@ Con estas tres mejoras, el ciclo degenerativo de fallos se corta de raíz: el st
 - Mayor confianza en las actualizaciones OTA, facilitando la adopción de mejoras de seguridad y funcionalidad.
 - Históricos de telemetría más completos, ya que los dispositivos no pasan largos períodos reiniciándose o en mantenimiento.
 
-![EventStorming-step5.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-6.png)
+![EventStorming-step4.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-6.png)
 
 ---
 
@@ -1450,7 +1450,7 @@ Este diseño asegura que la parcela no quede nunca desatendida más tiempo del e
 - Experiencia de usuario mejorada: el agricultor percibe un servicio proactivo que repone sus dispositivos sin que él tenga que reclamar.
 - Optimización del inventario de dispositivos precertificados al consumirlos según políticas de prioridad.
 
-![EventStorming-step5.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-7.png)
+![EventStorming-step4.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-7.png)
 
 ---
 
@@ -1517,7 +1517,7 @@ Con este diseño, el flujo completo se mantiene eficiente para el agrónomo (sig
 - Trazabilidad completa de todo el ciclo de propuesta, aceptación/rechazo y posibles reversiones, facilitando la auditoría de decisiones agronómicas.
 - Disminución de tickets de soporte del tipo "¿por qué cambiaron mis umbrales?" o "no quiero que mi agrónomo toque mis configuraciones".
 
-![EventStorming-step5.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-8.png)
+![EventStorming-step4.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-8.png)
 
 
 ---
@@ -1578,7 +1578,7 @@ Estos informes enriquecidos no solo satisfacen la necesidad de trazabilidad y au
 - Los informes mensuales se convierten en un entregable de alto valor percibido, incrementando la retención de clientes en planes con asesoría y fomentando la renovación de suscripciones.
 - El agrónomo dispone de una herramienta de comunicación más persuasiva, que facilita la justificación de sus honorarios y la captación de nuevos clientes.
 
-![EventStorming-step5.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-9.png)
+![EventStorming-step4.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-9.png)
 
 ---
 
@@ -1630,7 +1630,7 @@ Con este diseño, la asesoría experta se convierte en parte integral del onboar
 - Los agrónomos construyen su cartera de clientes de forma orgánica y automática, sin depender de invitaciones manuales.
 - Mejora de la percepción de valor de los planes con asesoría incluida, justificando su precio y fomentando upgrades desde planes Básicos.
 
-![EventStorming-step5.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-10.png)
+![EventStorming-step4.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-10.png)
 
 ---
 
@@ -1698,7 +1698,7 @@ Con estos tres pilares, el sistema garantiza que el agua se aplica de forma prec
 - Disminución de tickets de soporte relacionados con "¿se regó o no se regó?".
 - Uso eficiente del agua gracias a la validación temporal que evita riegos fuera de ventana óptima o ya innecesarios.
 
-![EventStorming-step5.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-11.png)
+![EventStorming-step4.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-11.png)
 
 ---
 
@@ -1753,7 +1753,7 @@ Con estos tres componentes, el sistema pasa de ser frágil y dependiente de una 
 - Reducción de tickets de soporte por "falsas alarmas constantes" o "el sensor no detecta nada".
 - El sistema mejora con el tiempo y el uso, en lugar de degradarse por cambios estacionales o ambientales no contemplados en la calibración inicial.
 
-![EventStorming-step5.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-12.png)
+![EventStorming-step4.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-12.png)
 
 ---
 
@@ -1811,13 +1811,520 @@ El motor no se consulta solo en la revisión trimestral. De forma continua, moni
 - Optimización del esfuerzo de desarrollo: se priorizan features que no solo tienen alta adopción, sino que están vinculadas a la retención.
 - Ciclos de análisis más rápidos: de revisiones trimestrales a monitorización continua con alertas.
 
-![EventStorming-step5.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-13.png)
+![EventStorming-step4.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-13.png)
 
 ---
 
-Con todo ello, comenzamos el paso de Commands, donde escribimos el desencadenante de ciertos eventos del dominio, así como el actor encargado.
+#### Paso 5: Commands (Comandos)
+**¿Qué es y cómo se hace?**  
+Los *Commands* son intenciones explícitas de acción (`Verb + Noun`) emitidas por actores o sistemas para detonar un evento de dominio. Se escriben en notas azules y se vinculan directamente al actor responsable. El equipo los valida asegurando que cada comando tenga un desencadenante claro y un efecto observable.
 
 
+#### Flujo: Onboarding y Registro de Usuarios
+
+**Nombre del flujo:** Onboarding y Registro de Usuarios
+
+**Propósito del flujo:** Transformar a un visitante anónimo en un usuario autenticado y completamente configurado dentro de la plataforma AgroSafe, guiándolo a través de un proceso estructurado que incluye selección de plan, registro de identidad, verificación de credenciales y configuración inicial del entorno de trabajo mediante un wizard.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Seleccionar plan** | Visitante | `Visitor selects a plan` → `Selected plan` → `Subscription activated` | El visitante elige entre Básico, Premium o Empresa. El sistema registra la selección y activa la suscripción, reservando el plan y estableciendo las bases para la facturación recurrente. |
+| **Registrar agrónomo** | Visitante (futuro Agrónomo) | `Registered Agronomist` | El visitante completa el formulario con perfil profesional. Se crea su cuenta con permisos de asesoría y gestión multi-cliente. |
+| **Registrar agricultor** | Visitante (futuro Agricultor) | `Registered Farmer` | El visitante completa el formulario con datos de identidad y parcela. Se crea su perfil con permisos operativos para gestionar dispositivos y cultivos. |
+| **Vincular agrónomo** | Agricultor | `Agronomist linked` | El agricultor invita o acepta a un agrónomo como asesor. Se establece el vínculo profesional que permite al agrónomo acceder remotamente a los datos de la parcela. |
+| **Enviar verificación de email** | Sistema (reacción automática) | `Verification email sent` | El backend dispara un correo con un enlace único y temporal de verificación, sin intervención del usuario. Es un paso automático de seguridad. |
+| **Verificar email** | Agricultor / Agrónomo | `Email verified by user` | El usuario hace clic en el enlace recibido. Su cuenta pasa irreversiblemente a estado "activa" y "verificada", habilitando el acceso completo. |
+| **Completar wizard** | Agricultor / Agrónomo | `Starter guide complete` | El usuario completa el asistente interactivo de configuración inicial: delimita parcelas, registra su primer dispositivo IoT y ajusta preferencias básicas. |
+| **Acceder al dashboard** | Agricultor / Agrónomo | `Access the dashboard` | El usuario, ya configurado, ingresa al panel de control principal donde puede comenzar a operar, ver telemetría y gestionar su explotación. |
+
+**Narrativa del flujo por actores**
+
+**1. Visitante:**  
+Es el actor que inicia todo el proceso. Ejecuta dos comandos clave de forma secuencial: primero `Seleccionar plan`, donde elige la suscripción que mejor se adapta a sus necesidades y provoca la activación comercial; y después `Registrar agricultor` o `Registrar agrónomo`, donde completa el formulario con sus datos de identidad y perfil. Su motivación es acceder a la plataforma, pero aún no está autenticado ni verificado.
+
+**2. Agricultor:**  
+Una vez registrado, hereda el flujo del Visitante y ejecuta comandos que construyen su ecosistema operativo. Tras verificar su email, puede ejecutar `Vincular agrónomo` para conectar con un asesor profesional que supervise sus cultivos. Posteriormente, ejecuta `Completar wizard` para configurar sus parcelas y dispositivos IoT, y finalmente `Acceder al dashboard` para entrar en operación. Es el actor central del ecosistema AgroSafe.
+
+**3. Agrónomo:**  
+Similar al Agricultor en el flujo de verificación y wizard, pero con un perfil profesional distinto. No necesita ejecutar `Vincular agrónomo` porque él es el asesor. Su interés es completar el onboarding para acceder al dashboard consolidado de clientes y comenzar a supervisar parcelas.
+
+**4. Sistema:**  
+Actúa como actor automatizado en un único pero crítico comando: `Enviar verificación de email`. Se dispara como reacción al registro exitoso, sin que el usuario lo solicite explícitamente. Es el guardián de la seguridad y la validez de las cuentas en AgroSafe.
+
+![EventStorming-step5.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-1.png)
+
+---
+
+#### Flujo: Gestión de Suspensión y Reactivación de Cuenta por Impago
+
+**Nombre del flujo:** Gestión de Suspensión y Reactivación de Cuenta por Impago
+
+**Propósito del flujo:** Administrar de forma segura y con trazabilidad completa el ciclo de suspensión de una cuenta por impago, garantizando que el staff revise el historial completo de pagos antes de ejecutar la suspensión, y que la reactivación tras el pago restablezca el acceso del cliente y sincronice todos sus dispositivos IoT, notificando adecuadamente al agricultor y registrando cada paso en la pista de auditoría.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Consultar cuenta del cliente** | Staff | `Staff searches and views customer account` | El operador accede a la vista consolidada del cliente, que ahora incluye el historial completo de pagos, acuerdos vigentes, tickets de facturación y notas internas. Este paso es obligatorio antes de poder suspender. |
+| **Suspender cuenta** | Staff (o Sistema) | `Customer account suspended due to non-payment` | Si la revisión del historial confirma el impago, el staff (o una regla automática si no hay respuesta del cliente) suspende la cuenta. Se dispara la cascada de bloqueo de acceso, revocación de credenciales y rechazo de telemetría. |
+| **Notificar al cliente** | Sistema | `Notify the customer` | El backend envía automáticamente un correo y una notificación push al agricultor informando de la suspensión, el motivo exacto y las vías de regularización disponibles. |
+| **Registrar en log** | Sistema | `It is recorded in a log` | Cada paso del proceso (consulta, suspensión, notificación) queda registrado en la pista de auditoría con marca de tiempo, operador responsable y resultado. |
+| **Reactivar cuenta** | Staff (o Sistema) | `Account reactivated after payment was processed` | Cuando se confirma el pago (por portal de autoservicio o validación manual del staff), se reactiva la cuenta. Esto desencadena la restauración del acceso y la sincronización de dispositivos. |
+**Narrativa del flujo por actores**
+
+**1. Staff:**  
+Es el actor responsable de la decisión de suspensión. Ejecuta el comando `Consultar cuenta del cliente`, obligatoriamente revisando el historial completo para evitar errores operativos. Si confirma el impago, ejecuta `Suspender cuenta`. Más adelante, si el cliente regulariza por fuera del portal, ejecuta `Reactivar cuenta` manualmente. Su rol es garantizar que cada suspensión sea justa y trazable, y que cada reactivación devuelva al cliente a la normalidad operativa completa.
+
+**2. Cliente:**  
+Aunque no aparece explícitamente como actor que emite comandos en este flujo, es el desencadenante indirecto: su impago provoca la revisión del staff, y su pago posterior (a través del portal de autoservicio o contacto con soporte) es lo que permite que se ejecute la reactivación.
+
+**3. Sistema:**  
+Actúa como actor automático en dos momentos críticos. Primero, tras la suspensión, ejecuta `Notificar al cliente` y `Registrar en log` sin intervención del staff, asegurando comunicación proactiva y trazabilidad. Segundo, cuando el pago se procesa automáticamente (por pasarela de pago), puede ejecutar `Reactivar cuenta` sin intervención manual. También gestiona toda la cascada técnica de bloqueo y restauración de acceso y dispositivos.
+
+![EventStorming-step5.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-2.png)
+
+---
+
+#### Flujo: Gestión de Pérdida y Reaprovisionamiento de Dispositivos IoT
+
+**Nombre del flujo:** Gestión de Pérdida y Reaprovisionamiento de Dispositivos IoT
+
+**Propósito del flujo:** Administrar de manera segura y controlada el ciclo de baja de un dispositivo IoT reportado como perdido o sustraído, asegurando la invalidación inmediata de sus credenciales para eliminar el riesgo de seguridad, la detención del flujo de telemetría, y la posterior reposición de la capacidad operativa mediante el registro de un nuevo lote de dispositivos disponibles. El staff supervisa y confirma la desactivación, mientras que el sistema actúa de forma automática en los pasos críticos de seguridad.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Desactivar dispositivo por pérdida** | Staff | `Device deactivated due to loss report` | El staff, tras recibir el reporte de pérdida del agricultor o detectar una anomalía, marca el dispositivo como "desactivado por pérdida" en el sistema. Este comando inicia el proceso de baja, pero la revocación de credenciales ocurre de forma automática e inmediata como reacción a este evento, sin requerir un paso manual adicional. |
+| **Confirmar baja administrativa** | Staff | `Staff deactivates account` | El operador verifica en el backoffice que el proceso de revocación automática se ha completado correctamente y confirma la baja administrativa definitiva del dispositivo. Este paso es de supervisión y documentación, no de seguridad, ya que las credenciales ya han sido invalidadas automáticamente. |
+| **Revocar credenciales y detener telemetría** | Sistema (reacción automática) | `Device credentials invalidated, telemetry stopped` | Al dispararse el evento de pérdida, el backend revoca de inmediato los certificados X.509 y tokens de autenticación del dispositivo, cierra su tópico MQTT y rechaza cualquier dato entrante. Esta acción es atómica y elimina la ventana de vulnerabilidad que permitiría a un tercero usar el dispositivo perdido para inyectar telemetría falsa. |
+| **Registrar lote de dispositivos disponibles** | Sistema (o Staff) | `Batch of IoT devices registered as available` | Según las políticas de cobertura y el stock en inventario, el sistema registra automáticamente un nuevo lote de dispositivos precertificados, dejándolos listos para ser asignados a la parcela afectada o a otras que requieran reemplazo. Si la política lo exige, el staff puede intervenir para autorizar o ajustar el reaprovisionamiento. |
+
+**Narrativa del flujo por actores**
+
+**1. Staff:**  
+Es el actor que inicia y supervisa el proceso. Ejecuta el comando `Desactivar dispositivo por pérdida` al recibir la notificación del agricultor o al detectar una anomalía de seguridad. Este paso dispara toda la cascada automática de protección. Posteriormente, ejecuta `Confirmar baja administrativa` para verificar que la revocación se completó, documentar el incidente y coordinar el reaprovisionamiento si es necesario. Su rol es de control y calidad, no de ejecución urgente de seguridad.
+
+**2. Agricultor:**  
+Es el actor que notifica la pérdida desde su dashboard o aplicación móvil, proporcionando la información inicial que permite al staff o al sistema iniciar el proceso. Aunque no aparece explícitamente en la tabla de comandos de este flujo, su reporte es el desencadenante indirecto de la acción del staff.
+
+**3. Sistema:**  
+Es el actor más crítico en este flujo. Actúa de forma automática con dos comandos. Primero, `Revocar credenciales y detener telemetría` se ejecuta en segundos como reacción al reporte de pérdida, eliminando la ventana de vulnerabilidad. Segundo, `Registrar lote de dispositivos disponibles` se ejecuta según las políticas de reaprovisionamiento para restaurar la capacidad de monitoreo de la parcela afectada lo antes posible, sin depender de una acción manual del staff.
+
+
+![EventStorming-step5.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-3.png)
+
+---
+
+#### Flujo: Gestión de Alertas de Seguridad en Tiempo Real
+
+**Nombre del flujo:** Gestión de Alertas de Seguridad en Tiempo Real
+
+**Propósito del flujo:** Proporcionar un canal de comunicación inmediato y de alta confianza ante incidentes de seguridad que afecten a la cuenta o a los dispositivos IoT del agricultor, permitiendo que la alerta se envíe vía WhatsApp, que el cliente confirme su recepción para detener contramedidas automáticas, y que finalmente descarte la alerta si la situación está bajo control, manteniendo la trazabilidad del incidente.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Enviar alerta** | Sistema | `Alert sent via WhatsApp` | Ante una anomalía de seguridad (intentos fallidos de inicio de sesión, acceso desde IP sospechosa, manipulación de dispositivo), el motor de seguridad envía automáticamente un mensaje de WhatsApp al agricultor o agrónomo titular, con detalles del incidente y un botón de confirmación de lectura. |
+| **Confirmar recepción de alerta** | Agricultor / Agrónomo | `Alert confirmed as received` | El usuario pulsa el botón de confirmación en el mensaje de WhatsApp. Esta acción detiene los temporizadores de escalado automático (como el bloqueo preventivo de cuenta) e informa al centro de operaciones que el legítimo dueño está al tanto del incidente. |
+| **Descartar alerta de seguridad** | Agricultor / Agrónomo | `Security alert dismissed` | El usuario, tras verificar la actividad sospechosa y determinar que es un falso positivo o que ya ha tomado medidas, descarta la alerta desde la app o dashboard. El incidente se cierra, la cuenta o dispositivo vuelve al estado normal y se genera un registro inmutable en el libro de seguridad. |
+
+**Narrativa del flujo por actores**
+
+**1. Sistema:**  
+Actúa como el actor iniciador del flujo. Ante la detección de una anomalía de seguridad que supera un umbral de riesgo, ejecuta el comando `Enviar alerta` vía WhatsApp, un canal de alta disponibilidad y confianza. No requiere intervención humana para esta primera notificación crítica.
+
+**2. Agricultor / Agrónomo:**  
+Es el actor central tras recibir la alerta. Ejecuta dos comandos: `Confirmar recepción de alerta`, que detiene cualquier contramedida automática y confirma que está al tanto; y `Descartar alerta de seguridad` cuando verifica que el incidente es un falso positivo o ya está bajo control, cerrando el ciclo de seguridad y restaurando la normalidad operativa. Si el usuario no confirma en el plazo estipulado, el sistema escala automáticamente con medidas de protección más agresivas.
+
+![EventStorming-step5.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-4.png)
+
+---
+
+#### Flujo: Ciclo de Vida del Dispositivo IoT – Alta, Activación y Operación
+
+**Nombre del flujo:** Ciclo de Vida del Dispositivo IoT – Alta, Activación y Operación
+
+**Propósito del flujo:** Transformar un dispositivo IoT recién registrado en un sensor plenamente operativo dentro del ecosistema AgroSafe. El proceso abarca el registro en inventario, la generación de credenciales criptográficas, la activación en campo, la configuración de parámetros por parte del usuario, la confirmación de que está listo para operar, y el inicio del ciclo continuo de envío de telemetría, recepción de comandos y sincronización de estado entre el dispositivo físico y el gemelo digital en la plataforma.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Registrar dispositivo** | Agricultor / Agrónomo | `Device Registered` | El usuario ingresa el identificador del nuevo sensor en el dashboard. El dispositivo queda vinculado a su cuenta e inventario, pero aún no tiene credenciales para conectarse. |
+| **Generar credenciales** | Sistema (reacción automática) | `Credentials Generated` | El motor de seguridad crea un par de credenciales criptográficas exclusivas para el dispositivo y el tenant. Es automático tras el registro. |
+| **Activar dispositivo** | Dispositivo | `Device Activated` | El sensor enciende en campo y realiza su primer handshake contra la plataforma, autenticándose con las credenciales generadas. El backend valida la identidad y marca el dispositivo como "vivo". |
+| **Configurar parámetros** | Agricultor / Agrónomo | `Configuration Changed` | El usuario ajusta la frecuencia de muestreo, los umbrales de alerta, las sondas activas o el modo de ahorro de batería. La configuración se envía al dispositivo, que la aplica y confirma. |
+| **Confirmar listo para operar** | Sistema (reacción automática) | `Ready for Operation` | Cuando la configuración ha sido aplicada y verificada, el sistema consolida el estado operativo del dispositivo. El sensor ya puede transmitir datos fiables para dashboards y diagnósticos. |
+| **Enviar latido** | Dispositivo | `Heartbeat Received` | De forma periódica, el sensor envía una señal de vida con su estado operativo, nivel de batería y versión de firmware. El backend actualiza el indicador de conectividad. |
+| **Transmitir telemetría** | Dispositivo | `Telemetry Received` | El sensor envía las lecturas acumuladas de humedad, temperatura, pH y demás parámetros configurados. La plataforma las ingiere en las series históricas. |
+| **Encolar comando** | Agricultor / Agrónomo / Sistema | `Command Queued` | Un usuario (o una regla automatizada) solicita una acción sobre el dispositivo: abrir válvula, cambiar frecuencia de muestreo, iniciar fertilización. El comando se almacena en el buzón del dispositivo a la espera de la próxima ventana de check‑in. |
+| **Ejecutar comando** | Dispositivo | `Command Executed` | El sensor recibe el comando pendiente, lo aplica sobre el hardware y envía la confirmación de ejecución al backend. |
+| **Sincronizar estado** | Dispositivo / Sistema | `Sync Completed` | El dispositivo envía su estado completo actualizado y el backend reconcilia la información con el gemelo digital: limpia el buzón de comandos, consolida la configuración y garantiza que ambos extremos tengan la misma foto operativa. |
+
+**Narrativa del flujo por actores**
+
+**1. Agricultor / Agrónomo:**  
+Inician el flujo con el comando `Registrar dispositivo`, dando de alta el sensor en su cuenta. Más adelante, ejecutan `Configurar parámetros` para adaptar el comportamiento del dispositivo a las condiciones del cultivo. Durante la operación diaria, pueden ejecutar `Encolar comando` para intervenir manualmente (activar un riego, modificar frecuencia) o bien dejar que las reglas automáticas del sistema lo hagan. Son los responsables de mantener la configuración alineada con la estrategia agronómica.
+
+**2. Dispositivo:**  
+Es el actor que ejecuta los comandos más frecuentes del flujo operativo: `Activar dispositivo` en su primer encendido, `Enviar latido` periódicamente para confirmar su salud, `Transmitir telemetría` con los datos de los sensores, `Ejecutar comando` cuando recibe una instrucción desde el backend y `Sincronizar estado` para cerrar cada ciclo de comunicación. Es el nexo físico entre el cultivo y la plataforma.
+
+**3. Sistema:**  
+Actúa como actor automático en varios momentos clave. Con el comando `Generar credenciales`, dota al dispositivo de identidad segura sin intervención del usuario. Con `Confirmar listo para operar`, da el visto bueno final tras la configuración para que los datos del sensor se consideren fiables y puedan alimentar dashboards, alertas y modelos de recomendación agronómica. También puede ejecutar `Encolar comando` cuando una regla automática (diagnóstico de estrés hídrico, programación de riego) decide actuar sin intervención humana.
+
+![EventStorming-step5.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-5.png)
+
+---
+
+#### Flujo: Ejecución de Comandos con Fallo y Recuperación
+
+**Nombre del flujo:** Ejecución de Comandos con Fallo y Recuperación
+
+**Propósito del flujo:** Garantizar que los comandos enviados desde la plataforma AgroSafe hacia los dispositivos IoT se ejecuten de forma fiable incluso cuando ocurren fallos en el borde. El flujo abarca el encolado del comando, su envío al Edge, la posible falla que provoca una degradación de salud del dispositivo, el reintento automático hasta lograr la ejecución exitosa y la sincronización final que reconcilia el estado, restaurando el flujo normal de telemetría.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Encolar comando** | Agricultor / Agrónomo / Sistema | `Command Queued` | Un usuario o una regla automatizada solicita una acción sobre un actuador (abrir válvula, ajustar fertilización, cambiar configuración). El comando se almacena en el buzón del dispositivo dentro de la plataforma, a la espera de la siguiente ventana de check‑in. |
+| **Enviar comando al borde** | Sistema | `Command Sent to Edge` | Durante la ventana de comunicación, el backend transmite el comando pendiente al dispositivo físico para su ejecución. |
+| **Fallo en la ejecución** | Dispositivo | `Command Failed` | El hardware no logra ejecutar el comando (checksum incorrecto, condición de hardware no cumplida, reinicio inesperado). El fallo se reporta al backend para activar el protocolo de recuperación. |
+| **Degradar salud del dispositivo** | Sistema (reacción automática) | `Device Health Degraded` | Como consecuencia del fallo, el backend reduce el indicador de salud del dispositivo, lo coloca en lista de vigilancia y activa un temporizador de recuperación. |
+| **Reintentar comando** | Sistema (reacción automática) | `Command Queued` → `Command Sent to Edge` | El motor de orquestación reencola automáticamente el mismo comando y lo reenvía al dispositivo en la siguiente ventana de check‑in, sin requerir intervención del usuario. |
+| **Ejecutar comando con éxito** | Dispositivo | `Sync Completed` | En el reintento, el dispositivo recibe correctamente la instrucción, la procesa y envía confirmación. El backend reconcilia el estado, limpia el buzón de comandos y restaura la confianza en el canal. |
+| **Reanudar telemetría** | Dispositivo | `Telemetry Received` | El sensor retoma su ciclo normal de reporte de datos, indicando que la salud del sistema ha vuelto a verde y la operación continúa sin fricción para el usuario. |
+
+**Narrativa del flujo por actores**
+
+**1. Agricultor / Agrónomo / Sistema:**  
+Son los actores que originan el comando. Un agricultor puede solicitar un riego manual, un agrónomo puede ajustar un umbral desde su dashboard, o una regla automática puede disparar una fertilización por diagnóstico de estrés hídrico. En todos los casos ejecutan `Encolar comando`, pero no participan en la gestión del fallo ni del reintento, que son transparentes para ellos. Solo perciben el resultado final.
+
+**2. Sistema:**  
+Actúa como el orquestador de la resiliencia. Ejecuta `Enviar comando al borde` para transmitir la instrucción. Si el dispositivo reporta un fallo, reacciona con `Degradar salud del dispositivo` para señalizar el incidente y activa el protocolo de `Reintentar comando`, reencolando y reenviando la orden sin intervención humana. Solo cesa en el reintento cuando el dispositivo confirma la ejecución exitosa.
+
+**3. Dispositivo:**  
+Es el actor que ejecuta o falla los comandos en el borde. Si la ejecución no es posible, emite `Command Failed`, forzando al sistema a activar la recuperación. En el reintento, si las condiciones son favorables, ejecuta el comando con éxito y lo confirma con la sincronización. Finalmente, retoma su operación normal con `Telemetry Received`, cerrando el ciclo de forma transparente para el usuario.
+
+![EventStorming-step5.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-6.png)
+
+---
+
+#### Flujo: Ciclo de Actualización de Firmware y Recuperación ante Fallos
+
+**Nombre del flujo:** Ciclo de Actualización de Firmware y Recuperación ante Fallos
+
+**Propósito del flujo:** Gestionar de forma segura, monitorizada y tolerante a fallos el despliegue de nuevas versiones de firmware en los dispositivos IoT de campo. El proceso abarca la solicitud e inicio de la actualización, la ejecución exitosa con reinicio del dispositivo y ajuste de configuración, o bien el fallo que desencadena la reversión automática a la versión anterior, la degradación temporal de la salud y la notificación al staff para diagnóstico y resolución definitiva.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Solicitar actualización de firmware** | Staff / Sistema | `Firmware Update Available` | El staff detecta una nueva versión disponible en el catálogo, o el sistema la marca automáticamente tras la liberación. El firmware queda listo para ser desplegado en los dispositivos compatibles. |
+| **Iniciar actualización** | Staff / Sistema | `Firmware Update Started` | El staff autoriza el despliegue, o una política automática lo inicia. La plataforma envía el paquete binario firmado al dispositivo y marca la ventana de mantenimiento. |
+| **Completar actualización exitosa** | Dispositivo | `Firmware Update Completed` | El sensor instala el nuevo firmware, rearranca correctamente y confirma la versión al backend. Se reanuda la operación normal. |
+| **Reiniciar dispositivo** | Dispositivo | `Device Rebooted` | Tras la instalación exitosa o durante la reversión, el dispositivo se reinicia para arrancar con el firmware correspondiente. |
+| **Enviar latido** | Dispositivo | `Heartbeat Received` | El sensor, tras el reinicio, envía su primera señal de vida con el nuevo firmware (o la versión restaurada), confirmando conectividad y salud. |
+| **Cambiar configuración** | Sistema / Agricultor | `Configuration Changed` | Si el nuevo firmware requiere ajustes en los parámetros operativos, el sistema aplica la configuración compatible, o el agricultor la modifica manualmente. |
+| **Fallar actualización** | Dispositivo | `Firmware Update Failed` | El hardware reporta un error durante la instalación (checksum, espacio insuficiente, timeout). El backend activa el protocolo de recuperación. |
+| **Restaurar versión anterior** | Sistema (reacción automática) | `Previous Version Restored` | Ante el fallo, el backend ordena al dispositivo revertir al firmware anterior, garantizando que el sensor siga operativo. |
+| **Degradar salud** | Sistema (reacción automática) | `Device Health Degraded` | La salud del dispositivo se reduce temporalmente como reflejo del fallo. El sistema activa un temporizador de vigilancia y limita nuevas actualizaciones hasta el diagnóstico. |
+| **Notificar al staff** | Sistema (reacción automática) | `Staff Notified` | El backend envía una notificación enriquecida al equipo de operaciones con el diagnóstico del fallo, para que pueda investigar la causa raíz y decidir si liberar o bloquear la versión. |
+
+**Narrativa del flujo por actores**
+
+**1. Staff / Sistema:**  
+Son los actores que inician el proceso. El staff ejecuta `Solicitar actualización de firmware` al detectar una nueva versión en el catálogo, o el sistema la marca automáticamente. Con `Iniciar actualización`, autorizan o disparan el despliegue del binario hacia los dispositivos. Si la actualización falla, el sistema reacciona automáticamente restaurando la versión anterior, degradando la salud y notificando al staff, quien ahora recibe un diagnóstico completo para investigar y resolver.
+
+**2. Dispositivo:**  
+Es el actor central en el proceso de instalación. Ejecuta `Completar actualización exitosa` cuando el firmware se instala correctamente, y luego `Reiniciar dispositivo` para arrancar con la nueva versión. Tras el reinicio, envía `Enviar latido` para confirmar que está operativo. Si la instalación falla, ejecuta `Fallar actualización`, forzando al sistema a revertir el proceso.
+
+**3. Agricultor:**  
+Puede intervenir puntualmente ejecutando `Cambiar configuración` si el nuevo firmware modifica parámetros operativos que requieren ajustes manuales para alinearse con la estrategia agronómica de la parcela. En condiciones normales, no participa en la decisión de actualizar ni en la gestión de fallos.
+
+![EventStorming-step5.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-7.png)
+
+---
+
+#### Flujo: Suspensión Administrativa de Cuenta y Gestión de Dispositivo Reportado como Perdido
+
+**Nombre del flujo:** Suspensión Administrativa de Cuenta y Gestión de Dispositivo Reportado como Perdido
+
+**Propósito del flujo:** Ejecutar de forma segura y trazable dos procesos administrativos críticos que pueden ocurrir de manera independiente o encadenada: la suspensión de una cuenta (con revocación masiva de credenciales, rechazo de telemetría y desactivación de todos los dispositivos asociados) y el reporte de un dispositivo como perdido (con revocación inmediata de sus credenciales, desactivación, desmantelamiento y registro de un reemplazo). Ambos flujos comparten eventos de revocación y desactivación, pero se originan por motivos distintos y son ejecutados por actores diferentes.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Suspender cuenta** | Staff | `Account Suspended` | El operador, tras revisar el historial de pagos u otra causa administrativa grave, ordena la suspensión de la cuenta del agricultor. La cuenta queda bloqueada y se inicia la cascada de revocación de credenciales y desactivación de todos los dispositivos vinculados. |
+| **Revocar credenciales (por suspensión)** | Sistema (reacción automática) | `Credentials Revoked` | Como consecuencia inmediata de la suspensión, el backend invalida en lote todos los certificados y tokens de los dispositivos asociados a la cuenta, impidiendo que se autentiquen de nuevo. |
+| **Rechazar telemetría** | Sistema (reacción automática) | `Telemetry Rejected` | El sistema cierra el canal de ingesta para los dispositivos de la cuenta suspendida, rechazando cualquier dato entrante con código de autorización denegado. |
+| **Desactivar dispositivo (por suspensión)** | Sistema (reacción automática) | `Device Deactivated` | Cada dispositivo vinculado a la cuenta suspendida pasa a estado "inactivo", con sus datos históricos preservados pero sin capacidad de operar. |
+| **Reportar dispositivo como perdido** | Agricultor | `Device Reported Lost` | El agricultor notifica desde su dashboard o app que un dispositivo ha desaparecido. Este comando dispara la revocación inmediata y automática de credenciales de ese dispositivo concreto. |
+| **Revocar credenciales (por pérdida)** | Sistema (reacción automática) | `Credentials Revoked` | De forma inmediata al reporte, el backend invalida los certificados y tokens del dispositivo reportado como perdido, cerrando la ventana de vulnerabilidad. |
+| **Desactivar dispositivo (por pérdida)** | Sistema (reacción automática) | `Device Deactivated` | El dispositivo reportado pasa a estado "inactivo", retirándose del panel de control y cesando su escucha. |
+| **Desmantelar dispositivo** | Staff | `Device Decommissioned` | El operador confirma la baja administrativa definitiva del dispositivo perdido, liberando su identificador único del inventario y archivando su historial completo. |
+| **Registrar dispositivo de reemplazo** | Staff / Sistema | `Replacement Device Registered` | Según políticas de cobertura, el staff o el sistema registran un nuevo sensor precertificado para restaurar la capacidad de monitoreo en la parcela afectada. |
+
+**Narrativa del flujo por actores**
+
+**1. Staff:**  
+Es el actor responsable de las decisiones administrativas más críticas. En el flujo de suspensión, ejecuta `Suspender cuenta` cuando las condiciones lo justifican, desencadenando la cascada automática de revocación de credenciales y desactivación de todos los dispositivos del agricultor. En el flujo de pérdida, interviene tras la revocación automática ejecutando `Desmantelar dispositivo` para cerrar administrativamente el ciclo del sensor perdido, y puede ejecutar `Registrar dispositivo de reemplazo` si la política de reaprovisionamiento requiere autorización manual.
+
+**2. Agricultor:**  
+Es el actor que desencadena el flujo de pérdida ejecutando `Reportar dispositivo como perdido` desde su dashboard o app. Su acción es suficiente para que el sistema active todas las protecciones de seguridad de forma inmediata. En el flujo de suspensión, no ejecuta comandos; es el receptor pasivo de la decisión del staff.
+
+**3. Sistema:**  
+Actúa como el ejecutor automático de las medidas de seguridad en ambos flujos. Ante una suspensión, ejecuta `Revocar credenciales`, `Rechazar telemetría` y `Desactivar dispositivo` para todos los dispositivos de la cuenta, garantizando atomicidad. Ante un reporte de pérdida, ejecuta `Revocar credenciales` y `Desactivar dispositivo` de forma inmediata, eliminando la ventana de vulnerabilidad sin esperar al staff. También puede ejecutar `Registrar dispositivo de reemplazo` si las políticas de reaprovisionamiento automático lo permiten.
+
+![EventStorming-step5.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-8.png)
+
+---
+
+#### Flujo: Configuración Colaborativa de Umbrales de Cultivo y Aplicación Masiva de Plantillas
+
+**Nombre del flujo:** Configuración Colaborativa de Umbrales de Cultivo y Aplicación Masiva de Plantillas
+
+**Propósito del flujo:** Permitir que el agricultor configure de forma asistida los umbrales agronómicos de sus zonas de cultivo a partir de un catálogo precargado, pudiendo modificarlos manualmente incluso fuera del rango seguro bajo confirmación explícita y registro de auditoría. Paralelamente, habilitar al agrónomo vinculado para crear plantillas maestras de umbrales y aplicarlas de forma masiva sobre las parcelas de sus clientes, notificando proactivamente al agricultor de cada cambio y manteniendo trazabilidad completa. Ambos actores colaboran en el ajuste de los parámetros que gobiernan el monitoreo y las alertas de los cultivos.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Seleccionar zona** | Agricultor | `Select zone` | El agricultor delimita la subparcela sobre la que quiere trabajar los umbrales, definiendo el alcance geográfico de la configuración. |
+| **Seleccionar tipo de cultivo** | Agricultor | `Type of crop selected by farmer` | El agricultor elige el cultivo de la zona (ej. maíz, tomate, vid). Esta selección activa la carga automática de los umbrales recomendados desde el catálogo agronómico de AgroSafe. |
+| **Cargar umbrales desde catálogo** | Sistema (reacción automática) | `Thresholds automatically loaded from catalog` | El backend consulta el catálogo y precarga los umbrales seguros de humedad, temperatura, pH y demás parámetros para el cultivo y estadio fenológico elegidos. |
+| **Modificar umbral manualmente** | Agricultor / Agrónomo | `Threshold manually modified with a value outside the safe range` | El usuario ajusta un umbral por encima o por debajo del rango recomendado. El sistema intercepta el cambio y solicita confirmación explícita antes de aplicarlo. |
+| **Confirmar excepción de umbral** | Agricultor / Agrónomo | `Threshold exception logged with user confirmation` | El usuario confirma que asume el riesgo del valor fuera de rango. El sistema registra la excepción con trazabilidad de quién, cuándo y por qué se modificó. |
+| **Registrar cambio en auditoría** | Sistema (reacción automática) | `Threshold change recorded in audit` | Cada modificación de umbral (manual o por plantilla) queda registrada en la pista de auditoría con el valor anterior, el nuevo, el usuario responsable y la marca de tiempo. |
+| **Vincular agrónomo como asesor** | Agricultor | `Agronomist linked to a farmer as an advisor` | El agricultor acepta o invita a un agrónomo, estableciendo el vínculo profesional que permite al asesor gestionar umbrales y supervisar la parcela. |
+| **Crear plantilla de umbrales** | Agrónomo | `Threshold template created by agronomist` | El agrónomo define una plantilla maestra con los valores objetivo de cada parámetro para un cultivo o estrategia, dejándola lista para aplicar a múltiples clientes. |
+| **Aplicar plantilla a parcelas** | Agrónomo | `Template applied to client plot` | El agrónomo selecciona una o varias parcelas de sus clientes y aplica la plantilla. El sistema despliega los cambios parcela por parcela. |
+| **Procesar cada parcela** | Sistema (reacción automática) | `System processes each parcel` | El backend itera sobre cada parcela seleccionada, validando compatibilidad, reemplazando los umbrales anteriores y registrando los cambios en la auditoría de cada una. |
+| **Notificar cambio al agricultor** | Sistema (reacción automática) | `Farmer notified of the change made by their agronomist` | El agricultor recibe una notificación push y un resumen en el dashboard detallando qué umbrales cambiaron, quién y por qué. En el flujo mejorado, esta notificación es previa a la aplicación y permite aceptar, rechazar o vetar parcialmente. |
+
+**Narrativa del flujo por actores**
+
+**1. Agricultor:**  
+Es el propietario último de las decisiones sobre sus cultivos. Ejecuta los comandos `Seleccionar zona` y `Seleccionar tipo de cultivo` para definir el contexto de trabajo. Puede ejecutar `Modificar umbral manualmente` si conoce su tierra mejor que el catálogo, y deberá `Confirmar excepción de umbral` si el valor está fuera del rango seguro. También ejecuta `Vincular agrónomo como asesor`, abriendo la puerta a la colaboración experta. Recibe notificaciones proactivas cuando el agrónomo modifica sus umbrales, manteniendo en todo momento el conocimiento y control sobre los cambios.
+
+**2. Agrónomo:**  
+Es el asesor experto que multiplica su conocimiento. Ejecuta `Crear plantilla de umbrales` para encapsular buenas prácticas agronómicas reutilizables, y `Aplicar plantilla a parcelas` para desplegar esos valores sobre múltiples clientes de forma eficiente. También puede ejecutar `Modificar umbral manualmente` y `Confirmar excepción de umbral` sobre parcelas concretas. Su rol es de guía y optimizador, pero respetando la autonomía del agricultor.
+
+**3. Sistema:**  
+Actúa como el habilitador automático del flujo. Con `Cargar umbrales desde catálogo`, proporciona al agricultor valores seguros de partida. Con `Registrar cambio en auditoría`, deja trazabilidad inmutable de cada modificación. Con `Procesar cada parcela`, aplica las plantillas del agrónomo de forma atómica y masiva. Y con `Notificar cambio al agricultor`, cierra el bucle de comunicación garantizando transparencia. En el flujo mejorado, interpone una solicitud de confirmación previa a la aplicación masiva, empoderando al agricultor sin frenar la eficiencia del agrónomo.
+
+![EventStorming-step5.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-9.png)
+
+---
+
+#### Flujo: Monitoreo de Suelo, Diagnóstico de Estrés Hídrico y Riego Correctivo Automatizado
+
+**Nombre del flujo:** Monitoreo de Suelo, Diagnóstico de Estrés Hídrico y Riego Correctivo Automatizado
+
+**Propósito del flujo:** Supervisar en tiempo real las condiciones del suelo —humedad, pH y temperatura— mediante sensores IoT, detectar de forma temprana situaciones de estrés hídrico o desequilibrios de pH, generar un diagnóstico agronómico automatizado y ejecutar un riego correctivo de precisión que restablezca los valores óptimos, finalizando con la sincronización de los datos en el gemelo digital de la parcela. El flujo es mayoritariamente automático, con intervención del agricultor o agrónomo únicamente en la evaluación y ajuste de umbrales cuando es necesario.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Activar sensores** | Dispositivo IoT | `Humidity sensor activated`, `pH sensor activated`, `Temperature sensor activated` | Los sensores de la zona de cultivo se ponen en marcha al iniciar el monitoreo, ya sea por configuración inicial o por ciclo programado, y comienzan a transmitir lecturas. |
+| **Registrar lecturas** | Dispositivo IoT | `Recorded humidity reading`, `pH reading recorded` | El sensor de humedad y el de pH envían sus primeras lecturas, alimentando las series históricas y refrescando los indicadores del dashboard. |
+| **Evaluar umbrales** | Sistema | `Humidity threshold exceeded`, `pH out of range detected` | El backend compara cada lectura contra los umbrales configurados para el cultivo. Si la humedad cae por debajo del mínimo o el pH se sale del rango seguro, se generan los eventos de anomalía. |
+| **Detectar estrés hídrico** | Sistema | `Water stress detected` | La combinación de baja humedad y condiciones ambientales activa la confirmación de que el cultivo está bajo estrés hídrico. |
+| **Calcular índice de estrés hídrico** | Sistema | `Calculated water stress index` | Se cuantifica la severidad del estrés mediante un índice sintético que incorpora humedad actual, temperatura, tipo de cultivo y estadio fenológico. |
+| **Generar diagnóstico agronómico** | Sistema | `Agronomic diagnosis generated` | Con el índice calculado, el motor de diagnóstico produce un informe breve con la causa raíz y la acción correctiva recomendada (riego con posible ajuste de pH). |
+| **Emitir comando de riego** | Sistema | `Irrigation command` | El diagnóstico, si es aprobado por las reglas de automatización, dispara la orden de riego hacia los actuadores de la parcela. |
+| **Abrir válvulas** | Actuador / Dispositivo | `Glued valve open`, `Solenoid valve open` | Las electroválvulas se abren secuencialmente para permitir el flujo de agua hacia la zona afectada. |
+| **Iniciar riego** | Actuador / Dispositivo | `Irrigation started` | Se confirma que el agua está fluyendo y comienza el riego correctivo. |
+| **Cerrar válvulas** | Actuador / Dispositivo | `Solenoid valve closed` | Cuando los sensores indican que los umbrales han vuelto a valores normales (humedad estandarizada, pH normalizado), el sistema ordena el cierre de la electroválvula. |
+| **Completar riego** | Sistema | `Irrigation completed` | Se sella el evento de riego, registrando el volumen aplicado, la duración y los parámetros normalizados. |
+| **Sincronizar datos** | Dispositivo IoT / Sistema | `Synchronized data` | Todos los registros generados durante el proceso (lecturas anómalas, diagnóstico, comandos ejecutados y valores corregidos) se reconcilian entre el gemelo digital y el histórico del dispositivo. |
+
+**Narrativa del flujo por actores**
+
+**1. Dispositivo IoT (Sensores y Actuadores):**  
+Es el actor más presente en el flujo. Los sensores ejecutan `Activar sensores` y `Registrar lecturas` de forma periódica, proporcionando los datos crudos que disparan todo el análisis. Los actuadores ejecutan `Abrir válvulas` y `Cerrar válvulas` cuando reciben los comandos del sistema, ejecutando físicamente el riego. Finalmente, el dispositivo colabora en `Sincronizar datos` para que el gemelo digital refleje fielmente lo ocurrido en campo.
+
+**2. Sistema:**  
+Es el cerebro automatizado del flujo. Ejecuta `Evaluar umbrales` continuamente, detectando las anomalías. Cuando se confirma un estrés hídrico, ejecuta `Detectar estrés hídrico`, `Calcular índice de estrés hídrico` y `Generar diagnóstico agronómico`. Si la situación lo requiere, `Emitir comando de riego` sin intervención humana, y al finalizar `Completar riego` para cerrar el ciclo documentado. También evalúa las condiciones para determinar el cierre automático de las válvulas.
+
+**3. Agricultor / Agrónomo:**  
+No ejecutan comandos directos en este flujo operativo, ya que la detección y el riego correctivo son completamente automáticos. Sin embargo, son responsables previos de la configuración de los umbrales que el sistema evalúa. Si el flujo mejorado incluye confirmación humana para diagnósticos críticos, podrían intervenir puntualmente aprobando o rechazando el comando de riego antes de su ejecución.
+
+![EventStorming-step5.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-10.png)
+
+---
+
+#### Flujo: Supervisión Colaborativa, Recomendaciones Técnicas e Informes Periódicos
+
+**Nombre del flujo:** Supervisión Colaborativa, Recomendaciones Técnicas e Informes Periódicos
+
+**Propósito del flujo:** Dotar al ingeniero agrónomo de un panel de control unificado desde el cual pueda monitorizar de forma proactiva el estado de todas las parcelas de sus clientes, identificar visualmente aquellas en condición crítica, profundizar en su historial, elaborar recomendaciones técnicas enriquecidas automáticamente con datos de sensores —para que el agricultor confíe en el consejo— y enviarlas directamente al agricultor. Asimismo, habilitar la generación de informes técnicos mensuales bajo demanda o programados, que compilan y analizan los datos agronómicos consolidados, proporcionando un entregable de alto valor para el agricultor y una herramienta de justificación del trabajo del agrónomo.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Vincular agrónomo como asesor** | Agricultor | `Agronomist linked to farmer as assigned advisor` | El agricultor, durante o después de su registro (`Farmer registers`), acepta o invita a un agrónomo. Se crea el vínculo profesional que permite al asesor acceder a los datos de la parcela y gestionar umbrales. |
+| **Acceder al dashboard consolidado** | Agrónomo | `Agronomist accesses the consolidated dashboard of his client plots` | El agrónomo ingresa a su vista unificada de clientes, donde el sistema presenta todas las parcelas con indicadores de salud y alertas activas. Una parcela en condición crítica se resalta visualmente (`Customer plot in critical condition visually highlighted`). |
+| **Acceder al historial de la parcela** | Agrónomo | `Access the plot history` | El agrónomo hace clic en la parcela crítica y consulta el timeline completo: lecturas de sensores, alertas previas, diagnósticos y riegos ejecutados. El sistema despliega las series de humedad, temperatura, pH y los eventos relevantes. |
+| **Redactar recomendación** | Agrónomo | `Agronomist writes a recommendation` | Con el historial como contexto, el agrónomo redacta su orientación experta: explica la situación, sugiere acciones correctivas o ajustes de configuración. El sistema captura automáticamente el contexto de telemetría relevante y lo adjuntará como evidencia. |
+| **Enviar recomendación** | Agrónomo | `Technical recommendation sent to the farmer with attached sensor data` | El agrónomo confirma el envío. La recomendación llega al agricultor con un bloque de "Datos que respaldan esta recomendación" que incluye gráficos de tendencia y valores actuales comparados con los umbrales. Esta evidencia resuelve la necesidad señalada: *la recomendación debe incluir datos de sensores para que el agricultor confíe en el consejo*. |
+| **Solicitar informe mensual** | Agricultor / Agrónomo | `Request monthly report` | Cualquiera de los dos actores puede solicitar un informe mensual para una parcela concreta, con el objetivo de obtener un compendio analítico del período. |
+| **Compilar datos** | Sistema (reacción automática) | `System compiles data` | El backend recolecta todas las lecturas de sensores, alertas, diagnósticos, riegos, fertilizaciones y recomendaciones aplicadas durante el período solicitado. |
+| **Generar informe técnico** | Sistema (reacción automática) | `Monthly technical report generated for a client` | Con los datos compilados, el sistema produce un informe estructurado con gráficos de evolución, estadísticas, tiempo fuera de rango y recomendaciones automáticas. Queda disponible en formato interactivo en el dashboard y como PDF descargable. |
+
+**Narrativa del flujo por actores**
+
+**1. Agrónomo:**  
+Es el actor principal de este flujo. Ejecuta `Acceder al dashboard consolidado` para monitorizar a todos sus clientes. Ante una alerta visual, ejecuta `Acceder al historial de la parcela` y `Redactar recomendación`, proporcionando su juicio experto. Con `Enviar recomendación`, entrega al agricultor un mensaje respaldado automáticamente por los datos de sensores, generando confianza y facilitando la adopción del consejo. También puede solicitar y consultar informes mensuales para evaluar la evolución de sus clientes o presentar resultados.
+
+**2. Agricultor:**  
+Ejecuta el comando `Vincular agrónomo como asesor`, abriendo la puerta a la colaboración experta. Recibe las recomendaciones técnicas con los datos de sensores adjuntos, lo que le permite entender el porqué del consejo y confiar en él sin tener que contrastar manualmente. También puede ejecutar `Solicitar informe mensual` para obtener un análisis detallado del rendimiento de su parcela durante el último mes.
+
+**3. Sistema:**  
+Actúa como el habilitador automático de la supervisión. Resalta visualmente las parcelas en condición crítica en el dashboard del agrónomo, facilitando la priorización. Captura el contexto de telemetría al redactar una recomendación y lo adjunta automáticamente para que el agricultor vea los datos que respaldan el consejo. Con `Compilar datos` y `Generar informe técnico`, automatiza la producción de informes mensuales enriquecidos con visualizaciones y resúmenes, liberando al agrónomo de trabajo manual y proporcionando un entregable de alto valor.
+
+![EventStorming-step5.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-11.png)
+
+----
+
+#### Flujo: Gestión de Comandos de Riego con Conectividad Inestable y Resolución de Conflictos
+
+**Nombre del flujo:** Gestión de Comandos de Riego con Conectividad Inestable y Resolución de Conflictos
+
+**Propósito del flujo:** Garantizar que las órdenes de riego emitidas por el agricultor, el agrónomo o el sistema lleguen a ejecutarse de forma segura, fiable y sin conflictos, incluso en condiciones adversas de conectividad en zonas rurales. El flujo gestiona el encolado local cuando no hay red, la detección de comandos duplicados o contradictorios, la validación al restaurarse la conectividad, el bloqueo de acciones que ya no son necesarias (por ventana de tiempo superada o condición resuelta por el Edge) y la confirmación final al usuario del estado real del comando, eliminando la incertidumbre sobre si el riego se ejecutó o no.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Enviar comando de riego** | Agricultor / Agrónomo / Sistema | `Irrigation command sent` (puede ser `without available connectivity` si no hay red) | El usuario o una regla automática ordena abrir una válvula de riego. Si no hay conectividad, el comando se encola en la app local (`Command queued locally in the mobile app`) y queda visible como "pendiente de envío". Si hay conectividad, se envía directamente al backend. |
+| **Bloquear comando duplicado** | Sistema | `Attempt to activate already active irrigation, conflict detected` → `Duplicate action blocked, user informed of current status` | El resolutor de conflictos detecta que el actuador ya está en el estado solicitado (riego ya activo). Bloquea el nuevo comando y notifica al usuario de que la acción ya está en curso, evitando solapamientos. |
+| **Validar comando al reconectar** | Sistema | `Connectivity restored, command validated before execution` | Cuando se recupera la conexión, el backend recibe el comando encolado y lo valida: comprueba el estado actual del actuador, la vigencia temporal y si la condición que lo motivó sigue existiendo. |
+| **Ejecutar comando validado** | Dispositivo / Sistema | `Command executed after successful validation` | Si la validación es exitosa, el comando se envía al Edge y se ejecuta. El sistema notifica al usuario el cambio de estado a "ejecutado". |
+| **Descartar comando por ventana expirada** | Sistema | `Command discarded, exceeded 30 min or condition already resolved` | Si han pasado más de 30 minutos desde que se encoló o la condición que motivó el riego ya fue resuelta (por el Edge o por otro comando), el sistema descarta el comando y notifica al usuario con el motivo claro. |
+| **Cancelar comando pendiente** | Agricultor / Sistema | `Canceled Irrigation Command` / `Disable Irrigation Command` | El agricultor puede cancelar manualmente un comando pendiente desde la app. El sistema también puede deshabilitarlo automáticamente si el Edge cerró la válvula por seguridad o si otro comando contradictorio tiene prioridad. |
+| **Eliminar comandos fallidos** | Sistema | `Delete failed commands` | Los comandos que han fallado reiteradamente o que ya no son relevantes se eliminan del buzón del dispositivo para evitar reintentos innecesarios y liberar recursos. |
+
+**Narrativa del flujo por actores**
+
+**1. Sistema:**  
+Es el actor central que garantiza la fiabilidad del flujo. Ejecuta `Bloquear comando duplicado` cuando detecta conflicto, informando al usuario en lugar de ejecutar a ciegas. Con `Validar comando al reconectar`, actúa como árbitro que decide si un comando pendiente sigue siendo pertinente. Ejecuta `Ejecutar comando validado` cuando todo está en orden, y `Descartar comando por ventana expirada` cuando ya no aplica. También realiza limpieza con `Eliminar comandos fallidos` para mantener la integridad del buzón del dispositivo.
+
+**2. Agricultor / Agrónomo:**  
+Son los emisores de la intención de riego. Ejecutan `Enviar comando de riego` desde la aplicación móvil o dashboard. En condiciones sin conectividad, su comando se encola localmente y pueden ver su estado como "pendiente". Si lo desean, pueden ejecutar `Cancelar comando pendiente` antes de que se envíe. Reciben notificaciones de cada cambio de estado: bloqueado por duplicado, ejecutado, descartado por tiempo, eliminando la incertidumbre de si el riego se realizó o no.
+
+**3. Dispositivo / Edge:**  
+Ejecuta el comando en campo cuando lo recibe validado. Además, puede influir indirectamente en el descarte de comandos: si el Edge, por su mecanismo de seguridad, cerró la válvula automáticamente al perder conexión con el backend, el sistema puede marcar comandos de riego posteriores como "condición ya resuelta" y descartarlos, protegiendo el cultivo.
+
+
+![EventStorming-step5.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-12.png)
+
+---
+
+#### Flujo: Ajuste y Ejecución de Fertirrigación Automatizada
+
+**Nombre del flujo:** Ajuste y Ejecución de Fertirrigación Automatizada
+
+**Propósito del flujo:** Ejecutar un ciclo de fertirrigación de forma automatizada y segura, integrando la apertura controlada de la válvula solenoide que da paso al agua, el registro del ajuste de dosificación de fertilizante con trazabilidad, la confirmación de que el evento de fertirrigación se ha completado, y el cierre definitivo de la válvula para retornar al estado de reposo. El flujo garantiza que tanto el suministro de agua como el de nutrientes queden documentados y alineados con la estrategia agronómica.
+
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Enviar comando de riego / fertirrigación** | Sistema | `Send Irrigation Command` | Ante un diagnóstico que recomienda fertilización o por una programación agronómica, el motor de automatización emite la orden de iniciar el ciclo de fertirrigación sobre la zona y actuador correspondientes. |
+| **Abrir válvula solenoide** | Actuador / Dispositivo | `Solenoid valve open` | La electroválvula recibe la señal y se abre, permitiendo el flujo de agua presurizada hacia el sistema de riego. Es el paso previo indispensable para la inyección de fertilizante. |
+| **Registrar ajuste de fertilización** | Sistema | `Fertilization adjustment recorded` | El dosificador modifica la concentración o proporción de nutrientes según lo ordenado. El sistema deja trazabilidad del valor de dosificación aplicado, quién o qué regla lo originó y la marca de tiempo. |
+| **Confirmar evento de fertirrigación** | Sistema | `Event occurred` | Se registra la finalización exitosa del pulso de fertirrigación, con el volumen total aplicado, la duración y la concentración media. El sistema puede notificar al agricultor y al agrónomo vinculado. |
+| **Cerrar válvula solenoide** | Actuador / Dispositivo | `Solenoid valve closed` | Finalizado el aporte de agua y nutrientes, la válvula se cierra, cortando el suministro y devolviendo el sistema hidráulico al estado de reposo seguro. Los datos del ciclo quedan sincronizados en el histórico de la parcela. |
+
+**Narrativa del flujo por actores**
+
+**1. Sistema:**  
+Es el actor principal que orquesta el proceso. Ejecuta `Enviar comando de riego / fertirrigación` basándose en diagnósticos automatizados, reglas de calendario de cultivo o decisiones del agrónomo. Registra el ajuste de fertilización con `Registrar ajuste de fertilización`, documentando cada cambio de dosis. Finalmente, confirma el ciclo con el evento de fertirrigación completada y ordena el cierre de la válvula para retornar a la normalidad operativa.
+
+**2. Actuador / Dispositivo:**  
+Es el ejecutor físico en campo. Con `Abrir válvula solenoide`, permite el flujo de agua. Con `Cerrar válvula solenoide`, lo corta tras recibir la orden del sistema. Es el nexo entre la decisión tomada en la plataforma y la acción que llega al cultivo.
+
+
+![EventStorming-step5.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-13.png)
+
+---
+
+#### Flujo: Detección y Clasificación de Intrusión Perimetral con Respuesta Contextual
+
+**Nombre del flujo:** Detección y Clasificación de Intrusión Perimetral con Respuesta Contextual
+
+**Propósito del flujo:** Dotar a AgroSafe de una capa de seguridad perimetral inteligente que detecta movimiento, mide la intensidad de calor para clasificar el evento en el borde —distinguiendo entre viento, animal y presencia humana— y envía la clasificación al backend. Allí, según la confianza y el contexto, el evento se registra sin notificación urgente o se dispara una alerta de intrusión humana. El flujo cubre desde la configuración inicial de la sensibilidad del PIR y los umbrales de clasificación, pasando por la detección y clasificación automática en el Edge, hasta la decisión contextual del sistema sobre cómo notificar.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Configurar sensibilidad del PIR** | Staff (instalador) | `Configure PIR Sensitivity` | Durante la instalación o el mantenimiento, el técnico ajusta los parámetros de sensibilidad del sensor infrarrojo pasivo para adecuarlo al entorno de la parcela (distancia, vegetación circundante). Este ajuste determina la línea base de detección. |
+| **Clasificar umbrales PIR** | Edge (firmware del dispositivo) | `Classify PIR thresholds` | El firmware del dispositivo aplica los umbrales configurados (o los umbrales dinámicos aprendidos) para comparar la intensidad de calor medida con los patrones de referencia de humano, animal o viento. |
+| **Disparar detección por movimiento** | Dispositivo (Sensor PIR) | `PIR sensor detects movement at the perimeter` | El sensor infrarrojo capta una variación en la radiación térmica dentro de su zona de cobertura, iniciando la secuencia de análisis. |
+| **Medir intensidad de calor** | Dispositivo (ESP32 ADC) | `Heat intensity measured by the ESP32 ADC` | El conversor analógico-digital del ESP32 cuantifica la magnitud y el patrón temporal del calor detectado, generando los datos que alimentarán la clasificación. |
+| **Comparar con umbrales y clasificar** | Edge (firmware del dispositivo) | `Event classified as HUMAN`, `Event classified as WIND`, `Event classified as ANIMAL` | El módulo de analítica embebida contrasta la intensidad y el patrón contra los umbrales. Si supera el criterio para presencia humana, se clasifica como `HUMAN`; si el calor es bajo o difuso, como `WIND`; si el patrón es de un animal pequeño, como `ANIMAL`. |
+| **Enviar clasificación de alta confianza** | Edge | `High trust rating sent to the backend immediately` | Si la clasificación es `HUMAN` con un nivel de confianza alto, se envía en tiempo real al backend para que evalúe la necesidad de alerta urgente. |
+| **Registrar evento de baja prioridad** | Backend / Sistema | `Low priority event logged in history without urgent notification` | Si la confianza no es alta o el contexto no lo amerita (evento de viento, animal, o humano en horario no crítico), el sistema registra el incidente en la bitácora pero sin notificar al agricultor, evitando la fatiga de alertas. |
+| **Enviar alerta de intrusión** | Backend / Sistema | `Human intrusion alert triggered` | Si el evento es `HUMAN` y el contexto lo justifica (confianza alta, horario o zona sensible), el sistema dispara una alerta de intrusión humana, notificando al agricultor vía push y registrando el incidente en la bitácora con trazabilidad completa. |
+
+**Narrativa del flujo por actores**
+
+**1. Dispositivo (Sensor PIR + ESP32):**  
+Es el actor que interactúa directamente con el entorno físico. Ejecuta `Disparar detección por movimiento` cuando percibe una variación infrarroja, y de inmediato `Medir intensidad de calor` para alimentar el análisis. Es el primer eslabón de la cadena de seguridad perimetral.
+
+**2. Edge (firmware embebido):**  
+Es el clasificador inteligente en el borde. Ejecuta `Clasificar umbrales PIR` aplicando los criterios de discriminación, y con `Comparar con umbrales y clasificar` determina si el evento es `HUMAN`, `WIND` o `ANIMAL`. Si la confianza es alta, ejecuta `Enviar clasificación de alta confianza` al backend en tiempo real.
+
+**3. Backend / Sistema:**  
+Es el evaluador contextual. Recibe los eventos con alta confianza y decide si ejecutar `Registrar evento de baja prioridad` (cuando no amerita alarma) o `Enviar alerta de intrusión` (cuando la situación lo requiere). Esta lógica evita tanto la fatiga por falsas alarmas como la pérdida de eventos de seguridad reales.
+
+**4. Staff (instalador / operador):**  
+Interviene fundamentalmente en la puesta a punto inicial ejecutando `Configurar sensibilidad del PIR`, o posteriormente reajustando si las condiciones de la parcela cambian. Con la evolución hacia umbrales dinámicos, su intervención se vuelve menos frecuente, pero sigue siendo responsable de la configuración base del sensor.
+
+![EventStorming-step5.14](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-14.png)
+
+---
+
+#### Flujo: Análisis Ejecutivo de Métricas y Priorización de Roadmap de Producto
+
+**Nombre del flujo:** Análisis Ejecutivo de Métricas y Priorización de Roadmap de Producto
+
+**Propósito del flujo:** Permitir que los roles de Product Owner y Product Manager de AgroSafe consulten de forma periódica el rendimiento del negocio mediante un dashboard ejecutivo trimestral, segmenten los datos por tipo de cliente y período, monitoreen KPIs clave (MAU, MRR, churn, conversión trial‑a‑pago), analicen el churn por segmento, visualicen mapas de calor de adopción de funcionalidades, comparen métricas respecto al período anterior y detecten embudos de abandono. El objetivo final es que cada decisión de roadmap esté respaldada por datos de uso reales y correlacionados con métricas de suscripción y retención, alineando la evolución del producto con la salud del negocio.
+
+**Tabla de Comandos y Actores**
+
+| Comando | Actor | Evento(s) que provoca | Explicación del evento |
+|---|---|---|---|
+| **Consultar dashboard ejecutivo** | Product Owner | `Product Owner consults the quarterly executive dashboard` | El Product Owner accede a la vista de alto nivel que condensa la salud del producto para el trimestre. Es el punto de partida del análisis estratégico. |
+| **Filtrar por segmento y período** | Product Owner / Product Manager | `Filter by segment and period` | Los roles de producto segmentan los datos (agricultores vs. agrónomos, planes Básico vs. Premium, ventana temporal) para enfocar el análisis en las cohortes relevantes. |
+| **Calcular KPIs** | Sistema (reacción automática) | `Calculated KPIs: MAU, MRR, churn, trial—paid conversion` | El motor de métricas del dashboard calcula bajo demanda los indicadores fundamentales: usuarios activos mensuales, ingresos recurrentes, tasa de cancelación y conversión de prueba a pago. |
+| **Analizar churn por segmento** | Product Owner / Product Manager | `Churn analysis filtered by customer segment` | Los roles de producto profundizan en la tasa de cancelación aislando segmentos concretos, buscando patrones de abandono. |
+| **Consultar mapa de adopción de funcionalidades** | Product Manager | `Feature adoption heatmap consulted by Product Manager` | El Product Manager visualiza un mapa de calor que muestra qué funcionalidades concentran la actividad de los usuarios y cuáles permanecen infrautilizadas. |
+| **Generar comparativa con período anterior** | Sistema (reacción automática, bajo demanda) | `Comparison of metrics with previous period generated` | El dashboard calcula y muestra las variaciones porcentuales en adopción, churn y conversión frente al trimestre anterior, identificando tendencias. |
+| **Identificar embudo de abandono** | Product Manager / Sistema | `Abandonment funnel identified in a specific feature` | Al cruzar los datos de uso con los de retención, el sistema resalta una funcionalidad concreta donde los usuarios abandonan en pasos tempranos, o el Product Manager la detecta manualmente al navegar el mapa de adopción. |
+| **Tomar decisión de roadmap** | Product Owner / Product Manager | `Roadmap decision made based on actual usage data` | Con toda la evidencia reunida —métricas de negocio, datos de adopción, churn correlacionado y embudos de abandono—, el equipo de producto decide la priorización de funcionalidades para el próximo ciclo de desarrollo. |
+
+**Narrativa del flujo por actores**
+
+**1. Product Owner:**  
+Es el responsable de la visión estratégica del producto. Ejecuta `Consultar dashboard ejecutivo` para obtener la foto de salud del negocio, y junto con el Product Manager ejecuta `Filtrar por segmento y período` y `Analizar churn por segmento` para entender dónde se pierden clientes. Con los resultados del análisis, participa en la decisión final de `Tomar decisión de roadmap`, asegurando que las prioridades de desarrollo estén alineadas con los objetivos de negocio.
+
+**2. Product Manager:**  
+Es el responsable de la ejecución y el análisis detallado. Ejecuta `Consultar mapa de adopción de funcionalidades` para entender qué features usa realmente cada segmento, y `Generar comparativa con período anterior` para ver la evolución de las métricas. Junto con el sistema, `Identificar embudo de abandono` en funcionalidades concretas que puedan explicar el churn. Propone y debate las opciones de roadmap basadas en estos hallazgos.
+
+**3. Sistema:**  
+Actúa como el habilitador analítico. Con `Calcular KPIs`, entrega las métricas de negocio bajo demanda. Con `Generar comparativa con período anterior`, permite ver tendencias. Con la capa de correlación (motor de correlación de churn), puede resaltar automáticamente el `Abandonment funnel identified in a specific feature` y anotarlo con su impacto estimado en retención, facilitando que el Product Owner y el Product Manager tomen decisiones informadas y no basadas en intuiciones aisladas.
+
+![EventStorming-step5.15](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-15.png)
 
 ---
 
