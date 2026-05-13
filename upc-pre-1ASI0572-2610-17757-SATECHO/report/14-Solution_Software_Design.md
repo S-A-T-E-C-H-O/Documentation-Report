@@ -616,45 +616,494 @@ Finalmente, con todo el contexto reunido, el equipo de producto lleva a cabo el 
 
 ### 4.1.1.1 Candidate Context Discovery
 
-Para hallar nuestros Candidate Context, continuamos con el paso 3 Pain Points, donde discutimos eventos del flujo que podrían ser cuellos de botella, pasos manuales que requieren automatización o riesgos técnicos críticos que podrían romper la experiencia del usuario o la integridad del cultivo.
+La fase de Candidate Context Discovery tiene como objetivo transformar el modelo visual del Event Storming en fronteras arquitectónicas concretas. A continuación, se detalla cada paso aplicado, explicando su propósito metodológico, cómo se ejecutó en el taller colaborativo y qué evidencia aporta cada imagen del proceso.
 
-En el timeline de Onboarding y Registro, un pain point es la validación de datos duplicados o erróneos en el formulario. Si el sistema no valida en tiempo real el correo o la contraseña, el usuario podría perder toda la información ingresada y abandonar el proceso de registro.
+#### Paso 3: Pain Points (Puntos Críticos)
+**¿Qué es y cómo se hace?**  
+Los *Pain Points* representan fricciones operativas, riesgos técnicos o pasos manuales que degradan la experiencia del usuario o la integridad del dominio. Se identifican marcando con notas rosas los eventos o transiciones donde existe alta probabilidad de fallo, latencia inaceptable, pérdida de datos o conflicto de estados. El equipo los valida preguntando: *"¿Qué pasa si este paso falla?"* o *"¿Dónde se pierde valor si no se automatiza?"*.
 
-En este timeline, un pain point es la continuidad del wizard de configuración. Si el usuario abandona el flujo a la mitad, el sistema debe poder retomar exactamente donde se dejó; de lo contrario, la fricción aumenta y se pierde la conversión.
+Perfecto, vamos a estructurar el primer **Pain Point** siguiendo la línea narrativa que ya estableciste.  
+Lo presento como un bloque listo para insertar en tu documentación, con título, propósito y explicación detallada vinculada a los eventos del timeline de Onboarding y Registro.
 
-![EventStorming-step3.1](./assets/images/candidate-context-discovery/es-pain-points-1.png)
+#### Pain Point 1: Pérdida de datos del formulario por error de validación tardía
+
+**Timeline asociado:** *Onboarding y Registro de Usuarios*
+
+**Propósito del análisis:** Identificar que la validación de los campos del formulario de registro no ocurre en tiempo real durante el llenado, sino únicamente en el momento del envío (`Visitor completes the registration form`). Esto convierte al proceso en un cuello de botella de experiencia de usuario, porque si se produce un error de validación (correo duplicado, formato de contraseña incorrecto, campos obligatorios vacíos), el sistema descarta todos los datos ingresados y obliga al visitante a recomenzar desde cero.
+
+**Narrativa del pain point:**  
+El flujo inicia de manera fluida: `Visitor arrives at the landing page`, `Visitor selects a plan`, se genera el evento `Selected plan` y se activa la suscripción (`Subscription activated`). Hasta aquí la experiencia es ágil y sin fricción. Sin embargo, el punto crítico aparece cuando el `Visitor completes the registration form`.
+
+Actualmente, toda la validación (unicidad de correo electrónico, fortaleza de contraseña, formato de teléfono, etc.) ocurre *después* de que el visitante pulsa el botón de envío. Si el servidor detecta un error (por ejemplo, un email ya registrado), se rechaza la petición y el formulario recarga completamente limpio. No existe persistencia local ni rellenado automático de los campos correctos. El evento esperado `Registered Farmer` (o `Registered Agronomist`) no se produce, y el flujo se rompe en un punto donde el usuario ya ha demostrado alta intención de conversión (plan seleccionado, suscripción activada).
+
+La consecuencia directa es que el visitante debe reingresar toda su información, incluyendo campos largos como dirección, nombre de la parcela o datos de contacto. Esta fricción incrementa drásticamente la probabilidad de abandono antes de que ocurran los eventos críticos `Verified email sent` y `Email verified by user`. Además, si el error es ambiguo o el mensaje no es claro, el usuario puede interpretar que la plataforma es inestable y abandonar definitivamente, perdiéndose la conversión completa.
+
+**Eventos involucrados:**
+- `Visitor completes the registration form` (punto de quiebre)
+- `Registered Farmer` / `Registered Agronomist` (no se alcanza si falla la validación)
+- `Verified email sent` (nunca se dispara si el formulario no se procesa)
+
+**Riesgo de negocio:**
+- Aumento de la tasa de abandono en el paso de registro.
+- Mala percepción de calidad del producto desde el primer contacto.
+- Dispositivos IoT no vinculados, parcelas no creadas, retraso en la activación de suscripciones de pago.
+
+![EventStorming-step3.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-1.png)
 
 ---
 
-En el timeline de Riego y Control de Cultivo, un pain point es la latencia e intermitencia de red en zonas rurales. Específicamente, existe un riesgo crítico entre el Comando de apertura de válvula encolado y la Electroválvula abierta. Si la conexión falla en ese instante, el cultivo podría no recibir el agua necesaria a tiempo.
+#### Pain Point 2: Suspensión de cuenta sin revisión completa del historial de pagos
 
-En este timeline, un pain point es la concurrencia de comandos. Dos usuarios (agricultor y agrónomo) podrían enviar comandos simultáneos para la misma zona generando un conflicto de estado en la electroválvula. Además, si un comando se ejecuta tras recuperar conexión pero supera los 30 minutos, podría regar un cultivo que ya fue hidratado manualmente, generando desperdicio hídrico.
+**Timeline asociado:** *Gestión de Suspensión y Reactivación de Cuenta por Impago*
 
-![EventStorming-step3.2](./assets/images/candidate-context-discovery/es-pain-points-2.png)
+**Propósito del análisis:** Evidenciar que el flujo actual permite que un miembro del staff suspenda una cuenta por impago (`Staff needs to suspend due to non-payment`) sin haber revisado previamente el historial completo de pagos del cliente. Esto introduce un riesgo operacional grave: una suspensión errónea sobre un cliente que ya regularizó su deuda por un canal alternativo, o que tiene un acuerdo de pago vigente, generando una interrupción innecesaria del servicio, la revocación masiva de credenciales de dispositivos IoT y una experiencia traumática para el agricultor.
+
+**Narrativa del pain point:**  
+El flujo de suspensión se dispara originalmente por un evento automático (`Customer account suspended due to non-payment`), pero en muchos casos reales la decisión final recae en un operador humano. El evento `Staff searches and views customer account` representa la consulta que el personal de soporte realiza desde el backoffice antes de tomar cualquier acción.
+
+El pain point emerge aquí: la interfaz actual muestra un resumen limitado de la cuenta (último pago, saldo pendiente), pero no despliega de manera proactiva el historial completo de pagos, notas de acuerdos previos, promesas de pago registradas por otro operador, o tickets de soporte relacionados. Si el miembro del staff no navega manualmente a una sección separada para ver ese historial (o si esa información ni siquiera está unificada en una vista), procede directamente al evento `Staff needs to suspend due to non-payment` con una imagen incompleta del caso.
+
+La consecuencia es que se ejecuta `Customer account suspended`, lo que desencadena en cascada `Client access disabled, data retained`, revocación de credenciales, detención de telemetría y notificación al cliente (`Notify the customer`). Si la suspensión fue errónea, el agricultor recibe un aviso de bloqueo que considera injusto, contacta a soporte indignado, y el staff debe revertir manualmente con `Account reactivated after payment was processed` y `Access restored and devices synchronized`, quedando el incidente registrado en el log (`It is recorded in a log`) como un error operativo.
+
+**Causa raíz del dolor:**
+- No hay una validación sistémica que obligue al staff a revisar el historial completo de pagos antes de habilitar el botón de suspensión.
+- La vista de cuenta no consolida en un solo lugar los pagos, acuerdos y comunicaciones relevantes.
+
+**Eventos involucrados:**
+- `Staff searches and views customer account` (consulta sin historial completo)
+- `Staff needs to suspend due to non-payment` (decisión tomada con datos incompletos)
+- `Customer account suspended` (posible error operativo)
+- `Client access disabled, data retained` (impacto directo sobre el agricultor)
+- `Notify the customer` (notificación de una suspensión potencialmente injusta)
+- `Account reactivated after payment was processed` (corrección reactiva)
+- `Access restored and devices synchronized` (normalización tras el error)
+- `It is recorded in a log` (registro del incidente)
+
+**Riesgo de negocio:**
+- Suspensiones erróneas que generan insatisfacción, llamadas a soporte y posible churn.
+- Interrupción del monitoreo IoT en parcelas activas sin causa real.
+- Desgaste del equipo de soporte corrigiendo decisiones apresuradas.
+- Registro de auditoría manchado con eventos de suspensión injustificada.
+
+![EventStorming-step3.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-2.png)
 
 ---
 
-En el timeline de Seguridad Perimetral, un pain point es el riesgo de falsas alarmas. Si el sensor PIR o el algoritmo de clasificación térmica en el Edge no distinguen adecuadamente entre viento, animales pequeños e intrusos humanos, se genera fatiga en el usuario y desconfianza en el sistema.En el timeline de Seguridad Perimetral, un pain point es el riesgo de falsas alarmas. Si el sensor PIR o el algoritmo de clasificación térmica en el Edge no distinguen adecuadamente entre viento, animales pequeños e intrusos humanos, se genera fatiga en el usuario y desconfianza en el sistema.
+#### Pain Point 3: Ventana de riesgo entre reporte de pérdida y revocación de credenciales
 
-En este timeline, un pain point es la garantía de entrega de alertas en zonas rurales. Antes de enviar la notificación por WhatsApp, debemos asegurar que el mensaje llegue incluso con cobertura intermitente; de lo contrario, la alerta de intrusión es inútil.
+**Timeline asociado:** *Gestión de Pérdida y Reaprovisionamiento de Dispositivos IoT*
 
-![EventStorming-step3.3](./assets/images/candidate-context-discovery/es-pain-points-3.png)
+**Propósito del análisis:** Poner en evidencia que la existencia de un paso manual (`Staff deactivates account`) entre el reporte de pérdida y la invalidación efectiva de credenciales genera una ventana temporal de vulnerabilidad. Durante ese intervalo, un dispositivo reportado como perdido pero con credenciales aún activas representa un riesgo de seguridad crítica: un tercero no autorizado podría manipularlo para inyectar telemetría falsa, comprometiendo la integridad de los datos agronómicos y las decisiones de riego, fertilización o alertas.
+
+**Narrativa del pain point:**  
+El flujo se inicia correctamente con `Device deactivated due to loss report`, que congela el dispositivo a nivel lógico en el gemelo digital. Sin embargo, este evento no revoca por sí mismo los certificados y tokens que el hardware utilizaría para autenticarse. La seguridad de la plataforma depende del siguiente paso: un operador humano debe ejecutar `Staff deactivates account` desde el backoffice para disparar la cadena de invalidación real.
+
+Aquí se abre el pain point. Si el staff tarda en actuar (por carga de trabajo, por falta de notificación inmediata del reporte, o porque simplemente no existe un SLA de respuesta), el dispositivo permanece con sus credenciales intactas en algún lugar desconocido. El propio dominio lo explicita: *"A lost device with active credentials is a security risk: it can send fake telemetry"*. Un atacante con acceso físico al sensor podría conectarlo a una red, autenticarse exitosamente contra los brokers de AgroSafe y empezar a publicar lecturas falsas de humedad, pH o temperatura.
+
+La inyección de telemetría maliciosa no es un riesgo teórico. Podría provocar:
+- Un falso diagnóstico de estrés hídrico que dispare un riego innecesario.
+- Una lectura de pH falsa que active una fertirrigación que dañe el cultivo real.
+- La contaminación de las series históricas, afectando la confianza del agricultor y del agrónomo en los datos de AgroSafe.
+
+Solo cuando el staff completa la acción, se alcanza el evento `Device credentials invalidated, telemetry stopped`, cerrando la ventana de vulnerabilidad y deteniendo la ingesta. Pero el daño a la integridad de los datos ya podría haberse consumado. El flujo culmina con `Batch of IoT devices registered as available`, que repone el sensor, pero sin una política de respuesta inmediata, la plataforma queda expuesta en cada incidente de pérdida.
+
+**Eventos involucrados:**
+- `Device deactivated due to loss report` → Disparador, sin revocación inmediata.
+- `Staff deactivates account` → Paso manual que introduce latencia.
+- `Device credentials invalidated, telemetry stopped` → Cierre de la ventana de riesgo (tardío si hay demora).
+- `Batch of IoT devices registered as available` → Reaprovisionamiento, sin relación directa con la vulnerabilidad.
+
+**Riesgo de negocio:**
+- Inyección de datos falsos que corrompen los históricos y los diagnósticos agronómicos.
+- Decisiones de riego o fertilización incorrectas basadas en telemetría maliciosa, con posible pérdida de cultivo.
+- Pérdida de confianza de los agricultores y agrónomos en la fiabilidad de AgroSafe.
+- Daño reputacional si un incidente de seguridad se hace público.
+- Responsabilidad legal si un ataque afecta la producción agrícola de un cliente.
+
+![EventStorming-step3.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-3.png)
 
 ---
 
-En el timeline de Gestión de Cuentas y Suscripciones, un pain point es la integridad de los datos históricos. La suspensión de una cuenta por mora NO debe borrar los datos históricos del cultivo; el sistema debe conservar la información para cuando el cliente reactive su servicio.
+#### Pain Point 4: Exposición de credenciales activas durante la ventana de configuración
 
-En este timeline, un pain point es la seguridad de dispositivos perdidos. Un dispositivo IoT reportado como perdido pero con credenciales activas es un riesgo grave, ya que podría enviar telemetría falsa o manipular el riego remotamente.
+**Timeline asociado:** *Activación y Puesta en Marcha de un Dispositivo IoT*
 
-![EventStorming-step3.4](./assets/images/candidate-context-discovery/es-pain-points-4.png)
+**Propósito del análisis:** Señalar que la generación de credenciales criptográficas para un dispositivo IoT nuevo ocurre de manera temprana en el flujo de alta (`Credentials Generated` y `Device Activated`), y que esas credenciales permanecen activas durante toda la fase de configuración (`Configuration Changed`) antes de que el dispositivo esté realmente listo para operar con seguridad (`Ready for Operation`). Si en esa ventana intermedia las credenciales quedan expuestas en tránsito sin cifrar, se almacenan en logs, se transfieren al firmware del dispositivo sin protección o son accesibles desde una interfaz web de configuración temporal sin autenticación, se abre un vector de ataque crítico.
+
+**Narrativa del pain point:**  
+El flujo normal de alta es rápido y funcional: `Device Registered`, `Credentials Generated`, `Device Activated` y `Configuration Changed`. Parece una secuencia inocua y sin fricción. Sin embargo, la superposición entre la creación temprana de credenciales y la configuración posterior introduce una ventana de riesgo que no se está gestionando explícitamente.
+
+Tras `Credentials Generated`, el dispositivo ya posee un par de claves o un token que le permitiría autenticarse contra la plataforma AgroSafe. Tras `Device Activated`, esa autenticación se ha validado con un primer handshake exitoso. Para entonces, el dispositivo está técnicamente "vivo" desde la perspectiva del broker MQTT o de las APIs, aunque el usuario aún no lo haya configurado completamente para su parcela.
+
+Durante el evento `Configuration Changed`, el agricultor o el agrónomo puede estar ajustando la frecuencia de muestreo, las sondas activas y las reglas de alerta. Si esa configuración se envía sin cifrar, si las credenciales se incluyen accidentalmente en los payloads de configuración, o si el dispositivo expone un portal web temporal para el emparejamiento, un atacante que esté escuchando el tráfico de la red local (o de la conexión inicial a internet) podría capturar las credenciales activas.
+
+Las consecuencias son directas: el atacante podría hacerse pasar por el dispositivo legítimo incluso antes de que esté en `Ready for Operation`, enviar telemetría falsa desde ese momento, y comprometer la serie histórica desde su mismo origen. Además, la intrusión no sería evidente porque el dispositivo aún no aparece en los dashboards del agricultor, y las alertas de comportamiento anómalo no suelen activarse hasta que la configuración está completa.
+
+**Eventos involucrados:**
+- `Device Registered` → Punto de partida.
+- `Credentials Generated` → Creación de los secretos de autenticación (inicio de la ventana de riesgo).
+- `Device Activated` → Handshake exitoso (credenciales ya operativas).
+- `Configuration Changed` → Fase de ajustes donde puede producirse la exposición.
+- `Ready for Operation` → Estado final seguro, pero la exposición ya podría haberse consumado.
+
+**Riesgo de negocio:**
+- Suplantación de dispositivos IoT legítimos desde el instante mismo del alta.
+- Inyección de datos falsos desde el primer ciclo de telemetría, contaminando las series históricas sin que se detecte a tiempo.
+- Robo de credenciales que podría escalar a un acceso más amplio a la infraestructura IoT de AgroSafe.
+- Necesidad de revocación masiva de credenciales si se descubre un patrón de ataque, impactando a múltiples agricultores.
+- Responsabilidad legal y reputacional por no garantizar un entorno de activación de dispositivos seguro por diseño.
+
+![EventStorming-step3.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-4.png)
+
+----
+
+#### Pain Point 5: Ciclos repetitivos de desconexión que degradan la integridad de los datos sincronizados
+
+**Timeline asociado:** *Gestión de Conectividad Intermitente y Sincronización de Dispositivos IoT*
+
+**Propósito del análisis:** Visibilizar que la ocurrencia cíclica de eventos de pérdida y restauración de conectividad (`Device Offline Detected` → `Device Online Restored`), especialmente cuando se repite con alta frecuencia en una misma ventana de tiempo, puede provocar la degradación de la integridad de los datos recolectados y sincronizados. En cada ciclo, el dispositivo acumula telemetría en su buffer local y la vuelca al reconectarse, pero si las desconexiones son muy frecuentes o los períodos offline muy prolongados, el buffer puede saturarse, las marcas de tiempo pueden desalinearse y la reconciliación mediante `Device Sync Completed` puede volverse inconsistente o incompleta.
+
+**Narrativa del pain point:**  
+El flujo de conectividad intermitente está diseñado para un patrón eventual: un dispositivo se desconecta, almacena datos localmente y, al reconectarse, los sincroniza sin pérdida. Sin embargo, la secuencia revela un escenario más agresivo:
+
+`Heartbeat Received` → `Device Offline Detected` → `Device Online Restored` → `Device Offline Detected` → `Device Online Restored` → `Device Sync Completed`
+
+El dispositivo entra y sale de línea varias veces en un intervalo corto. Esto puede deberse a cobertura celular débil en zonas rurales, interferencias, batería degradada que reduce la potencia de transmisión, o firmware inestable. Cada transición `Device Offline Detected` fuerza al dispositivo a activar su buffer local, y cada `Device Online Restored` dispara un nuevo intento de sincronización. Si el ciclo es demasiado rápido, puede ocurrir que una sincronización no termine antes de que llegue la siguiente desconexión, generando colas parciales, duplicación de datos o incluso omisión de lecturas.
+
+El evento `Device Sync Completed` debería cerrar el ciclo de forma limpia, pero en entornos de alta intermitencia es posible que llegue a procesarse con datos incompletos o con lecturas cuyo orden temporal ya no coincide con la realidad de campo. La plataforma confía en ese evento para dar por buenos los datos, sin una validación secundaria de integridad.
+
+**Eventos involucrados:**
+- `Heartbeat Received` → Señal de vida inicial.
+- `Device Offline Detected` → Caída de conexión que activa el buffer local (se repite cíclicamente).
+- `Device Online Restored` → Reconexión que dispara volcado (se repite cíclicamente).
+- `Device Sync Completed` → Reconciliación final que puede ejecutarse sobre datos comprometidos.
+
+**Riesgo de negocio:**
+- Pérdida silenciosa de lecturas si el buffer local se sobrescribe o no alcanza a sincronizar completamente entre ciclos.
+- Series históricas con huecos o con datos desordenados temporalmente, lo que afecta la precisión de diagnósticos agronómicos y modelos predictivos.
+- Decisiones de riego o fertilización basadas en datos incompletos o desactualizados.
+- Aumento de carga en la plataforma por sincronizaciones frecuentes y redundantes.
+- Desconfianza del agricultor y del agrónomo al ver indicadores de conectividad erráticos en el dashboard.
+
+![EventStorming-step3.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-5.png)
 
 ---
 
-En el timeline de Asesoría y Configuración de Umbrales, un pain point es la seguridad en la modificación manual. Si el agricultor ingresa un Umbral modificado manualmente con valor fuera de rango seguro, existe el riesgo de que un valor erróneo dañe el cultivo por sobre-riego o bloqueo salino.
+#### Pain Point 6: Conflictos de comandos concurrentes que provocan degradación y reintentos
 
-En este timeline, un pain point es la sobrescritura de configuraciones. La Aplicación masiva de plantilla por parte del agrónomo podría sobrescribir ajustes previos personalizados por el agricultor sin que este se percate, generando conflictos operativos y desconfianza.
+**Timeline asociado:** *Ejecución de Comandos con Fallo y Recuperación* (Timeline 10)
 
-![EventStorming-step3.5](./assets/images/candidate-context-discovery/es-pain-points-5.png)
+**Propósito del análisis:** Poner de manifiesto que la plataforma carece de un mecanismo robusto de resolución de conflictos cuando múltiples comandos (originados por el agricultor, el agrónomo, reglas automáticas o el sistema) se encolan para un mismo dispositivo en un intervalo muy corto. Estos conflictos pueden provocar fallos en la ejecución en el borde, forzar una degradación de la salud del dispositivo (`Device Health Degraded`) y desencadenar reintentos completos (`Command Queued` → `Command Sent to Edge` → `Sync Completed`) que añaden latencia operativa y exponen al cultivo a una ventana sin la acción correcta aplicada.
+
+**Narrativa del pain point:**  
+El proceso de envío de comandos está pensado para un flujo secuencial y ordenado: se encola un comando, se envía al borde, se ejecuta, se sincroniza y se retoma la telemetría. Sin embargo, en la realidad de una explotación agrícola conectada, pueden solaparse múltiples intenciones de actuación sobre el mismo actuador. Por ejemplo, un diagnóstico automático ordena abrir una válvula de riego mientras el agrónomo, desde su dashboard, solicita una fertirrigación que requiere un ajuste previo del mismo circuito hidráulico.
+
+Cuando ambos comandos llegan al borde casi simultáneamente, se produce un conflicto no resuelto: el firmware del dispositivo no sabe cuál ejecutar primero si las precondiciones de uno invalidan al otro, o intenta una ejecución concurrente no soportada. El resultado es un fallo que dispara inmediatamente `Device Health Degraded`, indicando que el dispositivo ha entrado en un estado inconsistente.
+
+A partir de ahí, la plataforma reacciona con un reintento ciego: `Command Queued` para reencolar la instrucción que falló, `Command Sent to Edge` para reenviarla, y eventualmente `Sync Completed` cuando se logra ejecutar de nuevo. Durante ese ciclo de degradación-reintento, el dispositivo ha dejado de ejecutar la acción original en el momento en que era necesaria. La telemetría se reanuda con `Telemetry Received`, pero el daño agronómico (un riego tardío, una válvula que no se abrió a tiempo) puede estar hecho.
+
+**Causa raíz del dolor:**
+- Inexistencia de un resolutor de conflictos de comandos en el borde o en el backend que serialice, priorice o rechace instrucciones incompatibles antes de enviarlas al dispositivo.
+- El reintento automático no evalúa si la ventana de oportunidad para la acción sigue abierta; simplemente reintenta.
+
+**Eventos involucrados:**
+- `Device Health Degraded` → Consecuencia directa de un conflicto de comandos.
+- `Command Queued` → Reintento del comando que falló.
+- `Command Sent to Edge` → Reenvío al hardware.
+- `Sync Completed` → Cierre del reintento, que puede ocultar la pérdida de la ventana de actuación.
+- `Telemetry Received` → Vuelta a la normalidad, pero con la acción correctiva posiblemente tardía.
+
+**Riesgo de negocio:**
+- Retrasos en la ejecución de riegos, fertilizaciones o aperturas de válvulas, impactando la salud del cultivo.
+- Desgaste innecesario de los actuadores por ciclos de apertura/cierre provocados por comandos conflictivos.
+- Degradación frecuente de la salud del dispositivo, que puede enmascarar problemas reales de hardware.
+- Experiencia del usuario (agricultor/agrónomo) inconsistente: ven que sus órdenes no se ejecutan a tiempo o reciben notificaciones de fallo sin explicación clara del conflicto.
+
+![EventStorming-step3.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-6.png)
+
+---
+
+#### Pain Point 7: Degradación silenciosa de batería y falta de trazabilidad en el mantenimiento
+
+**Timeline asociado:** *Gestión Predictiva y Reemplazo de Batería de Dispositivos IoT* (Timeline 11)
+
+**Propósito del análisis:** Evidenciar que el proceso actual de monitoreo de batería depende exclusivamente de los heartbeats periódicos para detectar niveles bajos, lo que abre la puerta a una **degradación silenciosa de batería** que no se manifiesta gradualmente en las lecturas sino como un desplome súbito. Además, una vez ejecutado el reemplazo (`Maintenance Replaced`), el sistema carece de un registro estructurado que capture quién hizo el cambio, qué batería se instaló, cuál era su voltaje inicial y si se siguieron los procedimientos de verificación post-intervención. Esta **falta de trazabilidad en el mantenimiento** impide correlacionar fallos posteriores con una intervención defectuosa y debilita la capacidad de auditoría del ecosistema.
+
+**Narrativa del pain point:**  
+El flujo de gestión de batería arranca de manera esperada con `Heartbeat Received`, que transporta entre sus métricas el voltaje actual del dispositivo. Sin embargo, no todas las baterías se degradan de forma lineal y predecible. El evento `Silent battery degradation` representa ese fenómeno donde la batería mantiene lecturas aparentemente normales durante semanas (incluso en el rango de "bajo") pero sufre un colapso interno que reduce la capacidad real a casi cero sin que el voltaje de superficie lo refleje con suficiente antelación.
+
+Este comportamiento traicionero provoca que la transición de `Low battery level` a `Battery Critical Alert` sea abrupta y con poco margen de reacción. El agricultor y el equipo de soporte reciben la alerta crítica cuando el dispositivo está a minutos de apagarse, no cuando aún hay tiempo para programar una visita de mantenimiento sin urgencia. El evento `Maintenance Scheduled` se dispara bajo presión, lo que puede traducirse en desplazamientos no planificados del técnico, mayor costo operativo y, si la agenda está llena, una ventana de indisponibilidad del dispositivo que afecta el monitoreo de la parcela.
+
+Cuando finalmente se ejecuta `Maintenance Replaced`, el alivio es momentáneo, pero emerge el segundo problema: la **falta de trazabilidad en el mantenimiento**. El sistema registra que la batería fue reemplazada, pero no captura metadatos esenciales como el identificador del técnico, el modelo y lote de la batería nueva, su voltaje inicial post-instalación, ni una confirmación de que el dispositivo pasó por una verificación funcional. Sin esta trazabilidad, si el dispositivo vuelve a degradarse prematuramente (`Device Health Degraded` en el futuro), el equipo de operaciones no puede determinar si la causa fue una batería defectuosa, una mala instalación o un problema de hardware preexistente.
+
+El cierre con `Device Health Restored` sella la intervención como exitosa a nivel operativo, pero la laguna en el registro de mantenimiento permanece, impidiendo análisis de vida útil, gestión de garantías y mejora continua del proceso.
+
+**Eventos involucrados:**
+- `Heartbeat Received` → Fuente de datos de voltaje, insuficiente para detectar degradación silenciosa.
+- `Silent battery degradation` → Colapso no lineal que escapa al monitoreo por voltaje superficial.
+- `Low battery level` → Advertencia temprana que puede llegar demasiado tarde en casos de degradación silenciosa.
+- `Battery Critical Alert` → Escalamiento urgente con margen de reacción mínimo.
+- `Maintenance Scheduled` → Programación bajo presión, con posibles sobrecostos.
+- `Maintenance Replaced` → Ejecución del cambio sin trazabilidad suficiente.
+- `Lack of traceability in maintenance` → Carencia de registro estructurado de la intervención.
+- `Device Health Restored` → Cierre operativo sin datos para análisis posteriores.
+
+**Riesgo de negocio:**
+- Apagones súbitos de dispositivos en campo por degradación de batería no anticipada, con pérdida de telemetría en momentos críticos del cultivo.
+- Aumento de costos operativos por desplazamientos urgentes de técnicos.
+- Imposibilidad de realizar análisis de vida útil real de baterías y de anticipar compras de repuestos.
+- Falta de evidencias para reclamar garantías a proveedores de baterías por fallos prematuros.
+- Dificultad para auditar procedimientos de mantenimiento en certificaciones de calidad o cumplimiento normativo.
+- Riesgo de repetir errores de instalación si no se registra quién y cómo realizó el reemplazo.
+
+![EventStorming-step3.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-7.png)
+
+---
+
+#### Pain Point 8: Fallos recurrentes en actualizaciones de firmware sin diagnóstico de causa raíz
+
+**Timeline asociado:** *Ciclo de Actualización de Firmware y Ajuste de Configuración de Dispositivos IoT* (Timeline 7) y *Ciclo de Vida Integral del Dispositivo IoT* (Timeline 2 consolidado)
+
+**Propósito del análisis:** Visibilizar que cuando una actualización de firmware falla (`Firmware Update Failed`), el sistema ejecuta mecánicamente un protocolo de recuperación: restaurar la versión anterior (`Previous Version Restored`), registrar una degradación de salud (`Device Health Degraded`), notificar al staff (`Staff Notified`) y eventualmente reintentar, sin realizar un diagnóstico automatizado de la causa del fallo. Esta carencia provoca que el mismo firmware pueda reintentarse sin cambios y volver a fallar cíclicamente, sometiendo al dispositivo a reinicios repetidos (`Device Rebooted`), cambios de configuración forzados (`Configuration Changed`) y períodos prolongados con la salud degradada, mientras el staff recibe notificaciones sin herramientas para resolver de raíz.
+
+**Narrativa del pain point:**  
+El proceso inicia de manera controlada: `Firmware Update Available` aparece en el dashboard, y la plataforma o el usuario autorizan `Firmware Update Started`. Hasta aquí, todo sigue el flujo esperado. Sin embargo, durante la transferencia del binario o la instalación en el dispositivo, se produce `Firmware Update Failed`. Las causas pueden ser múltiples: espacio insuficiente en memoria flash, checksum corrupto, interrupción de conectividad durante la descarga, incompatibilidad con el hardware específico de ese lote de sensores, o un bug en el propio firmware.
+
+Ante el fallo, el sistema activa automáticamente el protocolo de reversión: `Previous Version Restored` para devolver al dispositivo a un estado operativo conocido, y se emite `Device Health Degraded` porque la intervención no ha sido exitosa. El evento `Staff Notified` escala el problema al equipo de operaciones. Hasta este punto, la reacción es correcta y esperada.
+
+El pain point emerge porque **el ciclo puede repetirse sin que nada cambie**. Si el firmware fallido sigue marcado como disponible en el catálogo, una nueva ventana de actualización automática volverá a disparar `Firmware Update Started`, y el dispositivo volverá a fallar, a reiniciarse (`Device Rebooted`), a requerir una reversión y a notificar al staff. Mientras tanto, el dispositivo (que debería estar generando telemetría) se encuentra atrapado en un bucle de actualización fallida, con `Heartbeat Received` intermitentes o ausentes. El evento `Configuration Changed` puede llegar a dispararse incluso sin necesidad real, si la reversión de firmware deja parámetros inconsistentes.
+
+El staff, que recibe múltiples notificaciones (`Staff Notified`) del mismo dispositivo, carece de un panel de diagnóstico que correlacione los fallos por versión de firmware, modelo de hardware o patrón temporal. Sin esa información, la decisión puede ser pausar las actualizaciones manualmente, retrasando la adopción de mejoras de seguridad y funcionalidad en toda la flota.
+
+**Eventos involucrados:**
+- `Firmware Update Available` → Disponibilidad de nueva versión.
+- `Firmware Update Started` → Inicio de la instalación.
+- `Firmware Update Failed` → Fallo que detona el ciclo de recuperación.
+- `Previous Version Restored` → Reversión segura, pero sin diagnóstico.
+- `Device Health Degraded` → Degradación por intervención fallida.
+- `Staff Notified` → Escalamiento sin herramientas de análisis de causa.
+- `Device Rebooted` → Reinicio forzado como parte del ciclo fallido.
+- `Heartbeat Received` → Retorno intermitente a conectividad.
+- `Configuration Changed` → Ajuste de parámetros post-fallo, posiblemente innecesario.
+- `Firmware Update Completed` → Estado que no se alcanza, rompiendo la expectativa del flujo.
+
+**Riesgo de negocio:**
+- Dispositivos atrapados en ciclos de fallo de firmware que los dejan indisponibles para monitoreo agronómico durante horas o días.
+- Desgaste prematuro del hardware por reinicios repetidos y escrituras en memoria flash.
+- Incapacidad de desplegar parches de seguridad críticos en dispositivos afectados, ampliando la superficie de ataque.
+- Fatiga del staff de operaciones, que recibe notificaciones sin poder distinguir un fallo puntual de un problema sistémico.
+- Inconsistencia de versiones de firmware en la flota, dificultando el soporte y la evolución de funcionalidades.
+- Riesgo de que un agricultor pierda confianza al ver su dispositivo constantemente "en mantenimiento" en lugar de operativo.
+
+![EventStorming-step3.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-8.png)
+
+---
+
+#### Pain Point 9: Sobrescritura silenciosa de umbrales por aplicación masiva de plantillas y notificación insuficiente al agricultor
+
+**Timeline asociado:** *Configuración Colaborativa de Umbrales de Cultivo y Monitoreo Compartido* (Timeline 14) y *Creación y Aplicación Masiva de Plantillas de Umbrales por el Agrónomo* (Timeline 15)
+
+**Propósito del análisis:** Señalar que cuando un agrónomo vinculado como asesor crea una plantilla de umbrales (`Threshold template created by agronomist`) y la aplica de forma masiva sobre múltiples parcelas de sus clientes (`Template applied to client plot`), el sistema no solicita confirmación explícita del agricultor antes de sobrescribir sus configuraciones previas. Además, la notificación posterior (`Farmer notified of the change made by their agronomist`) carece del detalle suficiente para que el agricultor comprenda exactamente qué cambió, por qué cambió y qué implicaciones agronómicas tiene. Esta doble carencia (falta de consentimiento previo y notificación insuficiente)puede generar desconfianza en la relación de asesoría, decisiones de cultivo ejecutadas sobre umbrales que el agricultor no validó y una percepción de pérdida de control sobre su propia explotación.
+
+**Narrativa del pain point:**  
+El flujo de colaboración agrónomo-agricultor está diseñado para escalar el conocimiento experto. El Timeline 15 muestra la eficiencia: `Threshold template created by agronomist` → `Select plots` → `Template applied to client plot` → `System processes each parcel` → `Farmer notified of the change made by their agronomist`. Es rápido, masivo y reduce el trabajo manual del asesor.
+
+Sin embargo, la eficiencia tiene un costo en transparencia. El evento `Template applied to client plot` es la acción que dispara la sobrescritura, pero antes de ejecutarla el sistema no interpone un paso de validación por parte del agricultor afectado. Si el agrónomo decide modificar el umbral de humedad mínima de un cultivo de 30 % a 22 % para un grupo de parcelas, ese cambio se aplica directamente. El problema se agrava porque la plantilla puede contener múltiples parámetros: humedad, temperatura, pH, conductividad. Todos ellos pisan los valores anteriores, que el agricultor pudo haber ajustado manualmente con mucho cuidado (`Threshold manually modified with a value outside the safe range` y `Threshold exception logged with user confirmation`, vistos en el Timeline 14), sin que el agricultor haya sido consultado.
+
+Tras la aplicación masiva, el sistema emite `Farmer notified of the change made by their agronomist`. Pero aquí emerge el segundo punto de dolor: *"The farmer may not understand why his thresholds changed if he does not receive detailed notification"*. La notificación actual es genérica: indica que hubo un cambio y quién lo hizo, pero no desglosa parámetro por parámetro (valor anterior, valor nuevo, justificación agronómica, cultivo y zona afectada). Al agricultor le llega un aviso que dice algo similar a "Tu agrónomo ha modificado los umbrales de tu parcela", y si quiere entender el detalle debe navegar manualmente al histórico de auditoría (`Threshold change recorded in audit`), lo que requiere tiempo y conocimientos que no todos los agricultores poseen.
+
+El riesgo de fondo es doble: un agricultor puede operar durante días o semanas con umbrales que no comprende o no comparte, y solo descubrirá el impacto cuando una alerta de riego no se dispare o cuando un diagnóstico agronómico le indique una corrección que él nunca autorizó. Esto erosiona la relación de confianza con el agrónomo y con la propia plataforma AgroSafe.
+
+**Eventos involucrados:**
+- `Threshold template created by agronomist` → Creación de la plantilla maestra.
+- `Select plots` → Selección de las parcelas destino.
+- `Template applied to client plot` → Punto crítico: sobrescritura sin consentimiento previo del agricultor.
+- `System processes each parcel` → Aplicación masiva irreversible antes de notificar.
+- `Farmer notified of the change made by their agronomist` → Notificación genérica que no desglosa los cambios ni los justifica.
+- `Threshold change recorded in audit` → El detalle existe, pero no se expone proactivamente en la notificación.
+- `Threshold manually modified with a value outside the safe range` y `Threshold exception logged with user confirmation` (del Timeline 14) → Configuraciones previas del agricultor que pueden ser sobrescritas sin que él lo sepa.
+
+**Riesgo de negocio:**
+- Pérdida de confianza del agricultor en el agrónomo y en AgroSafe como plataforma de asesoría transparente.
+- Decisiones agronómicas (riegos, fertilizaciones, alertas) ejecutadas sobre umbrales que el agricultor no ha validado.
+- Posible abandono de la funcionalidad de asesoría por parte de agricultores que sienten que pierden el control sobre sus parcelas.
+- Conflictos entre agrónomo y agricultor si un cambio masivo produce un resultado adverso en el cultivo (por ejemplo, estrés hídrico por un umbral de humedad demasiado bajo).
+- Riesgo de churn en el segmento de agricultores que valoran el control directo sobre sus configuraciones.
+- Dificultad para auditar responsabilidades si una decisión agronómica cuestionada fue impuesta sin consentimiento explícito.
+
+![EventStorming-step3.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-9.png)
+
+---
+
+#### Pain Point 10: Recomendación técnica sin adjuntar datos de sensores que respalden el consejo
+
+**Timeline asociado:** *Supervisión Colaborativa, Recomendaciones Técnicas e Informes Periódicos* (Timeline 17)
+
+**Propósito del análisis:** Señalar que cuando un agrónomo escribe una recomendación técnica desde el dashboard consolidado (`Write a recommendation`) y la envía al agricultor, es crítico que el mensaje incluya de manera automática y visible los datos de sensores que fundamentan el consejo. Si la plataforma no adjunta esos datos, o lo hace de forma poco visible, la recomendación pierde su base de evidencia objetiva y se convierte en una opinión subjetiva. El agricultor, sin acceso inmediato a las lecturas que motivaron el consejo, puede desconfiar, ignorar la acción sugerida, o verse forzado a contrastar manualmente la información con el dashboard, generando fricción y erosionando la relación de asesoría.
+
+**Narrativa del pain point:**  
+El flujo de supervisión está diseñado para que el agrónomo actúe con rapidez: `Agronomist accesses the consolidated dashboard of his client plots`, identifica una `Customer plot in critical condition visually highlighted`, profundiza con `Access the plot history`, y redacta una orientación experta en `Write a recommendation`. Hasta ahí, el sistema está empoderando al asesor.
+
+El punto de dolor se concentra en la transición hacia el agricultor. La nota que acompaña a la imagen es explícita: *"The recommendation should include sensor data so that the farmer can trust the advice."* Esto indica que no siempre se está cumpliendo, o que la forma en que se adjuntan los datos no es lo suficientemente clara. El evento `Technical recommendation sent to the farmer with attached sensor data` presupone que los datos se incluyen, pero en la realidad actual podrían estar ausentes, o enviarse como un enlace genérico al dashboard que el agricultor no revisa, o aparecer en un formato técnico incomprensible sin la contextualización necesaria.
+
+La consecuencia es directa: el agricultor recibe una notificación que dice, por ejemplo, "Tu agrónomo recomienda aumentar el riego", pero sin ver la curva de humedad del suelo que muestra la tendencia a la baja, o el índice de estrés hídrico calculado. Sin esa evidencia, el agricultor puede interpretar que el agrónomo está adivinando, que la recomendación es una alarma innecesaria, o que él mismo conoce mejor su tierra. La confianza se resiente y la probabilidad de que el agricultor ejecute la acción recomendada disminuye drásticamente.
+
+Este problema se agrava si la recomendación incluye acciones que implican costos (desplazamiento a campo, apertura de válvulas, ajuste de fertilización). Un agricultor que no ve los datos que justifican el gasto probablemente posponga o ignore la indicación, exponiendo el cultivo al riesgo que el agrónomo ya había detectado.
+
+**Eventos involucrados:**
+- `Agronomist accesses the consolidated dashboard of his client plots` → Inicio del análisis experto.
+- `Customer plot in critical condition visually highlighted` → Detección de la parcela con problemas.
+- `Access the plot history` → Consulta de datos históricos por el agrónomo.
+- `Write a recommendation` → Redacción del consejo técnico.
+- `Technical recommendation sent to the farmer with attached sensor data` → Punto crítico: los datos deben estar presentes, visibles y comprensibles.
+- `Monthly technical report generated for a client` / `Request a monthly report` / `System compiles data` → Flujos paralelos que sí compilan datos, pero no sustituyen la inmediatez de una recomendación con evidencia.
+
+**Riesgo de negocio:**
+- Pérdida de confianza del agricultor en el agrónomo y en la plataforma como canal de asesoría profesional.
+- Recomendaciones técnicas ignoradas, con el consiguiente deterioro evitable de las condiciones del cultivo (estrés hídrico, desbalance de pH, plagas no tratadas a tiempo).
+- Agricultores que optan por desvincular al agrónomo al percibir que sus consejos no están fundamentados, reduciendo la retención de clientes en planes con asesoría incluida.
+- Incremento de la carga de soporte: agricultores que contactan para preguntar "¿por qué mi agrónomo me pide que haga esto?", cuando la respuesta debería estar ya en la notificación.
+- Desalineación entre el valor real del monitoreo IoT y la percepción del agricultor, que no ve el vínculo entre los datos que recolectan sus sensores y las recomendaciones que recibe.
+
+![EventStorming-step3.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-10.png)
+
+---
+
+#### Pain Point 11: Desperdicio de agua y daño potencial al cultivo por comandos de riego en entornos de conectividad inestable y concurrencia no controlada
+
+**Timelines asociados:** *Ejecución de Comandos con Fallo y Recuperación* (Timeline 10), *Gestión de Conectividad Intermitente y Sincronización de Dispositivos IoT* (Timeline 9) y *Monitoreo de Suelo, Diagnóstico de Estrés Hídrico y Riego Correctivo Automatizado* (Timeline 16)
+
+**Propósito del análisis:** Exponer que la combinación de conectividad intermitente en zonas rurales y la falta de un resolutor robusto de comandos concurrentes puede provocar desperdicio de agua, daños al cultivo y confusión operativa. Los escenarios identificados incluyen: comandos de riego enviados cuando no hay conectividad, comandos simultáneos de agricultor y agrónomo sobre la misma zona, intentos de activar un riego que ya está en curso, incertidumbre del agricultor sobre el estado real de ejecución, cierre automático de válvulas por el Edge ante pérdida de conexión con el backend, y comandos que pierden vigencia por ventana de tiempo superada o condición ya resuelta. Todos estos escenarios confluyen en un mismo riesgo de negocio: insumos desperdiciados y cultivo comprometido.
+
+**Narrativa del pain point:**
+
+**Escenario 1: Comando enviado sin conectividad disponible**  
+Un agricultor, desde la aplicación móvil en una zona de baja cobertura, solicita un riego manual. El evento `Irrigation command` se genera, pero no puede ser enviado al backend. El sistema lo encola localmente (`Command queued locally in the mobile app`) a la espera de reconexión. Sin embargo, el agricultor no recibe una confirmación clara de si el comando se envió o está pendiente. La nota lo explicita: *"The farmer may not know whether the command was executed or not"*. Mientras tanto, con `Connectivity restored, command validated before execution`, el backend recibe el comando diferido y debe decidir si aún es válido.
+
+**Escenario 2: Comandos simultáneos de agricultor y agrónomo**  
+Sobre la misma válvula o zona de riego, dos usuarios con permisos (el agricultor y su agrónomo vinculado) pueden enviar comandos casi al mismo tiempo. El sistema carece de un mecanismo de bloqueo o priorización previa. El resultado es un conflicto: *"Two users (farmer and agronomist) could send simultaneous commands for the same area, generating conflict"*. Si uno ordena abrir la válvula y el otro ordena cerrarla o modificar el caudal, el dispositivo de borde recibe instrucciones contradictorias. La mitigación actual (`Duplicate action blocked, user informed of current status`) actúa después del hecho, cuando el conflicto ya se ha detectado.
+
+**Escenario 3: Intento de activar un riego ya en curso**  
+Una regla automatizada, basada en diagnóstico de estrés hídrico, ordena abrir la válvula. Simultáneamente, el agricultor, sin saberlo, presiona el botón de riego manual. Se produce el evento `Attempt to activate already active irrigation, conflict detected`. El sistema bloquea la acción duplicada e informa al usuario del estado actual, pero el agricultor puede interpretar que su comando falló y reintentarlo, generando ciclos de bloqueo-información que deterioran la experiencia.
+
+**Escenario 4: Cierre automático de válvula por el Edge ante pérdida de backend**  
+Como medida de seguridad, el firmware del dispositivo de borde está programado para cerrar automáticamente la válvula si detecta que la conexión con el backend se ha perdido (`Valve automatically closed by Edge when connection with backend is lost`). Esta protección evita riegos indefinidos, pero introduce un nuevo problema: un riego legítimo, en curso, se interrumpe bruscamente por una caída de conectividad que nada tiene que ver con las condiciones del suelo. El cultivo puede quedar con un riego incompleto, y el agricultor ni siquiera lo sabe hasta que revisa el dashboard o recibe una alerta de humedad aún baja.
+
+**Escenario 5: Comando descartado por ventana de tiempo superada**  
+Un comando encolado durante un período offline prolongado puede llegar al backend cuando la condición que lo motivó ya se resolvió (por ejemplo, ya llovió, o el diagnóstico automático ya ejecutó otro riego). La regla actual dicta: `Command discarded, exceeded 30 min or condition already resolved`. Esto es correcto como protección, pero el agricultor nunca recibe confirmación de que su orden fue descartada. La aplicación móvil puede seguir mostrando el comando como "pendiente" o, peor aún, desaparecer sin explicación.
+
+**Escenario 6: Comando ejecutado tras validación exitosa**  
+El flujo positivo también existe: `Command executed after successful validation`. Pero incluso en este caso, si el comando viajó con retraso, el riego se aplica fuera de la ventana óptima (por ejemplo, en las horas de mayor evaporación en lugar de al amanecer), desperdiciando agua y reduciendo la eficiencia.
+
+**Consecuencia agronómica global:**  
+La suma de estos escenarios se traduce en el título del pain point: *Waste and potential damage to the crop*. El agua se aplica de más (solapamiento de comandos, riego fuera de hora), se interrumpe sin completar (desconexión), o nunca se aplica a tiempo (comando descartado). El cultivo sufre estrés por exceso o defecto, y el agricultor percibe que la automatización no es confiable.
+
+**Eventos involucrados:**
+- `Irrigation command` / `Command Queued` → Origen del comando.
+- `Command queued locally in the mobile app` → Encolado sin conectividad.
+- `Attempt to activate already active irrigation, conflict detected` → Conflicto de duplicación.
+- `Duplicate action blocked, user informed of current status` → Bloqueo reactivo.
+- `Connectivity restored, command validated before execution` → Revalidación post-reconexión.
+- `Command executed after successful validation` → Ejecución efectiva.
+- `Valve automatically closed by Edge when connection with backend is lost` → Cierre de seguridad.
+- `Command discarded, exceeded 30 min or condition already resolved` → Descarte por ventana.
+- `Device Offline Detected` / `Device Online Restored` / `Sync Completed` → Ciclo de conectividad subyacente.
+
+**Riesgo de negocio:**
+- Desperdicio de agua, un recurso crítico y costoso, por riegos solapados, incompletos o fuera de ventana óptima.
+- Daño al cultivo: estrés hídrico por riego insuficiente (si el comando se descarta o la válvula se cierra prematuramente) o excesivo (si no se detecta un riego ya activo).
+- Pérdida de confianza en la automatización y en la app móvil; el agricultor puede optar por operar las válvulas manualmente, renunciando al valor diferencial de AgroSafe.
+- Conflictos entre agrónomo y agricultor si la plataforma no distingue quién originó el comando fallido o conflictivo.
+- Incremento de tickets de soporte preguntando "¿se regó o no se regó?" o "¿por qué mi válvula se cerró sola?".
+
+![EventStorming-step3.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-11.png)
+
+---
+
+#### Pain Point 12: Calibración incorrecta de umbrales en el borde que provoca clasificación errónea y fatiga de alertas
+
+**Timeline asociado:** *Detección y Clasificación de Intrusión Perimetral con Respuesta Contextual* (Timeline 20)
+
+**Propósito del análisis:** Visibilizar que la clasificación de eventos de intrusión perimetral depende críticamente de los umbrales configurados en el firmware del dispositivo de borde para distinguir entre viento, animales pequeños y presencia humana real. Si estos umbrales se calibran de forma incorrecta en campo (por ejemplo, usando valores genéricos que no se ajustan a las condiciones ambientales específicas de la parcela), todos los eventos pueden clasificarse de manera uniforme (todo como `WIND`, todo como `ANIMAL`, o todo como `HUMAN`). Esta distorsión produce, por un lado, frecuentes falsas alarmas que llevan a la fatiga de alertas del agricultor y del equipo de seguridad; y por otro, el riesgo opuesto de que intrusiones humanas reales sean clasificadas erróneamente como inocuas y no se notifiquen a tiempo.
+
+**Narrativa del pain point:**
+
+El flujo de detección perimetral está diseñado para una clasificación inteligente en el borde: `PIR sensor detects movement at the perimeter` → `Heat intensity measured by the ESP32 ADC` → `Edge compares with thresholds` → `Event classified as WIND`, `Event classified as ANIMAL` o `Event classified as HUMAN`. Esta arquitectura es eficiente porque descarga la decisión al hardware local, reduciendo latencia y tráfico al backend.
+
+Sin embargo, la nota que abre la imagen es contundente: *"If the threshold is incorrectly calibrated in the field, all events are classified the same."* Esto revela un punto frágil del diseño. Los umbrales que utiliza el Edge para comparar la intensidad de calor y el patrón de movimiento no son universales: dependen de la temperatura ambiente de la zona, la presencia de fauna local, la vegetación circundante y la distancia a la que se espera detectar intrusos. Si el instalador utiliza una configuración por defecto sin ajustarla a la parcela concreta, el firmware aplica criterios que pueden no corresponder a la realidad.
+
+Esta mala calibración produce dos escenarios de fallo:
+
+**Escenario A – Todo clasificado como WIND o ANIMAL:** Si el umbral de calor para presencia humana se ajusta demasiado alto, incluso una persona que camina cerca del perímetro puede clasificarse como viento o animal pequeño. Los eventos humanos reales nunca alcanzan el estado `Event classified as HUMAN`, nunca se envía un `High trust rating sent to the backend immediately`, y nunca se dispara `Human intrusion alert triggered`. El intruso real queda registrado, como mucho, como un `Low priority event logged in history without urgent notification`, invisible para el agricultor en tiempo real. El riesgo de seguridad es crítico: la parcela está ciega a intrusiones humanas.
+
+**Escenario B – Todo clasificado como HUMAN:** Si el umbral se ajusta demasiado bajo, cada ráfaga de viento que mueve la vegetación, cada animal pequeño que cruza el perímetro, genera un `Event classified as HUMAN`. El backend recibe una avalancha de eventos con `High trust rating`, y el sistema dispara repetidamente `Human intrusion alert triggered`. La nota lo explicita con claridad: *"Frequent false alarms (wind, small animals) lead to alert fatigue."* El agricultor, que inicialmente reaccionaba a cada alerta, empieza a ignorarlas. Cuando ocurre una intrusión real, la notificación se pierde en un mar de falsas alarmas, y el agricultor no actúa.
+
+La fatiga de alertas es un problema bien documentado en sistemas de seguridad: el usuario pierde confianza en el sistema, puede llegar a silenciar las notificaciones de la app, y la inversión en sensores perimetrales queda devaluada. Además, el backend recibe una carga innecesaria de eventos de baja calidad, lo que puede degradar el rendimiento del sistema de notificaciones para todos los clientes.
+
+**Eventos involucrados:**
+- `PIR sensor detects movement at the perimeter` → Disparo inicial.
+- `Heat intensity measured by the ESP32 ADC` → Medición que alimenta la comparación.
+- `Edge compares with thresholds` → Punto crítico: si los umbrales están mal calibrados, todo el flujo se distorsiona.
+- `Event classified as WIND` → Falso negativo si el evento real era humano.
+- `Event classified as ANIMAL` → Falso negativo o falso positivo según la calibración.
+- `Event classified as HUMAN` → Falso positivo masivo que genera fatiga de alertas.
+- `High trust rating sent to the backend immediately` → Envío de evento clasificado como humano, potencialmente falso.
+- `Low priority event logged in history without urgent notification` → Registro de eventos clasificados como viento o animal, que podrían esconder intrusiones reales.
+- `Human intrusion alert triggered` → Alerta final, devaluada si se dispara con demasiada frecuencia.
+
+**Riesgo de negocio:**
+- Intrusiones humanas reales no detectadas por umbrales demasiado restrictivos, con riesgo de robo de equipos, sabotaje de cultivos o vandalismo.
+- Fatiga de alertas que lleva al agricultor a ignorar notificaciones de seguridad, incluyendo las genuinas.
+- Desinstalación o desconexión de sensores perimetrales por parte de clientes que los consideran inútiles debido a las falsas alarmas constantes.
+- Experiencia de usuario degradada: la aplicación móvil se convierte en una fuente de molestia, no de seguridad.
+- Desperdicio de recursos de backend y de ancho de banda por procesamiento de eventos mal clasificados.
+- Responsabilidad legal si un incidente de seguridad real (robo, intrusión) no fue notificado adecuadamente y el cliente sufre pérdidas económicas.
+
+![EventStorming-step3.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-12.png)
+
+---
+
+#### Pain Point 13: Análisis de churn no correlacionado con datos de suscripción y uso
+
+**Timeline asociado:** *Análisis Ejecutivo de Métricas y Priorización de Roadmap de Producto* (Timeline 21)
+
+**Propósito del análisis:** Evidenciar que el dashboard ejecutivo actual calcula y presenta los KPIs fundamentales (MAU, MRR, churn, conversión trial-a-pago) y permite segmentar el análisis de churn por tipo de cliente, pero no cruza de forma automática y visible los datos de cancelación con la información detallada de suscripciones (plan, antigüedad, ciclo de facturación, método de pago) ni con los datos de uso real de la plataforma (funcionalidades utilizadas, frecuencia de acceso, adopción de features específicas). Esta carencia obliga al Product Owner y al Product Manager a realizar correlaciones manuales fuera de la herramienta, ralentiza la identificación de las causas raíz del churn y puede conducir a decisiones de roadmap basadas en intuiciones en lugar de en evidencia cruzada.
+
+**Narrativa del pain point:**
+
+El flujo de análisis ejecutivo es completo en su secuencia: `Product Owner consults the quarterly executive dashboard` → `Filter by segment and period` → `Calculated KPIs: MAU, MRR, churn, trial—paid conversion` → `Churn analysis filtered by customer segment`. Hasta aquí, el Product Owner dispone de una foto clara de cuántos clientes se están perdiendo en cada segmento (agricultores Básico, agricultores Premium, agrónomos).
+
+Sin embargo, la nota que acompaña la imagen es una señal de alarma: *"Churn data should be cross-referenced with subscriptions information and usage data."* Esta afirmación revela una carencia actual del sistema. El dashboard muestra el número de cancelaciones y la tasa de churn, pero no responde preguntas críticas como:
+
+- ¿Los clientes que cancelan estaban en plan mensual o anual?
+- ¿Cancelan más los que pagaban con tarjeta o por transferencia?
+- ¿Cuántos días antes de cancelar dejaron de usar la plataforma?
+- ¿Qué funcionalidades usaban (o nunca llegaron a usar) los que se dieron de baja?
+- ¿Existe correlación entre no completar el wizard de configuración inicial y el churn a los 30 días?
+
+Actualmente, para obtener esas respuestas, el Product Manager debe exportar manualmente los datos del módulo de suscripciones, los logs de uso y el mapa de adopción de funcionalidades (`Feature adoption heatmap consulted by Product Manager`), y cruzarlos en una hoja de cálculo externa. Este proceso es lento, propenso a errores y rara vez se hace con la frecuencia necesaria.
+
+Mientras tanto, el equipo observa eventos como `Abandonment funnel identified in a specific feature` y `Comparison of metrics with previous period generated`, pero no puede determinar si el embudo de abandono en una funcionalidad concreta es el causante directo del churn en un segmento específico. La decisión final (`Roadmap decision made based on actual usage data`) se toma con datos de uso, sí, pero sin la correlación con los datos de suscripción y cancelación. El riesgo es que se priorice una funcionalidad con alta adopción pero sin impacto real en retención, mientras se ignora otra cuyo bajo uso está directamente vinculado a las cancelaciones.
+
+**Eventos involucrados:**
+- `Product Owner consults the quarterly executive dashboard` → Punto de entrada al análisis.
+- `Filter by segment and period` → Segmentación que aísla el churn por tipo de cliente.
+- `Calculated KPIs: MAU, MRR, churn, trial—paid conversion` → Cálculo de métricas que no incluye correlación con uso.
+- `Churn analysis filtered by customer segment` → Análisis de cancelaciones sin datos de suscripción ni de uso en la misma vista.
+- `Feature adoption heatmap consulted by Product Manager` → Datos de adopción disponibles pero no correlacionados con churn.
+- `Abandonment funnel identified in a specific feature` → Hallazgo de abandono que no puede vincularse automáticamente a cancelaciones.
+- `Comparison of metrics with previous period generated` → Comparativa temporal sin correlación de factores causales.
+- `Roadmap decision made based on actual usage data` → Decisión final que puede ser subóptima por falta de correlación con churn y suscripciones.
+
+**Riesgo de negocio:**
+- Decisiones de roadmap que no atacan las verdaderas causas de cancelación, perpetuando tasas de churn que podrían reducirse.
+- Inversión en funcionalidades que muestran abandono en el embudo pero que no son el factor determinante de la pérdida de clientes.
+- Incapacidad de identificar segmentos de clientes en riesgo antes de que cancelen (por ejemplo, clientes que no usan features clave de su plan).
+- Lentitud en el ciclo de análisis: el equipo de producto reacciona con meses de retraso a patrones de cancelación que podrían haberse detectado en tiempo real.
+- Posible conflicto entre las áreas de Producto y Negocio si las decisiones de roadmap no se alinean con las métricas de retención y revenue.
+- Desperdicio de esfuerzo de desarrollo en iniciativas que no impactan la métrica más crítica del negocio: la retención de clientes.
+
+![EventStorming-step3.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-13.png)
 
 ---
 
