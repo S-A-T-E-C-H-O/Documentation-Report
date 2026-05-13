@@ -24,15 +24,595 @@ _Evidencia del desarrollo del primer paso del DDD._
 
 ---
 
-Después, avanzamos al segundo paso, denominado **Timelines**, donde analizamos y debatimos la secuencia de los eventos del dominio.
+#### Construcción y Explicación de los Timelines
+Una vez capturados los eventos de dominio, el equipo procedió a la fase de **Timelines**, donde se organizó cronológicamente la narrativa del dominio para visualizar flujos de valor completos. Cada timeline representa un proceso de negocio autosuficiente, con un inicio claro, estados intermedios y un resultado observable.
 
-El timeline describe el flujo de un sistema de riego inteligente que inicia con la captura de datos de sensores (humedad, pH y temperatura), analiza condiciones de estrés hídrico y genera un diagnóstico. Con base en ello, ejecuta el riego automáticamente hasta normalizar los valores y finalmente cierra el proceso sincronizando los datos. Después, avanzamos al segundo paso, denominado **Timelines**, donde analizamos y debatimos la secuencia de los eventos del dominio.
+A continuación, se describen los **Timelines** críticos identificados para AgroSafe, los cuales definen la lógica de operación del sistema:
 
-El timeline describe el flujo de un sistema de riego inteligente que inicia con la captura de datos de sensores (humedad, pH y temperatura), analiza condiciones de estrés hídrico y genera un diagnóstico. Con base en ello, ejecuta el riego automáticamente hasta normalizar los valores y finalmente cierra el proceso sincronizando los datos.
+#### Timeline 1: Onboarding y Registro de Usuarios
 
-![EventStorming-step2](./assets/images/dl-eventstorming/es-timeline.png)
+**Propósito:** Transformar a un visitante anónimo en un usuario autenticado y completamente configurado dentro de la plataforma AgroSafe, guiándolo a través de un proceso estructurado que incluye selección de plan, registro de identidad, verificación de credenciales y configuración inicial del entorno de trabajo.
 
-_Evidencia del desarrollo del segundo paso de DDD (Uno de los timelines)._
+**Narrativa del Flujo:** El proceso inicia cuando un `Visitante llega a la landing page` y explora la propuesta de valor del sistema. Tras identificar el beneficio, el `Visitante selecciona un plan` (Básico, Premium o Empresa), lo que genera el evento `Selected plan` y activa la lógica comercial correspondiente. Inmediatamente, se dispara el evento `Subscription activated`, reservando el plan y estableciendo las bases para la facturación recurrente.
+
+Con el plan seleccionado, el `Visitor completes the registration form`, proporcionando información crítica de identidad: nombre, email, teléfono y credenciales de acceso. En este punto crítico, el flujo se bifurca según el rol del usuario:
+
+**Rama A - Agricultor:** Si el usuario se registra como agricultor, se genera el evento `Registered Farmer`, creando su perfil con permisos operativos para gestionar parcelas, dispositivos y configuraciones de riego. Posteriormente, si decide trabajar con un asesor, se produce el evento `Agronomist linked`, estableciendo un vínculo profesional que permite al agrónomo acceder remotamente a los datos.
+
+**Rama B - Agrónomo:** Si el usuario se registra como ingeniero agrónomo, se genera el evento `Registered Agronomist`, creando su perfil profesional con capacidades de asesoría y gestión multi-cliente. Este flujo no requiere vinculación inmediata, pero habilita la estructura para invitar agricultores posteriormente.
+
+Ambas ramas convergen en el evento `Verification email sent`, donde el sistema dispara un correo electrónico con un enlace de verificación único y temporal. Cuando el usuario hace clic en el enlace, se produce el evento `Email verified by user`, marcando irreversiblemente la cuenta como "activa" y "verificada". Este es el punto de inflexión que separa la adquisición del acceso operativo.
+
+Inmediatamente después, el sistema presenta el `Starter guide complete` (Wizard de configuración inicial), un asistente interactivo que guía al usuario en la delimitación de parcelas, registro de dispositivos IoT y configuración de preferencias. Finalmente, tras completar el wizard, se produce el evento `Access the dashboard`, redirigiendo al usuario al panel de control principal donde puede comenzar a operar.
+
+**Eventos Clave del Timeline:**
+
+1. `Visitor arrives at landing page` → Primer punto de contacto
+2. `Visitor selects a plan` → Decisión comercial inicial
+3. `Subscription activated` → Activación del modelo de negocio
+4. `Visitor completes registration form` → Captura de identidad
+5. `Registered Farmer` / `Registered Agronomist` → Bifurcación por rol (Rama A / Rama B)
+6. `Agronomist linked` → Vinculación profesional (opcional, Rama A)
+7. `Verification email sent` → Validación de identidad
+8. `Email verified by user` → Transición irreversible de visitante a usuario activo
+9. `Starter guide complete` → Configuración operativa finalizada
+10. `Access the dashboard` → Usuario listo para generar valor
+
+![EventStorming-step2.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-1.png)
+
+---
+
+#### Timeline 2: Gestión de Suspensión y Reactivación de Cuenta por Impago
+
+**Propósito:** Administrar el ciclo de vida de una cuenta cuando se detecta un fallo de pago recurrente, transitando desde la suspensión automática del acceso y la notificación al cliente, pasando por la intervención del personal de soporte que investiga el caso, hasta la reactivación completa tras la regularización del pago, garantizando en todo momento la retención segura de los datos y la restauración íntegra de la conectividad con los dispositivos IoT.
+
+**Narrativa del Flujo:** El proceso se dispara internamente cuando el sistema de facturación, tras varios intentos fallidos de cobro, emite el evento `Customer account suspended due to non-payment`. Inmediatamente, de forma atómica, se produce el evento `Client access disabled, data retained`: el usuario pierde la capacidad de autenticarse en el dashboard y se detiene la ingesta de telemetría en tiempo real, pero todos los datos históricos, configuración de parcelas y registros de dispositivos permanecen inalterados dentro de su tenant.
+
+En paralelo, el motor de comunicación se activa y se lanza el evento `Notify the customer`, que envía un correo electrónico transaccional y una notificación push al dispositivo móvil informando del bloqueo, el motivo exacto y las vías de regularización disponibles (portal de pagos o contacto con soporte). Toda esta actividad queda registrada de forma inmutable con el evento `It is recorded in a log`, poblando la pista de auditoría para trazabilidad financiera y futuras disputas.
+
+El flujo puede bifurcarse a partir de aquí:
+
+**Rama A – Autogestión:** Si el cliente efectúa el pago pendiente a través del portal de autoservicio, el sistema valida instantáneamente la transacción y procede directamente a la reactivación automática.
+
+**Rama B – Intervención manual:** Si el cliente requiere asistencia o el pago se realiza por fuera de la plataforma, un miembro del staff de AgroSafe ejecuta el evento `Staff searches and views customer account` desde el backoffice. Allí verifica el historial de pagos, confirma el ingreso bancario y fuerza manualmente la reactivación.
+
+Ambas ramas convergen en el evento `Account reactivated after payment was processed`, que desencadena la restauración de los privilegios del cliente. Justo a continuación se dispara el evento `Access restored and devices synchronized`: el usuario vuelve a tener acceso al dashboard y los dispositivos IoT que habían quedado inactivos sincronizan su buffer de datos atrasados con la plataforma, poniendo al día las series históricas sin pérdida de información.
+
+**Eventos Clave del Timeline:**
+
+1. `Customer account suspended due to non-payment` → Disparador por fallo de cobro recurrente.
+2. `Client access disabled, data retained` → Bloqueo de acceso con preservación de datos.
+3. `Notify the customer` → Comunicación proactiva del incidente.
+4. `It is recorded in a log` → Registro inmutable para auditoría.
+5. `Staff searches and views customer account` → Investigación por parte de soporte (Rama B).
+6. `Account reactivated after payment was processed` → Transición a estado activo.
+7. `Access restored and devices synchronized` → Restauración total del servicio y sincronización de dispositivos IoT.
+
+![EventStorming-step2.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-2.png)
+
+---
+
+#### Timeline 3: Gestión de Pérdida y Reaprovisionamiento de Dispositivos IoT
+
+**Propósito:** Administrar de manera segura y controlada el ciclo de baja de un dispositivo IoT reportado como perdido o sustraído, asegurando la invalidación irreversible de sus credenciales, la detención inmediata del flujo de telemetría, y la posterior reposición de la capacidad operativa mediante el registro de un nuevo lote de dispositivos disponibles para ser reasignados a las parcelas activas.
+
+**Narrativa del Flujo:** El detonante del proceso es la notificación de un incidente de seguridad física sobre un sensor. Cuando un agricultor informa la desaparición de un dispositivo, o el sistema de monitoreo detecta una desconexión anómala prolongada, se dispara el evento `Device deactivated due to loss report`. Este evento bloquea el dispositivo en primera instancia, pero requiere validación humana para evitar falsos positivos.
+
+Acto seguido, un operador del equipo de soporte de AgroSafe accede a la consola de administración y confirma la baja definitiva mediante el evento `Staff deactivates account`. Esta acción administrativa inicia un proceso irreversible que desvincula el identificador único del dispositivo de la parcela y del agricultor. Como consecuencia inmediata, se producen dos eventos atómicos e inmutables: `Device credentials invalidated` (los certificados digitales y tokens de autenticación son revocados, haciendo imposible que el hardware se reconecte incluso si reapareciera) y `Telemetry stopped` (el stream de datos de humedad, temperatura y otros parámetros se cierra definitivamente, aunque todo el histórico se conserva intacto). A partir de este punto, el dispositivo queda marcado como “dado de baja por pérdida” en la pista de auditoría.
+
+Para que la explotación agrícola no pierda capacidad de monitoreo, el sistema inicia automáticamente un proceso de reaprovisionamiento cuando las políticas de inventario lo permiten. Se origina así el evento `Batch of IoT devices registered as available`, donde un lote de sensores precertificados y preconfigurados se incorpora al pool de dispositivos listos para desplegar.
+
+- Si el cliente posee un plan con reposición ágil, el sistema puede asignar directamente uno de estos dispositivos a la misma parcela, encadenándose con el timeline de “Configuración de parcela y vinculación de dispositivos”.
+- De lo contrario, el agricultor recibe una notificación en su dashboard indicando que tiene nuevos dispositivos disponibles para instalar, y será él quien complete la vinculación manualmente.
+
+De esta manera, el incidente de pérdida se transforma en una oportunidad para demostrar resiliencia operativa, minimizando el tiempo sin datos y manteniendo la integridad del ecosistema.
+
+**Eventos Clave del Timeline:**
+
+1. `Device deactivated due to loss report` → Disparador a partir de reporte o detección de anomalía.
+2. `Staff deactivates account` → Confirmación manual de la baja por parte del equipo de operaciones.
+3. `Device credentials invalidated, telemetry stopped` → Revocación de acceso y cese definitivo de ingesta de datos.
+4. `Batch of IoT devices registered as available` → Reposición planificada de sensores listos para asignar.
+
+![EventStorming-step2.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-3.png)
+
+---
+
+#### Timeline 4: Gestión de Alertas de Seguridad en Tiempo Real
+
+**Propósito:** Proporcionar un canal de comunicación inmediato y de alta confianza ante incidentes de seguridad que afecten a la cuenta de un usuario o a sus dispositivos IoT, permitiendo que el cliente reciba la alerta vía WhatsApp, confirme su recepción para detener automatismos de bloqueo preventivo y, tras verificar la situación, descarte la alerta si el incidente está bajo control, manteniendo la transparencia y la capacidad de reacción del usuario sobre su propia operación.
+
+**Narrativa del Flujo:** El disparador del proceso es una detección anómala por parte del motor de seguridad de AgroSafe: puede tratarse de múltiples intentos fallidos de inicio de sesión desde una ubicación inusual, un acceso a datos de telemetría desde una IP sospechosa, o una señal de manipulación física reportada por un dispositivo IoT. En cuanto la anomalía supera el umbral de riesgo, el sistema lanza el evento `Alert sent via WhatsApp`, que entrega al agricultor o agrónomo titular un mensaje enriquecido con detalles del incidente (tipo, hora, dispositivo o cuenta afectada) y un botón de confirmación de lectura.
+
+El flujo se divide inmediatamente en dos ramas temporales:
+
+- **Rama A – Confirmación rápida:** Si el usuario pulsa el botón en los primeros minutos, se produce el evento `Alert confirmed as received`. Esta acción es crucial: detiene cualquier temporizador de escalado automático (como el bloqueo preventivo de cuenta), informa al centro de operaciones que el legítimo dueño está al tanto y desbloquea la opción de gestionar la alerta.
+- **Rama B – Escalamiento por ausencia:** Si el usuario no confirma en el tiempo estipulado, el sistema inicia automáticamente una secuencia de protección más agresiva (bloqueo parcial de cuenta, notificación a soporte) que queda registrada en una pista de auditoría independiente.
+
+Siguiendo la rama principal, el usuario revisa la actividad sospechosa desde su aplicación móvil o dashboard, tal vez consulta con su agrónomo vinculado o verifica físicamente el dispositivo. Si determina que es un falso positivo (por ejemplo, él mismo intentó acceder desde una red distinta) o que ya ha tomado medidas para contener la situación, decide descartar la alerta. Se dispara entonces el evento `Security alert dismissed`, que cierra irreversiblemente el incidente, devuelve la cuenta o el dispositivo a su estado operativo normal y genera un registro inmutable en el libro de seguridad.
+
+Tras el descarte, el sistema puede opcionalmente reforzar la confianza con un mensaje de WhatsApp de cierre (“La alerta ha sido gestionada con éxito”), y todos los eventos involucrados quedan disponibles para futuras auditorías de cumplimiento.
+
+**Eventos Clave del Timeline:**
+
+1. `Alert sent via WhatsApp` → Notificación proactiva a través de un canal de alta disponibilidad.
+2. `Alert confirmed as received` → Acuse de recibo que detiene contramedidas automáticas.
+3. `Security alert dismissed` → Cierre explícito del incidente por parte del usuario, restaurando la normalidad.
+
+![EventStorming-step2.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-4.png)
+
+---
+
+#### Timeline 5: Activación y Puesta en Marcha de un Dispositivo IoT
+
+**Propósito:** Transformar un sensor IoT recién registrado en el inventario de AgroSafe en un dispositivo plenamente operativo, listo para transmitir telemetría desde campo. El proceso abarca la generación de credenciales criptográficas únicas, la activación en primer encendido, la aplicación de la configuración específica de la parcela y la confirmación final de que el dispositivo ha alcanzado el estado `Ready for Operation`, integrándose de forma segura y fiable al gemelo digital de la explotación.
+
+**Narrativa del Flujo:** El punto de partida es el evento `Device Registered`, que puede originarse desde dos fuentes: la recepción de un lote de dispositivos precertificados en el inventario (como vimos en el timeline de pérdida) o el registro manual de un nuevo sensor por parte del agricultor desde su dashboard. En este momento el dispositivo aparece en el sistema con su identificador de fábrica, pero no tiene aún los permisos para conectarse.
+
+Inmediatamente, el motor de seguridad de AgroSafe dispara el evento `Credentials Generated`. El sistema crea un par de credenciales asimétricas (certificados X.509 o tokens JWT de largo plazo) y los asocia de forma exclusiva al dispositivo y al tenant del agricultor. Este paso garantiza que, cuando el hardware encienda, solo pueda autenticarse contra el endpoint de AgroSafe y que la comunicación esté cifrada de extremo a extremo.
+
+Con las credenciales preinyectadas o descargadas, el dispositivo se enciende en campo. Al establecer su primer handshake exitoso con la plataforma, se produce el evento `Device Activated`. Este es un punto de no retorno: el backend registra la primera conexión, valida la identidad, crea los tópicos MQTT correspondientes y declara el dispositivo “vivo”. A partir de aquí ya puede recibir órdenes y empezar a transmitir datos crudos bajo una configuración por defecto.
+
+Para optimizar el comportamiento del sensor según el cultivo, la zona o la estrategia de riego, el usuario (agricultor o agrónomo vinculado) aplica ajustes mediante el evento `Configuration Changed`: modifica la frecuencia de muestreo, los umbrales de alerta de humedad, la resolución de envío de datos o activa modos de ahorro de batería. El sistema valida y envía la nueva configuración al dispositivo, que la confirma con un ACK.
+
+Finalmente, cuando la configuración ha sido aplicada y verificada, el dispositivo transita al estado `Ready for Operation`. Este evento consolida el alta operativa: la plataforma empieza a considerar sus datos como fiables para alimentar dashboards, disparar alertas y nutrir los modelos de recomendación agronómica. El sensor queda plenamente integrado en el mapa de la parcela y su telemetría se visualiza en tiempo real.
+
+**Eventos Clave del Timeline:**
+
+1. `Device Registered` → Ingreso del dispositivo al inventario o a la cuenta del agricultor.
+2. `Credentials Generated` → Vinculación criptográfica irreversible entre el hardware y el tenant.
+3. `Device Activated` → Primer handshake exitoso y validación de identidad del dispositivo.
+4. `Configuration Changed` → Ajuste de parámetros operativos por parte del usuario autorizado.
+5. `Ready for Operation` → Estado final que habilita el uso de la telemetría como fuente confiable.
+
+![EventStorming-step2.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-5.png)
+
+---
+
+#### Timeline 6: Ciclo de Telemetría, Comando y Sincronización de Dispositivos IoT
+
+**Propósito:** Mantener la comunicación bidireccional, segura y confiable entre la plataforma AgroSafe y los dispositivos IoT desplegados en campo, garantizando que los latidos de salud y los datos de telemetría se reciban en tiempo real, que las órdenes enviadas desde el dashboard o los automatismos se encolen y ejecuten correctamente, y que el estado del dispositivo se sincronice de forma consistente tras cada operación, preservando la integridad del gemelo digital de la parcela.
+
+**Narrativa del Flujo:** versión de firmware. La plataforma registra la marca de tiempo y actualiza el indicador de conectividad en el dashboard; si el heartbeat no se recibe dentro del umbral, el sistema puede disparar una alerta por desconexión.
+
+En la misma ráfaga de comunicación, o inmediatamente después, el dispositivo transmite las lecturas acumuladas de los sensores, produciéndose el evento `Telemetry Received`. Humedad del suelo, temperatura, conductividad eléctrica y cualquier otra métrica configurada se ingieren en las series históricas, alimentando gráficos, reportes y motores de alerta.
+
+El flujo puede continuar en dos direcciones en función de si existen instrucciones pendientes para el dispositivo:
+
+- **Rama A – Operación pasiva:** Si no hay comandos en cola, el ciclo finaliza temporalmente hasta la próxima ventana de heartbeat, dejando el estado sincronizado por defecto.
+- **Rama B – Intervención activa:** Cuando un agricultor, un agrónomo o una regla automatizada decide modificar el comportamiento del dispositivo (por ejemplo, cambiar la frecuencia de muestreo, abrir una electroválvula o iniciar una actualización de firmware OTA), se dispara el evento `Command Queued`. En este momento la instrucción se almacena en el buzón del dispositivo dentro de la plataforma, a la espera de ser consumida.
+
+Durante el siguiente check-in del dispositivo, este recibe el comando pendiente y lo ejecuta sobre el hardware. El evento `Command Executed` registra la confirmación del sensor de que la acción fue llevada a cabo, incluyendo el resultado (éxito o fallo de ejecución). Inmediatamente después, para cerrar el ciclo de forma segura, el dispositivo envía su estado completo actualizado y la plataforma lo refleja en el gemelo digital a través del evento `Sync Completed`. Este evento reconcilia cualquier posible divergencia: consolida la nueva configuración aplicada, limpia el buzón de comandos pendientes y deja tanto al dispositivo como al dashboard exactamente con la misma foto operativa.
+
+Este ciclo continuo de `Heartbeat → Telemetry → (opcional) Command Queued → Command Executed → Sync Completed` es el latido operativo que permite a AgroSafe reaccionar en tiempo real y mantener la confianza en los datos que soportan la toma de decisiones agronómicas.
+
+**Eventos Clave del Timeline:**
+
+1. `Heartbeat Received` → Señal periódica que confirma la conectividad y salud del dispositivo.
+2. `Telemetry Received` → Ingesta de datos de sensores que nutren las series históricas.
+3. `Command Queued` → Encapsulamiento de una instrucción para el dispositivo, originada por usuario o regla automatizada.
+4. `Command Executed` → Confirmación de que el hardware realizó la acción solicitada.
+5. `Sync Completed` → Cierre del ciclo con la reconciliación total del estado entre el dispositivo físico y su gemelo digital en la plataforma.
+
+![EventStorming-step2.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-6.png)
+
+---
+
+#### Timeline 7: Ciclo de Actualización de Firmware y Ajuste de Configuración de Dispositivos IoT
+
+**Propósito:** Gestionar de forma segura y monitorizada el despliegue de nuevas versiones de firmware en los dispositivos IoT de campo, garantizando que la actualización se inicie bajo políticas controladas, se complete sin pérdida de integridad, y que cualquier cambio de configuración necesario tras el reinicio del firmware quede aplicado. El proceso incorpora la observabilidad del estado de salud del dispositivo, permitiendo detectar y registrar cualquier degradación temporal o persistente que surja como consecuencia de la intervención, activando los flujos de recuperación oportunos.
+
+**Narrativa del Flujo:** El disparador del proceso puede ser una política automática de actualización masiva, una recomendación de seguridad del equipo de AgroSafe o la aceptación por parte del agricultor de una notificación de nuevo firmware. En cualquier caso, el primer evento que se registra es `Firmware Update Started`. En este momento la plataforma envía el paquete binario firmado al dispositivo, se marcan los streams de telemetría como “ventana de mantenimiento” y se suspende temporalmente la ejecución de comandos asíncronos.
+
+Durante la transferencia o el reinicio del dispositivo, es esperable que los heartbeats se interrumpan y que los indicadores vitales fluctúen. Si la interrupción supera un umbral predefinido o se detectan reinicios no planificados, el sistema puede emitir el evento `Device Health Degraded`. Aunque se trate de una degradación transitoria asociada a la propia actualización, el evento queda registrado en el libro de salud del dispositivo y se refleja en el dashboard, activando alertas informativas para el usuario y, si la situación se prolonga, una escalación al equipo de soporte.
+
+Una vez que el dispositivo completa la instalación y arranca con la nueva versión, se registra el evento `Firmware Update Completed`. El nuevo firmware ya está operativo, pero es posible que ciertos parámetros hayan cambiado o que los valores por defecto no sean los adecuados para la parcela.
+
+Para alinear el comportamiento del sensor con la estrategia agronómica, el sistema (o el usuario) aplica el evento `Configuration Changed` justo después de la actualización. Esto puede implicar restaurar una configuración previa que era compatible, ajustar las frecuencias de muestreo activadas por nuevas funcionalidades o activar sensores recién expuestos. El dispositivo confirma la recepción y aplicación de la nueva configuración.
+
+La aparición del evento `Device Health Degraded` en esta fase post-actualización puede responder a dos escenarios:
+
+- **Rama A – Degradación transitoria** que se autocorrige tras unos minutos de estabilización: el sistema lo registra, pero la salud vuelve a verde por sí sola.
+- **Rama B – Degradación persistente** que no se resuelve espontáneamente: puede deberse a una incompatibilidad entre la configuración aplicada y el nuevo firmware, un bug latente o un fallo de hardware. En este caso, el evento alimenta un flujo de diagnóstico que incluye la revisión por parte del equipo de operaciones, con posibilidad de revertir el firmware o restaurar la configuración anterior.
+
+En ambos casos, el cierre completo del timeline ocurre cuando la salud se normaliza (o se determina la necesidad de una intervención correctiva). La trazabilidad completa (firmware anterior, nueva versión, configuración aplicada, ventana de degradación) queda inmutable para análisis posteriores y auditorías de cumplimiento.
+
+**Eventos Clave del Timeline:**
+
+1. `Firmware Update Started` → Inicio controlado del despliegue del nuevo firmware.
+2. `Device Health Degraded` → Detección de pérdida temporal o persistente de indicadores de salud durante o tras la intervención.
+3. `Firmware Update Completed` → Confirmación de que el dispositivo ya opera con la nueva versión de firmware.
+4. `Configuration Changed` → Ajuste de parámetros post-actualización para mantener la compatibilidad operativa.
+
+![EventStorming-step2.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-7.png)
+![EventStorming-step2.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-8.png)
+
+---
+
+#### Timeline 8: Baja Definitiva y Desmantelamiento de un Dispositivo IoT
+
+**Propósito:** Ejecutar de forma controlada e irreversible la eliminación operativa de un dispositivo IoT del ecosistema AgroSafe, asegurando que sus credenciales criptográficas sean revocadas primero para cortar cualquier posibilidad de reconexión, que el dispositivo pase a estado inactivo y que finalmente sea desmantelado del inventario digital, preservando la trazabilidad completa y liberando los recursos del tenant. Ejecutar de forma controlada e irreversible la eliminación operativa de un dispositivo IoT del ecosistema AgroSafe, asegurando que sus credenciales criptográficas sean revocadas primero para cortar cualquier posibilidad de reconexión, que el dispositivo pase a estado inactivo y que finalmente sea desmantelado del inventario digital, preservando la trazabilidad completa y liberando los recursos del tenant.
+
+**Narrativa del Flujo:** El disparador de este proceso puede provenir de varias fuentes: una decisión administrativa por fin de vida útil del hardware, el reemplazo planificado tras una pérdida ya registrada, o la desvinculación definitiva de un agricultor de una parcela. En todos los casos, el primer evento contundente es `Credentials Revoked`, que invalida inmediatamente los certificados y tokens de autenticación del dispositivo, impidiendo cualquier nuevo intento de handshake con los brokers MQTT o las APIs de ingesta. Desde este instante, el dispositivo queda mudo para la plataforma.
+
+Acto seguido, se registra el evento `Device Deactivated`. El estado del dispositivo cambia a "inactivo" en el gemelo digital: se detiene la escucha de su tópico, se archivan sus series de telemetría como históricos congelados y se elimina del panel de control del agricultor, aunque sus datos permanecen accesibles en modo consulta. Si el dispositivo intenta enviar un heartbeat, será rechazado con un código de autenticación inválida.
+
+Finalmente, se produce el cierre administrativo con `Device Decommissioned`. Este evento implica la eliminación lógica del dispositivo del inventario activo, liberando su identificador único, desvinculándolo del tenant y dejándolo fuera de cualquier política de monitoreo o mantenimiento. Si el plan de reaprovisionamiento lo contempla, este paso puede enlazar con el registro de un nuevo lote de dispositivos disponibles (`Batch of IoT devices registered as available`), cerrando el ciclo de vida y abriendo la puerta a un reemplazo.
+
+**Eventos Clave del Timeline:**
+
+1. `Credentials Revoked` → Corte definitivo de la capacidad de autenticación del dispositivo.
+2. `Device Deactivated` → Transición a estado inactivo con datos históricos preservados.
+3. `Device Decommissioned` → Baja administrativa completa y liberación del activo digital.
+
+![EventStorming-step2.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-9.png)
+
+---
+
+#### Timeline 9: Gestión de Conectividad Intermitente y Sincronización de Dispositivos IoT
+
+**Propósito:** Garantizar la resiliencia operativa de los dispositivos IoT desplegados en campo frente a interrupciones de conectividad inevitables (zonas de baja cobertura, condiciones climáticas adversas, interferencias), permitiendo que el sensor continúe recolectando datos de forma autónoma durante los períodos offline y que, al restaurarse la conexión, toda la telemetría acumulada se sincronice sin pérdidas con la plataforma AgroSafe, reconstruyendo la continuidad del gemelo digital y normalizando el ciclo de heartbeats.
+
+**Narrativa del Flujo:** El proceso describe un ciclo que puede repetirse indefinidamente a lo largo de la vida útil del dispositivo. Comienza con el dispositivo en estado operativo normal: el evento `Device Online` refleja su presencia activa en la red, y acto seguido se recibe un `Heartbeat Received` que confirma conectividad y salud.
+
+De forma repentina o progresiva, el sistema de monitoreo detecta que el dispositivo ha dejado de responder dentro de la ventana esperada. Se dispara entonces el evento `Device Offline Detected`, que puede aparecer duplicado en los registros cuando múltiples chequeos consecutivos fallan (la repetición del evento en la secuencia refleja precisamente esa insistencia del motor de monitoreo). La plataforma marca el dispositivo como "fuera de línea" en el dashboard y detiene la espera activa de telemetría en tiempo real.
+
+Durante este período de desconexión, la inteligencia de borde del dispositivo toma el control. Se produce el evento `Device buffers data locally`: todas las lecturas de los sensores se almacenan en la memoria no volátil del hardware, con marcas de tiempo precisas, evitando cualquier pérdida de información. El agricultor puede visualizar un indicador de "datos pendientes de sincronización" aunque los gráficos muestren una interrupción momentánea.
+
+Cuando las condiciones de red mejoran, el dispositivo logra reconectarse y se dispara el evento `Device online restored`. Inmediatamente, el firmware embebido inicia el volcado del buffer local hacia la plataforma, produciéndose `Device Sync Completed`. Este evento es crítico: la plataforma ingiere ordenadamente todas las lecturas atrasadas, las inserta en las series históricas en las posiciones temporales correctas, y reconcilia cualquier posible divergencia entre el estado físico y el gemelo digital.
+
+Acto seguido, se retoma el flujo normal con `Telemetry Received` (los datos frescos ahora fluyen en tiempo real) y un nuevo `Heartbeat Received` que confirma la plena restauración del ciclo operativo. A partir de aquí, el sistema queda preparado para una eventual nueva iteración: `Device Offline Detected`, nuevo buffering, nueva restauración y sincronización, en un patrón resiliente que asegura que la información agronómica nunca se pierde.
+
+**Eventos Clave del Timeline:**
+
+1. `Device Online` → Estado de conectividad activa.
+2. `Heartbeat Received` → Confirmación periódica de salud y enlace.
+3. `Device Offline Detected` → Detección de pérdida de conectividad (puede repetirse en ráfagas de monitoreo).
+4. `Device buffers data locally` → Almacenamiento autónomo de telemetría en el borde.
+5. `Device online restored` → Restablecimiento de la conexión de red.
+6. `Device Sync Completed` → Volcado y reconciliación de todos los datos acumulados durante la desconexión.
+7. `Telemetry Received` → Reanudación del flujo normal de datos en tiempo real.
+
+![EventStorming-step2.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-10.png)
+
+---
+
+#### Timeline 10: Ejecución de Comandos con Fallo y Recuperación
+
+**Propósito:** Garantizar que los comandos enviados desde la plataforma AgroSafe a los dispositivos IoT se gestionen con tolerancia a fallos, confiabilidad de entrega y recuperación automática. El flujo abarca el encolado, el envío al borde, la posible falla que provoca una degradación de salud, y el reintento que finalmente sincroniza el estado y reactiva el flujo de telemetría, manteniendo la coherencia entre el gemelo digital y el dispositivo físico.
+
+**Narrativa del Flujo:** El proceso se inicia con la intención de modificar el comportamiento del dispositivo: un agrónomo, un agricultor o una regla automatizada dispara el evento `Command Queued`. La instrucción se almacena en el buzón digital del dispositivo, a la espera de la siguiente ventana de check‑in. Durante esa ventana, el sistema despacha el comando hacia el hardware mediante el evento `Command Sent to Edge`, estableciendo la comunicación y quedando a la espera de la confirmación de ejecución.
+
+Sin embargo, en este caso la ejecución no llega a buen término. Puede suceder por múltiples razones: un error de checksum en el payload, una condición de hardware no cumplida (por ejemplo, intentar abrir una válvula ya abierta), o un reinicio inesperado durante la aplicación. Se registra entonces `Command Failed`, un evento que marca el fracaso de la operación puntual pero que no abandona el intento.
+
+Como consecuencia directa de la falla, el sistema emite `Device Health Degraded`. Este evento refleja que la confiabilidad del canal de comandos ha disminuido temporalmente; el dashboard muestra una alerta amarilla, el dispositivo entra en una lista de vigilancia y se activa un temporizador de recuperación.
+
+La resiliencia entra en juego inmediatamente: el motor de orquestación reintenta la operación. Se produce un nuevo `Command Queued` (idéntico en contenido, pero con un identificador de reintento) y nuevamente se ejecuta `Command Sent to Edge`. Esta vez el dispositivo recibe correctamente la instrucción, la procesa sin novedad y envía la confirmación de vuelta. El evento `Sync Completed` sella la operación: el estado se reconcilia, el buzón del dispositivo se limpia y la plataforma recupera la confianza en el canal.
+
+Para confirmar la normalización, el flujo concluye con `Telemetry Received`, indicando que el dispositivo ha retomado su ciclo normal de reporte de datos y que la salud del sistema ha vuelto a verde. De esta manera, AgroSafe demuestra un comportamiento tolerante a fallos que minimiza la intervención manual y preserva la integridad operativa.
+
+**Eventos Clave del Timeline:**
+
+1. `Command Queued` → Instrucción almacenada a la espera de envío (primer intento).
+2. `Command Sent to Edge` → Transmisión del comando hacia el dispositivo físico.
+3. `Command Failed` → Fallo en la entrega o ejecución en el borde.
+4. `Device Health Degraded` → Degradación de salud como efecto colateral del fallo.
+5. `Command Queued` → Reintento automático, misma instrucción re-encolada.
+6. `Command Sent to Edge` → Segundo envío al dispositivo.
+7. `Sync Completed` → Confirmación de ejecución exitosa y reconciliación de estado.
+8. `Telemetry Received` → Reactivación del flujo normal de datos y restauración de la salud operativa.
+
+![EventStorming-step2.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-11.png)
+
+---
+
+#### Timeline 11: Gestión Predictiva y Reemplazo de Batería de Dispositivos IoT
+
+**Propósito:** Garantizar la continuidad operativa de los dispositivos IoT desplegados en campo mediante la detección temprana de niveles críticos de batería, la activación de una alerta que dispara una orden de mantenimiento programado, la ejecución del reemplazo físico y la restauración completa de la salud del dispositivo, minimizando las ventanas de indisponibilidad y evitando la pérdida de telemetría por agotamiento total.
+
+**Narrativa del Flujo:** El ciclo se inicia dentro de un heartbeat de rutina. Junto con la señal de vida, el evento `Heartbeat Received` transporta las métricas de estado, entre ellas el voltaje actual de la batería. Cuando el nivel desciende por debajo del umbral de advertencia configurado (por ejemplo, 20 %), se dispara el evento `Low battery level`. En este momento el dispositivo sigue operando normalmente, pero se enciende un indicador amarillo en el dashboard y el sistema de monitoreo comienza a muestrear con mayor frecuencia.
+
+Si la batería continúa su descenso y alcanza el umbral crítico (por ejemplo, 5-10 %), el evento `Battery Critical Alert` se emite de inmediato. Esta alerta abandona el canal meramente informativo: escala al agricultor mediante notificación push y WhatsApp, y se registra con prioridad alta en la consola de operaciones de AgroSafe. El dispositivo, aunque todavía activo, reduce su frecuencia de muestreo para preservar la carga restante.
+
+La plataforma no espera a que la batería muera. Automáticamente, o con intervención del equipo de soporte, se genera el evento `Maintenance Scheduled`: se agenda una visita de un técnico de campo o se envía un kit de reemplazo al agricultor con instrucciones. La fecha queda visible en el dashboard y se congela cualquier actualización no esencial hasta la intervención.
+
+El día programado, el técnico (o el propio agricultor capacitado) realiza el cambio físico del componente. Desde la aplicación móvil de AgroSafe se confirma la operación, produciendo el evento `Battery Replaced`. El dispositivo recibe alimentación renovada, rearranca y transmite su primer heartbeat con voltaje nominal.
+
+El sistema evalúa entonces los indicadores de salud del dispositivo: voltaje estable, conectividad normal, telemetría fluyendo sin interrupciones. Se emite el evento `Device Health Restored`, que cierra el incidente. El dispositivo vuelve a su estado operativo pleno, se archiva el registro de mantenimiento para análisis de vida útil y el agricultor recibe una notificación reconfortante: “Tu sensor ha recuperado su salud y está operando al 100 %”.
+
+**Eventos Clave del Timeline:**
+
+1. `Heartbeat Received` → Señal de vida que incluye el nivel de batería.
+2. `Low battery level` → Detección temprana de desgaste energético.
+3. `Battery Critical Alert` → Escalamiento ante umbral mínimo de operación segura.
+4. `Maintenance Scheduled` → Planificación de la visita o del envío de reemplazo.
+5. `Battery Replaced` → Confirmación del cambio físico del componente.
+6. `Device Health Restored` → Validación final y retorno a estado operativo normal.
+
+![EventStorming-step2.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-12.png)
+
+---
+
+#### Timeline 12: Suspensión Administrativa de Cuenta y Desactivación de Dispositivos Asociados
+
+**Propósito:** Ejecutar de forma atómica y segura el bloqueo completo de un tenant cuando se detecta una falta grave que obliga a suspender la cuenta (impago prolongado, violación de términos de servicio, orden legal), asegurando que todas las credenciales de los dispositivos IoT vinculados sean revocadas, que se rechace cualquier ingesta de telemetría entrante y que los dispositivos pasen a estado inactivo, preservando los datos históricos pero cortando toda capacidad operativa del ecosistema.
+
+**Narrativa del Flujo:** El disparador es una decisión administrativa o automática de alto nivel. El evento `Account Suspended` sella irreversiblemente la cuenta del agricultor o agrónomo: se bloquea el acceso al dashboard, se pausan las suscripciones activas y se congela la facturación. Pero la suspensión no se limita al usuario: el sistema debe asegurar que los dispositivos en campo también queden inertes.
+
+Inmediatamente, se propaga en cascada el evento `Credentials Revoked` para cada dispositivo asociado al tenant. Los certificados X.509, tokens JWT y claves de sesión MQTT son invalidados, impidiendo que cualquier sensor se autentique de nuevo. Acto seguido, `Telemetry Rejected` sella el canal de ingesta: cualquier dato que intente llegar desde campo (incluso heartbeats residuales) es rechazado con código de autorización denegado, garantizando que la plataforma no procese información de una cuenta suspendida.
+
+Como consecuencia final en la capa de inventario, se emite `Device Deactivated`. Cada dispositivo pasa al estado "inactivo", se congela su indicador de conectividad y se archivan sus series históricas como consultables pero no actualizables. El silencio operativo es total.
+
+**Eventos Clave del Timeline:**
+
+1. `Account Suspended` → Bloqueo administrativo de la cuenta y su ecosistema.
+2. `Credentials Revoked` → Invalidación en lote de todas las credenciales de dispositivos vinculados.
+3. `Telemetry Rejected` → Corte definitivo del canal de ingesta de datos.
+4. `Device Deactivated` → Transición de los dispositivos a estado inactivo con datos preservados.
+
+![EventStorming-step2.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-13.png)
+
+---
+
+#### Timeline 13: Reporte de Pérdida, Desmantelamiento y Reemplazo de Dispositivo
+
+**Propósito:** Gestionar el ciclo completo de baja de un dispositivo reportado como perdido o sustraído, desde la notificación del incidente hasta el reemplazo operativo, pasando por la revocación de credenciales como primera barrera de seguridad, la desactivación funcional, el desmantelamiento administrativo definitivo y el registro de un nuevo dispositivo que restaurará la capacidad de monitoreo en la parcela.
+
+**Narrativa del Flujo:** Todo inicia con la notificación del agricultor o la detección de una anomalía grave de localización. Se dispara `Reported Lost`, marcando el dispositivo con un flag de seguridad y activando una alerta en la consola de operaciones. Este evento es el pistoletazo de salida para una secuencia de cierre controlada.
+
+La primera acción es proteger la integridad del ecosistema: se emite `Credentials Revoked`. Los certificados y tokens son anulados incluso antes de que el dispositivo intente reconectarse, haciendo imposible que un tercero no autorizado envíe datos falsos o tome control del sensor. Inmediatamente después, `Device Deactivated` cambia el estado del dispositivo a inactivo en el gemelo digital, deteniendo su escucha y retirándolo del panel de control.
+
+Sin posibilidad de recuperación y sin valor operativo, se procede al cierre administrativo con `Device Decommissioned`. El identificador único se libera, el activo se da de baja del inventario y se archiva su historial completo con la etiqueta "Desmantelado por pérdida".
+
+Para cerrar el ciclo y minimizar la ventana sin datos en campo, el sistema o el equipo de operaciones) inicia el reaprovisionamiento con `Replacement Device Registered`. Un nuevo dispositivo, precertificado y listo para desplegar, queda vinculado a la misma parcela o al inventario del agricultor, reiniciando el ciclo de vida desde el evento `Device Registered` y restaurando la capacidad de monitoreo.
+
+**Eventos Clave del Timeline:**
+
+1. `Reported Lost` → Notificación del incidente de pérdida o sustracción.
+2. `Credentials Revoked` → Invalidación inmediata de acceso para prevenir usos no autorizados.
+3. `Device Deactivated` → Transición a estado inactivo con datos históricos preservados.
+4. `Device Decommissioned` → Baja administrativa definitiva y liberación del activo.
+5. `Replacement Device Registered` → Registro de un nuevo dispositivo que restaura la cobertura en campo.
+
+![EventStorming-step2.14](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-14.png)
+
+---
+
+#### Timeline 14: Configuración Colaborativa de Umbrales de Cultivo y Monitoreo Compartido
+
+**Propósito:** Permitir que un agricultor configure de forma asistida las zonas de cultivo y los umbrales agronómicos para sus parcelas, aprovechando un catálogo precargado de valores seguros por tipo de cultivo. Cuando un agrónomo vinculado como asesor modifica dichos umbrales, especialmente si los ajusta fuera del rango recomendado, el sistema registra la excepción con confirmación explícita del usuario, audita el cambio y notifica al agricultor, garantizando transparencia y control. El timeline también abarca la consolidación de la vista del agrónomo sobre todas las parcelas de sus clientes.
+
+**Narrativa del Flujo:** El proceso inicia cuando el agricultor accede al módulo de configuración de cultivos y ejecuta `Select zone` para delimitar la subparcela sobre la cual aplicará la estrategia. Una vez definida la zona, elige el tipo de cultivo: se dispara `Type of crop selected by farmer`. Esta selección activa una consulta al catálogo agronómico interno de AgroSafe, que contiene umbrales seguros validados para cada especie y estadio fenológico.
+
+De forma automática, el sistema emite `Thresholds automatically loaded from catalog`: humedad, temperatura, conductividad y demás parámetros quedan precargados con los valores recomendados. El agricultor puede operar inmediatamente con esos umbrales, pero también puede decidir modificarlos. Si realiza un ajuste puntual, todo transcurre dentro de la normalidad. Sin embargo, si el agricultor o su agrónomo vinculado introducen un valor fuera del rango seguro (por ejemplo, una humedad mínima demasiado baja para el cultivo), se produce el evento `Threshold manually modified with a value outside the safe range`.
+
+En ese instante, la plataforma no aplica el cambio sin más: lanza `Threshold exception logged with user confirmation`, mostrando un diálogo de advertencia que explica el riesgo agronómico y solicita confirmación explícita del usuario responsable. Tras la confirmación, el sistema registra el evento `Threshold recorded in audit`, dejando trazabilidad inmutable con el valor anterior, el nuevo, el usuario que lo cambió y la marca de tiempo. Esta pista de auditoría queda disponible para futuras revisiones de cumplimiento o análisis de decisiones.
+
+El flujo incorpora la dimensión colaborativa. Previamente, o en cualquier momento, un `Agronomist linked to a farmer as an advisor` establece la relación profesional. A partir de ese vínculo, el agrónomo puede modificar los umbrales de sus clientes desde su propio acceso. Cuando lo hace, el agricultor recibe el evento `Farmer notified of the change made by their agronomist` a través de notificación push y en el dashboard, indicando qué parámetro cambió, cuál era el valor anterior y quién lo modificó. Esta transparencia evita sorpresas y fomenta la confianza.
+
+Finalmente, para cerrar el flujo de supervisión profesional, el evento `Agronomist accesses the consolidated dashboard of his client plots` muestra cómo el asesor dispone de una vista unificada de todos los agricultores vinculados, pudiendo monitorizar el estado de cada parcela, sus umbrales y las alertas activas en un solo lugar.
+
+**Eventos Clave del Timeline:**
+
+1. `Select zone` → Delimitación de la subparcela de trabajo.
+2. `Type of crop selected by farmer` → Elección del cultivo que activa el catálogo de umbrales.
+3. `Thresholds automatically loaded from catalog` → Carga de valores seguros por defecto.
+4. `Threshold manually modified with a value outside the safe range` → Ajuste de umbral fuera del rango recomendado.
+5. `Threshold exception logged with user confirmation` → Validación explícita del cambio riesgoso.
+6. `Threshold recorded in audit` → Registro inmutable de la modificación.
+7. `Agronomist linked to a farmer as an advisor` → Establecimiento del vínculo colaborativo.
+8. `Farmer notified of the change made by their agronomist` → Transparencia ante modificaciones del asesor.
+9. `Agronomist accesses the consolidated dashboard of his client plots` → Vista unificada de la cartera de clientes.
+
+![EventStorming-step2.15](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-15.png)
+
+---
+
+#### Timeline 15: Creación y Aplicación Masiva de Plantillas de Umbrales por el Agrónomo
+
+**Propósito:** Permitir que un ingeniero agrónomo con rol de asesor multiplique su conocimiento experto creando plantillas de umbrales reutilizables (valores seguros de humedad, temperatura, conductividad y demás parámetros adaptados a un cultivo o estrategia específica) y las despliegue de forma controlada sobre múltiples parcelas de sus clientes. El sistema procesa cada parcela individualmente, aplica la configuración, registra los cambios y notifica de forma transparente a cada agricultor afectado, manteniendo la confianza y la trazabilidad en la gestión colaborativa.
+
+**Narrativa del Flujo:** El disparador es la intención del agrónomo de estandarizar o actualizar la estrategia agronómica de varios de sus clientes. Desde su dashboard consolidado, el asesor accede al módulo de plantillas y crea una nueva configuración maestra: define cultivo, estadio fenológico y los valores objetivo para cada sensor. Esta acción genera el evento `Threshold template created by agronomist`, que persiste la plantilla en el catálogo personal del profesional, lista para ser reutilizada.
+
+Inmediatamente, el agrónomo necesita definir el alcance de la aplicación. Mediante el evento `Select plots`, elige del listado de sus clientes vinculados aquellas parcelas concretas en las que desea desplegar la plantilla. Puede seleccionar múltiples parcelas de diferentes agricultores, una sola, o incluso todas las que comparten el mismo cultivo.
+
+Una vez confirmada la selección, el sistema inicia la operación masiva con `Template applied to client plot`. Aunque el comando es único, la aplicación real es atómica e individualizada: el evento siguiente, `System processes each parcel`, refleja que la plataforma itera sobre cada parcela seleccionada, validando compatibilidad (cultivo, zona, sensores disponibles), reemplazando los umbrales anteriores por los de la plantilla y registrando cada cambio en la pista de auditoría correspondiente.
+
+Para cerrar el ciclo con transparencia, por cada parcela procesada se emite `Farmer notified of the change made by their agronomist`. Cada agricultor recibe una notificación push y un resumen en su dashboard: qué umbrales cambiaron, quién realizó el cambio (el agrónomo vinculado) y a qué valor se ajustaron. El agricultor puede aceptar los nuevos umbrales, revisarlos o, si lo considera necesario, ajustarlos manualmente (lo que enlazaría con eventos de excepción y auditoría del timeline anterior).
+
+Este flujo permite al agrónomo gobernar buenas prácticas agronómicas a escala, reduciendo el tiempo de configuración manual parcela por parcela, mientras mantiene a cada agricultor informado y en control último de sus decisiones de cultivo.
+
+**Eventos Clave del Timeline:**
+
+1. `Threshold template created by agronomist` → Creación de la plantilla maestra de umbrales.
+2. `Select plots` → Selección de las parcelas cliente donde aplicar la plantilla.
+3. `Template applied to client plot` → Aplicación confirmada sobre el conjunto de parcelas.
+4. `System processes each parcel` → Iteración atómica que actualiza cada parcela individualmente.
+5. `Farmer notified of the change made by their agronomist` → Notificación transparente a cada agricultor afectado.
+
+![EventStorming-step2.16](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-16.png)
+
+---
+
+#### Timeline 16: Monitoreo de Suelo, Diagnóstico de Estrés Hídrico y Riego Correctivo Automatizado
+
+**Propósito:** Permitir que la plataforma AgroSafe supervise en tiempo real las condiciones del suelo (humedad, pH y temperatura) mediante sensores IoT, detecte de forma temprana situaciones de estrés hídrico o desequilibrios de pH que amenacen el cultivo, genere un diagnóstico agronómico automatizado y ejecute un riego correctivo de precisión que restablezca los valores óptimos, normalizando los parámetros y sincronizando todos los datos en el gemelo digital de la parcela para trazabilidad y análisis posteriores.
+
+**Narrativa del Flujo:** El ciclo de monitoreo arranca con la puesta en marcha de los sensores instalados en la zona de cultivo. Se disparan tres eventos en paralelo o secuencia cercana: `Humidity sensor activated`, `pH sensor activated` y `Temperature sensor activated`. A partir de este instante, la zona queda bajo vigilancia continua y los sensores comienzan a transmitir lecturas.
+
+Los primeros datos útiles llegan con `Recorded humidity reading` y `pH reading recorded`, que alimentan las series históricas y refrescan los indicadores del dashboard. La plataforma evalúa cada lectura contra los umbrales configurados (ya sea los del catálogo por defecto o los definidos colaborativamente por agricultor y agrónomo). Si los valores se mantienen dentro de rango, el ciclo de monitoreo prosigue sin novedad; pero en este caso, las condiciones del suelo se deterioran.
+
+Se dispara `Humidity threshold exceeded`, indicando que la humedad ha caído por debajo del mínimo seguro. Casi simultáneamente, `pH out of range detected` alerta de un desbalance en la acidez del suelo que puede afectar la absorción de nutrientes. Con dos variables fuera de rango, el motor de diagnóstico se activa.
+
+La plataforma emite `Water stress detected`, confirmando que la combinación de baja humedad y condiciones ambientales está sometiendo al cultivo a un estrés que puede comprometer el rendimiento. Para cuantificar la severidad, se calcula y registra el evento `Calculated water stress index`, un valor sintético que incorpora humedad actual, temperatura, tipo de cultivo y estadio fenológico.
+
+Con el índice en mano, el sistema genera `Agronomic diagnosis generated`, un informe breve que identifica la causa raíz (déficit hídrico y desviación de pH), recomienda la acción correctiva (riego con ajuste de pH) y la somete a validación si las reglas lo requieren. Aprobado el diagnóstico, se origina `Irrigation command`, la orden que inicia la cadena de actuación.
+
+El comando viaja al borde: se producen los eventos `Glued valve open` y `Solenoid valve open`, abriendo las electroválvulas que controlan el flujo de agua hacia la zona afectada. Inmediatamente, `Irrigation started` confirma que el agua está fluyendo. Durante el riego, los sensores continúan monitoreando: `Normalized pH` indica que la corrección de acidez ha surtido efecto, y `Standardized humidity` señala que la humedad del suelo ha regresado al rango objetivo.
+
+Cuando el índice de estrés hídrico se disipa y los umbrales vuelven a verde, el sistema emite `Solenoid valve closed`, cerrando el paso de agua. Con la válvula cerrada, `Irrigation completed` sella el evento de riego como finalizado, registrando el volumen aplicado y la duración.
+
+Para cerrar el ciclo con integridad, el evento `Synchronized data` reconcilia todos los registros generados durante el proceso: lecturas anómalas, diagnóstico, comandos ejecutados y valores normalizados quedan alineados entre el gemelo digital y el histórico del dispositivo, disponibles para análisis agronómico y auditoría de decisiones automatizadas.
+
+**Eventos Clave del Timeline:**
+
+1. `Humidity sensor activated`/`pH sensor activated`/`Temperature sensor activated` → Activación de la capa de monitoreo.
+2. `Recorded humidity reading`/`pH reading recorded` → Primeras lecturas del suelo.
+3. `Humidity threshold exceeded`/`pH out of range detected` → Detección de anomalías.
+4. `Water stress detected` → Confirmación de condición de estrés en el cultivo.
+5. `Calculated water stress index` → Cuantificación de la severidad.
+6. `Agronomic diagnosis generated` → Generación automatizada del diagnóstico y recomendación.
+7. `Irrigation command` → Orden de actuación correctiva.
+8. `Glued valve open`/`Solenoid valve open` → Apertura del sistema hidráulico.
+9. `Irrigation started` → Confirmación de flujo de agua.
+10. `Normalized pH`/`Standardized humidity` → Restauración de parámetros óptimos.
+11. `Solenoid valve closed` → Cierre controlado de la electroválvula.
+12. `Irrigation completed` → Cierre del evento de riego correctivo.
+13. `Synchronized data` → Reconciliación total entre el gemelo digital y la realidad del campo.
+
+![EventStorming-step2.17](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-17.png)
+
+---
+
+#### Timeline 17: Supervisión Colaborativa, Recomendaciones Técnicas e Informes Periódicos
+
+**Propósito:** Dotar al ingeniero agrónomo de un panel de control unificado desde el cual pueda monitorizar de forma proactiva el estado de todas las parcelas de sus clientes, identificar visualmente aquellas en condición crítica, profundizar en su historial, elaborar recomendaciones técnicas enriquecidas con datos de sensores y enviarlas directamente al agricultor. Asimismo, habilitar la generación, tanto a petición como programada, de informes técnicos mensuales que compilan y analizan los datos agronómicos consolidados, fomentando una relación de asesoría transparente, basada en evidencia y orientada a la acción.
+
+**Narrativa del Flujo:** El proceso comienza cuando el `Agronomist accesses the consolidated dashboard of his client plots`, una vista de alto nivel donde cada parcela vinculada se presenta con indicadores de salud, estado de riego y alertas activas. Entre todas ellas, el sistema aplica una lógica de priorización basada en umbrales y tendencias, y genera el evento `Customer plot in critical condition visually highlighted`, que resalta de forma inequívoca aquella parcela que requiere atención inmediata (por ejemplo, un índice de estrés hídrico severo o una alerta de pH no resuelta).
+
+Ante el resalte, el agrónomo decide investigar: hace clic y se dispara `Access the plot history`. Se despliega un timeline completo con las series de humedad, temperatura, pH, alertas previas, diagnósticos y riegos ejecutados. Con ese contexto, el profesional redacta su orientación experta en el evento `Write a recommendation`, donde puede explicar la situación, sugerir ajustes en la configuración o recomendar una intervención en campo.
+
+Al confirmar el envío, el sistema adjunta automáticamente los datos de sensores relevantes que respaldan su análisis y se produce `Technical recommendation sent to the farmer with attached sensor data`. Este evento dispara una notificación push y un mensaje en el dashboard del agricultor, garantizando que la recomendación no solo sea un texto, sino un argumento fundamentado con evidencia.
+
+Paralelamente, el sistema ofrece una funcionalidad periódica. Un agricultor, o el propio agrónomo, puede ejecutar `Request monthly report` para obtener un compendio analítico de un mes de operación. Al recibir la solicitud, se dispara `System compiles data`, donde la plataforma recolecta todas las lecturas, alertas, diagnósticos, riegos y recomendaciones aplicadas durante el período. Con los datos consolidados, se genera el evento `Monthly technical report generated for a client`, un documento estructurado (accesible en PDF o dashboard) con gráficos de evolución, estadísticas de estrés hídrico, eficiencia de riego y recomendaciones generales, que queda disponible tanto para el agricultor como para el agrónomo, y puede ser utilizado para auditoría, cumplimiento o simple mejora continua.
+
+**Eventos Clave del Timeline:**
+
+1. `Agronomist accesses the consolidated dashboard of his client plots` → Punto de partida de la supervisión experta.
+2. `Customer plot in critical condition visually highlighted` → Priorización visual de la parcela en estado de alerta.
+3. `Access the plot history` → Exploración detallada del historial de telemetría y eventos de la parcela.
+4. `Write a recommendation` → Elaboración de la orientación técnica por parte del agrónomo.
+5. `Technical recommendation sent to the farmer with attached sensor data` → Entrega de la recomendación con datos de respaldo.
+6. `Request monthly report` → Solicitud explícita de un informe agronómico mensual.
+7. `System compiles data` → Recolección y procesamiento de todas las fuentes de datos del período.
+8. `Monthly technical report generated for a client` → Emisión del informe estructurado, listo para consulta y descarga.
+
+![EventStorming-step2.18](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-18.png)
+
+---
+
+#### Timeline 18: Vinculación Inicial Agricultor-Agrónomo y Acceso al Panel de Supervisión
+
+**Propósito:** Establecer, desde el mismo momento del registro del agricultor en AgroSafe, una relación formal de asesoría con un ingeniero agrónomo asignado (por política de la plataforma, por cobertura zonal o por un plan específico que incluye asesoría). Esta vinculación temprana garantiza que el agricultor cuente con acompañamiento experto desde el arranque, y que el agrónomo disponga inmediatamente del perfil del nuevo cliente en su dashboard consolidado para iniciar la supervisión y la configuración colaborativa.
+
+**Narrativa del Flujo:** El punto de partida es el registro exitoso de un agricultor. El evento `Farmer registers` marca la creación de su cuenta, perfil y parcela inicial (aún vacía o en fase básica de delimitación). En este instante, el agricultor ya ha completado la verificación de correo y ha accedido al dashboard, según lo establecido en el Timeline de Onboarding.
+
+De forma automática (o tras una aceptación por parte del pool de agrónomos disponibles), el sistema ejecuta `Agronomist linked to farmer as assigned advisor`. Este evento crea el vínculo profesional entre ambos perfiles, estableciendo los permisos de visualización de datos del agricultor por parte del agrónomo y viceversa. A diferencia del Timeline 1, donde el agricultor debía buscar manualmente a un asesor, aquí la vinculación es proactiva: el agrónomo aparece inmediatamente en el espacio de trabajo del agricultor como "Asesor asignado".
+
+El flujo se cierra con la perspectiva del agrónomo. Cuando este inicia sesión o refresca su vista principal, se dispara el evento `Agronomist accesses the consolidated dashboard of his client plots`. En este panel, el nuevo agricultor aparece listado junto con los demás clientes, con indicadores iniciales a cero y la posibilidad de comenzar a configurar umbrales, crear plantillas o enviar la primera recomendación. Esta visibilidad inmediata permite al agrónomo preparar la estrategia agronómica incluso antes de que el agricultor termine de desplegar sus dispositivos.
+
+**Eventos Clave del Timeline:**
+
+1. `Farmer registers` → Alta del agricultor y creación de su espacio de trabajo.
+2. `Agronomist linked to farmer as assigned advisor` → Establecimiento automático del vínculo de asesoría.
+3. `Agronomist accesses the consolidated dashboard of his client plots` → Toma de control del agrónomo sobre su cartera ampliada.
+
+![EventStorming-step2.19](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-19.png)
+
+---
+
+#### **Timeline 19: Ajuste y Ejecución de Fertirrigación Automatizada
+
+**Propósito:** Permitir que la plataforma AgroSafe, tras un diagnóstico agronómico que identifica una deficiencia nutricional o la necesidad de una fertilización programada, ejecute un ciclo de fertirrigación de forma automatizada y segura. El proceso incluye la apertura y cierre controlado de la válvula solenoide, el ajuste registrado de la dosificación de fertilizante, la confirmación del evento de fertirrigación y el cierre definitivo del flujo, dejando trazabilidad completa del suministro de nutrientes.
+
+**Narrativa del Flujo:** El punto de partida suele ser una transición desde un estado de reposo o desde un riego previo ya finalizado. Por ello, el evento inicial es `Solenoid valve closed`, que garantiza que el sistema hidráulico está en posición segura, sin flujo de agua hacia la parcela, antes de iniciar la inyección de fertilizante.
+
+Inmediatamente, la plataforma activa el suministro de agua que servirá como vehículo para los nutrientes: se produce `Solenoid valve open`. El agua comienza a fluir por las líneas de riego presurizadas. Con el flujo estable, el dosificador de fertilizante recibe la instrucción de modificar la concentración o la proporción de nutrientes, disparando el evento `Fertilization adjustment recorded`. Este paso documenta el nuevo valor de dosificación (por ejemplo, cambio de NPK, hierro o microelementos) y registra quién o qué regla (agrónomo, diagnóstico automático, plan de cultivo) originó el cambio.
+
+Con la mezcla ajustada, se ejecuta el evento central: `Event occurred`. En este contexto, este evento representa la confirmación del ciclo de fertirrigación completado exitosamente, registrando el volumen total aplicado, la duración y la concentración media de nutrientes. El sistema puede enviar una notificación al agricultor y al agrónomo vinculado informando que la fertilización programada ha sido ejecutada.
+
+Finalmente, para cerrar el ciclo hidráulico, se emite nuevamente `Solenoid valve closed`. La válvula se cierra, cortando el suministro de agua y fertilizante. Los datos de la fertirrigación (volumen, dosis, tiempo) quedan sincronizados en el histórico de la parcela, listos para ser consultados en el panel de control, incorporados en futuros diagnósticos o reflejados en los informes mensuales.
+
+**Eventos Clave del Timeline:**
+
+1. `Solenoid valve closed` → Punto de partida: estado seguro del sistema hidráulico.
+2. `Solenoid valve open` → Apertura del flujo de agua para la fertirrigación.
+3. `Fertilization adjustment recorded` → Documentación del cambio de dosificación de nutrientes.
+4. `Event occurred` → Confirmación del ciclo de fertirrigación ejecutado.
+5. `Solenoid valve closed` → Cierre definitivo y retorno al estado de reposo.
+
+![EventStorming-step2.20](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-20.png)
+
+---
+
+#### **Timeline 20: Detección y Clasificación de Intrusión Perimetral con Respuesta Contextual
+
+**Propósito:** Dotar a AgroSafe de una capa de seguridad perimetral inteligente que detecta movimiento en los límites de la parcela, mide la intensidad de calor para filtrar falsos positivos, clasifica en el borde los eventos como intrusión humana con un nivel de confianza, y envía esa clasificación al backend. Allí, una evaluación contextual determina la criticidad real del evento, permitiendo registrar intrusiones humanas confirmadas con baja prioridad cuando no representan una amenaza inminente, sin saturar al agricultor con notificaciones urgentes pero manteniendo la trazabilidad completa de cada incidente.
+
+**Narrativa del Flujo:** El ciclo de vigilancia se activa cuando un sensor PIR instalado en el perímetro de la parcela capta una variación de infrarrojos. Se dispara el evento `PIR sensor detects movement at the perimeter`, indicando una posible presencia no autorizada. Para reducir falsos positivos (como animales pequeños o ráfagas de calor), un sensor de temperatura acoplado al ESP32 entra en acción inmediatamente: se registra `Heat intensity measured by the ESP32 ADC`, cuantificando la firma térmica del objeto en movimiento.
+
+En el firmware del dispositivo de borde, el módulo de analítica embebida ejecuta `Edge compares with thresholds`, contrastando la intensidad de calor y el patrón temporal contra modelos preentrenados. Si la coincidencia supera el umbral para una presencia humana, se emite `Event classified as HUMAN`. La clasificación lleva asociado un nivel de confianza; en este caso es alto, produciéndose `High trust rating sent to the backend immediately`. Este envío ocurre en tiempo real, incluso si el dispositivo estuviera en modo de bajo consumo, garantizando que la información de seguridad llegue sin demora.
+
+Una vez que el backend recibe la notificación con alta confianza, entra en juego la inteligencia contextual de AgroSafe. El sistema evalúa las condiciones de la parcela: ¿es horario laboral habitual? ¿La zona está cerca de un camino público? ¿Hay trabajadores con acceso autorizado registrados? Si el análisis determina que la intrusión, aunque confirmada como humana, no representa un riesgo inminente (por ejemplo, un operario que olvidó su identificación), el sistema decide no alarmar innecesariamente. Se genera entonces `Low priority event logged in history without urgent notification`, almacenando el incidente en el libro de seguridad con visibilidad en el dashboard pero sin push al móvil ni WhatsApp.
+
+A pesar de la baja prioridad en la notificación, el protocolo de seguridad exige que toda intrusión humana confirmada quede registrada formalmente. Por ello, se dispara el evento `Human intrusion alert triggered`, que crea un registro imborrable en la bitácora de intrusiones con los metadatos completos: timestamp, ubicación, duración del evento y nivel de confianza. Este registro queda disponible para auditorías, informes de seguridad y, si en el futuro se repite un patrón, puede escalar automáticamente a un nivel superior de alerta.
+
+Este diseño permite a AgroSafe equilibrar la sensibilidad de la detección perimetral con la tranquilidad del agricultor, evitando la fatiga por falsas alarmas sin sacrificar la trazabilidad de eventos reales de seguridad.
+
+**Eventos Clave del Timeline:**
+
+1. `PIR sensor detects movement at the perimeter` → Disparo inicial por detección infrarroja pasiva.
+2. `Heat intensity measured by the ESP32 ADC` → Cuantificación de la firma térmica del objeto en movimiento.
+3. `Edge compares with thresholds` → Clasificación embebida en el dispositivo de borde.
+4. `Event classified as HUMAN` → Confirmación de que el movimiento corresponde a una persona.
+5. `High trust rating sent to the backend immediately` → Notificación en tiempo real de la clasificación con alta confianza.
+6. `Low priority event logged in history without urgent notification` → Registro histórico no intrusivo tras evaluación contextual.
+7. `Human intrusion alert triggered` → Registro formal imborrable de la intrusión humana en la bitácora de seguridad.
+
+![EventStorming-step2.21](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-21.png)
+
+---
+
+#### **Timeline 21: Análisis Ejecutivo de Métricas y Priorización de Roadmap de Producto
+
+**Propósito:** Permitir que los roles de Product Owner y Product Manager de AgroSafe consulten de forma periódica el rendimiento del negocio mediante un dashboard ejecutivo trimestral, segmenten los datos por tipo de cliente y período, monitoreen KPIs clave (MAU, MRR, churn, conversión trial‑a‑pago), analicen el churn por segmento, visualicen mapas de calor de adopción de funcionalidades, comparen métricas respecto al período anterior y detecten embudos de abandono. El objetivo final es que cada decisión de roadmap esté respaldada por datos de uso reales, alineando la evolución del producto con la salud del negocio y la retención de clientes.
+
+**Narrativa del Flujo:** El proceso se desencadena cuando el `Product Owner consults the quarterly executive dashboard`, accediendo a una vista de alto nivel que condensa la salud del producto para el trimestre. Para enfocar el análisis, el dashboard ofrece controles de segmentación: se ejecuta `Filter by segment and period`, permitiendo seleccionar, por ejemplo, agricultores vs. agrónomos, o clientes de plan Básico vs. Premium, en una ventana de tiempo específica.
+
+Con los filtros aplicados, el sistema despliega un panel de métricas calculadas bajo demanda. Se emite `Calculated KPIs: MAU, MRR, churn, trial—paid conversion`, que refleja los usuarios activos mensuales, los ingresos recurrentes, la tasa de cancelación y la conversión de pruebas gratuitas a suscripciones de pago. Esta foto cuantitativa enciende las primeras preguntas estratégicas, particularmente alrededor del churn.
+
+Para profundizar, se dispara `Churn analysis filtered by customer segment`. El Product Manager aísla, por ejemplo, el segmento de agrónomos con plan Premium y examina las tasas de abandono específicas, buscando correlaciones con el uso de funcionalidades. A continuación, accede a una vista complementaria: `Feature adoption heatmap consulted by Product Manager`. Este mapa de calor muestra qué módulos (telemetría, riego automático, informes, alertas) concentran la actividad y cuáles permanecen infrautilizados.
+
+Con los datos del trimestre actual en pantalla, el sistema genera automáticamente `Comparison of metrics with previous period generated`, mostrando variaciones porcentuales en adopción, churn y conversión frente al trimestre anterior. Esta comparación revela tendencias y confirma o descarta hipótesis.
+
+El análisis en profundidad conduce a un descubrimiento: `Abandonment funnel identified in a specific feature`. El embudo revela que una funcionalidad reciente, por ejemplo la de generación de informes mensuales, presenta una alta tasa de abandono en los primeros pasos del flujo. El Product Manager documenta el hallazgo.
+
+Finalmente, con todo el contexto reunido, el equipo de producto lleva a cabo el evento `Roadmap decision made based on actual usage data`. La decisión puede ser incrementar la inversión en una funcionalidad de alta adopción, rediseñar la experiencia de la funcionalidad con abandono crítico, o priorizar acciones para mitigar el churn en el segmento afectado. El ciclo cierra con la seguridad de que la dirección del producto está guiada por evidencia cuantitativa y cualitativa, y no por suposiciones.El proceso se desencadena cuando el `Product Owner consults the quarterly executive dashboard`, accediendo a una vista de alto nivel que condensa la salud del producto para el trimestre. Para enfocar el análisis, el dashboard ofrece controles de segmentación: se ejecuta `Filter by segment and period`, permitiendo seleccionar, por ejemplo, agricultores vs. agrónomos, o clientes de plan Básico vs. Premium, en una ventana de tiempo específica.
+
+Con los filtros aplicados, el sistema despliega un panel de métricas calculadas bajo demanda. Se emite `Calculated KPIs: MAU, MRR, churn, trial—paid conversion`, que refleja los usuarios activos mensuales, los ingresos recurrentes, la tasa de cancelación y la conversión de pruebas gratuitas a suscripciones de pago. Esta foto cuantitativa enciende las primeras preguntas estratégicas, particularmente alrededor del churn.
+
+Para profundizar, se dispara `Churn analysis filtered by customer segment`. El Product Manager aísla, por ejemplo, el segmento de agrónomos con plan Premium y examina las tasas de abandono específicas, buscando correlaciones con el uso de funcionalidades. A continuación, accede a una vista complementaria: `Feature adoption heatmap consulted by Product Manager`. Este mapa de calor muestra qué módulos (telemetría, riego automático, informes, alertas) concentran la actividad y cuáles permanecen infrautilizados.
+
+Con los datos del trimestre actual en pantalla, el sistema genera automáticamente `Comparison of metrics with previous period generated`, mostrando variaciones porcentuales en adopción, churn y conversión frente al trimestre anterior. Esta comparación revela tendencias y confirma o descarta hipótesis.
+
+El análisis en profundidad conduce a un descubrimiento: `Abandonment funnel identified in a specific feature`. El embudo revela que una funcionalidad reciente, por ejemplo la de generación de informes mensuales, presenta una alta tasa de abandono en los primeros pasos del flujo. El Product Manager documenta el hallazgo.
+
+Finalmente, con todo el contexto reunido, el equipo de producto lleva a cabo el evento `Roadmap decision made based on actual usage data`. La decisión puede ser incrementar la inversión en una funcionalidad de alta adopción, rediseñar la experiencia de la funcionalidad con abandono crítico, o priorizar acciones para mitigar el churn en el segmento afectado. El ciclo cierra con la seguridad de que la dirección del producto está guiada por evidencia cuantitativa y cualitativa, y no por suposiciones.
+
+**Eventos Clave del Timeline:**
+
+1. `Product Owner consults the quarterly executive dashboard` → Punto de entrada al análisis de salud del producto.
+2. `Filter by segment and period` → Segmentación del análisis por tipo de cliente y ventana temporal.
+3. `Calculated KPIs: MAU, MRR, churn, trial—paid conversion` → Cálculo y visualización de métricas de negocio fundamentales.
+4. `Churn analysis filtered by customer segment` → Profundización en la tasa de cancelación por segmento.
+5. `Feature adoption heatmap consulted by Product Manager` → Visualización de patrones de uso de funcionalidades.
+6. `Comparison of metrics with previous period generated` → Generación de comparativa interperíodo.
+7. `Abandonment funnel identified in a specific feature` → Detección de un embudo de abandono en una funcionalidad concreta.
+8. `Roadmap decision made based on actual usage data` → Toma de decisión de evolución del producto fundamentada en datos reales.
+
+![EventStorming-step2.22](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-22.png)
+
+---
 
 ### 4.1.1.1 Candidate Context Discovery
 
