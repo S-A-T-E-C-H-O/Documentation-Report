@@ -456,16 +456,16 @@ Para cerrar el ciclo con integridad, el evento `Synchronized data` reconcilia to
 
 **Eventos Clave del Timeline:**
 
-1. `Humidity sensor activated`/`pH sensor activated`/`Temperature sensor activated` → Activación de la capa de monitoreo.
-2. `Recorded humidity reading`/`pH reading recorded` → Primeras lecturas del suelo.
-3. `Humidity threshold exceeded`/`pH out of range detected` → Detección de anomalías.
+1. `Humidity sensor activated` / `pH sensor activated` / `Temperature sensor activated` → Activación de la capa de monitoreo.
+2. `Recorded humidity reading` / `pH reading recorded` → Primeras lecturas del suelo.
+3. `Humidity threshold exceeded` / `pH out of range detected` → Detección de anomalías.
 4. `Water stress detected` → Confirmación de condición de estrés en el cultivo.
 5. `Calculated water stress index` → Cuantificación de la severidad.
 6. `Agronomic diagnosis generated` → Generación automatizada del diagnóstico y recomendación.
 7. `Irrigation command` → Orden de actuación correctiva.
-8. `Glued valve open`/`Solenoid valve open` → Apertura del sistema hidráulico.
+8. `Glued valve open` / `Solenoid valve open` → Apertura del sistema hidráulico.
 9. `Irrigation started` → Confirmación de flujo de agua.
-10. `Normalized pH`/`Standardized humidity` → Restauración de parámetros óptimos.
+10. `Normalized pH` / `Standardized humidity` → Restauración de parámetros óptimos.
 11. `Solenoid valve closed` → Cierre controlado de la electroválvula.
 12. `Irrigation completed` → Cierre del evento de riego correctivo.
 13. `Synchronized data` → Reconciliación total entre el gemelo digital y la realidad del campo.
@@ -2328,25 +2328,450 @@ Actúa como el habilitador analítico. Con `Calcular KPIs`, entrega las métrica
 
 ---
 
-Después proseguimos con el paso 6, Policies, donde identificamos eventos que debían ejecutarse en automático o necesitaban alguna política de negocio.
+#### Paso 6: Policies (Políticas de Negocio)
+**¿Qué es y cómo se hace?**  
+Las *Policies* son reglas automáticas o semiautomatizadas que responden a eventos (`Cuando [Evento] Entonces [Acción]`). Se plasman en notas violetas y representan la lógica de negocio que no requiere intervención humana directa. Se validan preguntando: *"¿Esta regla puede fallar silenciosamente?"* o *"¿Requiere contexto externo para ejecutarse?"*.
 
-![EventStorming-step6.1](./assets/images/candidate-context-discovery/es-policies-1.png)
+#### Policy ON‑WZ: Reanudación del wizard de configuración desde el punto de interrupción
 
-![EventStorming-step6.2](./assets/images/candidate-context-discovery/es-policies-2.png)
+**Propósito del policy:**  
+Garantizar que el asistente de configuración inicial (Starter Guide) sea tolerante a interrupciones, permitiendo al usuario abandonarlo voluntariamente (por cierre de navegador, cambio de dispositivo o simple pausa) y retomarlo exactamente desde el último paso completado, sin pérdida de datos ni necesidad de reiniciar el proceso. Este policy elimina la fricción y el abandono definitivo causado por la pérdida de progreso.
 
-![EventStorming-step6.3](./assets/images/candidate-context-discovery/es-policies-3.png)
+**Disparador (evento):**  
+El usuario completa un paso del wizard (por ejemplo, `Step completed: zone delimited`, `Step completed: first IoT device linked`, `Step completed: thresholds configured`). Cada paso genera un evento implícito de progreso.
 
-![EventStorming-step6.4](./assets/images/candidate-context-discovery/es-policies-4.png)
+**Acción / comando resultante:**  
+El sistema persiste el estado del wizard en el backend (no solo en el cliente) con el identificador del último paso finalizado. Cuando el usuario vuelve a acceder a la sección de configuración antes de haber emitido `Starter guide complete`, el sistema consulta el progreso almacenado y redirige automáticamente al primer paso incompleto, restaurando todos los datos ingresados hasta ese momento.
 
-![EventStorming-step6.5](./assets/images/candidate-context-discovery/es-policies-5.png)
+**Narrativa del flujo:**  
+El usuario inicia el wizard tras verificar su email. Completa el paso 1 (delimitación de zona) y el paso 2 (registro de primer dispositivo IoT). Antes de llegar al paso 3 (configuración de umbrales), cierra la pestaña o pierde la conexión. Al día siguiente, vuelve a ingresar a AgroSafe y hace clic en “Continuar configuración”. El sistema detecta que el usuario tiene un wizard en progreso (evento `Wizard progress found`) y lo sitúa directamente en el paso 3, con los datos de zona y dispositivo ya cargados. El usuario completa el resto del wizard sin tener que repetir nada. Solo cuando el último paso se finaliza se emite `Starter guide complete`. Esta política se apoya en el **Pivotal Point 1** (diseño de onboarding resiliente) y resuelve indirectamente el **Pain Point 1** (pérdida de datos), aunque en el wizard más que en el formulario de registro.
 
-![EventStorming-step6.6](./assets/images/candidate-context-discovery/es-policies-6.png)
+**Eventos involucrados:**
+- `Step completed N` (eventos internos de progreso)
+- `Wizard progress stored` (persistencia en backend)
+- `User resumes wizard` → `Wizard progress found`
+- `Starter guide complete` (solo cuando todos los pasos están finalizados)
 
-![EventStorming-step6.7](./assets/images/candidate-context-discovery/es-policies-7.png)
+![EventStorming-step6.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-1.png)
 
-![EventStorming-step6.8](./assets/images/candidate-context-discovery/es-policies-8.png)
+---
 
-![EventStorming-step6.9](./assets/images/candidate-context-discovery/es-policies-9.png)
+#### Policy SP‑REV: Revisión obligatoria del historial completo de pagos antes de suspender
+
+**Propósito del policy:**  
+Asegurar que ningún miembro del personal de soporte pueda ejecutar la suspensión de una cuenta por impago sin haber revisado previamente, de forma explícita y documentada, el historial completo de pagos del cliente, los acuerdos de pago vigentes, los tickets de facturación abiertos y cualquier nota interna de otros operadores. Esta política elimina las suspensiones erróneas causadas por información incompleta o desactualizada, protegiendo la experiencia del agricultor y la integridad de sus datos históricos.
+
+**Disparador (evento):**  
+`Staff searches and views customer account` – el operador accede a la ficha de un cliente desde el backoffice.
+
+**Acción / comando resultante:**  
+El sistema muestra una **vista consolidada obligatoria** que incluye: línea de tiempo de pagos (fechas, montos, métodos, referencias), acuerdos de pago activos, tickets de soporte relacionados con facturación y un registro de notas internas. El botón o comando `Suspend account due to non-payment` permanece deshabilitado hasta que el operador marca manualmente un check de “He revisado toda la información de pagos”. Una vez marcado, se habilita la suspensión y se registra en el log la confirmación de revisión junto con el identificador del operador.
+
+**Narrativa del flujo:**  
+Un cliente acumula varios ciclos de factura impagada. El sistema marca la cuenta como candidata a suspensión, pero no la ejecuta automáticamente. El operador de soporte accede al perfil del cliente mediante `Staff searches and views customer account`. En lugar de ver solo el saldo pendiente, la interfaz ahora le fuerza a navegar por un panel único que muestra todo el historial financiero y de comunicaciones. El operador descubre que, aunque el sistema muestra un adeudo, el cliente tiene un acuerdo de pago registrado por otro agente y un ticket abierto con promesa de pago para el día siguiente. Al ver esta información, el operador decide **no** suspender y en su lugar actualiza el estado del acuerdo. Si, por el contrario, la revisión confirma que no hay acuerdos y el impago es real, el operador marca la casilla de verificación, queda habilitado el comando de suspensión y se ejecuta `Customer account suspended`. Toda la acción queda registrada en auditoría con la constancia de que se revisó el historial completo. Esta política implementa el **Pivotal Point 2** y resuelve el **Pain Point 2**.
+
+**Eventos involucrados:**
+- `Staff searches and views customer account` → gatilla la visualización forzada del historial consolidado.
+- `Staff confirms payment history review` (nuevo evento interno de verificación).
+- `Customer account suspended` solo después de la confirmación.
+- `It is recorded in a log` (auditoría con el registro de la revisión).
+- `Activate account` (para el flujo de reactivación, cuando el cliente regulariza su situación).
+
+![EventStorming-step6.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-2.png)
+
+---
+
+#### Policy CON‑BUF: Almacenamiento local de telemetría durante desconexión y sincronización con validación de integridad al restaurar la conectividad
+
+**Propósito del policy:**  
+Garantizar que ningún dato de telemetría se pierda durante los períodos en que un dispositivo IoT queda sin conexión a la plataforma AgroSafe (por baja cobertura, interferencias, batería degradada u otras condiciones del entorno rural). El policy activa un buffer local en el firmware del dispositivo que almacena todas las lecturas con metadatos de integridad. Cuando la conectividad se restablece, el backend no solo ingiere los datos, sino que valida checksums, orden temporal y ausencia de duplicados antes de sincronizarlos con el gemelo digital. Esto asegura series históricas fiables incluso en entornos de conectividad inestable.
+
+**Disparador (evento):**  
+`Device Offline Detected` – el sistema de monitoreo detecta que el dispositivo ha dejado de enviar heartbeats dentro de la ventana esperada.
+
+**Acción / comando resultante:**
+1. El dispositivo activa su **buffer circular local** y almacena cada lectura con: timestamp UTC, checksum de integridad (CRC o hash ligero), número de secuencia incremental y prioridad del dato (crítico vs. normal).
+2. Cuando ocurre `Device Online Restored`, el dispositivo envía el conjunto de datos acumulados al backend.
+3. El backend ejecuta una **validación de integridad**: verifica checksums, reordena por timestamp, elimina duplicados e identifica huecos. Solo si la validación es exitosa se emite `Sync Completed` y los datos se incorporan a las series históricas.
+4. Adicionalmente, si se detectan ciclos de desconexión muy cortos y repetitivos (ej. más de 5 en 10 minutos), el backend puede aplicar **backpressure**, posponiendo sincronizaciones no críticas hasta que la conectividad se estabilice.
+
+**Narrativa del flujo:**  
+El dispositivo se encuentra en una parcela remota con cobertura celular intermitente. Durante una hora el sensor no logra enviar heartbeats (`Device Offline Detected`). Mientras tanto, sigue tomando lecturas de humedad y temperatura cada 5 minutos. Cada lectura se almacena localmente con su checksum y número de secuencia (`Device buffers data locally`). Cuando la señal regresa (`Device Online Restored`), el dispositivo envía el lote completo al backend. El backend valida que ningún registro esté corrupto, los ordena cronológicamente y verifica que no falten rangos enteros (si faltan, los marca como “no disponible por conectividad” en lugar de ignorarlos). Solo tras esta validación se emite `Sync Completed` y los datos fluyen al dashboard (`Telemetry Received`). El agricultor ve el histórico completo sin huecos ni duplicados. Si la conexión sube y baja constantemente, el backend le dice al dispositivo: “espera, acumula más datos” para evitar sincronizaciones parciales inútiles. Este policy implementa el **Pivotal Point 5** (sincronización con validación de integridad y buffer adaptativo) y resuelve el **Pain Point 5** (ciclos repetitivos que degradan la integridad).
+
+**Eventos involucrados:**
+- `Device Offline Detected` → dispara el activación del buffer local.
+- `Device buffers data locally` → almacenamiento con checksum y secuencia.
+- `Device Online Restored` → gatilla el envío de los datos acumulados.
+- `Validación de integridad en backend` (nuevo paso interno)
+- `Sync Completed` → se emite solo tras validación exitosa.
+- `Telemetry Received` → reanudación del flujo normal de datos.
+- `Heartbeat Received` → señal de que el ciclo operativo vuelve a la normalidad.
+
+![EventStorming-step6.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-3.png)
+
+---
+
+#### Policy CMD‑RET: Reintento automático y degradación de salud ante fallo o falta de acuse de recibo de comandos
+
+**Propósito del policy:**  
+Garantizar la resiliencia de la ejecución de comandos (como apertura de válvulas, ajuste de frecuencias de muestreo o inicio de fertirrigación) cuando el dispositivo IoT no confirma su recepción o ejecución dentro de un plazo definido. El policy implementa un mecanismo de reintento automático limitado y, si el fallo persiste, degrada la salud del dispositivo para alertar al sistema y al personal de soporte, evitando que un único fallo silencioso deteriore la integridad operativa de la parcela.
+
+**Disparador (evento):**  
+El dispositivo no envía confirmación de un comando (ni éxito ni fallo explícito) dentro de una ventana de 30 minutos posteriores a `Command Sent to Edge`, o bien envía explícitamente `Command Failed`.
+
+**Acción / comando resultante:**
+1. El backend **no asume éxito ni fracaso inmediato**; en su lugar, activa un temporizador de 30 minutos.
+2. Si transcurrido ese tiempo no se ha recibido `Sync Completed` ni `Command Executed`, el sistema:
+    - Reintenta el comando (lo re-encola y lo vuelve a enviar) hasta un número configurable de veces (ej. 3 reintentos).
+    - Si tras los reintentos sigue sin éxito, emite `Device Health Degraded` y registra el incidente en el log.
+3. Si el dispositivo responde explícitamente con `Command Failed`, el sistema puede:
+    - Decidir no reintentar si el error es permanente (ej. actuador roto), degradando la salud inmediatamente.
+    - Reintentar si el error es transitorio (ej. checksum incorrecto por interferencia).
+4. En todos los casos de fallo persistente, se notifica al dashboard y al personal de soporte para intervención manual, mientras el dispositivo continúa enviando telemetría (`Telemetry Received`) pero con su indicador de salud en estado degradado.
+
+**Narrativa del flujo:**  
+El agricultor ordena abrir una válvula de riego desde su aplicación móvil (`Queue Command`). El comando se encola (`Command Queued`) y se envía al dispositivo (`Command and Sent to Edge`). El dispositivo, por problemas de batería baja, recibe el comando pero no logra abrir la válvula ni enviar confirmación. El backend inicia el temporizador de 30 minutos. Al no recibir `Sync Completed` dentro del plazo, el sistema asume `Command Failed` (aunque el evento explícito no haya llegado). Realiza un reintento: re-encola el mismo comando y lo reenvía. Si el segundo intento también falla, el sistema degrada la salud del dispositivo (`Device Health Degraded`), lo marca como "requiere atención" en el dashboard del agricultor y registra el incidente en el log. El dispositivo sigue reportando telemetría (humedad, temperatura) porque esa función no se vio afectada (`Telemetry Received`). El agricultor ve una alerta amarilla junto a la válvula y sabe que debe revisar físicamente el actuador o contactar a soporte. Si en algún reintento el comando se ejecuta exitosamente, se emite `Sync Completed` y la salud se restaura. Este policy complementa el **Pivotal Point 11** (resolutor de conflictos y protocolo offline/online) al añadir una capa de reintentos transparentes para el usuario y gestión explícita de la degradación de salud.
+
+**Eventos involucrados:**
+- `Command Queued` (por el agricultor o sistema)
+- `Command Sent to Edge`
+- `Command Failed` (explícito por el dispositivo)
+- Temporizador interno `No acknowledgment within 30 min` (evento implícito)
+- `Device Health Degraded`
+- `Sync Completed` (si el reintento es exitoso)
+- `Telemetry Received` (el dispositivo sigue operativo parcialmente)
+
+![EventStorming-step6.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-4.png)
+
+---
+
+#### Policy BAT‑ALERT: Detección de degradación silenciosa de batería y alerta crítica con planificación automática de mantenimiento
+
+**Propósito del policy:**  
+Detectar de forma temprana niveles críticos de batería en dispositivos IoT, incluyendo escenarios de **degradación silenciosa** donde el voltaje superficial parece normal pero la capacidad real ha disminuido drásticamente. Ante un umbral bajo (ej. 15 % de carga útil restante), el policy dispara una alerta crítica, notifica al agricultor y al staff, reduce automáticamente la frecuencia de muestreo del sensor para prolongar su vida operativa, y agenda una tarea de mantenimiento para el reemplazo de la batería. Una vez ejecutado el reemplazo, el sistema restaura la salud del dispositivo. El policy también expone la **falta de trazabilidad** como un punto de mejora identificado (debería registrar técnico, lote de batería, voltaje post-instalación).
+
+**Disparador (evento):**  
+`Heartbeat Received` que incluye métricas de batería. El sistema evalúa el nivel real (no solo voltaje superficial) y puede detectar `Silent battery degradation` mediante modelos predictivos o históricos.
+
+**Acción / comando resultante:**
+1. Si el nivel de batería efectivo cae por debajo del umbral de advertencia (ej. 25 %), se emite `Low battery level` (informativo).
+2. Si el nivel cae por debajo del umbral crítico (ej. 15 %), se ejecuta:
+    - `Battery Critical Alert` → notificación push y WhatsApp al agricultor y al staff.
+    - Reducción automática de la frecuencia de muestreo (de 5 min a 15 min) para conservar energía.
+    - `Maintenance Scheduled` → se crea una tarea de reemplazo de batería en el sistema de gestión de flota, con fecha sugerida y asignación de técnico.
+3. Cuando el técnico o agricultor ejecuta `Maintenance Replaced` (cambio físico de la batería), el sistema valida el nuevo voltaje y emite `Device Health Restored`.
+4. **Lack of traceability in maintenance** es una nota de mejora: el policy actual no registra automáticamente el identificador del técnico, el lote de la batería nueva ni el voltaje inicial, lo que dificulta auditorías y análisis de vida útil.
+
+**Narrativa del flujo:**  
+El dispositivo envía periódicamente su heartbeat con el voltaje medido. Durante semanas, el voltaje parece estable (3.6 V), pero internamente la batería ha sufrido un envejecimiento acelerado por altas temperaturas (`Silent battery degradation`). El sistema detecta que, aunque el voltaje es normal, la capacidad de carga útil ha caído al 14 % según el modelo predictivo. Inmediatamente se dispara `Battery Critical Alert`. El agricultor recibe un mensaje en el dashboard y por WhatsApp: “Batería crítica en sensor de humedad – programe reemplazo”. El sistema reduce la frecuencia de muestreo automáticamente para que el dispositivo dure unos días más. Se agenda `Maintenance Scheduled` para el técnico en los próximos 3 días. El técnico acude a campo, cambia la batería y registra la intervención en la app (`Maintenance Replaced`). El sistema verifica el voltaje post-cambio (3.8 V) y emite `Device Health Restored`. Sin embargo, el policy no exige registrar el lote de la batería nueva ni el técnico responsable (`Lack of traceability in maintenance`), lo que impide futuros análisis de vida útil por lote. Este policy aborda directamente el **Pain Point 7** (degradación silenciosa de batería y falta de trazabilidad en el mantenimiento) y debería mejorarse para incluir trazabilidad completa.
+
+**Eventos involucrados:**
+- `Heartbeat Received` (con métricas de batería)
+- `Silent battery degradation` (detección interna)
+- `Low battery level` (umbral de advertencia)
+- `Battery Critical Alert` (umbral crítico)
+- `Maintenance Scheduled`
+- `Maintenance Replaced`
+- `Device Health Restored`
+- `Lack of traceability in maintenance` (evento de mejora identificado)
+
+![EventStorming-step6.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-5.png)
+
+---
+
+#### Policy FW‑ROLLBACK: Reversión automática a versión anterior y degradación de salud ante fallo o timeout de actualización de firmware
+
+**Propósito del policy:**  
+Garantizar que los dispositivos IoT en campo nunca queden inoperativos o en un estado indeterminado cuando una actualización de firmware falla (por corrupción de binario, timeout de conectividad, espacio insuficiente en memoria o incompatibilidad de hardware). Ante cualquier fallo o demora excesiva, el sistema ejecuta automáticamente la reversión a la versión de firmware anterior que era estable, degrada el indicador de salud del dispositivo para alertar al staff, y notifica al equipo de operaciones. Tras la reversión, el dispositivo retoma su ciclo normal de heartbeats, y el staff puede intervenir para diagnosticar la causa raíz y decidir si reintentar la actualización con una versión corregida.
+
+**Disparador (evento):**  
+`Firmware Update Failed` (reportado explícitamente por el dispositivo) o un timeout sin confirmación de `Firmware Update Completed` dentro de una ventana configurable (ej. 10 minutos desde que se inició `Firmware Update Started`).
+
+**Acción / comando resultante:**
+1. El backend ordena inmediatamente al dispositivo ejecutar `Rollback to Previous Version`.
+2. El dispositivo restaura la versión anterior (conocida como estable), se reinicia (`Device Rebooted`) y emite `Previous Version Restored`.
+3. El sistema degrada la salud del dispositivo (`Device Health Degraded`) y registra el incidente con el código de error específico.
+4. Se notifica al staff (`Staff Notified`) con un diagnóstico estructurado (fase del fallo, modelo de hardware, versión fallida, versión restaurada).
+5. El dispositivo reanuda el envío de heartbeats (`Heartbeat Received`) con su estado operativo pero con el indicador de salud degradado.
+6. El staff puede ejecutar `Request Firmware Update Available` más adelante si se libera una versión corregida, y entonces reiniciar el ciclo.
+7. Si la reversión es exitosa pero la configuración previa quedó desajustada, el sistema o el agricultor ejecuta `Configuration Changed` para restaurar parámetros operativos.
+
+**Narrativa del flujo:**  
+El staff libera una nueva versión de firmware para un lote de sensores de humedad. El sistema inicia la actualización en un dispositivo (`Request Firmware Update Available` → comando de inicio). Durante la transferencia, la conexión se interrumpe y el dispositivo no confirma la instalación dentro del timeout. El backend activa la política: ordena la reversión inmediata. El dispositivo restaura la versión anterior, reinicia y envía `Previous Version Restored`. El sistema degrada la salud (`Device Health Degraded`), mostrando una alerta amarilla en el dashboard del agricultor. El staff recibe una notificación: “Fallo de actualización en dispositivo XYZ – reversión automática aplicada – causa: timeout de descarga”. El dispositivo retoma el envío de heartbeats con la versión antigua. El staff analiza el diagnóstico, corrige el paquete de firmware y lo vuelve a liberar. Mientras tanto, el agricultor puede seguir viendo telemetría, aunque con la salud degradada. Si la reversión dejó parámetros inconsistentes, el sistema o el agricultor puede ejecutar `Configuration Changed` para reajustar umbrales o frecuencia de muestreo. Este policy implementa el mecanismo central del **Pivotal Point 6** (diagnóstico automático de fallos de firmware y cuarentena de versiones problemáticas) y resuelve el **Pain Point 8** (fallos recurrentes sin diagnóstico de causa raíz), al añadir la reversión automática como primer paso de recuperación.
+
+**Eventos involucrados:**
+- `Firmware Update Failed` o timeout interno.
+- `Rollback to Previous Version` (comando automático).
+- `Device Rebooted`
+- `Previous Version Restored`
+- `Device Health Degraded`
+- `Heartbeat Received` (reanudación de operación normal con versión anterior)
+- `Staff Notified` (con diagnóstico)
+- `Request Firmware Update Available` (futuro reintento, opcional)
+- `Configuration Changed` (para ajustes post-reversión, si es necesario)
+
+![EventStorming-step6.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-6.png)
+
+---
+
+#### Policy SEC‑REVOKE: Revocación automática de credenciales y desactivación de dispositivos ante suspensión de cuenta o reporte de pérdida
+
+**Propósito del policy:**  
+Garantizar la seguridad inmediata del ecosistema AgroSafe cuando ocurre un evento crítico que invalida la confianza en un dispositivo o en una cuenta completa. Ante la suspensión administrativa de una cuenta (por impago prolongado, violación de términos o orden legal), el sistema revoca de forma atómica y masiva las credenciales de **todos** los dispositivos asociados a esa cuenta, rechaza cualquier telemetría entrante y desactiva los dispositivos. Ante el reporte de pérdida de un dispositivo específico (por el agricultor), el sistema revoca las credenciales **únicamente de ese dispositivo** y lo desactiva, preservando el resto de la cuenta. Ambas reglas eliminan la ventana de vulnerabilidad donde credenciales activas podrían ser usadas por terceros no autorizados.
+
+**Disparadores (eventos):**
+- `Account Suspended` (orden administrativa del staff)
+- `Device Reported Lost` (desde el dashboard del agricultor)
+
+**Acción / comando resultante:**  
+**Para suspensión de cuenta:**
+1. Ejecutar `Revoke Credentials` para **todos** los dispositivos del tenant.
+2. Ejecutar `Reject telemetry` cerrando todos los tópicos MQTT y rechazando cualquier ingesta entrante.
+3. Ejecutar `Device Deactivated` en cada dispositivo (cambia su estado a inactivo, datos históricos preservados).
+
+**Para reporte de pérdida:**
+1. Ejecutar `Revoke Credentials` **solo** para el dispositivo reportado.
+2. Ejecutar `Device Deactivated` para ese dispositivo.
+3. Opcionalmente, si el dispositivo está en flujo de desmantelamiento, posteriormente `Device Decommissioned` y `Replacement Device Registered` (gestionado por otras políticas).
+
+**Narrativa del flujo:**  
+**Escenario A – Suspensión de cuenta:**  
+Un agricultor acumula deuda y no responde a notificaciones. El staff ejecuta `Account Suspended`. El sistema, de forma automática e inmediata, revoca todos los certificados X.509 y tokens de autenticación de los 5 dispositivos IoT que el agricultor tiene desplegados (`Credentials Revoked`). Acto seguido, cierra los canales de ingesta (`Telemetry Rejected`) y marca cada dispositivo como inactivo (`Device Deactivated`). El agricultor pierde acceso al dashboard, y sus dispositivos quedan mudos. Si algún sensor intenta reconectarse, su handshake es rechazado. Todos los datos históricos permanecen intactos para futura reactivación.
+
+**Escenario B – Reporte de pérdida:**  
+El agricultor nota que un sensor de humedad ha desaparecido de su parcela. Desde la app ejecuta `Report Device Lost`. El sistema revoca las credenciales **solo** de ese sensor (`Credentials Revoked`) y lo desactiva (`Device Deactivated`). El resto de sus dispositivos siguen operando con normalidad, enviando telemetría y recibiendo comandos. El staff puede luego ejecutar `Device Decommissioned` para la baja administrativa y `Replacement Device Registered` para reponerlo (Pivotal Point 7). Este policy implementa la revocación automática del **Pivotal Point 3** (ventana de riesgo eliminada) y complementa el **Pain Point 3** (exposición de credenciales activas).
+
+**Eventos involucrados:**
+- `Account Suspended` (disparador)
+- `Device Reported Lost` (disparador)
+- `Credentials Revoked` (comando ejecutado en lote o individual)
+- `Telemetry Rejected` (solo para suspensión)
+- `Device Deactivated` (para todos los dispositivos en suspensión, o para uno en pérdida)
+- `Device Decommissioned` (posterior, opcional)
+- `Replacement Device Registered` (posterior, opcional)
+
+![EventStorming-step6.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-7.png)
+
+---
+
+#### Policy THR‑EXCEPTION: Validación y auditoría de modificaciones de umbrales fuera del rango seguro
+
+**Propósito del policy:**  
+Garantizar que cualquier ajuste de umbrales agronómicos (humedad, pH, temperatura, conductividad) que se salga del rango seguro recomendado por el catálogo de AgroSafe pase por un proceso explícito de **advertencia, confirmación y trazabilidad**. El policy protege al agricultor de cambios involuntarios o mal informados que podrían dañar su cultivo (ej. un umbral de humedad mínima demasiado bajo que impide el riego automático), al tiempo que permite la flexibilidad necesaria para que agricultores o agrónomos con conocimiento específico tomen decisiones informadas fuera del estándar. Cada modificación anómala queda registrada en auditoría con el usuario responsable, la justificación y el valor anterior y nuevo, generando confianza y trazabilidad.
+
+**Disparador (evento):**  
+`Threshold manually modified with a value outside the safe range` – el agricultor o el agrónomo vinculado introduce un valor que el catálogo agronómico considera fuera del margen seguro para ese cultivo y estadio fenológico.
+
+**Acción / comando resultante:**
+1. El sistema **no aplica el cambio directamente**. En su lugar, muestra una advertencia clara: el valor está fuera del rango recomendado, explica el posible riesgo (ej. "un umbral de humedad mínimo del 15 % puede provocar estrés hídrico irreversible") y solicita confirmación explícita.
+2. El usuario debe marcar un check o pulsar “Confirmar de todas formas”.
+3. Se registra el evento `Threshold exception logged with user confirmation`, almacenando en auditoría: usuario que realiza el cambio, fecha y hora, parcela y zona afectada, umbral modificado, valor anterior, nuevo valor, justificación opcional ingresada por el usuario.
+4. El sistema **luego** aplica el cambio y emite `Threshold change recorded in audit`.
+5. Adicionalmente, se notifica al agricultor (si el cambio lo hizo el agrónomo) o al agrónomo vinculado (si el cambio lo hizo el agricultor) con los detalles completos, manteniendo la transparencia colaborativa.
+
+**Narrativa del flujo:**  
+El agricultor ha delimitado su zona (`Select zone`) y ha seleccionado el tipo de cultivo (`Select Crop Type`). El sistema carga automáticamente los umbrales seguros desde el catálogo (`Thresholds automatically loaded from catalog`). El agricultor, basándose en su experiencia local, decide bajar el umbral de humedad mínima del 30 % al 20 %. Al introducir el nuevo valor, el sistema detecta que está fuera del rango seguro (el catálogo recomienda 25‑35 %). Aparece una ventana de advertencia: “El valor 20 % está por debajo del mínimo recomendado. Esto podría retrasar los riegos automáticos y provocar estrés hídrico. ¿Confirmar de todas formas?”. El agricultor confirma. El sistema registra la excepción (`Threshold exception logged with user confirmation`) con su identificación y marca de tiempo. Luego aplica el cambio y lo guarda en auditoría (`Threshold change recorded in audit`). El agrónomo vinculado recibe una notificación: “Tu agricultor ha ajustado el umbral de humedad al 20 %, fuera del rango seguro”. Si en el futuro se produce un daño por falta de riego, la trazabilidad permite saber quién tomó la decisión. Este policy está directamente alineado con la narrativa del **Timeline 14** (Configuración colaborativa de umbrales) y complementa el **Pivotal Point 8** (Notificación detallada pre-aplicación) al añadir la capa de confirmación explícita para cambios riesgosos.
+
+**Eventos involucrados:**
+- `Type of crop selected by farmer`
+- `Thresholds automatically loaded from catalog`
+- `Threshold manually modified with a value outside the safe range` (disparador)
+- `Threshold exception logged with user confirmation` (tras confirmación)
+- `Threshold change recorded in audit` (tras aplicación)
+- `Farmer notified of the change made by their agronomist` (si aplica)
+
+![EventStorming-step6.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-8.png)
+
+---
+
+#### Policy THR‑TEMPLATE: Notificación previa detallada y consentimiento del agricultor antes de aplicar plantillas de umbrales de forma masiva
+
+**Propósito del policy:**  
+Evitar que un agrónomo pueda sobrescribir silenciosamente los umbrales de cultivo de sus clientes al aplicar una plantilla de forma masiva (`Template applied to client plot`). El policy establece que, antes de que la plantilla modifique cualquier parcela, el sistema debe **notificar a cada agricultor afectado con un desglose detallado** de los cambios propuestos (parámetro por parámetro, valor anterior vs. nuevo, justificación agronómica del agrónomo) y **solicitar confirmación explícita** antes de aplicar los cambios. Si el agricultor no responde dentro de un plazo configurable, se aplica una regla de aceptación tácita o rechazo por defecto según su preferencia. Este policy garantiza transparencia, respeta la autonomía del agricultor y mantiene la trazabilidad completa de cada modificación en auditoría.
+
+**Disparador (evento):**  
+El agrónomo ejecuta `Select plots` y luego `Apply Template` sobre una o varias parcelas de sus clientes, después de haber creado una plantilla (`Threshold template created by agronomist`).
+
+**Acción / comando resultante:**
+1. El sistema **no aplica la plantilla inmediatamente**. En lugar de eso, genera una **propuesta de cambio** (`Threshold change proposal`) que contiene: lista de parcelas afectadas, para cada parcela y cada umbral (humedad, pH, temperatura, etc.) el valor actual y el valor propuesto, la justificación escrita por el agrónomo, y un plazo de respuesta (ej. 48 horas).
+2. El sistema envía una notificación detallada a cada agricultor afectado (`Threshold change proposal sent to farmer`), visible en el dashboard y mediante push/email.
+3. El agricultor puede: (a) **aceptar todos los cambios**, (b) **rechazar todos los cambios**, o (c) **aceptar parcialmente** (seleccionando qué parcelas o qué umbrales específicos modificar).
+4. Si el agricultor acepta (total o parcialmente), el sistema aplica la plantilla solo sobre lo aceptado, registra cada cambio en auditoría por parcela (`Threshold change recorded in audit` con metadato “vía plantilla aceptada”), y envía una notificación de consolidación (`Farmer notified of the change made by their agronomist`).
+5. Si el agricultor rechaza, no se aplica ningún cambio y se registra el rechazo en auditoría.
+6. Si el agricultor no responde en el plazo, se aplica la política de silencio configurable (por defecto: rechazar automáticamente para evitar sobrescrituras no deseadas).
+7. El agrónomo recibe un resumen de aceptaciones/rechazos para cada parcela.
+8. Cada parcela procesada genera su entrada individual en auditoría (`System processes each parcel` con el resultado de la aceptación).
+
+**Narrativa del flujo:**  
+El agrónomo ha creado una plantilla de umbrales optimizada para el cultivo de maíz en una región determinada (`Threshold template created by agronomist`). Selecciona 10 parcelas de 5 agricultores distintos (`Select plots`) y pulsa “Aplicar plantilla”. En lugar de sobrescribir silenciosamente, el sistema genera una propuesta detallada y la envía a cada agricultor. Juan Pérez, agricultor, recibe una notificación en su móvil: “Tu agrónomo propone modificar los umbrales de tus 2 parcelas. Humedad: de 30 % a 25 %; pH: de 6.5 a 6.2. Justificación: ‘Optimización para fase de floración’. Confirma o rechaza antes de 48h.” Juan revisa los datos, le parece correcto y acepta. El sistema aplica los cambios solo en sus parcelas, registra la auditoría y le envía un resumen final. Otro agricultor, María, rechaza el cambio porque prefiere mantener sus umbrales empíricos. El sistema no aplica nada y notifica al agrónomo del rechazo. El agrónomo puede entonces discutir con María directamente. Este policy implementa el **Pivotal Point 8** (Notificación detallada pre-aplicación y reversión bajo demanda) y resuelve el **Pain Point 9** (sobrescritura silenciosa de umbrales por aplicación masiva de plantillas).
+
+**Eventos involucrados:**
+- `Threshold template created by agronomist`
+- `Select plots` → `Apply Template` (disparador)
+- `Threshold change proposal sent to farmer` (nuevo evento)
+- `Farmer accepts / rejects / partially accepts` (nuevos eventos de respuesta)
+- `Template applied to client plot` (solo tras aceptación)
+- `System processes each parcel`
+- `Threshold change recorded in audit`
+- `Farmer notified of the change made by their agronomist` (notificación de consolidación)
+
+![EventStorming-step6.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-9.png)
+
+---
+
+#### Policy IRR‑STRESS: Detección automática de estrés hídrico, cálculo del índice de estrés y ejecución de riego correctivo
+
+**Propósito del policy:**  
+Automatizar por completo el ciclo de monitoreo, diagnóstico y actuación ante condiciones de estrés hídrico en el cultivo. Cuando los sensores detectan que la humedad del suelo o el pH superan los umbrales configurados, el sistema calcula automáticamente un índice de estrés hídrico (integrando humedad, temperatura, tipo de cultivo y estadio fenológico), genera un diagnóstico agronómico y, sin intervención humana, emite un comando de riego que abre las válvulas solenoides, aplica el agua necesaria y restaura los parámetros óptimos. Una vez normalizados los valores, el sistema cierra las válvulas, completa el riego y sincroniza todos los datos en el gemelo digital de la parcela.
+
+**Disparador (evento):**  
+`Humidity threshold exceeded` o `pH out of range detected` – el sistema detecta que una lectura de humedad está por debajo del mínimo configurado o que el pH se ha salido del rango seguro, basándose en los umbrales cargados desde el catálogo o modificados colaborativamente.
+
+**Acción / comando resultante:**
+1. El sistema ejecuta `Calculate water stress index`, combinando la lectura actual, la temperatura ambiente, el tipo de cultivo y el estadio fenológico para obtener un valor cuantitativo de severidad.
+2. Si el índice supera un umbral crítico, se genera `Agronomic diagnosis generated` (diagnóstico que identifica la causa raíz y recomienda riego correctivo, posiblemente con ajuste de pH).
+3. El sistema emite `Irrigation command` hacia los actuadores de la parcela.
+4. Se ejecuta la apertura secuencial: `Glued valve command` → `Solenoid valve open` → `Irrigation started`, confirmando que el agua está fluyendo.
+5. Los sensores continúan monitoreando; cuando registran `Normalized pH` y `Standardized humidity` (valores de vuelta al rango óptimo), el sistema ordena `Solenoid valve closed`.
+6. Se registra `Irrigation completed` con el volumen aplicado y la duración.
+7. Finalmente, se dispara `Synchronized data` para reconciliar todas las lecturas anómalas, el diagnóstico y el evento de riego entre el dispositivo físico y el gemelo digital, dejando trazabilidad completa.
+
+**Narrativa del flujo:**  
+Los sensores de humedad y pH están activos en la parcela. El sensor de humedad mide una caída al 18 % (el umbral mínimo es 30 %). El sistema detecta `Humidity threshold exceeded` y de inmediato, sin esperar confirmación humana, activa el cálculo del índice de estrés hídrico. El índice arroja un valor de 0.75 sobre 1.0, indicando estrés severo. Se genera un diagnóstico automático: “Déficit hídrico crítico – se recomienda riego de 15 minutos”. El sistema emite un comando de riego (`Irrigation command`). La electroválvula se abre, el agua comienza a fluir y se registra `Irrigation started`. Durante el riego, los sensores monitorean la recuperación. Cuando la humedad alcanza el 32 % y el pH se normaliza en 6.5, el sistema cierra la válvula (`Solenoid valve closed`) y marca `Irrigation completed`. Todos los datos –lecturas anómalas, índice calculado, diagnóstico, comando, eventos de apertura/cierre– se sincronizan (`Synchronized data`). El agricultor ve en su dashboard el histórico del incidente y la actuación automática, sin haber tenido que intervenir. Este policy es el núcleo del **Timeline 16** (Monitoreo de suelo, diagnóstico de estrés hídrico y riego correctivo automatizado) y automatiza completamente lo que en otros sistemas requeriría decisión manual.
+
+**Eventos involucrados:**
+- `Humidity sensor activated` / `pH sensor activated`
+- `Humidity threshold exceeded` / `pH out of range detected` (disparadores)
+- `Water stress detected`
+- `Calculate water stress index`
+- `Agronomic diagnosis generated`
+- `Irrigation command`
+- `Glued valve command` → `Solenoid valve open` → `Irrigation started`
+- `Normalized pH` / `Standardized humidity`
+- `Solenoid valve closed` → `Irrigation completed`
+- `Synchronized data`
+
+![EventStorming-step6.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-10.png)
+
+---
+
+#### Policy SUP‑DATA: Inclusión automática de evidencia de telemetría en recomendaciones técnicas y priorización visual de parcelas críticas
+
+**Propósito del policy:**  
+Garantizar que cada recomendación técnica enviada por un agrónomo a un agricultor esté respaldada por **datos objetivos de los sensores** (gráficos de tendencia, valores actuales vs. umbrales, alertas recientes), de modo que el agricultor pueda confiar en el consejo sin necesidad de contrastar manualmente la información. Adicionalmente, el policy establece que el dashboard consolidado del agrónomo debe **resaltar visualmente de forma automática** las parcelas en condición crítica (por umbrales superados, estrés hídrico, alertas de seguridad o degradación de dispositivos), priorizando la atención del asesor hacia los casos más urgentes. Cuando el agrónomo accede al historial de una parcela y redacta una recomendación, el sistema captura el contexto de telemetría relevante y lo adjunta como evidencia antes del envío.
+
+**Disparador (evento):**  
+Doble disparador:
+1. `Agronomist accesses the consolidated dashboard of his client plots` → el sistema evalúa todas las parcelas y aplica la priorización visual.
+2. `Agronomist writes a recommendation` (dentro del flujo `Access the plot history`) → el sistema captura automáticamente los datos de sensores del período relevante.
+
+**Acción / comando resultante:**  
+**Para la priorización visual:**
+- El backend evalúa en tiempo real el estado de cada parcela del agrónomo según: umbrales de humedad, pH, temperatura, alertas activas, estrés hídrico, salud de dispositivos, y tiempos fuera de rango.
+- Las parcelas que superan un umbral de criticidad se resaltan en el dashboard con un color distintivo (rojo, naranja, amarillo) y pueden ordenarse por urgencia.
+
+**Para la recomendación con datos adjuntos:**
+- Cuando el agrónomo accede al historial (`Access the plot history`) y comienza a redactar (`Write a recommendation`), el sistema captura automáticamente: las últimas 24‑48 horas de lecturas de los sensores clave, los umbrales configurados, las alertas activas o recientes, y un mini gráfico de tendencia del parámetro más relevante.
+- Esta evidencia se presenta al agrónomo en un panel lateral y se adjunta automáticamente al mensaje final, generando un bloque “Datos que respaldan esta recomendación” (gráfico, valores actuales comparados con umbrales).
+- El comando `Technical recommendation sent to the farmer with attached sensor data` se enriquece con esta información visible y comprensible para el agricultor.
+
+**Para los informes mensuales:**
+- Cuando se ejecuta `Request monthly report`, el sistema compila automáticamente todos los datos del período (`System compiles data`) y genera un informe enriquecido con gráficos, estadísticas y resúmenes ejecutivos (`Monthly technical report generated for a client`), disponible en PDF y en el dashboard.
+
+**Narrativa del flujo:**  
+El agrónomo ingresa a su panel consolidado. El sistema analiza automáticamente las 30 parcelas que supervisa y resalta en rojo aquellas con estrés hídrico crítico, en naranja las que tienen batería baja en algún sensor. El agrónomo hace clic en una parcela roja (`Customer plot in critical condition visually highlighted`) y accede a su historial completo. Al ver la tendencia descendente de humedad, pulsa “Redactar recomendación”. El sistema captura automáticamente la curva de humedad de los últimos 2 días, el umbral actual (30 %) y el valor actual (18 %), y los adjunta como un gráfico en la ventana de redacción. El agrónomo escribe: “Es necesario aumentar el riego en la zona norte. Observen la caída de humedad por debajo del umbral crítico.” Al enviar, el agricultor recibe una notificación con el texto y, justo debajo, el gráfico con los datos que demuestran la necesidad. El agricultor confía en el consejo y activa el riego manual o modifica la automatización. Este policy implementa el **Pivotal Point 9** (Adjunción automática de evidencia de telemetría en recomendaciones e informes) y resuelve el **Pain Point 10** (Recomendación técnica sin adjuntar datos de sensores).
+
+**Eventos involucrados:**
+- `Agronomist accesses the consolidated dashboard of his client plots`
+- `Customer plot in critical condition visually highlighted` (resultado automático)
+- `Access the plot history`
+- `Write a recommendation` (disparador de captura de telemetría)
+- `Technical recommendation sent to the farmer with attached sensor data` (con datos adjuntos)
+- `Request monthly report` → `System compiles data` → `Monthly technical report generated for a client`
+- 
+  ![EventStorming-step6.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-11.png)
+
+---
+
+#### Policy IRR‑RESOLVE: Resolución de conflictos de comandos de riego y validación temporal de comandos encolados por falta de conectividad
+
+**Propósito del policy:**  
+Garantizar que los comandos de riego enviados por el agricultor, el agrónomo o el sistema se ejecuten de forma determinista, segura y sin conflictos, incluso en escenarios de conectividad inestable o acciones simultáneas sobre la misma zona. El policy aborda dos problemas críticos: (1) **conflictos por comandos concurrentes** (ej. agricultor y agrónomo ordenan abrir/cerrar la misma válvula al mismo tiempo), y (2) **comandos encolados localmente** que, al restaurarse la conectividad, podrían ejecutarse fuera de ventana temporal o sobre una condición que ya fue resuelta (ej. el suelo ya se humedeció por lluvia o por otro riego). El policy introduce un resolutor de conflictos en el backend que serializa y prioriza comandos, y un validador temporal que descarta comandos caducos o ya innecesarios, notificando al usuario con una razón clara y visible.
+
+**Disparadores (eventos):**
+1. `Irrigation command sent` (desde dashboard o app) mientras el actuador ya está en el estado solicitado o hay otro comando en curso.
+2. `Connectivity restored` después de que un comando fue almacenado localmente en la app móvil.
+
+**Acción / comando resultante:**  
+**Parte A – Resolución de conflictos en tiempo real:**
+- Cuando se recibe un comando de riego, el backend verifica el estado actual del actuador (válvula abierta/cerrada, en transición, bloqueada por seguridad).
+- Si el comando intenta abrir una válvula ya abierta o cerrar una ya cerrada, se ejecuta `Attempt to activate already active irrigation, conflict detected`.
+- El sistema **no ejecuta** el comando duplicado o contradictorio. En su lugar, bloquea la acción (`Block Irrigation Command`), ejecuta `Duplicate action blocked, user informed of current status`, y notifica al usuario con un mensaje claro: “El riego ya estaba activo” o “Comando contradictorio detectado – se ha ignorado tu solicitud”.
+- El resolutor aplica reglas de priorización configurables (ej. comandos del agricultor tienen prioridad sobre reglas automáticas, o viceversa).
+
+**Parte B – Validación de comandos encolados por falta de conectividad:**
+- Cuando el agricultor envía un comando sin conectividad (`Irrigation command sent without available connectivity`), la app lo almacena localmente como `Command queued locally in the mobile app` con un timestamp. El usuario puede ver el estado “pendiente de envío”.
+- Al restaurarse la conectividad (`Connectivity restored`), el backend recibe el comando y ejecuta `Command validated before execution`.
+- La validación evalúa dos condiciones: (1) que el suelo **siga seco** (o la condición que motivó el riego persista), y (2) que el tiempo transcurrido desde el encolado sea **menor a 30 minutos** (ventana configurable).
+- Si ambas condiciones se cumplen, se ejecuta `Command executed after successful validation`.
+- Si el tiempo supera los 30 minutos o la condición ya se resolvió (ej. llovió o el Edge ya ejecutó otro riego), el sistema ejecuta `Command discarded, exceeded 30 min or condition already resolved`.
+- **Se notifica al agricultor con la razón exacta:** “Comando descartado – tiempo de espera superado” o “Comando descartado – el suelo ya no está seco”. Esto elimina la incertidumbre de si el riego se realizó o no.
+- Adicionalmente, si el agricultor cancela manualmente, se puede ejecutar `Canceled Irrigation Command` o `Disable Irrigation Command`.
+- Los comandos fallidos o descartados se limpian periódicamente (`Delete failed commands`).
+
+**Narrativa del flujo – Parte A (conflicto simultáneo):**  
+El agricultor ordena abrir la válvula de riego desde su móvil. Simultáneamente, su agrónomo, desde el dashboard, ordena cerrar la misma válvula por una alerta de exceso de humedad. Ambos comandos llegan al backend casi al mismo tiempo. El resolutor detecta que el actuador está en reposo (cerrado). Recibe primero el comando de apertura del agricultor y lo ejecuta, cambiando el estado a “abierto”. Al procesar el comando del agrónomo, el sistema detecta `Attempt to activate already active irrigation, conflict detected` (el conflicto real es que el comando de cierre intenta actuar sobre una válvula que ya está siendo abierta). Aplica la prioridad (por ejemplo, el agricultor tiene la última palabra), bloquea el comando de cierre y notifica al agrónomo: “Tu comando de cierre no se ejecutó porque el agricultor ordenó la apertura simultáneamente”. Se evita una situación de toggling rápido que dañaría la válvula o desperdiciaría agua.
+
+**Narrativa del flujo – Parte B (comando offline):**  
+Un agricultor en una zona de baja cobertura envía un comando de riego. La app lo almacena localmente (`queued locally`) y muestra “Pendiente de envío – se ejecutará cuando haya señal”. Pasados 45 minutos, el agricultor llega a una zona con cobertura, pero en ese tiempo ha llovido 20 mm. El backend recibe el comando, verifica el estado del suelo (sensores reportan humedad óptima) y el timestamp (45 min > 30 min). Ejecuta `Command discarded, exceeded 30 min or condition already resolved` y notifica al agricultor: “Tu comando de riego fue descartado porque la condición ya no aplica (el suelo ya está húmedo por lluvia) o por tiempo excesivo.” El agricultor sabe que no se regó y no tiene que preocuparse por un riego innecesario. Si el comando se hubiera validado, se ejecutaría y él recibiría la confirmación “Riego ejecutado”.
+
+Este policy implementa el **Pivotal Point 11** (Resolutor de conflictos de comandos y protocolo confiable offline/online para riego seguro) y resuelve los **Pain Points 6 y 11** (conflictos de comandos concurrentes y desperdicio de agua por comandos fuera de ventana).
+
+**Eventos involucrados:**
+- `Irrigation command sent` (con o sin conectividad)
+- `Attempt to activate already active irrigation, conflict detected`
+- `Duplicate action blocked, user informed of current status`
+- `Command queued locally in the mobile app`
+- `Connectivity restored, command validated before execution`
+- `Command executed after successful validation`
+- `Command discarded, exceeded 30 min or condition already resolved`
+- `Canceled Irrigation Command` / `Disable Irrigation Command`
+- `Delete failed commands`
+
+![EventStorming-step6.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-12.png)
+
+---
+
+#### Policy SEC‑CLASS: Clasificación en el borde de eventos de intrusión perimetral con envío prioritario según nivel de confianza
+
+**Propósito del policy:**  
+Permitir que el dispositivo IoT (sensor PIR + ESP32) clasifique en el borde los eventos de movimiento detectados en el perímetro de la parcela, distinguiendo entre viento (`WIND`), animal (`ANIMAL`) y presencia humana (`HUMAN`), basándose en la intensidad de calor medida y unos umbrales configurados (estáticos o dinámicos). La clasificación determina la urgencia de la notificación: si el evento es `HUMAN` con alta confianza, se envía al backend en menos de 5 segundos para activar una alerta de intrusión; si es `WIND` o `ANIMAL`, se registra como evento de baja prioridad sin notificación urgente. El policy es crítico para evitar la fatiga de alertas por falsos positivos (viento, animales) y garantizar que una intrusión humana real reciba atención inmediata.
+
+**Disparador (evento):**  
+`PIR sensor detects movement at the perimeter` – el sensor infrarrojo pasivo capta una variación térmica dentro de su campo de visión.
+
+**Acción / comando resultante:**
+1. El ESP32 mide la intensidad de calor mediante su ADC (`Heat intensity measured by the ESP32 ADC`).
+2. El firmware del Edge compara la intensidad contra los umbrales de clasificación (`Configure PIR Sensitivity`).
+    - Si `Heat Intensity > human threshold` → clasifica como `Event classified as HUMAN`.
+    - Si `Heat Intensity < human threshold` y el patrón corresponde a animal pequeño → `Event classified as ANIMAL`.
+    - Si `Heat Intensity` es muy baja o el patrón es difuso → `Event classified as WIND`.
+3. Si la clasificación es `HUMAN` con un nivel de confianza alto (configurable, ej. > 80 %), el Edge ejecuta `High trust rating sent to the backend immediately`, garantizando la entrega en menos de 5 segundos.
+4. El backend, al recibir la alta confianza, dispara `Human intrusion alert triggered` (notificación push/WhatsApp al agricultor y registro en la bitácora de seguridad).
+5. Si la clasificación es `WIND` o `ANIMAL`, o la confianza en `HUMAN` es baja, se ejecuta `Low priority event logged in history without urgent notification` (solo registro en el historial, sin alerta inmediata).
+
+**Narrativa del flujo:**  
+El sensor PIR instalado en el perímetro de una parcela de maíz detecta movimiento. El ESP32 mide la intensidad de calor. Si la calibración es incorrecta (ej. umbral humano demasiado bajo), todo movimiento (incluyendo viento) podría clasificarse como `HUMAN`, generando falsas alarmas constantes. Por eso el policy requiere una calibración precisa, idealmente dinámica (ver Pivotal Point 12). En un escenario correcto, un movimiento con alta intensidad de calor y patrón típico humano se clasifica como `HUMAN`. El Edge envía la alerta al backend en menos de 5 segundos. El agricultor recibe una notificación push: “Intrusión humana detectada en parcela norte”. Un movimiento de un perro o una ráfaga de viento se clasifica como `ANIMAL` o `WIND`, se registra en el historial pero no molesta al agricultor. Este policy es el núcleo del **Timeline 20** (Detección y clasificación de intrusión perimetral) y, cuando se combina con umbrales adaptativos, implementa la solución propuesta en el **Pivotal Point 12** (Calibración adaptativa y aprendizaje en el borde), resolviendo el **Pain Point 12** (calibración incorrecta que provoca clasificación errónea y fatiga de alertas).
+
+**Eventos involucrados:**
+- `PIR sensor detects movement at the perimeter` (disparador)
+- `Heat intensity measured by the ESP32 ADC`
+- `Event classified as WIND` / `Event classified as ANIMAL` / `Event classified as HUMAN`
+- `High trust rating sent to the backend immediately`
+- `Low priority event logged in history without urgent notification`
+- `Human intrusion alert triggered`
+
+![EventStorming-step6.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-13.png)
 
 ---
 
