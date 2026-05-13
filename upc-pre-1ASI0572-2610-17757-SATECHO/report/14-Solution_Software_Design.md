@@ -622,8 +622,6 @@ La fase de Candidate Context Discovery tiene como objetivo transformar el modelo
 **¿Qué es y cómo se hace?**  
 Los *Pain Points* representan fricciones operativas, riesgos técnicos o pasos manuales que degradan la experiencia del usuario o la integridad del dominio. Se identifican marcando con notas rosas los eventos o transiciones donde existe alta probabilidad de fallo, latencia inaceptable, pérdida de datos o conflicto de estados. El equipo los valida preguntando: *"¿Qué pasa si este paso falla?"* o *"¿Dónde se pierde valor si no se automatiza?"*.
 
-Perfecto, vamos a estructurar el primer **Pain Point** siguiendo la línea narrativa que ya estableciste.  
-Lo presento como un bloque listo para insertar en tu documentación, con título, propósito y explicación detallada vinculada a los eventos del timeline de Onboarding y Registro.
 
 #### Pain Point 1: Pérdida de datos del formulario por error de validación tardía
 
@@ -1107,63 +1105,719 @@ Mientras tanto, el equipo observa eventos como `Abandonment funnel identified in
 
 ---
 
-Después, continuamos con el cuarto paso del DDD llamado Pivotal Points, donde identificamos puntos o eventos comerciales importantes que indicaban un cambio drástico en el contexto, el estado del sistema o la fase del proceso. Estos eventos marcan fronteras naturales entre bounded contexts.
+#### Paso 4: Pivotal Points (Puntos de Inflexión)
+**¿Qué es y cómo se hace?**  
+Los *Pivotal Points* son eventos que marcan un cambio drástico en el contexto, el estado del sistema o la fase del proceso. Se identifican preguntando: *"¿Este evento separa responsabilidades de negocio distintas?"* o *"¿Cambia irreversiblemente el estado del agregado?"*. Actúan como fronteras naturales para Bounded Contexts.
 
-En el flujo de Onboarding e Identidad, el evento Email verificado por el usuario actúa como pivotal point. Marca el cambio irreversible de un visitante anónimo a un usuario autenticado, separando el contexto de adquisición del contexto de gestión de identidad y acceso.
+#### Pivotal Point 1: Diseño de un flujo de Onboarding resiliente a validación tardía y abandono del wizard
 
-![EventStorming-step4.1](./assets/images/candidate-context-discovery/es-pivotal-points-1.png)
+**Timeline asociado:** *Onboarding y Registro de Usuarios* (Timeline 1) y *Onboarding Wizard – Starter Guide*
+
+**Pain Points que resuelve:**
+- Pain Point 1: Pérdida de datos del formulario por error de validación tardía.
+- Pain Point adicional: Abandono del wizard de configuración inicial sin posibilidad de retomar el punto exacto donde se dejó.
+
+**Propósito del Pivotal Point:** Establecer que el proceso de onboarding debe ser **estado-persistente** tanto en el formulario de registro como en el wizard de configuración inicial. Para ello, se toma la decisión arquitectónica de implementar un almacenamiento local progresivo de los datos ingresados (previo envío) y una política de *checkpoints* en cada paso del wizard. Esta decisión garantiza que ni un error de validación en el servidor ni un cierre accidental de la sesión supongan la pérdida total de la información, eliminando la fricción que provocaba el abandono y mejorando la conversión final al dashboard operativo.
+
+**Narrativa del Pivotal Point:** El flujo original de Onboarding mostraba dos puntos de quiebre claros:
+1. Durante el `Visitor completes registration form`, toda la validación ocurría del lado del servidor. Si el backend rechazaba el envío (correo duplicado, contraseña débil, formato incorrecto), el formulario se recargaba vacío. El visitante perdía todos los campos ya completados, lo que a menudo desembocaba en el abandono.
+2. Durante el `Starter guide complete`, el wizard de configuración inicial (delimitación de parcelas, alta de primeros dispositivos) carecía de cualquier mecanismo de guardado intermedio. Si el usuario cerraba la ventana, cambiaba de pestaña o se quedaba sin conectividad, debía recomenzar desde el primer paso.
+
+La decisión pivotal que resuelve ambos problemas es doble:
+
+**A) Persistencia local progresiva del formulario de registro:**  
+Cada campo del formulario (`name`, `email`, `phone`, `password`, `plan`) se almacena en `localStorage` o `sessionStorage` del navegador (o en el estado de la app móvil) tan pronto como el usuario termina de rellenarlo. Ante un error de validación del servidor, el frontend recupera automáticamente los datos almacenados y repuebla el formulario, conservando todos los campos correctos y resaltando únicamente aquellos que requieren corrección. Solo cuando el backend responde con éxito y se emite `Registered Farmer` / `Registered Agronomist`, se limpia el almacenamiento local. Esto elimina la pérdida de datos y reduce drásticamente la tasa de abandono en este paso.
+
+**B) Wizard de configuración con checkpoint por paso:**  
+El `Starter guide` se rediseña como un flujo con estados guardables. Cada paso completado (selección de zona de cultivo, vinculación de un primer dispositivo IoT) actúa como un checkpoint que persiste en el backend el progreso del usuario. Si el usuario abandona el wizard, al reingresar el sistema lo sitúa exactamente en el último paso no finalizado. El evento `Starter guide complete` solo se emite cuando todos los checkpoints están confirmados, y hasta ese momento el wizard puede pausarse y reanudarse sin pérdida de contexto.
+
+Estas dos decisiones convierten el onboarding en un proceso tolerante a fallos de red, errores de validación e interrupciones del usuario, protegiendo la inversión en adquisición desde el primer punto de contacto.
+
+**Eventos involucrados en el flujo resiliente:**
+- `Visitor arrives at landing page`
+- `Visitor selects a plan` → `Selected plan` → `Subscription activated`
+- `Visitor completes registration form` → **Ahora con persistencia local progresiva**
+- `Registered Farmer` / `Registered Agronomist` → Confirmación que dispara la limpieza del almacenamiento local
+- `Verified email sent` → `Email verified by user`
+- `Starter guide complete` → **Ahora con checkpoints intermedios guardados**
+- `Access the dashboard` → Entrada al panel sin fricción
+
+**Impacto esperado en el sistema:**
+- Reducción significativa de la tasa de abandono en el formulario de registro.
+- Aumento de la conversión del 100 % del wizard de configuración inicial (los usuarios que empiezan el wizard lo terminan, aunque sea en varias sesiones).
+- Mejora de la percepción de robustez y profesionalidad de la plataforma.
+- Disminución de tickets de soporte del tipo “perdí todos mis datos al registrarme” o “tengo que volver a empezar la configuración”.
+
+![EventStorming-step5.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-1.png)
 
 ---
 
-En el flujo de Monitoreo y Diagnóstico, el evento Estrés hídrico detectado es pivotal. Indica que el sistema ha pasado de solo recolectar datos brutos (Lectura de humedad) a interpretar el estado fisiológico del cultivo, separando el monitoreo de suelo del diagnóstico agronómico.
+#### Pivotal Point 2: Validación obligatoria del historial completo de pagos antes de habilitar la suspensión manual
 
-En el flujo de Control de Riego, el evento Diagnóstico agronómico generado y posteriormente Riego iniciado son pivotes críticos. El primero separa la capa de análisis de la capa de ejecución; el segundo marca la transición del dominio de software al dominio físico (IoT Device/Actuator), donde una acción en el mundo real es irreversible.
+**Timeline asociado:** *Gestión de Suspensión y Reactivación de Cuenta por Impago* (Timeline 2)
 
-![EventStorming-step4.2](./assets/images/candidate-context-discovery/es-pivotal-points-2.png)
+**Pain Points que resuelve:**
+- Pain Point 2: Suspensión de cuenta sin revisión completa del historial de pagos.
+
+**Propósito del Pivotal Point:** Transformar la acción manual de suspensión de cuenta en un proceso con una compuerta de validación forzosa. Se toma la decisión arquitectónica de que la interfaz de backoffice no habilite el comando de suspensión hasta que el operador haya navegado explícitamente por una vista consolidada que muestre todo el historial de pagos del cliente, los acuerdos de pago vigentes, los tickets de soporte relacionados con facturación y cualquier nota de promesa de pago registrada por otro miembro del staff. Solo tras una confirmación explícita de revisión, el sistema permite ejecutar `Customer account suspended`, eliminando las suspensiones erróneas por falta de contexto.
+
+**Narrativa del Pivotal Point:** El pain point original revelaba un riesgo operacional significativo: un miembro del staff podía ejecutar `Customer account suspended` inmediatamente después de una consulta superficial (`Staff searches and views customer account`), sin haber contrastado toda la información financiera y de comunicación con el cliente. La consecuencia era la suspensión injusta de cuentas que ya habían regularizado su pago por otro canal o que tenían un acuerdo vigente, dañando la relación con el agricultor y forzando una reactivación reactiva.
+
+La decisión pivotal que resuelve este problema es la introducción de una **compuerta de validación previa obligatoria**. Se rediseña la pantalla de cuenta del cliente en el backoffice para que presente, en una única vista consolidada y con indicadores visuales claros:
+
+- El estado de facturación actual (último pago, saldo pendiente, fecha de vencimiento).
+- El historial completo de pagos en una línea de tiempo (fechas, montos, método, referencia).
+- Los acuerdos de pago activos, si existiesen (plan de pagos, compromiso registrado).
+- Los tickets de soporte abiertos o cerrados relacionados con facturación, pagos o problemas económicos.
+- Una bandeja de notas internas del staff vinculadas a la cuenta, donde otro operador puede haber dejado constancia de una promesa de pago o una situación excepcional.
+
+Mientras el operador no haya hecho scroll completo por esta vista y marcado un checkbox de "He revisado toda la información de pagos", el botón de suspensión permanece deshabilitado. Este gesto de confirmación explícita queda registrado en el log de auditoría (`It is recorded in a log`), asociando la decisión de suspensión a un operador concreto y a su constancia de revisión.
+
+Con esta compuerta, el evento `Staff searches and views customer account` se enriquece: ya no es una consulta superficial, sino un paso de revisión exhaustiva. Solo si tras esa revisión el operador considera que la suspensión es procedente, ejecuta `Customer account suspended`. En caso de que el operador detecte un pago reciente no procesado o un acuerdo vigente, puede redirigir el caso a la rama de reactivación temprana o a la actualización del saldo, evitando la suspensión por completo.
+
+La cascada posterior (`Client access disabled, data retained` → `Notify the customer`) solo se dispara tras una decisión informada, eliminando las suspensiones erróneas y sus consecuencias negativas en la experiencia del agricultor y la carga de soporte.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Staff searches and views customer account` → **Ahora muestra una vista consolidada de historial de pagos, acuerdos y tickets.**
+- `Compuerta de revisión obligatoria` → Confirmación explícita de revisión antes de habilitar la suspensión.
+- `Customer account suspended` → Solo ejecutable tras validación.
+- `Client access disabled, data retained` → Consecuencia ahora informada.
+- `Notify the customer` → Notificación que refleja una decisión justa.
+- `Account reactivated after payment was processed` → Reservado para casos donde realmente hubo un impago que luego se regularizó.
+- `Access restored and devices synchronized` → Restauración sin el estigma de un error operativo.
+- `It is recorded in a log` → Auditoría que ahora incluye la confirmación de revisión del operador.
+
+**Impacto esperado en el sistema:**
+- Reducción de suspensiones erróneas a prácticamente cero.
+- Mejora de la satisfacción del cliente al no recibir bloqueos injustos.
+- Disminución de tickets de soporte por "me suspendieron y ya pagué".
+- Auditoría más robusta que registra la revisión consciente del operador antes de una acción crítica.
+- Protección de la reputación de AgroSafe como plataforma confiable y justa en la gestión de cuentas.
+
+![EventStorming-step5.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-2.png)
 
 ---
 
-En el flujo de Seguridad, el evento Evento clasificado como HUMANO es pivotal. Cambia el contexto de monitoreo pasivo a alerta crítica inmediata, disparando notificaciones externas y requiriendo una política de prioridad alta.
+#### Pivotal Point 3: Revocación automática e inmediata de credenciales ante reporte de pérdida
 
-![EventStorming-step4.3](./assets/images/candidate-context-discovery/es-pivotal-points-3.png)
+**Timeline asociado:** *Gestión de Pérdida y Reaprovisionamiento de Dispositivos IoT* (Timeline 3)
+
+**Pain Points que resuelve:**
+- Pain Point 3: Ventana de riesgo entre reporte de pérdida y revocación de credenciales.
+
+**Propósito del Pivotal Point:** Eliminar la ventana de vulnerabilidad que se abre cuando un dispositivo es reportado como perdido pero sus credenciales permanecen activas hasta que un operador humano las invalida manualmente. La decisión arquitectónica consiste en automatizar la revocación de credenciales como consecuencia directa e inmediata del evento `Device deactivated due to loss report`, sin depender del paso manual `Staff deactivates account`. El rol del staff se reorienta hacia labores de auditoría, reaprovisionamiento y comunicación con el agricultor, mientras que la seguridad de la plataforma queda garantizada en tiempo real.
+
+**Narrativa del Pivotal Point:** El pain point original evidenciaba un riesgo crítico de seguridad: un dispositivo reportado como perdido pero con credenciales aún activas podía ser manipulado por un tercero para inyectar telemetría falsa. La raíz del problema era la dependencia de un paso manual (`Staff deactivates account`) entre el reporte y la invalidación efectiva de credenciales. Si el staff tardaba en actuar, la ventana de exposición permanecía abierta, con el consiguiente peligro de contaminación de datos y suplantación del dispositivo.
+
+La decisión pivotal transforma este flujo en una secuencia atómica y automatizada. A partir de ahora, el evento `Device deactivated due to loss report` (ya sea originado por el agricultor desde su dashboard, por el agrónomo desde su panel de supervisión o por una detección automática de anomalía) dispara de forma inmediata y sin intervención humana la cadena de invalidación:
+
+1. `Device credentials invalidated`: los certificados X.509 y tokens de autenticación del dispositivo son revocados en el acto.
+2. `Telemetry stopped`: se cierra el tópico MQTT del dispositivo y se rechaza cualquier dato entrante con sus credenciales anteriores.
+
+Esta automatización cierra la ventana de vulnerabilidad en segundos, no en horas o días. El dispositivo perdido queda mudo para la plataforma aunque un tercero intente reconectarlo.
+
+El evento `Staff deactivates account` se reubica en el flujo: deja de ser el disparador de la revocación y pasa a ser un paso de supervisión y confirmación que el staff ejecuta *después* de que la seguridad ya está garantizada. Desde el backoffice, el operador verifica que la revocación automática se completó, revisa las circunstancias del reporte de pérdida y decide las acciones de reaprovisionamiento (`Batch of IoT devices registered as available`). Si el caso lo requiere, el staff se comunica con el agricultor para recabar más información o coordinar el envío de un reemplazo, pero sin la presión de estar dejando una puerta abierta a un ataque.
+
+Adicionalmente, se implementa una notificación proactiva al agricultor y al agrónomo vinculado en el mismo momento de la revocación, informando que el dispositivo ha sido desactivado de forma segura, que sus datos históricos permanecen intactos y que ya se ha iniciado el proceso de reaprovisionamiento.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Device deactivated due to loss report` → Disparador que ahora desencadena la revocación automática.
+- `Device credentials invalidated, telemetry stopped` → Acción inmediata y atómica.
+- `Staff deactivates account` → Paso de supervisión posterior, no bloqueante para la seguridad.
+- `Batch of IoT devices registered as available` → Reaprovisionamiento sin haber estado en riesgo.
+
+**Impacto esperado en el sistema:**
+- Eliminación total de la ventana de vulnerabilidad entre reporte de pérdida e invalidación de credenciales.
+- Reducción del riesgo de inyección de telemetría falsa y de suplantación de dispositivos.
+- Liberación del staff de la presión de actuar con urgencia por motivos de seguridad, permitiendo enfocar su trabajo en la calidad del reaprovisionamiento y la atención al agricultor.
+- Mejora de la postura de seguridad de AgroSafe frente a auditorías y certificaciones.
+- Mayor confianza del agricultor al saber que reportar una pérdida bloquea instantáneamente el dispositivo, protegiendo la integridad de sus datos agronómicos.
+
+![EventStorming-step5.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-3.png)
 
 ---
 
-En el flujo de Gestión de Cuentas, los eventos Cuenta de cliente suspendida por mora y Cuenta reactivada tras regularizar pago son pivotes de estado de negocio. Condicionan el acceso a funcionalidades premium y la sincronización de dispositivos IoT.
+#### Pivotal Point 4: Activación en dos fases con credenciales provisionales para eliminar la exposición temprana
 
-![EventStorming-step4.4](./assets/images/candidate-context-discovery/es-pivotal-points-4.png)
+**Timeline asociado:** *Activación y Puesta en Marcha de un Dispositivo IoT* (Timeline 5)
+
+**Pain Points que resuelve:**
+- Pain Point 4: Exposición de credenciales activas durante la ventana de configuración.
+
+**Propósito del Pivotal Point:** Eliminar el riesgo de que unas credenciales plenamente operativas queden expuestas durante el proceso de configuración del dispositivo IoT. La decisión arquitectónica consiste en dividir la activación en dos fases: una primera fase de «vinculación segura» donde el dispositivo recibe credenciales provisionales de alcance limitado que solo permiten operaciones de configuración, y una segunda fase de «activación operativa» donde, una vez validada y confirmada la configuración, se intercambian por las credenciales definitivas que habilitan la publicación de telemetría y la recepción de comandos. Este diseño garantiza que incluso si las credenciales provisionales quedaran expuestas, el atacante no podría inyectar telemetría falsa ni suplantar al dispositivo en el ecosistema operativo de AgroSafe.
+
+**Narrativa del Pivotal Point:** El pain point original mostraba que en el flujo de alta (`Device Registered` → `Credentials Generated` → `Device Activated` → `Configuration Changed` → `Ready for Operation`) las credenciales criptográficas definitivas se generaban y quedaban operativas en una fase muy temprana, justo después del registro. A partir de ese instante, el dispositivo ya podía autenticarse contra el backend y comenzar a transmitir datos, aunque el agricultor todavía lo estuviera configurando y ni siquiera hubiera verificado que el sensor estaba correctamente instalado en la parcela correcta.
+
+Si durante esa ventana, que podía extenderse largos minutos o incluso quedar en pausa, las credenciales quedaban expuestas en una red local insegura, en los logs de la app de configuración o en el propio firmware del dispositivo, un atacante podía capturarlas y suplantar al dispositivo antes de que alcanzara el estado `Ready for Operation`.
+
+La decisión pivotal transforma esta secuencia en un modelo de activación en dos fases:
+
+**Fase 1 – Vinculación segura (credenciales provisionales):**  
+Tras `Device Registered`, el backend genera unas **credenciales provisionales** (`Provisional Credentials Generated`) con alcance estrictamente limitado. Estas credenciales solo permiten al dispositivo:
+- Realizar handshakes de configuración con el endpoint de aprovisionamiento.
+- Recibir y confirmar cambios de configuración (`Configuration Changed`).
+- Enviar heartbeats de estado «en configuración».
+- En ningún caso publicar telemetría en los tópicos MQTT operativos ni recibir comandos de riego, fertilización o actuación sobre válvulas.
+
+Con estas credenciales provisionales, el dispositivo se considera «vinculado pero no operativo». La interfaz de configuración puede trabajar con seguridad: si un atacante interceptara estas credenciales, no podría inyectar datos falsos en el flujo agronómico real.
+
+**Fase 2 – Activación operativa (credenciales definitivas):**  
+Solo cuando el agricultor (o el sistema) confirma que la configuración ha sido completada y verificada, es decir, justo antes de emitir `Ready for Operation`, se dispara una rotación automática de credenciales. Las credenciales provisionales se revocan y se generan unas **credenciales definitivas** (`Operational Credentials Issued`). A partir de este instante, el dispositivo ya puede publicar telemetría y recibir comandos. El evento `Ready for Operation` se emite únicamente tras la confirmación de que el dispositivo ha realizado su primer handshake con las credenciales definitivas.
+
+Esta separación garantiza que la ventana de vulnerabilidad con credenciales de alto privilegio coincide exactamente con el momento en que el dispositivo ya está bajo control del agricultor, configurado y verificado, y no antes.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Device Registered` → Alta en inventario.
+- `Provisional Credentials Generated` → Credenciales de alcance limitado (Fase 1).
+- `Device Activated` → Handshake exitoso con las credenciales provisionales (solo configuración).
+- `Configuration Changed` → Ajustes de parámetros realizados de forma segura.
+- `Operational Credentials Issued` → Rotación a credenciales definitivas (Fase 2).
+- `Ready for Operation` → Estado operativo pleno con credenciales definitivas.
+
+**Impacto esperado en el sistema:**
+- Eliminación del riesgo de exposición de credenciales con capacidad de inyectar telemetría o ejecutar comandos durante la fase de configuración.
+- Un atacante que capture credenciales provisionales no puede publicar datos falsos en los históricos de la parcela.
+- Proceso de activación transparente para el agricultor, que no percibe la complejidad de las dos fases.
+- Mejora de la postura de seguridad general del ecosistema de dispositivos IoT de AgroSafe.
+- Facilita auditorías de seguridad al demostrar que las credenciales operativas solo existen en dispositivos que han superado la fase de configuración validada.
+
+![EventStorming-step5.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-4.png)
 
 ---
 
-En el flujo de Dispositivos IoT, el evento Dispositivo iot offline detectado (o falta de heartbeat en 5 min) es pivotal. Cambia el contexto de operación normal a estado de fallo, requiriendo políticas de caché local, encolamiento de comandos y notificación de soporte.
+#### Pivotal Point 5: Sincronización con validación de integridad y gestión adaptativa del buffer local
 
-![EventStorming-step4.5](./assets/images/candidate-context-discovery/es-pivotal-points-5.1.png)
+**Timeline asociado:** *Gestión de Conectividad Intermitente y Sincronización de Dispositivos IoT* (Timeline 9)
 
-![EventStorming-step4.5](./assets/images/candidate-context-discovery/es-pivotal-points-5.2.png)
+**Pain Points que resuelve:**
+- Pain Point 5: Ciclos repetitivos de desconexión que degradan la integridad de los datos sincronizados.
+
+**Propósito del Pivotal Point:** Reforzar la resiliencia del ciclo de conectividad intermitente dotando al firmware del dispositivo de un mecanismo de buffer local con políticas de gestión adaptativa, y al backend de una capa de validación de integridad que verifique la completitud, orden temporal y no duplicación de los datos volcados durante cada evento `Sync Completed`. Esto garantiza que, incluso bajo patrones agresivos de desconexión y reconexión, los datos que se incorporan a las series históricas sean íntegros y fiables, evitando la pérdida silenciosa de lecturas o la contaminación de los históricos.
+
+**Narrativa del Pivotal Point:** El pain point original mostraba que la secuencia `Device Offline Detected → Device Online Restored → Sync Completed` podía repetirse con alta frecuencia en zonas de baja cobertura. Cada ciclo forzaba al dispositivo a acumular telemetría en un buffer local y a volcarla de golpe al reconectarse. Si las desconexiones eran muy rápidas o solapadas, el buffer podía saturarse, las marcas de tiempo podían desalinearse y el backend procesaba `Sync Completed` sin herramientas para verificar si los datos estaban completos, ordenados y sin duplicados. La decisión pivotal introduce dos mejoras arquitectónicas complementarias:
+
+**A) Buffer local con políticas de gestión adaptativa (lado del dispositivo):**  
+El firmware del dispositivo IoT se equipa con un buffer circular indexado por marca de tiempo. Cuando se emite `Device buffers data locally`, los registros no se almacenan como un simple volcado secuencial, sino que incluyen:
+- Marca de tiempo exacta de la lectura (timestamp UTC).
+- Checksum de integridad de cada registro (CRC o hash ligero).
+- Número de secuencia incremental por sesión de muestreo.
+- Indicador de prioridad para lecturas críticas (umbrales de alerta, valores fuera de rango).
+
+Si el buffer alcanza un umbral de ocupación (por ejemplo, 80 %), se activa una política de compactación adaptativa: las lecturas más antiguas y de baja prioridad se pueden agregar en promedios por intervalo, liberando espacio para las nuevas sin perder la información de tendencia. Las lecturas críticas nunca se compactan ni se descartan.
+
+**B) Validación de integridad en el backend (lado de la plataforma):**  
+Cuando se produce el evento `Device Online Restored` y el dispositivo envía los datos acumulados, el backend no se limita a insertarlos directamente en las series históricas. En lugar de eso, ejecuta un proceso de validación que:
+- Verifica el checksum de cada registro contra el dato recibido.
+- Reordena las lecturas por su marca de tiempo si llegasen desordenadas.
+- Detecta duplicados comparando las marcas de tiempo y número de secuencia con los datos ya existentes en la serie.
+- Identifica huecos temporales (intervalos donde no hay lecturas) y los marca como "no disponible por conectividad" en lugar de interpretarlos como silencio de telemetría.
+
+Solo cuando esta validación se ha completado, se emite `Sync Completed`, garantizando que el gemelo digital recibe un reflejo fidedigno de lo que el sensor midió en campo durante el período offline. Si la validación detecta inconsistencias graves (por ejemplo, una corrupción del buffer), se genera una notificación de "sincronización parcial" visible en el dashboard, invitando al agricultor a revisar el período afectado.
+
+**C) Política de backpressure ante ciclos muy cortos:**  
+Si el sistema detecta que los eventos `Device Offline Detected` y `Device Online Restored` se alternan más de N veces en un intervalo breve (por ejemplo, más de 5 ciclos en 10 minutos), el backend puede optar por posponer la sincronización no crítica hasta que la conectividad se estabilice, notificando al dispositivo que mantenga los datos en buffer un poco más. Esto evita sincronizaciones parciales constantes y reduce la carga de procesamiento en ambos extremos.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Device Online` / `Heartbeat Received` → Operación normal.
+- `Device Offline Detected` → Disparo del buffering local con checksum y secuencia.
+- `Device buffers data locally` → Ahora con gestión adaptativa del buffer.
+- `Device Online Restored` → Reconexión que inicia el volcado.
+- `Validación de integridad en backend` → Nuevo paso interno antes de sincronizar.
+- `Sync Completed` → Solo se emite tras la validación exitosa de todos los registros.
+- `Telemetry Received` → Reanudación confiable del flujo de datos.
+
+**Impacto esperado en el sistema:**
+- Eliminación de la pérdida silenciosa de lecturas por saturación del buffer local.
+- Series históricas sin huecos no explicados ni duplicados, mejorando la calidad de los diagnósticos agronómicos.
+- Reducción de decisiones de riego o fertilización basadas en datos incompletos.
+- Mayor confianza del agricultor y del agrónomo en la fiabilidad de la telemetría incluso en zonas de cobertura difícil.
+- Disminución de la carga de procesamiento en el backend al evitar sincronizaciones redundantes y parciales.
+
+![EventStorming-step5.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-5.png)
+
+---
+
+#### Pivotal Point 6: Diagnóstico automático de fallos de firmware y cuarentena de versiones problemáticas
+
+**Timeline asociado:** *Ciclo de Actualización de Firmware y Ajuste de Configuración de Dispositivos IoT* (Timeline 7) y *Ciclo de Vida Integral del Dispositivo IoT*
+
+**Pain Points que resuelve:**
+- Pain Point 8: Fallos recurrentes en actualizaciones de firmware sin diagnóstico de causa raíz.
+
+**Propósito del Pivotal Point:** Romper el ciclo de fallo-reversión-reintento que atrapa a los dispositivos IoT cuando una actualización de firmware falla por causas no diagnosticadas. La decisión arquitectónica consiste en dotar al ecosistema de un **motor de diagnóstico en el borde y en el backend** que, ante un `Firmware Update Failed`, capture el código y contexto del error, lo clasifique (incompatibilidad de hardware, corrupción de binario, espacio insuficiente, timeout de conexión) y, si el fallo es intrínseco a la versión, ponga en cuarentena esa versión de firmware para ese modelo de dispositivo, deteniendo los reintentos automáticos. Paralelamente, se introduce un modo seguro para el dispositivo que evite reinicios traumáticos y permita la operación básica con la versión anterior mientras el staff recibe una notificación enriquecida con el diagnóstico, y no una simple alerta de fallo.
+
+**Narrativa del Pivotal Point:** El pain point original mostraba que cuando se producía `Firmware Update Failed`, el sistema siempre restauraba la versión anterior (`Previous Version Restored`), degradaba la salud (`Device Health Degraded`) y notificaba al staff (`Staff Notified`), pero no realizaba ningún análisis de la causa. Como el firmware fallido seguía marcado como disponible, en la siguiente ventana de actualización el ciclo se repetía sin cambios, forzando nuevos reinicios (`Device Rebooted`), ajustes de configuración (`Configuration Changed`) y notificaciones estériles. Los dispositivos quedaban atrapados en un bucle de mantenimiento inútil mientras perdían telemetría.
+
+La decisión pivotal introduce tres elementos que acaban con este ciclo:
+
+**A) Captura y clasificación del error en el borde:**  
+Cuando el firmware del dispositivo inicia el proceso (`Firmware Update Started`) y la actualización falla, el gestor de actualizaciones captura de inmediato un **código de diagnóstico estructurado** que incluye:
+- La fase exacta donde ocurrió el fallo (descarga, checksum, desempaquetado, pre-instalación, post-reboot).
+- El código de error del bootloader o del runtime.
+- El espacio disponible en memoria flash y RAM en el momento del fallo.
+- El modelo exacto de hardware y revisión de placa.
+- La versión de firmware del que se partía y a la que se intentaba llegar.
+- Si el fallo fue una corrupción detectada por checksum, se incluye la firma del binario descargado.
+
+Toda esta información se empaqueta y se envía al backend junto con el evento `Firmware Update Failed`, incluso antes de proceder a la reversión.
+
+**B) Motor de diagnóstico y cuarentena en el backend:**  
+Al recibir el paquete de diagnóstico, el backend no se limita a registrar el fallo. Un **motor de reglas de actualización**:
+- Clasifica el error (corrupción, incompatibilidad, timeout, tamaño excedido, etc.).
+- Si el error es de tipo «incompatibilidad de hardware» o «corrupción reproducible», marca la combinación `{modelo_hardware, version_firmware}` como **en cuarentena**.
+- Mientras la cuarentena está activa, ese firmware no se vuelve a ofrecer ni a reintentar para ningún dispositivo del mismo modelo. El evento `Firmware Update Available` se suprime para esa versión.
+- Si el error es transitorio (timeout de red, batería baja en el momento de la instalación), se permite un número limitado de reintentos en condiciones óptimas, pero nunca un bucle infinito.
+
+Solo si un ingeniero de firmware revisa el diagnóstico, corrige la versión y levanta manualmente la cuarentena (o libera un parche), la nueva versión vuelve a estar disponible para esa flota.
+
+**C) Modo seguro post-fallo sin reinicios traumáticos:**  
+Tras la reversión a `Previous Version Restored`, el dispositivo no realiza un `Device Rebooted` completo que borre sus buffers de telemetría acumulada. En su lugar, entra en un **modo seguro** que:
+- Preserva la telemetría pendiente en el buffer local y la transmite tan pronto como se restablece la conexión.
+- Emite `Heartbeat Received` indicando estado «operativo con versión anterior».
+- Notifica al staff con el diagnóstico completo (`Staff Notified`) y no solo con un mensaje genérico de fallo.
+- El evento `Configuration Changed` solo se emite si realmente hubo cambios en la configuración como parte de la reversión; en caso contrario, el dispositivo conserva su configuración previa.
+
+Con estas tres mejoras, el ciclo degenerativo de fallos se corta de raíz: el staff recibe información accionable, los dispositivos no reintentan firmware defectuoso, y los agricultores no perciben reinicios ni pérdidas de datos.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Firmware Update Available` → Disponibilidad de nueva versión (filtrada por cuarentena).
+- `Firmware Update Started` → Inicio de la actualización.
+- `Firmware Update Failed` → Ahora incluye paquete de diagnóstico.
+- `Diagnóstico y clasificación de fallo` → Clasificación y posible cuarentena.
+- `Previous Version Restored` → Reversión segura.
+- `Device Health Degraded` → Degradación registrada con causa conocida.
+- `Staff Notified` → Notificación enriquecida con diagnóstico y recomendación.
+- `Heartbeat Received` → Dispositivo operativo con versión anterior, sin reinicio traumático.
+- `Configuration Changed` → Solo si procede.
+- `Firmware Update Completed` → Solo se alcanzará tras reintento exitoso con una versión no cuarentenada.
+
+**Impacto esperado en el sistema:**
+- Eliminación de los bucles de fallo de firmware que inutilizan dispositivos durante horas o días.
+- Reducción drástica de reinicios innecesarios, preservando los buffers de telemetría.
+- El staff de operaciones pasa de recibir notificaciones repetitivas y ciegas a recibir diagnósticos accionables, acelerando la resolución de incidentes.
+- Cuarentena automática que protege a toda la flota de una versión defectuosa, conteniendo el impacto de un mal firmware.
+- Mayor confianza en las actualizaciones OTA, facilitando la adopción de mejoras de seguridad y funcionalidad.
+- Históricos de telemetría más completos, ya que los dispositivos no pasan largos períodos reiniciándose o en mantenimiento.
+
+![EventStorming-step5.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-6.png)
+
+---
+
+#### Pivotal Point 7: Automatización del desmantelamiento y reaprovisionamiento inmediato ante pérdida confirmada
+
+**Timelines asociados:** *Reporte de Pérdida, Desmantelamiento y Reemplazo de Dispositivo* (Timeline 13), *Baja Definitiva y Desmantelamiento de un Dispositivo IoT* (Timeline 8)
+
+**Pain Points que resuelve:**
+- Complementa el Pain Point 3 (Ventana de riesgo entre reporte de pérdida y revocación de credenciales) abordando el resto de la cadena: la ventana de tiempo sin cobertura de monitoreo en la parcela afectada.
+- Riesgo no documentado previamente: tras el desmantelamiento del dispositivo perdido, la parcela queda sin sensor hasta que un operador registra manualmente un reemplazo, lo que puede tardar horas o días.
+
+**Propósito del Pivotal Point:** Cerrar el ciclo completo de pérdida de un dispositivo IoT con la mínima ventana posible de indisponibilidad de monitoreo en la parcela. Para ello, se automatiza la transición desde el desmantelamiento del dispositivo perdido (`Device Decommissioned`) hasta el registro y asignación de un dispositivo de reemplazo (`Replacement Device Registered`), basándose en políticas de cobertura que consideran el plan del agricultor, la criticidad del cultivo y la disponibilidad de stock en el inventario. Esta automatización elimina la dependencia de un operador humano para iniciar el reaprovisionamiento, garantizando que la parcela recupere la capacidad de monitoreo en el menor tiempo posible.
+
+**Narrativa del Pivotal Point:** El flujo actual de gestión de pérdida ya ha sido mejorado con la revocación automática de credenciales (Pivotal Point 3). Sin embargo, el final del proceso sigue dependiendo de una acción manual: tras `Device Decommissioned`, un operador debe decidir cuándo y cómo registrar un nuevo dispositivo para el agricultor afectado (`Replacement Device Registered`). Esta dependencia introduce una ventana de desprotección que puede ser crítica si la parcela está en un momento fenológico sensible o si las condiciones climáticas requieren monitoreo continuo.
+
+La decisión pivotal introduce un **motor de reaprovisionamiento automático** que actúa bajo políticas configurables:
+
+1. **Disparo automático:**  
+   El evento `Device Decommissioned` (que sella el desmantelamiento administrativo del dispositivo perdido) dispara inmediatamente una evaluación de reaprovisionamiento. No se requiere intervención del staff para iniciar el proceso.
+
+2. **Evaluación de políticas de cobertura:**  
+   El motor consulta las reglas asociadas al tenant del agricultor:
+    - **Plan del cliente:** Premium o Empresa pueden tener reaprovisionamiento prioritario y automático; Básico puede requerir confirmación o coste adicional.
+    - **Criticidad de la parcela:** Si la parcela tiene cultivos activos, está en una fase fenológica crítica o tiene alertas recientes, se eleva la prioridad.
+    - **Stock disponible:** Se verifica el inventario de dispositivos precertificados (`Batch of IoT devices registered as available`).
+    - **Historial de pérdidas:** Si el agricultor ha reportado múltiples pérdidas en un periodo corto, puede requerir una revisión antes del envío automático.
+
+3. **Asignación inmediata o diferida:**  
+   Si las políticas permiten el reaprovisionamiento automático y hay stock, se genera `Replacement Device Registered` de forma inmediata, vinculando el nuevo dispositivo a la misma parcela y heredando la configuración del dispositivo anterior (umbrales, zona de cultivo, plan de muestreo). Si no hay stock, el sistema crea una orden de reaprovisionamiento pendiente y notifica al staff y al agricultor con una estimación de tiempo.
+
+4. **Notificación proactiva al agricultor:**  
+   El agricultor recibe un mensaje claro: "Tu dispositivo reportado como perdido ha sido desactivado de forma segura. Ya hemos registrado un dispositivo de reemplazo que está listo para instalar" o bien "Tu reemplazo estará disponible en X días". Esta comunicación cierra el ciclo de incertidumbre del agricultor, que sabe en todo momento el estado de su cobertura de monitoreo.
+
+Este diseño asegura que la parcela no quede nunca desatendida más tiempo del estrictamente necesario por logística, y que el proceso de pérdida y reemplazo se perciba como un servicio ágil y fiable.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Reported Lost` → Disparador del proceso.
+- `Credentials Revoked` → Automatizado (Pivotal Point 3).
+- `Device Deactivated` → Paso previo al desmantelamiento.
+- `Device Decommissioned` → Disparador automático del reaprovisionamiento.
+- `Evaluación de políticas de cobertura` → Nuevo paso automático.
+- `Replacement Device Registered` → Asignación inmediata del reemplazo si las políticas lo permiten.
+- `Notificación al agricultor y al staff` → Comunicación del estado del reemplazo.
+
+**Impacto esperado en el sistema:**
+- Reducción drástica de la ventana de tiempo sin cobertura de monitoreo en la parcela tras una pérdida.
+- Eliminación de la dependencia de un operador para iniciar el reaprovisionamiento, reduciendo la carga de trabajo del staff.
+- Experiencia de usuario mejorada: el agricultor percibe un servicio proactivo que repone sus dispositivos sin que él tenga que reclamar.
+- Optimización del inventario de dispositivos precertificados al consumirlos según políticas de prioridad.
+
+![EventStorming-step5.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-7.png)
+
+---
+
+#### Pivotal Point 8: Notificación detallada pre-aplicación y reversión bajo demanda de cambios masivos de umbrales
+
+**Timelines asociados:** *Configuración Colaborativa de Umbrales de Cultivo y Monitoreo Compartido* (Timeline 14) y *Creación y Aplicación Masiva de Plantillas de Umbrales por el Agrónomo* (Timeline 15)
+
+**Pain Points que resuelve:**
+- Pain Point 9: Sobrescritura silenciosa de umbrales por aplicación masiva de plantillas y notificación insuficiente al agricultor.
+
+**Propósito del Pivotal Point:** Transformar la aplicación masiva de plantillas de umbrales desde un acto unilateral y opaco hacia un proceso colaborativo y transparente que respeta la autonomía del agricultor. La decisión arquitectónica se basa en tres pilares:
+1. Una **notificación previa detallada** que informe al agricultor, antes de que el cambio se aplique, exactamente qué umbrales van a modificarse, con sus valores anterior y nuevo, y una justificación agronómica proporcionada por el agrónomo.
+2. Un **derecho de veto con plazo** que permita al agricultor rechazar la aplicación total o parcialmente antes de que se consolide.
+3. Una **capacidad de reversión a un estado anterior** registrada en auditoría, en caso de que el agricultor ya haya aceptado pero posteriormente detecte un efecto no deseado.  
+   Este diseño mantiene la eficiencia del agrónomo al poder operar sobre múltiples parcelas, pero sitúa al agricultor como validador último de las configuraciones que afectan a su cultivo, preservando la confianza en la relación de asesoría.
+
+**Narrativa del Pivotal Point:** En el flujo original, cuando un agrónomo creaba una plantilla (Threshold template created by agronomist) y la aplicaba a múltiples parcelas (Select plots → Template applied to client plot), el sistema sobrescribía inmediatamente los umbrales existentes en todas las parcelas seleccionadas. La primera notificación que recibía el agricultor (Farmer notified of the change made by their agronomist) era genérica y posterior al cambio, sin posibilidad de evitarlo. El agricultor se enfrentaba a umbrales modificados sin saber exactamente qué había cambiado, por qué, ni qué implicaciones tenía. Si los nuevos umbrales eran inadecuados para su contexto específico, debía navegar manualmente al histórico de auditoría, contrastar valores y revertirlos uno a uno.
+
+La decisión pivotal rediseña este flujo completo introduciendo tres fases que equilibran la eficiencia del agrónomo con la transparencia hacia el agricultor:
+
+**Fase 1 – Notificación previa detallada y solicitud de confirmación:**  
+Cuando el agrónomo ejecuta `Select plots` y confirma la intención de aplicar la plantilla, el sistema **no aplica los cambios inmediatamente**. En su lugar, genera un evento `Threshold change proposal sent to farmer`, que notifica proactivamente al agricultor (push + dashboard) con un desglose completo y comprensible:
+- Lista de todas las parcelas afectadas, con enlace a cada una.
+- Para cada parcela y cada umbral modificado: valor anterior, valor nuevo propuesto y diferencia porcentual.
+- Justificación escrita por el agrónomo (campo obligatorio en la plantilla) explicando la razón agronómica del cambio.
+- Plazo de respuesta (por ejemplo, 48 horas) con indicación de qué ocurre si no responde (según su configuración de preferencias).
+
+Este mensaje es mucho más rico que el genérico `Farmer notified of the change made by their agronomist` y permite al agricultor tomar una decisión informada.
+
+**Fase 2 – Derecho de veto y aceptación granular:**  
+El agricultor, desde la misma notificación o desde su dashboard, puede:
+- **Aceptar todos los cambios:** el sistema procede a `Template applied to client plot` y `System processes each parcel`.
+- **Rechazar la plantilla completa:** el cambio no se aplica en ninguna de sus parcelas. El agrónomo recibe una notificación de rechazo para que pueda discutirlo directamente con él.
+- **Aceptar parcialmente:** puede marcar umbrales específicos que no desea modificar (por ejemplo, acepta el cambio de humedad pero no el de pH). El sistema aplica solo lo aceptado y registra el rechazo parcial en auditoría.
+
+Si el agricultor no responde en el plazo, la política configurable (por aceptación tácita o por rechazo por defecto) determina el resultado, pero siempre queda trazado el silencio como evento.
+
+**Fase 3 – Reversión bajo demanda con trazabilidad:**  
+Si el agricultor aceptó los cambios pero posteriormente observa un comportamiento no deseado (por ejemplo, riegos que se disparan con demasiada frecuencia), puede ejecutar una **reversión a los umbrales anteriores** desde el historial de cambios de su parcela. El sistema:
+- Restaura los valores previos (almacenados en `Threshold recorded in audit`).
+- Registra el evento de reversión con la misma trazabilidad que un cambio manual.
+- Notifica al agrónomo de que el agricultor ha revertido sus umbrales, cerrando el bucle de comunicación.
+
+Con este diseño, el flujo completo se mantiene eficiente para el agrónomo (sigue pudiendo crear plantillas y seleccionar múltiples parcelas), pero el agricultor recupera el control y la comprensión de lo que sucede en sus cultivos.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Select zone` / `Type of crop selected by farmer` → Configuración inicial del agricultor.
+- `Thresholds automatically loaded from catalog` → Valores seguros por defecto.
+- `Threshold template created by agronomist` → Creación de la plantilla maestra.
+- `Select plots` → Selección de parcelas destino.
+- `Threshold change proposal sent to farmer` → **Nuevo evento**: notificación previa detallada con solicitud de confirmación.
+- `Farmer accepts / rejects / partially accepts` → **Nuevo paso**: decisión informada del agricultor.
+- `Template applied to client plot` → Solo tras aceptación.
+- `System processes each parcel` → Aplicación de los cambios aceptados.
+- `Threshold recorded in audit` → Trazabilidad completa de cada cambio y su aceptación.
+- `Farmer notified of the change made by their agronomist` → Notificación de consolidación (ahora informativa, no sorpresiva).
+- `Threshold manually modified with a value outside the safe range` / `Threshold exception logged with user confirmation` → Siguen disponibles para ajustes finos posteriores.
+- `Reversión de umbrales` → **Nuevo evento**: restauración bajo demanda con notificación al agrónomo.
+
+**Impacto esperado en el sistema:**
+- Eliminación de la percepción de pérdida de control por parte del agricultor, al recibir notificaciones detalladas y disponer de capacidad de veto.
+- Reducción de conflictos entre agrónomos y agricultores por cambios unilaterales no comprendidos.
+- Mejora de la adopción de la funcionalidad de plantillas masivas, al hacerla más respetuosa con el agricultor sin penalizar la productividad del agrónomo.
+- Trazabilidad completa de todo el ciclo de propuesta, aceptación/rechazo y posibles reversiones, facilitando la auditoría de decisiones agronómicas.
+- Disminución de tickets de soporte del tipo "¿por qué cambiaron mis umbrales?" o "no quiero que mi agrónomo toque mis configuraciones".
+
+![EventStorming-step5.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-8.png)
+
+
+---
+
+#### Pivotal Point 9: Adjunción automática de evidencia de telemetría en recomendaciones e informes
+
+**Timelines asociados:** *Supervisión Colaborativa, Recomendaciones Técnicas e Informes Periódicos* (Timeline 17)
+
+**Pain Points que resuelve:**
+- Pain Point 10: Recomendación técnica sin adjuntar datos de sensores que respalden el consejo.
+
+**Propósito del Pivotal Point:** Asegurar que cada recomendación técnica enviada por un agrónomo y cada informe mensual generado por el sistema incluyan de forma automática, visible y comprensible los datos de telemetría que fundamentan el consejo o el análisis. La decisión arquitectónica consiste en enriquecer los eventos `Write a recommendation` y `Request monthly report` con una capa de contextualización automática que capture las lecturas relevantes de los sensores, las visualice de forma amigable (mini gráficos, resúmenes de umbrales) y las adjunte al mensaje antes de su envío al agricultor. De este modo, el agricultor no solo recibe un texto, sino evidencia objetiva que respalda la recomendación, eliminando la percepción de subjetividad y aumentando la confianza en la asesoría.
+
+**Narrativa del Pivotal Point:** El pain point original evidenciaba que, aunque el sistema permitía al agrónomo escribir una recomendación (`Write a recommendation`) y enviarla al agricultor (`Technical recommendation sent to the farmer with attached sensor data`), la realidad era que los datos de sensores no siempre se adjuntaban de forma visible o comprensible. El agricultor podía recibir un mensaje con un enlace genérico al dashboard o, peor aún, sin ningún dato, viendo la recomendación como una opinión sin fundamento. La nota en la imagen es clara: *"The recommendation should include sensor data so that the farmer can trust the advice."*
+
+La decisión pivotal transforma el flujo de recomendaciones e informes en tres aspectos:
+
+**A) Captura automática del contexto de telemetría al redactar:**  
+Cuando el agrónomo accede al historial de una parcela (`Access the plot`) y pulsa `Write a recommendation`, el sistema captura automáticamente el contexto de telemetría en ese instante:
+- Las últimas 24-48 horas de lecturas de los sensores clave (humedad, pH, temperatura).
+- Los umbrales configurados para esa zona y cultivo.
+- Las alertas activas o recientes que hayan motivado la visita al dashboard.
+- Un mini gráfico de tendencia que muestre la evolución del parámetro más relevante.
+
+Esta evidencia se presenta al agrónomo en un panel lateral mientras escribe, para que pueda referenciarla explícitamente en su texto si lo desea. El sistema también incluirá estos datos automáticamente como un bloque visual adjunto denominado "Evidencia de sensor" que acompañará a la recomendación.
+
+**B) Notificación enriquecida para el agricultor:**  
+Cuando la recomendación se envía, el agricultor recibe una notificación que no solo contiene el texto del agrónomo, sino un bloque de "Datos que respaldan esta recomendación" con:
+- El gráfico de tendencia del sensor más relevante (por ejemplo, humedad del suelo bajando en las últimas 48h).
+- Los valores actuales comparados con los umbrales (ej: "Humedad actual: 22 % — Umbral mínimo: 30 %").
+- Un enlace directo al dashboard en la sección exacta donde puede ver los datos completos.
+
+Esto convierte la recomendación en un mensaje de alta confianza: el agricultor ve la evidencia sin tener que navegar a otro sitio.
+
+**C) Informes mensuales con visualizaciones y resúmenes ejecutivos:**  
+Para el flujo `Request monthly report` → `System compiles data` → `Monthly technical report generated for a client`, la plataforma deja de generar simplemente un volcado de datos tabulares. En su lugar, el informe incluye:
+- Gráficos de evolución de cada sensor con anotaciones de eventos relevantes (riegos, fertilizaciones, alertas).
+- Tablas resumen con valores medios, máximos, mínimos y tiempo fuera de rango.
+- Una sección de "Recomendaciones del sistema" generada automáticamente a partir de los diagnósticos agronómicos del período.
+- Un formato descargable (PDF) y una vista interactiva en el dashboard.
+
+Estos informes enriquecidos no solo satisfacen la necesidad de trazabilidad y auditoría, sino que también sirven como herramienta de venta para el agrónomo, que puede mostrar a sus clientes el valor tangible de su asesoría respaldada por datos.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Agronomist accesses the consolidated dashboard of his client plots` → Detección de parcela crítica.
+- `Access the plot history` → Revisión del histórico.
+- `Write a recommendation` → **Ahora con captura automática del contexto de telemetría.**
+- `Evidencia de sensor adjuntada automáticamente` → **Nuevo paso interno.**
+- `Technical recommendation sent to the farmer with attached sensor data` → **Ahora con datos visibles y comprensibles.**
+- `Request monthly report` → Solicitud de informe.
+- `System compiles data` → Compilación que ahora incluye generación de gráficos y resúmenes.
+- `Monthly technical report generated for a client` → Informe enriquecido, listo para consulta interactiva o descarga.
+
+**Impacto esperado en el sistema:**
+- Aumento de la confianza del agricultor en las recomendaciones del agrónomo, al percibirlas como fundamentadas en datos objetivos y no en opiniones.
+- Mayor tasa de adopción de las acciones recomendadas (riegos, ajustes de umbrales, intervenciones en campo), mejorando los resultados agronómicos.
+- Reducción de tickets de soporte del tipo "¿por qué mi agrónomo me dice esto?" o "no entiendo la recomendación".
+- Los informes mensuales se convierten en un entregable de alto valor percibido, incrementando la retención de clientes en planes con asesoría y fomentando la renovación de suscripciones.
+- El agrónomo dispone de una herramienta de comunicación más persuasiva, que facilita la justificación de sus honorarios y la captación de nuevos clientes.
+
+![EventStorming-step5.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-9.png)
+
+---
+
+#### Pivotal Point 10: Vinculación automática y temprana de un agrónomo asesor al registro del agricultor
+
+**Timeline asociado:** *Vinculación Inicial Agricultor-Agrónomo y Acceso al Panel de Supervisión* (Timeline 18)
+
+**Pain Points que resuelve:** Riesgo no documentado previamente: en el flujo de Onboarding (Timeline 1), la vinculación con un agrónomo era una acción posterior y opcional (`Agronomist linked`), que dependía de que el agricultor la solicitara manualmente. Esto podía provocar que el agricultor operase durante días o semanas sin asesoría profesional, infrautilizando las capacidades de AgroSafe y aumentando la probabilidad de configuraciones incorrectas y abandono temprano. Además, el agrónomo no recibía visibilidad del nuevo cliente hasta que la vinculación se formalizaba, perdiendo la oportunidad de intervenir desde el primer momento.
+
+**Propósito del Pivotal Point:**  
+Garantizar que todo agricultor reciba acompañamiento profesional desde el instante mismo de su registro, mediante una **vinculación automática y temprana** con un agrónomo asesor. La decisión arquitectónica establece que, al producirse el evento `Farmer registers`, el sistema dispare un proceso de asignación inteligente de un agrónomo (por cobertura zonal, disponibilidad, tipo de cultivo o plan contratado), formalice el vínculo y le otorgue visibilidad inmediata del nuevo cliente en su dashboard consolidado. Esta decisión transforma la asesoría de un extra opcional a un pilar integrado del onboarding, mejorando la retención y la correcta adopción de la plataforma.
+
+**Narrativa del Pivotal Point:** En el flujo original de Onboarding, el agricultor completaba su registro, verificaba su correo y accedía al dashboard, pero la vinculación con un agrónomo (`Agronomist linked`) era un paso posterior, opcional y proactivo por parte del agricultor. Si el agricultor no conocía el valor de la asesoría, no sabía cómo buscar un agrónomo, o simplemente priorizaba otras tareas, esta vinculación no se producía. Como resultado, el agricultor configuraba sus parcelas, umbrales y dispositivos sin supervisión experta, con el riesgo de cometer errores que luego requerirían correcciones costosas o, peor aún, que le hicieran abandonar la plataforma al no ver resultados.
+
+Paralelamente, los agrónomos vinculados a AgroSafe no tenían visibilidad de los nuevos agricultores que se registraban en su zona de cobertura hasta que estos los invitaban explícitamente. Esto retrasaba la construcción de la cartera de clientes y dejaba sin aprovechar la capacidad del agrónomo de intervenir en la configuración inicial, que es el momento de mayor impacto para alinear las prácticas del agricultor con las buenas prácticas agronómicas.
+
+La decisión pivotal rediseña este proceso en tres pasos:
+
+**1. Asignación automática al registrar:**  
+Al producirse `Farmer registers`, y sin necesidad de que el agricultor lo solicite, el backend ejecuta un motor de asignación que selecciona un agrónomo adecuado. Los criterios de asignación son configurables por AgroSafe e incluyen:
+- **Zona geográfica de la parcela:** se priorizan agrónomos con cobertura en esa región.
+- **Tipo de cultivo declarado:** se busca un agrónomo con experiencia en ese cultivo.
+- **Disponibilidad y carga de trabajo:** se equilibra la cartera de clientes entre los agrónomos activos.
+- **Plan del agricultor:** los planes Premium y Empresa pueden incluir asignación prioritaria a un agrónomo senior o a uno específico.
+
+La asignación se produce de forma inmediata o, si se requiere confirmación del agrónomo, se envía una notificación y se activa un temporizador corto (por ejemplo, 2 horas) antes de reasignar a otro disponible.
+
+**2. Vinculación formal y notificación a ambas partes:**  
+Al confirmarse la asignación, se dispara `Agronomist linked to farmer as assigned advisor`. Ambos reciben una notificación:
+- El agricultor ve en su dashboard un mensaje de bienvenida que le presenta a su agrónomo asignado, con su nombre, especialidad y un botón para contactarlo.
+- El agrónomo recibe una notificación push y un aviso en su dashboard de que tiene un nuevo cliente asignado, listo para supervisar.
+
+**3. Visibilidad inmediata en el dashboard consolidado:**  
+El agrónomo, al acceder a su panel (`Agronomist accesses the consolidated dashboard of his client plots`), ya ve al nuevo agricultor en su lista de clientes, con los indicadores iniciales (parcela en configuración, dispositivos aún no desplegados). Puede revisar los datos básicos del agricultor y, si lo considera necesario, contactarlo proactivamente para ayudarlo con el wizard de configuración (`Starter guide complete`).
+
+Con este diseño, la asesoría experta se convierte en parte integral del onboarding, eliminando la fricción de que el agricultor tenga que buscar un asesor manualmente y asegurando que cada nuevo cliente tenga acompañamiento desde el primer día. Esto aumenta la probabilidad de que el agricultor complete la configuración correctamente, entienda el valor de los datos y permanezca en la plataforma.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Farmer registers` → Ahora dispara el proceso de asignación automática.
+- `Asignación automática de agrónomo` → **Nuevo paso interno** según políticas de cobertura y disponibilidad.
+- `Agronomist linked to farmer as assigned advisor` → Vinculación formal y temprana.
+- `Agronomist accesses the consolidated dashboard of his client plots` → Visibilidad inmediata del nuevo cliente.
+- `Notificación de bienvenida y presentación del agrónomo al agricultor` → **Nuevo paso** que integra la asesoría en el onboarding.
+
+**Impacto esperado en el sistema:**
+- Aumento de la tasa de finalización del wizard de configuración inicial (`Starter guide complete`) al contar el agricultor con asesoría desde el primer momento.
+- Reducción de configuraciones incorrectas de umbrales y dispositivos, al ser supervisadas por un experto.
+- Mayor retención de agricultores en los primeros 30 días, al percibir un servicio de acompañamiento y no una herramienta que deben dominar solos.
+- Los agrónomos construyen su cartera de clientes de forma orgánica y automática, sin depender de invitaciones manuales.
+- Mejora de la percepción de valor de los planes con asesoría incluida, justificando su precio y fomentando upgrades desde planes Básicos.
+
+![EventStorming-step5.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-10.png)
+
+---
+
+#### Pivotal Point 11: Resolutor de conflictos de comandos y protocolo confiable offline/online para riego seguro
+
+**Timelines asociados:** *Ejecución de Comandos con Fallo y Recuperación* (Timeline 10), *Ciclo de Telemetría, Comando y Sincronización de Dispositivos IoT* (Timeline 6), *Monitoreo de Suelo, Diagnóstico de Estrés Hídrico y Riego Correctivo Automatizado* (Timeline 16) y *Ajuste y Ejecución de Fertirrigación Automatizada* (Timeline 19)
+
+**Pain Points que resuelve:**
+- Pain Point 11: Desperdicio de agua y daño potencial al cultivo por comandos de riego en entornos de conectividad inestable y concurrencia no controlada.
+- Pain Point 6: Conflictos de comandos concurrentes que provocan degradación y reintentos.
+
+**Propósito del Pivotal Point:** Transformar la ejecución de comandos de riego y fertirrigación en un proceso determinista, seguro y tolerante a las condiciones adversas del campo (conectividad intermitente, latencia, concurrencia de múltiples actores). La decisión arquitectónica se apoya en tres pilares: (1) un **resolutor de conflictos en el backend** que actúa como árbitro único para comandos sobre el mismo actuador, serializando, priorizando y rechazando instrucciones contradictorias antes de encolarlas hacia el Edge; (2) un **protocolo confiable offline/online** que da visibilidad total al agricultor sobre el estado de cada comando (pendiente de envío, enviado, ejecutado, rechazado o caducado), eliminando la incertidumbre; y (3) un **modo seguro de borde** que, ante pérdida de conectividad con el backend, cierra la válvula para evitar riegos indefinidos pero notifica proactivamente y reanuda la operación controlada al reconectar.
+
+**Narrativa del Pivotal Point:** El pain point original exponía un cóctel de problemas que coincidían en un mismo riesgo de negocio: desperdicio de agua y daño al cultivo. Los escenarios iban desde comandos de riego enviados sin conectividad, pasando por conflictos entre agricultor y agrónomo que ordenaban acciones opuestas sobre la misma válvula, hasta cierres automáticos de seguridad del Edge que interrumpían riegos legítimos, y comandos que caducaban sin que el agricultor lo supiera. La causa raíz era doble: no existía un árbitro central que resolviese los conflictos antes de llegar al hardware, y la experiencia de usuario no reflejaba el estado real del comando en entornos offline.
+
+La decisión pivotal aborda todos estos frentes con tres mejoras arquitectónicas coordinadas:
+
+**A) Resolutor de conflictos en el backend (árbitro único):**  
+Cada actuador (válvula, dosificador de fertilizante) se modela con un estado global gestionado exclusivamente por un componente del backend: el **Resolutor de Conflictos de Actuador**. Cuando cualquier actor (agricultor, agrónomo, regla automática, diagnóstico agronómico) emite un comando (`Irrigation command`, `Fertigation command`), este no se encola directamente al dispositivo. En su lugar, el resolutor:
+
+- Verifica el estado actual del actuador (abierto, cerrado, en transición, bloqueado por seguridad).
+- Detecta comandos duplicados (misma acción sobre el mismo actuador en una ventana corta) y los rechaza con `Duplicate action blocked, user informed of current status`.
+- Detecta conflictos (abrir y cerrar simultáneamente, o abrir mientras ya está abierto) y aplica reglas de priorización configurables (ej. comandos de seguridad > comandos manuales del agricultor > comandos del agrónomo > reglas automáticas, aunque esta jerarquía puede personalizarse).
+- Si el comando supera la validación, el resolutor lo encola como `Command Validated and Queued` y actualiza el estado del actuador a "en transición", notificando a los demás actores que el actuador está ocupado.
+
+Este diseño elimina los conflictos antes de que lleguen al Edge, reduciendo drásticamente los fallos de ejecución y las degradaciones de salud.
+
+**B) Protocolo confiable offline/online con estados visibles:**  
+Cuando un agricultor emite un comando desde la aplicación móvil sin conectividad (`Command sent without available connectivity`), el comando no se pierde ni queda en un limbo. La app:
+
+- Lo almacena localmente con estado **"Pendiente de envío"** y un timestamp de creación.
+- Lo muestra en una sección de "Comandos pendientes" de la app, permitiendo al agricultor cancelarlo si ya no es necesario.
+- Al restaurarse la conectividad (`Connectivity restored`), el comando se envía al backend, donde el resolutor lo valida (ventana de vigencia, estado del actuador) antes de encolarlo o descartarlo.
+- Si el comando ha superado los 30 minutos o la condición que lo motivó ya se resolvió, se descarta con `Command discarded, exceeded time window or condition already resolved`, y el agricultor recibe una notificación clara: "Tu comando de riego ya no era necesario y ha sido cancelado."
+
+Cada transición de estado del comando (pendiente, enviado, validado, en ejecución, ejecutado, rechazado, caducado) se refleja en la app móvil. Con esto se resuelve la incertidumbre: *"The farmer may not know whether the command was executed or not"* deja de ser un problema, porque el estado es visible y actualizado en tiempo real.
+
+**C) Modo seguro de borde con notificación y reanudación controlada:**  
+El Edge mantiene su medida de seguridad: si pierde conectividad con el backend, cierra la válvula automáticamente (`Valve automatically closed by Edge when connection with backend is lost`). Pero con la mejora pivotal, este cierre:
+
+- Se notifica inmediatamente al backend en cuanto se restablece la conexión (y al agricultor vía push, si la desconexión se prolonga más de X minutos).
+- Se registra en el histórico de la parcela como "Riego interrumpido por pérdida de conectividad", con el volumen aplicado hasta ese momento.
+- Si el comando de riego original aún es vigente y no ha sido cancelado, el resolutor puede reencolarlo automáticamente tras la reconexión, reabriendo la válvula y completando el riego sin intervención manual, siempre que las condiciones agronómicas sigan justificándolo.
+
+Con estos tres pilares, el sistema garantiza que el agua se aplica de forma precisa, sin desperdicio, sin conflictos y con plena visibilidad para todos los actores involucrados.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Irrigation command` / `Fertigation command` → Origen del comando.
+- `Command queued locally in the mobile app` → Encolado offline con estado visible.
+- `Connectivity restored, command sent to backend` → Reenvío seguro.
+- `Resolutor de conflictos valida comando` → **Nuevo paso**: detección de duplicados y conflictos.
+- `Duplicate action blocked, user informed of current status` → Rechazo informado.
+- `Command Validated and Queued` → **Nuevo estado**: comando aceptado y pendiente de envío al Edge.
+- `Command Sent to Edge` → Envío al hardware.
+- `Command Executed` → Confirmación de ejecución.
+- `Sync Completed` → Reconciliación post-ejecución.
+- `Valve automatically closed by Edge when connection with backend is lost` → Medida de seguridad, ahora con notificación y posible reanudación.
+- `Command discarded, exceeded time window or condition already resolved` → Descarte con notificación de caducidad.
+
+**Impacto esperado en el sistema:**
+- Eliminación de riegos solapados o contradictorios, reduciendo el desperdicio de agua y el riesgo de daño al cultivo.
+- Eliminación de la incertidumbre del agricultor sobre el estado de sus comandos, mejorando la confianza en la plataforma.
+- Reducción de fallos de ejecución y de eventos de `Device Health Degraded` provocados por conflictos de comandos.
+- Experiencia de usuario unificada: el agricultor y el agrónomo ven los mismos estados y saben que sus órdenes se ejecutan de forma determinista.
+- Disminución de tickets de soporte relacionados con "¿se regó o no se regó?".
+- Uso eficiente del agua gracias a la validación temporal que evita riegos fuera de ventana óptima o ya innecesarios.
+
+![EventStorming-step5.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-11.png)
+
+---
+
+#### Pivotal Point 12: Calibración adaptativa y clasificación con aprendizaje en el borde para detección perimetral
+
+**Timeline asociado:** *Detección y Clasificación de Intrusión Perimetral con Respuesta Contextual* (Timeline 20)
+
+**Pain Points que resuelve:**
+- Pain Point 12: Calibración incorrecta de umbrales en el borde que provoca clasificación errónea y fatiga de alertas.
+
+**Propósito del Pivotal Point:** Eliminar la fragilidad de la clasificación de eventos perimetrales basada en umbrales estáticos calibrados manualmente en campo, que provocan que todos los eventos se clasifiquen de forma homogénea (todo como `WIND`, todo como `ANIMAL` o todo como `HUMAN`) cuando la calibración no se ajusta a las condiciones reales de la parcela. La decisión arquitectónica consiste en evolucionar desde un modelo de umbrales fijos hacia un sistema de **calibración adaptativa asistida** con tres componentes: un asistente de calibración inicial guiada que aprende del entorno real durante los primeros días de operación, un mecanismo de **umbrales dinámicos** que se ajustan automáticamente según la temperatura ambiente, la hora del día y la estación, y un **bucle de retroalimentación desde el backend** que permite al agricultor reetiquetar eventos mal clasificados para refinar el modelo de clasificación sin necesidad de recalibrar manualmente en campo. Este diseño garantiza una clasificación precisa, reduce drásticamente las falsas alarmas y elimina la fatiga de alertas, manteniendo la sensibilidad necesaria para detectar intrusiones humanas reales.
+
+**Narrativa del Pivotal Point:** El pain point original evidenciaba que la clasificación de eventos perimetrales dependía de umbrales fijos configurados durante la instalación (Edge compares with thresholds). Si el instalador no ajustaba esos umbrales a las condiciones específicas de la parcela (algo frecuente en despliegues masivos o realizados por personal no especializado), el resultado era una clasificación homogénea y errónea: o bien todos los eventos se clasificaban como WIND o ANIMAL, dejando pasar intrusiones humanas reales sin alerta; o bien todo se clasificaba como HUMAN, generando una avalancha de falsas alarmas que llevaban a la fatiga del agricultor y a la pérdida de confianza en el sistema.
+
+La decisión pivotal rediseña el subsistema de clasificación perimetral en tres capas que trabajan conjuntamente:
+
+**A) Asistente de calibración inicial con periodo de aprendizaje:**  
+Al instalar un nuevo sensor PIR, el sistema ya no depende de una calibración manual de umbrales en campo. En su lugar, se activa un **asistente de calibración** que opera durante los primeros días (configurable, por ejemplo 72 horas) en modo aprendizaje:
+- El sensor registra todos los eventos de movimiento y las intensidades de calor asociadas, sin clasificarlos aún como alertas.
+- Paralelamente, el agricultor o el instalador puede etiquetar algunos eventos desde la app (ej. "esto fue viento", "esto fue un perro", "esto fue una persona"), proporcionando ejemplos reales de cada clase.
+- Con estos datos etiquetados, el modelo embebido en el Edge ajusta automáticamente sus parámetros de clasificación, adaptándose a la firma térmica real del entorno: fauna local, vegetación, patrones de viento, temperatura basal de la zona.
+- Al finalizar el periodo de aprendizaje, el sensor pasa a modo operativo con umbrales personalizados para esa parcela concreta.
+
+**B) Umbrales dinámicos sensibles al contexto ambiental:**  
+Incluso después de la calibración inicial, las condiciones ambientales de la parcela cambian (estación del año, hora del día, temperatura ambiente). Un umbral fijo puede funcionar bien de día pero mal de noche, o en verano pero no en invierno. Por ello, los umbrales que utiliza el Edge para comparar (`Edge compares with thresholds`) se vuelven dinámicos:
+- La temperatura ambiente medida por el propio sensor se utiliza como parámetro de ajuste: con temperaturas más altas, la firma térmica de un humano se diferencia menos del fondo, por lo que el umbral se ajusta automáticamente.
+- Los patrones horarios se incorporan: en horas diurnas es más probable la presencia de fauna o trabajadores legítimos; en horas nocturnas, una detección de movimiento con calor corporal debe ser más sensible.
+
+Este dinamismo reduce drásticamente las falsas alarmas por causas ambientales (viento, animales) sin sacrificar la sensibilidad ante intrusiones humanas reales.
+
+**C) Bucle de retroalimentación desde el backend (reetiquetado por el agricultor):**  
+Cuando se emite un evento clasificado (`Event classified as WIND`, `Event classified as ANIMAL`, `Event classified as HUMAN`), el agricultor puede revisarlo desde su dashboard o app y reetiquetarlo si fue mal clasificado. Por ejemplo, si una ráfaga de viento fue clasificada como `HUMAN` y generó una falsa alerta, el agricultor la marca como "Falsa alarma – viento". Si una persona fue clasificada como `ANIMAL`, la marca como "Intrusión real – no detectada". Esta retroalimentación viaja al backend, que la reenvía al Edge en la siguiente ventana de sincronización, permitiendo que el modelo de clasificación se refine incrementalmente y se adapte a cambios en el entorno sin necesidad de una recalibración completa.
+
+Con estos tres componentes, el sistema pasa de ser frágil y dependiente de una calibración manual única a ser robusto, adaptativo y de mejora continua.
+
+**Eventos involucrados en el flujo mejorado:**
+- `PIR sensor detects movement at the perimeter` → Disparo inicial.
+- `Heat intensity measured by the ESP32 ADC` → Medición de firma térmica.
+- `Edge compares with dynamic thresholds` → **Nuevo**: comparación con umbrales adaptativos y sensibles al contexto ambiental.
+- `Event classified as WIND / ANIMAL / HUMAN` → Clasificación ahora más precisa.
+- `High trust rating sent to the backend immediately` → Envío priorizado cuando la confianza es alta.
+- `Low priority event logged in history without urgent notification` → Eventos de baja prioridad registrados sin fatigar al agricultor.
+- `Human intrusion alert triggered` → Alerta de intrusión real, ahora mucho más fiable.
+- `Farmer re-labels misclassified event` → **Nuevo evento**: bucle de retroalimentación para refinar el modelo.
+- `Model updated on Edge` → **Nuevo paso**: refinamiento incremental del clasificador.
+
+**Impacto esperado en el sistema:**
+- Reducción drástica de las falsas alarmas (WIND o ANIMAL clasificados como HUMAN), eliminando la fatiga de alertas del agricultor.
+- Eliminación de la ceguera ante intrusiones reales (HUMAN clasificado como WIND o ANIMAL), mejorando la seguridad real del perímetro.
+- La calibración deja de ser un paso crítico y propenso a errores durante la instalación; el sistema aprende del entorno real.
+- Mayor confianza del agricultor en el sistema de seguridad perimetral, aumentando la adopción y el uso continuado de los sensores.
+- Reducción de tickets de soporte por "falsas alarmas constantes" o "el sensor no detecta nada".
+- El sistema mejora con el tiempo y el uso, en lugar de degradarse por cambios estacionales o ambientales no contemplados en la calibración inicial.
+
+![EventStorming-step5.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-12.png)
+
+---
+
+#### Pivotal Point 13: Motor de correlación de churn con suscripciones y uso para decisiones de roadmap basadas en evidencia cruzada
+
+**Timeline asociado:** *Análisis Ejecutivo de Métricas y Priorización de Roadmap de Producto* (Timeline 21)
+
+**Pain Points que resuelve:**
+- Pain Point 13: Análisis de churn no correlacionado con datos de suscripción y uso.
+
+**Propósito del Pivotal Point:** Garantizar que las decisiones de evolución del producto AgroSafe estén fundamentadas en evidencia cruzada y no en hipótesis aisladas. La decisión arquitectónica consiste en implementar un **motor de correlación de churn** que, de forma automática y visible en el dashboard ejecutivo, cruce los datos de cancelación de clientes con dos fuentes adicionales: (1) los datos de suscripción (plan, antigüedad, ciclo de facturación, método de pago) obtenidos del módulo de facturación, y (2) los datos de uso real de la plataforma (funcionalidades utilizadas, frecuencia de acceso, adopción de features, eventos de onboarding completados, abandono de funcionalidades) obtenidos de los logs de producto. Este motor permite que eventos como `Churn analysis filtered by customer segment`, `Feature adoption heatmap consulted by Product Manager` y `Abandonment funnel identified in a specific feature` no se consulten de forma aislada, sino que se presenten en una vista unificada con las correlaciones ya calculadas. Así, el evento final `Roadmap decision made based on actual usage data` pasa a estar basado en **datos de uso, suscripción y churn correlacionados**.
+
+**Narrativa del Pivotal Point:** El pain point original evidenciaba una laguna crítica en el proceso de análisis ejecutivo: cuando el Product Owner consultaba el dashboard trimestral y observaba las métricas de churn, no podía determinar si las cancelaciones estaban relacionadas con el plan contratado, con la falta de uso de una funcionalidad clave o con el abandono del wizard de configuración. La información existía en AgroSafe, pero estaba fragmentada: las métricas de negocio en el dashboard ejecutivo, los datos de suscripción en el módulo de facturación, y los datos de uso en los logs de producto. Cruzarlos requería exportaciones manuales y trabajo fuera de la plataforma, lo que ralentizaba el diagnóstico y podía conducir a decisiones de roadmap no óptimas.
+
+La decisión pivotal rediseña el dashboard ejecutivo introduciendo un **Motor de Correlación de Churn**, una capa de analítica que opera bajo demanda y entrega respuestas a las preguntas críticas del equipo de producto en tiempo real.
+
+**A) Integración de fuentes de datos en el motor de correlación:**  
+El motor se alimenta de tres fuentes internas que AgroSafe ya posee:
+- **Módulo de facturación y suscripciones:** plan contratado (Básico, Premium, Empresa), ciclo de facturación (mensual, anual), método de pago, antigüedad de la cuenta, cambios de plan.
+- **Logs de producto y eventos de uso:** funcionalidades utilizadas (telemetría, riego automático, informes, alertas), frecuencia de acceso al dashboard, eventos del wizard de configuración completados, abandono de features específicas, interacción con recomendaciones del agrónomo.
+- **Datos de churn:** fecha de cancelación, segmento del cliente, motivo declarado (si se recoge en un survey de salida).
+
+**B) Correlaciones automáticas visibles en el dashboard ejecutivo:**  
+Cuando el Product Owner ejecuta los eventos `Filter by segment and period` y `Churn analysis filtered by customer segment`, el motor de correlación calcula y presenta junto a la tasa de churn una serie de insights automáticos:
+- **Churn por plan y ciclo de facturación:** "El churn en plan Básico mensual es 3 veces superior al del plan Premium anual".
+- **Churn por adopción de features críticas:** "El 80 % de los clientes que cancelaron nunca usaron la funcionalidad de informes mensuales" o "Los agricultores que completaron el wizard de configuración tienen una tasa de churn un 50 % menor".
+- **Churn por método de pago:** "Los clientes que pagan por transferencia cancelan un 20 % más que los que usan tarjeta", lo que podría indicar fricción en el proceso de pago.
+- **Abandono de funcionalidades y churn:** El evento `Abandonment funnel identified in a specific feature` se presenta ahora con una anotación automática: "El 35 % de los usuarios que abandonaron esta feature cancelaron su suscripción en los 30 días siguientes".
+
+Estas correlaciones se presentan visualmente en el dashboard, eliminando la necesidad de exportaciones manuales. El Product Owner y el Product Manager ya no consultan el `Feature adoption heatmap` de forma aislada: ahora lo ven con una capa de anotaciones que vinculan adopción con retención.
+
+**C) Simulación predictiva para decisiones de roadmap:**  
+Antes de tomar la decisión final de roadmap, el motor permite simular escenarios: "Si aumentamos la adopción de la feature X en un 20 %, ¿qué impacto estimado tendría sobre el churn del segmento Y?". Esto convierte `Roadmap decision made based on actual usage data` en una decisión informada no solo por el uso pasado, sino por el impacto proyectado sobre la métrica más crítica del negocio: la retención de clientes.
+
+**D) Actualización continua y alertas proactivas:**  
+El motor no se consulta solo en la revisión trimestral. De forma continua, monitorea patrones y puede generar alertas proactivas: "El churn en el segmento de agrónomos Premium ha aumentado un 15 % este mes. Correlación detectada: bajo uso de la vista de dashboard consolidado". Esta alerta permite al equipo de producto reaccionar antes de que el problema se agrave.
+
+**Eventos involucrados en el flujo mejorado:**
+- `Product Owner consults the quarterly executive dashboard` → Punto de entrada al análisis.
+- `Filter by segment and period` → Segmentación del análisis.
+- `Calculated KPIs: MAU, MRR, churn, trial—paid conversion` → KPIs ahora acompañados de insights de correlación.
+- `Churn analysis filtered by customer segment` → **Ahora muestra correlaciones automáticas con suscripciones y uso.**
+- `Feature adoption heatmap consulted by Product Manager` → **Ahora anotado con vinculación a retención y churn.**
+- `Abandonment funnel identified in a specific feature` → **Ahora con impacto estimado sobre churn.**
+- `Comparison of metrics with previous period generated` → Comparativa enriquecida con factores causales.
+- `Motor de correlación calcula insights` → **Nuevo paso automático interno.**
+- `Simulación de impacto en churn` → **Nuevo paso opcional** antes de la decisión.
+- `Roadmap decision made based on actual usage data, subscription data, and churn correlation` → **Decisión final basada en evidencia cruzada.**
+
+**Impacto esperado en el sistema:**
+- Decisiones de roadmap que atacan directamente las causas de cancelación, mejorando la retención de clientes.
+- Fin de las exportaciones manuales y las correlaciones en hojas de cálculo externas; todo el análisis está integrado en el dashboard ejecutivo.
+- Capacidad de identificar segmentos de clientes en riesgo antes de que cancelen, permitiendo intervenciones proactivas (mejoras en la feature, campañas de reenganche, ajustes de onboarding).
+- Mayor alineación entre los equipos de Producto, Negocio y Customer Success al compartir una misma fuente de verdad correlacionada.
+- Optimización del esfuerzo de desarrollo: se priorizan features que no solo tienen alta adopción, sino que están vinculadas a la retención.
+- Ciclos de análisis más rápidos: de revisiones trimestrales a monitorización continua con alertas.
+
+![EventStorming-step5.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-13.png)
 
 ---
 
 Con todo ello, comenzamos el paso de Commands, donde escribimos el desencadenante de ciertos eventos del dominio, así como el actor encargado.
 
-![EventStorming-step5.1](./assets/images/candidate-context-discovery/es-commands-1.png)
 
-![EventStorming-step5.2](./assets/images/candidate-context-discovery/es-commands-2.png)
-
-![EventStorming-step5.3](./assets/images/candidate-context-discovery/es-commands-3.png)
-
-![EventStorming-step5.4](./assets/images/candidate-context-discovery/es-commands-4.png)
-
-![EventStorming-step5.5](./assets/images/candidate-context-discovery/es-commands-5.png)
-
-![EventStorming-step5.6](./assets/images/candidate-context-discovery/es-commands-6.png)
-
-![EventStorming-step5.7](./assets/images/candidate-context-discovery/es-commands-7.png)
-
-![EventStorming-step5.8](./assets/images/candidate-context-discovery/es-commands-8.png)
-
-![EventStorming-step5.9](./assets/images/candidate-context-discovery/es-commands-9.png)
-
-![EventStorming-step5.10](./assets/images/candidate-context-discovery/es-commands-10.png)
 
 ---
 
