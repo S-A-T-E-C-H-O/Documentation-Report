@@ -4305,11 +4305,299 @@ Gestionar la recolección y agregación de métricas de adopción de funcionalid
 
 ---
 
-Ya por último y después de un análisis y discusión grupal, los siguientes Bounded Contexts fueron elegidos, siguiendo algunas condiciones, como la separación de responsabilidades de negocio, cambios de lenguaje ubicuo y las fronteras marcadas por los pivotal points. Por ello, al final se eligió estos Bounded Contexts:
+### Paso 10: Descubrimiento de Bounded Contexts (Contextos Delimitados)
 
-![EventStorming-step10](./assets/images/candidate-context-discovery/es-bounded-context-1.png)
+**¿Qué es y cómo se hace?**  
+Los *Bounded Contexts* son fronteras explícitas dentro del dominio donde un modelo de dominio es consistente y aplicable. Se identifican en el EventStorming agrupando agregados, eventos, comandos y políticas que comparten un lenguaje ubicuo cohesivo y que tienen baja dependencia semántica con otros grupos. El equipo los valida preguntando: *“¿Este concepto tiene el mismo significado en ambos lados de la frontera?”*, *“¿Pueden los equipos trabajar de forma independiente?”* y *“¿Qué eventos cruzan la frontera?”*.
 
-![EventStorming-step10](./assets/images/candidate-context-discovery/es-bounded-context-2.png)
+#### Bounded Context 1: Onboarding
+
+**Propósito:**  
+Gestionar el primer contacto del visitante con AgroSafe, desde que llega a la landing page hasta que completa la configuración inicial y accede al dashboard. Este contexto es responsable de la selección de plan, el registro de nuevos usuarios (agricultores o agrónomos), la verificación de email, el wizard de configuración guiada (`Starter Guide`), y la persistencia del progreso para permitir la reanudación en caso de abandono. Es el punto de entrada a toda la plataforma.
+
+**Agregados contenidos:**
+- `User` (creación inicial, rol, email verification)
+- `WizardProgress` (progreso del asistente de configuración)
+
+**Eventos de dominio clave:**
+- `Visitor arrives at landing page`
+- `Visitor selects a plan`
+- `Registered Farmer` / `Registered Agronomist`
+- `Email verified by user`
+- `Wizard step completed`
+- `Starter guide complete`
+- `Access the dashboard`
+
+**Comandos clave:**
+- `Select Plan`
+- `Register Farmer` / `Register Agronomist`
+- `Verify Email`
+- `Complete Wizard Step`
+- `Resume Wizard`
+- `Complete Wizard`
+
+**Relaciones con otros contextos:**
+- **Subscriptions & Payments:** Recibe el evento `Selected plan` para activar la suscripción correspondiente.
+- **Identity & Access Management:** Tras la verificación de email, notifica la creación de la cuenta para que esté disponible en la gestión de cuentas.
+- **Collaborative Supervision** (contexto externo al onboarding): Al finalizar el wizard, se puede disparar la vinculación automática con un agrónomo (Pivotal Point 10).
+
+**Consideraciones de frontera:**  
+El onboarding termina cuando el usuario completa el wizard y accede al dashboard. A partir de ahí, la responsabilidad pasa a otros contextos (gestión de dispositivos, monitoreo, etc.). El progreso del wizard se mantiene dentro de este contexto hasta su finalización.
+
+![EventStorming-step10.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-1.png)
+
+---
+
+#### Bounded Context 2: Subscriptions & Payments
+
+**Propósito:**  
+Gestionar el ciclo de vida comercial de las suscripciones de los clientes de AgroSafe, incluyendo la selección de planes, la activación de suscripciones, el procesamiento de pagos (a través de un proveedor externo), el manejo de fallos de pago, y la interacción con los eventos de facturación recurrente. Este contexto asegura la consistencia del estado de pago de la cuenta y coordina con Identity & Access Management las suspensiones y reactivaciones por impago.
+
+**Agregados contenidos:**
+- `Subscription` (suscripción activa, plan, estado de pago)
+- `BusinessMetrics` (cálculo de MRR, churn, etc. – aunque puede ubicarse en un contexto analítico separado, por simplicidad se agrupa aquí)
+- `ChurnRecord` (registro de cancelaciones)
+
+**Eventos de dominio clave:**
+- `Selected plan` (recibido desde Onboarding)
+- `Subscription activated`
+- `Payment processed`
+- `Payment failed`
+- `Subscription suspended`
+- `Subscription reactivated`
+- `Subscription cancelled`
+
+**Comandos clave:**
+- `Select Plan`
+- `Process Payment` (interno o por webhook del proveedor)
+- `Suspend Subscription` (por fallo de pago o staff)
+- `Reactivate Subscription` (tras pago)
+- `Cancel Subscription`
+
+**Relaciones con otros contextos:**
+- **Onboarding:** Recibe el comando `Select Plan` iniciado por el visitante.
+- **Identity & Access Management:** Notifica `Account suspended` o `Account reactivated` para que se bloque o restaure el acceso al dashboard y a los dispositivos.
+- **External Systems:** Se integra con `Payment Provider` (Stripe, Mercado Pago, etc.) a través de webhooks.
+
+**Consideraciones de frontera:**  
+El contexto de suscripciones no conoce los detalles de los usuarios más allá de su identificador y su estado de pago. La suspensión de cuenta por impago se comunica mediante eventos asíncronos al contexto de Identity & Access Management, que es el responsable de ejecutar el bloqueo real.
+
+![EventStorming-step10.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-2.png)
+
+---
+
+#### Bounded Context 3: Identity & Access Management (IAM)
+
+**Propósito:**  
+Gestionar la identidad de los usuarios (agricultores y agrónomos), sus credenciales de acceso, los roles y permisos, y el estado operativo de la cuenta (activa, suspendida, en mora). También administra las acciones administrativas sobre las cuentas (suspensión manual, reactivación, desactivación de dispositivos por pérdida, reaprovisionamiento de dispositivos) y mantiene un registro de auditoría de todas estas acciones. Este contexto es el guardián del acceso a toda la plataforma.
+
+**Agregados contenidos:**
+- `User` (completo, incluyendo rol, estado, vinculaciones)
+- `CustomerAccount` (desde la perspectiva administrativa)
+- `Device` (gestión de pérdida y reaprovisionamiento)
+- `NotificationDispatch` (envío de notificaciones al cliente por cambios de estado)
+
+**Eventos de dominio clave:**
+- `Registered Farmer` / `Registered Agronomist` (desde Onboarding)
+- `Account suspended due to non-payment` (desde Subscriptions & Payments)
+- `Account reactivated after payment was processed`
+- `Device deactivated due to loss report`
+- `Credentials revoked`
+- `Access restored and devices synchronized`
+- `Notify the customer`
+- `It is recorded in a log`
+
+**Comandos clave:**
+- `Suspend account` (staff o sistema)
+- `Activate account` (staff o sistema)
+- `Deactivate device due to loss` (agricultor o staff)
+- `Register batch of IoT devices` (staff)
+- `Notify customer` (sistema)
+
+**Relaciones con otros contextos:**
+- **Onboarding:** Recibe los eventos de registro y verificación de email.
+- **Subscriptions & Payments:** Recibe eventos de suspensión y reactivación por impago.
+- **Device Management** (contexto externo): Coordina la revocación de credenciales y la desactivación de dispositivos cuando una cuenta se suspende o se reporta pérdida.
+- **Collaborative Supervision:** Proporciona la información de vinculación agrónomo-agricultor.
+
+**Consideraciones de frontera:**  
+IAM es el contexto más sensible de AgroSafe. Contiene toda la información de identidad y control de acceso. Las suspensiones manuales por parte del staff requieren una revisión obligatoria del historial de pagos (Pivotal Point 2), lo que implica una integración con Subscriptions & Payments (a través del read model `Customer Account View`). La auditoría de todas las acciones administrativas se almacena dentro de este contexto (`Account Log View`).
+
+![EventStorming-step10.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-3.png)
+
+---
+
+#### Bounded Context 4: Communication
+
+**Propósito:**  
+Gestionar el envío de notificaciones y alertas a través de canales externos (WhatsApp, push, email), específicamente las alertas de seguridad generadas por intrusiones humanas. Coordina la interacción con Twilio, registra los envíos y procesa las confirmaciones de recepción o descarte por parte del usuario.
+
+**Agregados contenidos:**
+- `NotificationDispatch`
+
+**Eventos clave:**  
+`Send alert`, `Alert sent via WhatsApp`, `Alert confirmed as received`, `Security alert dismissed`.
+
+**Relaciones:**
+- Recibe comandos desde **Security & Alerts** cuando se confirma una intrusión humana.
+- Depende del sistema externo `Twilio`.
+
+![EventStorming-step10.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-4.png)
+
+---
+
+#### Bounded Context 5: IoT Device Management
+
+**Propósito:**  
+Gestionar el ciclo de vida completo de los dispositivos IoT (sensores y actuadores): registro, activación, configuración, operación (heartbeats, telemetría, comandos), actualización de firmware, mantenimiento de batería, desactivación por pérdida o suspensión, y desmantelamiento. Asegura la consistencia del estado del dispositivo, la seguridad de credenciales y la sincronización de datos tras periodos offline.
+
+**Agregados contenidos:**
+- `Device` (estado, credenciales, configuración)
+- `CommandExecution` (comandos hacia el dispositivo)
+- `OfflineCommandQueue` (comandos pendientes por falta de conectividad)
+- `DeviceFirmware` (actualizaciones y reversiones)
+- `ValveState` (estado de actuadores)
+
+**Eventos clave:**  
+`Device Registered`, `Credentials Generated`, `Device Activated`, `Ready for Operation`, `Heartbeat Received`, `Telemetry Received`, `Command Queued/Sent/Executed/Failed`, `Sync Completed`, `Device Health Degraded/Restored`, `Firmware Update Completed/Failed`, `Maintenance Scheduled/Replaced`.
+
+**Comandos clave:**  
+`Register Device`, `Activate Device`, `Change Configuration`, `Send Command`, `Retry Command`, `Request Firmware Update`, `Schedule Maintenance`, `Report Device Lost`, `Decommission Device`.
+
+**Relaciones:**
+- Recibe órdenes desde **Irrigation & Command Execution** (para riego).
+- Notifica eventos de salud y telemetría a **Soil Monitoring & Diagnosis** y **Security & Alerts**.
+- Depende del sistema externo de comunicación MQTT (broker).
+
+![EventStorming-step10.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-5.png)
+
+---
+
+#### Bounded Context 6: Soil Monitoring & Diagnosis
+
+**Propósito:**  
+Supervisar las condiciones del suelo (humedad, pH, temperatura, conductividad, etc.) mediante sensores IoT, evaluar los umbrales configurados, calcular índices de estrés hídrico (integrando datos meteorológicos externos), y generar diagnósticos agronómicos automatizados que pueden derivar en recomendaciones de riego o ajuste de pH. También gestiona la calibración colaborativa de umbrales (zonas, plantillas y catálogo de cultivos).
+
+**Agregados contenidos:**
+- `SoilMonitoring` (lecturas y detección de umbrales)
+- `ZoneThreshold` (umbrales por zona)
+- `ThresholdTemplate` (plantillas del agrónomo)
+- `CropCatalog` (valores seguros por cultivo)
+- `AgronomicDiagnosis` (cálculo de estrés y generación de diagnóstico)
+
+**Eventos clave:**  
+`Humidity threshold exceeded`, `pH out of range`, `Water stress detected`, `Calculated water stress index`, `Agronomic diagnosis generated`, `Irrigation recommendation issued`, `Threshold change recorded`, `Template applied to client plot`.
+
+**Comandos clave:**  
+`Select Zone`, `Select Crop Type`, `Update Threshold`, `Confirm Out-of-Range`, `Create/Apply Template`, `Calculate Stress Index`, `Generate Diagnosis`.
+
+**Relaciones:**
+- Depende de **IoT Device Management** para recibir lecturas de sensores.
+- Utiliza `Weather API` (sistema externo).
+- Envía `Irrigation recommendation issued` a **Irrigation & Command Execution**.
+- Colabora con **Collaborative Supervision** para las recomendaciones del agrónomo basadas en umbrales.
+
+![EventStorming-step10.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-6.png)
+
+---
+
+#### Bounded Context 7: Agronomist Advisory
+
+**Propósito:**  
+Facilitar la colaboración entre agrónomos y agricultores, proporcionando al agrónomo un dashboard consolidado de sus clientes con priorización visual de parcelas en condición crítica, acceso al historial detallado de cada parcela, generación de informes técnicos mensuales (bajo demanda o programados) a través de un servicio externo de PDF, y la vinculación automática de un agrónomo como asesor cuando un agricultor se registra. Este contexto es el núcleo de la supervisión remota y la asesoría agronómica.
+
+**Agregados contenidos:**
+- `AgronomistRecommendation` (recomendaciones técnicas con evidencia de telemetría)
+- `TechnicalReport` (generación y almacenamiento de informes)
+
+**Eventos clave:**  
+`Agronomist linked`, `Customer plot in critical condition visually highlighted`, `Technical recommendation sent`, `Monthly technical report generated`.
+
+**Comandos clave:**  
+`Link Agronomist`, `Access Consolidated Dashboard`, `Write Recommendation`, `Send Recommendation`, `Request Monthly Report`, `Generate Technical Report`.
+
+**Relaciones con otros contextos:**
+- Recibe datos de usuarios desde **Identity & Access Management** (vinculaciones).
+- Obtiene telemetría y umbrales desde **Soil Monitoring & Diagnosis** e **IoT Device Management**.
+- Utiliza el sistema externo `PDF Generator`.
+- Puede enviar notificaciones vía **Communication** cuando se genera un informe.
+
+![EventStorming-step10.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-7.png)
+
+---
+
+#### Bounded Context 8: Irrigation & Actuator Control
+
+**Propósito:**  
+Gestionar la ejecución de comandos de riego sobre actuadores (válvulas solenoides), incluyendo la resolución de conflictos entre comandos simultáneos (agricultor, agrónomo o sistema), el manejo de comandos encolados cuando no hay conectividad (con validación temporal y de condición al restaurar la conexión), y el mantenimiento del estado visible de las válvulas. Es el contexto encargado de la automatización del riego y la fertirrigación.
+
+**Agregados contenidos:**
+- `IrrigationCommand` (comandos de riego)
+- `OfflineCommandQueue` (cola de comandos sin conectividad)
+- `ValveState` (estado actual de cada válvula)
+
+**Eventos clave:**  
+`Irrigation command sent`, `Command queued locally`, `Connectivity restored, command validated`, `Command executed/discarded`, `Solenoid valve open/close`, `Irrigation started/completed`.
+
+**Comandos clave:**  
+`Send Irrigation Command`, `Validate Queued Command`, `Cancel Queued Command`, `Open/Close Valve`.
+
+**Relaciones con otros contextos:**
+- Recibe `Irrigation recommendation` desde **Soil Monitoring & Diagnosis**.
+- Envía comandos al **IoT Device Management** para que los ejecute en el Edge.
+- Consulta el estado de válvulas desde el **Valve State View** (read model).
+
+![EventStorming-step10.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-8.png)
+
+---
+
+### Bounded Context 9: Perimeter Security
+
+**Propósito:**  
+Detectar movimientos en el perímetro de las parcelas mediante sensores PIR, clasificar los eventos en el borde (Edge) como WIND, ANIMAL o HUMAN basándose en la intensidad de calor y umbrales configurables, y generar alertas de seguridad cuando se confirma una intrusión humana con alta confianza. Las alertas se envían a través del contexto de **Communication** (Twilio) y se registran en un feed de seguridad para su seguimiento.
+
+**Agregados contenidos:**
+- `PIRSecurityEvent` (detección y clasificación en el borde)
+- `SecurityAlert` (alerta de intrusión y gestión de notificación)
+
+**Eventos clave:**  
+`PIR detects movement`, `Heat intensity measured`, `Event classified as HUMAN/WIND/ANIMAL`, `High trust rating sent`, `Human intrusion alert triggered`, `Security alert dismissed`.
+
+**Comandos clave:**  
+`Configure PIR Sensitivity`, `Classify Event`, `Send Alert`, `Confirm Alert Reception`, `Dismiss Alert`.
+
+**Relaciones con otros contextos:**
+- Depende de **IoT Device Management** para recibir los eventos crudos del sensor PIR.
+- Envía comandos de notificación a **Communication** (Twilio).
+- Las alertas registradas alimentan los read models `Security Event List View` y `Security Alert Feed`.
+
+![EventStorming-step10.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-9.png)
+
+---
+
+#### Bounded Context 10: Business Intelligence
+
+**Propósito:**  
+Recolectar, agregar y presentar métricas de negocio (KPIs) y de adopción de funcionalidades para la toma de decisiones estratégicas. Permite al Product Owner y al Product Manager analizar el churn por segmento, visualizar mapas de calor de adopción de funcionalidades, detectar embudos de abandono en flujos específicos, y basar las decisiones de roadmap en datos reales de uso y suscripciones.
+
+**Agregados contenidos:**
+- `FeatureUsageMetrics` (registro de uso de funcionalidades)
+- (Opcionalmente, `BusinessMetrics` y `ChurnRecord` podrían residir aquí, aunque en contextos anteriores se ubicaron en **Subscriptions & Payments**)
+
+**Eventos clave:**  
+`Feature usage recorded`, `Feature adoption heatmap generated`, `Abandonment funnel identified`, `Comparison of metrics with previous period generated`.
+
+**Comandos clave:**  
+`Record Feature Usage`, `Generate Adoption Heatmap`, `Analyze Funnel`, `Calculate KPIs`, `Filter by Segment and Period`.
+
+**Relaciones con otros contextos:**
+- Consume eventos de uso generados por **todos los demás contextos** (cada acción relevante del usuario emite un evento de uso).
+- Recibe datos de suscripciones y cancelaciones desde **Subscriptions & Payments** para correlacionar churn con adopción.
+- Los análisis y dashboards se sirven a través de read models (`Executive Dashboard`, `Feature Adoption View`, `Funnel Analysis View`).
+
+![EventStorming-step10.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-10.png)
+
+---
 
 ### 4.1.1.2 Domain Message Flows Modeling
 
