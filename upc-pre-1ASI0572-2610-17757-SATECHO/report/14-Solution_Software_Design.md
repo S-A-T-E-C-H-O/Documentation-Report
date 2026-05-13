@@ -618,7 +618,7 @@ Finalmente, con todo el contexto reunido, el equipo de producto lleva a cabo el 
 
 La fase de Candidate Context Discovery tiene como objetivo transformar el modelo visual del Event Storming en fronteras arquitectónicas concretas. A continuación, se detalla cada paso aplicado, explicando su propósito metodológico, cómo se ejecutó en el taller colaborativo y qué evidencia aporta cada imagen del proceso.
 
-#### Paso 3: Pain Points (Puntos Críticos)
+### Paso 3: Pain Points (Puntos Críticos)
 **¿Qué es y cómo se hace?**  
 Los *Pain Points* representan fricciones operativas, riesgos técnicos o pasos manuales que degradan la experiencia del usuario o la integridad del dominio. Se identifican marcando con notas rosas los eventos o transiciones donde existe alta probabilidad de fallo, latencia inaceptable, pérdida de datos o conflicto de estados. El equipo los valida preguntando: *"¿Qué pasa si este paso falla?"* o *"¿Dónde se pierde valor si no se automatiza?"*.
 
@@ -1105,7 +1105,7 @@ Mientras tanto, el equipo observa eventos como `Abandonment funnel identified in
 
 ---
 
-#### Paso 4: Pivotal Points (Puntos de Inflexión)
+### Paso 4: Pivotal Points (Puntos de Inflexión)
 **¿Qué es y cómo se hace?**  
 Los *Pivotal Points* son eventos que marcan un cambio drástico en el contexto, el estado del sistema o la fase del proceso. Se identifican preguntando: *"¿Este evento separa responsabilidades de negocio distintas?"* o *"¿Cambia irreversiblemente el estado del agregado?"*. Actúan como fronteras naturales para Bounded Contexts.
 
@@ -1815,7 +1815,7 @@ El motor no se consulta solo en la revisión trimestral. De forma continua, moni
 
 ---
 
-#### Paso 5: Commands (Comandos)
+### Paso 5: Commands (Comandos)
 **¿Qué es y cómo se hace?**  
 Los *Commands* son intenciones explícitas de acción (`Verb + Noun`) emitidas por actores o sistemas para detonar un evento de dominio. Se escriben en notas azules y se vinculan directamente al actor responsable. El equipo los valida asegurando que cada comando tenga un desencadenante claro y un efecto observable.
 
@@ -2328,7 +2328,7 @@ Actúa como el habilitador analítico. Con `Calcular KPIs`, entrega las métrica
 
 ---
 
-#### Paso 6: Policies (Políticas de Negocio)
+### Paso 6: Policies (Políticas de Negocio)
 **¿Qué es y cómo se hace?**  
 Las *Policies* son reglas automáticas o semiautomatizadas que responden a eventos (`Cuando [Evento] Entonces [Acción]`). Se plasman en notas violetas y representan la lógica de negocio que no requiere intervención humana directa. Se validan preguntando: *"¿Esta regla puede fallar silenciosamente?"* o *"¿Requiere contexto externo para ejecutarse?"*.
 
@@ -2774,7 +2774,7 @@ El sensor PIR instalado en el perímetro de una parcela de maíz detecta movimie
 ![EventStorming-step6.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-13.png)
 
 ---
-#### Paso 7: Read Models (Modelos de Lectura)
+### Paso 7: Read Models (Modelos de Lectura)
 
 **¿Qué es y cómo se hace?**  
 Los *Read Models* son proyecciones optimizadas de datos para consultas, dashboards o reportes. Se representan en notas verdes y se desacoplan del modelo transaccional para mejorar rendimiento y usabilidad. El equipo los define preguntando: *"¿Qué necesita ver el usuario para tomar una decisión rápida?"* y *"¿Qué datos se consultan frecuentemente sin modificarse?"*.
@@ -3472,15 +3472,88 @@ Una vista por flujo funcional, que calcula:
 
 ---
 
-También empezamos a discutir el uso de Sistemas Externos, donde únicamente se encontró necesario en los siguientes servicios.
+### Paso 8: External Systems (Sistemas Externos)
 
-![EventStorming-step8.1](./assets/images/candidate-context-discovery/es-external-systems-1.png)
+**¿Qué es y cómo se hace?**  
+Los *External Systems* son servicios, APIs o hardware fuera del control del equipo de desarrollo. Se marcan con notas amarillas y establecen límites de integración. Se validan preguntando: *"¿Quién es dueño de este servicio?"*, *"¿Qué SLA tiene?"* y *"¿Cómo fallback si falla?"*.
 
-![EventStorming-step8.2](./assets/images/candidate-context-discovery/es-external-systems-2.png)
+#### External System 1: Twilio (Servicio de Mensajería y Notificaciones)
 
-![EventStorming-step8.3](./assets/images/candidate-context-discovery/es-external-systems-3.png)
+**Propósito:**  
+Twilio es el servicio externo de comunicaciones que utiliza AgroSafe para enviar **alertas de seguridad por WhatsApp** a los agricultores y agrónomos. Este canal es crítico para notificar en tiempo real sobre intrusiones humanas detectadas en el perímetro de las parcelas, permitiendo una reacción inmediata del usuario. AgroSafe no controla la infraestructura de Twilio, su disponibilidad o latencia, por lo que el diseño debe contemplar tiempos de respuesta garantizados (el Edge envía la clasificación de alta confianza al backend en menos de 5 segundos, y el backend debe entregar el mensaje a Twilio lo antes posible).
 
-![EventStorming-step8.4](./assets/images/candidate-context-discovery/es-external-systems-4.png)
+**Eventos que AgroSafe envía a Twilio:**
+- `Send alert` → cuando se confirma una intrusión humana con alta confianza (`High trust rating sent to the backend immediately` → `Human intrusion alert triggered`), el backend de AgroSafe solicita a Twilio el envío de un mensaje de WhatsApp al agricultor (y opcionalmente al agrónomo vinculado). El mensaje incluye detalles del incidente (tipo, hora, parcela, dispositivo) y un botón de confirmación de lectura.
+
+**Eventos que AgroSafe recibe de Twilio:**
+- `Alert confirmed as received` → cuando el usuario pulsa el botón de confirmación en el mensaje de WhatsApp, Twilio notifica al backend de AgroSafe. Esta confirmación detiene los temporizadores de escalado automático (como el bloqueo preventivo de cuenta) y registra que el legítimo dueño está al tanto del incidente.
+- Opcionalmente, Twilio puede notificar fallos de entrega o estados de mensaje no entregado, lo que AgroSafe debe registrar en el log de auditoría y considerar mecanismos de respaldo (ej. reintento o canal alternativo).
+
+![EventStorming-step8.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-1.png)
+
+---
+
+#### External System 2: Payment Provider (Pasarela de Pagos)
+
+**Propósito:**  
+El proveedor de pagos (por ejemplo, Stripe, Mercado Pago, PayPal) es el servicio externo que procesa las transacciones de suscripción de los clientes de AgroSafe. Gestiona la captura de datos de pago (tarjeta, transferencia), la autorización de cargos recurrentes (mensuales o anuales) y la notificación de eventos de pago (exitoso, fallido, reembolso). AgroSafe no almacena información sensible de pago (números de tarjeta, CVV), delegando completamente la seguridad y el cumplimiento PCI-DSS al proveedor externo.
+
+**Eventos que AgroSafe envía al Payment Provider:**
+- `Process payment` → cuando un visitante selecciona un plan (`Selected plan` → `Subscription activated`), o cuando se genera un cobro recurrente por la suscripción, AgroSafe envía al proveedor los datos necesarios: identificador del cliente en el proveedor (customer ID), monto, moneda, método de pago, y metadatos de referencia (ej. `subscription_id`).
+
+**Eventos que AgroSafe recibe del Payment Provider:**
+- `Payment processed` → notificación de que un cargo fue exitoso. Actualiza el estado de la suscripción, registra la fecha de último pago y, si aplica, reactiva una cuenta que estaba suspendida por impago (ver Timeline 2).
+- `Payment failed` → notificación de que un cargo fue rechazado (tarjeta expirada, fondos insuficientes). AgroSafe incrementa un contador de fallos, notifica al cliente y, tras varios fallos, puede iniciar el proceso de suspensión (`Customer account suspended due to non-payment`).
+- Opcionalmente, `Subscription cancelled` (si el cliente cancela desde el portal del proveedor) o `Refund processed` (para reembolsos).
+
+![EventStorming-step8.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-2.png)
+
+---
+
+#### External System 3: Email Service (Servicio de Correo Electrónico)
+
+**Propósito:**  
+El servicio de correo electrónico (por ejemplo, SendGrid, AWS SES, Mailgun) es el sistema externo encargado del envío de emails transaccionales de AgroSafe. Su función principal es enviar el **correo de verificación** a los visitantes que se registran, con un enlace único y temporal para confirmar su dirección de correo electrónico. También puede utilizarse para notificaciones de suspensión de cuenta, reactivación, alertas de seguridad no críticas (cuando WhatsApp no está disponible) y recordatorios de pago pendiente. AgroSafe no gestiona la infraestructura de correo ni las listas de spam, delegando la entregabilidad al proveedor externo.
+
+**Eventos que AgroSafe envía al Email Service:**
+- `Send Email Verification` → tras el registro exitoso del agricultor o agrónomo (`Registered Farmer` / `Registered Agronomist`), el backend construye un mensaje con el enlace de verificación y lo envía al servicio de correo. El enlace contiene un token firmado con expiración (ej. 24 horas).
+- Opcionalmente, `Send Notification` para otros tipos de correos (suspensión, reactivación, recordatorio de pago).
+
+**Eventos que AgroSafe recibe del Email Service:**
+- `Email delivery success` / `Email delivery failed` → notificaciones de estado de entrega (opcional, según configuración). AgroSafe puede registrar fallos para reintentos o para alertar al staff si hay problemas de entregabilidad masivos.
+- `Email opened` / `Link clicked` → si se configura tracking, el servicio puede notificar cuando el usuario hace clic en el enlace de verificación. Sin embargo, lo habitual es que el propio backend de AgroSafe reciba la petición del enlace y verifique el token, sin depender del webhook de apertura.
+
+![EventStorming-step8.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-3.png)
+
+---
+
+#### External System 4: Weather API (API de Datos Meteorológicos)
+
+**Propósito:**  
+La API meteorológica externa (por ejemplo, OpenWeatherMap, Weather.com, Tomorrow.io) proporciona a AgroSafe datos climáticos en tiempo real y pronósticos para la ubicación específica de cada parcela. Estos datos se integran en el **cálculo del índice de estrés hídrico**, ya que la temperatura ambiente, la humedad relativa, la radiación solar y la evapotranspiración son factores críticos para determinar si un cultivo está bajo estrés, más allá de la mera lectura de humedad del suelo. AgroSafe no controla la disponibilidad, precisión ni frecuencia de actualización de la API externa.
+
+**Eventos que AgroSafe envía a la Weather API:**
+- `Request weather data` → con parámetros de ubicación (coordenadas de la parcela o código postal) y, opcionalmente, timestamp para datos históricos o forecast.
+
+**Eventos que AgroSafe recibe de la Weather API:**
+- `Weather data received` → incluye temperatura actual, humedad relativa, presión atmosférica, velocidad del viento, precipitaciones recientes, radiación solar, y evapotranspotranspiración de referencia (ET0). AgroSafe utiliza estos valores para enriquecer el diagnóstico.
+
+![EventStorming-step8.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-4.png)
+
+---
+
+#### External System 5: PDF Generator (Servicio de Generación de Documentos PDF)
+
+**Propósito:**  
+El generador de PDF (por ejemplo, una librería interna como iText, Apache PDFBox, o un servicio externo como Gotenberg, DocRaptor) es el componente responsable de producir los **informes técnicos mensuales** descargables que AgroSafe ofrece a agricultores y agrónomos. Estos informes consolidan telemetría, alertas, riegos, fertilizaciones y recomendaciones en un documento estructurado y profesional. Aunque puede ser una librería interna, se trata como un "sistema externo" en el sentido de que es un componente especializado con el que AgroSafe interactúa a través de comandos y eventos.
+
+**Eventos que AgroSafe envía al PDF Generator:**
+- `Generate Technical Report` → tras la solicitud `Request monthly report` y la compilación de datos (`System compiles data`), el backend envía al generador un conjunto de datos estructurados (JSON o XML) que incluye: cabecera (parcela, agricultor, período), gráficos (en formato SVG o base64), tablas de resumen, listado de eventos y recomendaciones.
+
+**Eventos que AgroSafe recibe del PDF Generator:**
+- `Technical report generated` → el generador devuelve el documento PDF (como archivo temporal, URL o bytes) y su metadata (tamaño, número de páginas). AgroSafe almacena el PDF (en un servicio de almacenamiento) y emite `Monthly technical report generated for a client`, poniendo el informe a disposición del usuario para descarga.
+
+![EventStorming-step8.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-5.png)
 
 ---
 
