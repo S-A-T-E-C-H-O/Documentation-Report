@@ -112,7 +112,7 @@ En esta sección se presentan los requisitos funcionales y técnicos del sistema
 
 ## 3.2. Impact Mapping
 
-En esta sección, presentamos el **Impact Mapping** el cual como finlidad alinear los objetivos de negocio que tiene SATECHO, bajo la metodología **SMART** (Specific, Measurable, Attainable, Relevant y Timely), con las necesidades y comportamientos esperados de cada uno de nuestros **User Personas**. A través de este actividad, identificamos cómo los actores clave (Agricultor e Ingeniero Agrónomo) deben cambiar su comportamiento (Impacts) para ayudarnos a alcanzar las metas, qué funcionalidades o artefactos construiremos (Deliverables) para provocar esos cambios, y cómo se traducen estos en historias de usuario (User Stories) concretas para el equipo de desarrollo.
+En esta sección, presentamos el **Impact Mapping** el cual como finalidad alinear los objetivos de negocio que tiene SATECHO, bajo el criterio **SMART** (Specific, Measurable, Attainable, Relevant y Timely), con las necesidades y comportamientos esperados de cada uno de nuestros **User Personas**. A través de este actividad, identificamos cómo los actores clave (Agricultor e Ingeniero Agrónomo) deben cambiar su comportamiento (Impacts) para ayudarnos a alcanzar las metas, qué funcionalidades o artefactos construiremos (Deliverables) para provocar esos cambios, y cómo se traducen estos en historias de usuario (User Stories) concretas para el equipo de desarrollo.
 
 ## Agricultor
 
