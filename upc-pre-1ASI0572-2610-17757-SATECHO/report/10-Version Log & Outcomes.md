@@ -24,9 +24,59 @@
 | 4.0.0 | 21/04/2025 | Gamio Upiachihua, Brenda Lucía | Desarrollo del **Ubiquitous Language** para la definición de los términos que se utilizarán dentro del negocio y facilitar su trazabilidad y comprensión. |
 | 4.1.0 | 21/04/2025 | Huamani Sánchez, José Diego y Gamio Upiachihua, Brenda Lucía | Desarrollo de los **User Stories** relacionados a la funcionalidad que espera tener nuestro solución orientada a las perspectivas de nuestros segmentos objetivos - la gran mayoría de detalles, obtenidos mediante la información de las entrevistas realizadas. |
 | 4.2.0 | 21/04/2025 | Estrada Cajamune, Abraham André | Elaboración del **Impact Mapping**. |
-| 4.3.0 | 21/04/2025 | Huamani Sánchez, José Diego y Gamio Upiachihua, Brenda Lucía| | Elaboración del **Product Backlog** donde priorizamos cada *User Story* mediante un sistema de calificación **Fibonacci** (si una tarea es fácil de implementar o requiere un esfuerzo mayor para su concretación). |
+| 4.3.0 | 21/04/2025 | Huamani Sánchez, José Diego y Gamio Upiachihua, Brenda Lucía | Elaboración del **Product Backlog** donde priorizamos cada *User Story* mediante un sistema de calificación **Fibonacci** (si una tarea es fácil de implementar o requiere un esfuerzo mayor para su concretación). |
+| 5.0.0 | 24/04/2026 | Gamio Upiachihua, Brenda Lucía | Desarollo del **Strategic-Level Domain-Driven Design** y **Context Mapping** |
+| 5.1.0 | 24/04/2026 | Palacios, Yasser Renteria | Desarrollo del **Software Architecture** |
+| 5.2.0 | 26/04/2026 |  Gamio Upiachihua, Brenda Lucía | Desarollo del **Tactical Level Domain-Driven Design** |
 
 # Project Report Collaboration Insights
+
+Para el presente desarrollo de la documentación de la idea del proyecto, se utilizó la herramienta **Github** para registrar minuciosamente los cambios aplicados por cada uno de los miembros del equipo y mantener versiones consistentes en el transcurso del ciclo de vida del proyecto.
+
+- **Link del repositorio del Informe:** [https://github.com/S-A-T-E-C-H-O/Documentation-Report](https://github.com/S-A-T-E-C-H-O/Documentation-Report)
+
+- **Link del repositorio de la organización:** [https://github.com/S-A-T-E-C-H-O](https://github.com/S-A-T-E-C-H-O)
+
+**Contribuyentes**:
+
+| Integrantes | Usuario de Github |
+| :--- | :--- |
+| José Diego Huamani Sánchez | `ProgramadorHuamani` |
+| Brenda Lucía Gamio Upiachihua | `B-Gamio` |
+| Raul Ronaldo Quispe Erasmo | `Raul-QE` |
+| Abraham Andrés Estrada Cajamune | `Abraham0310` |
+| Yasser Renteria Palacios | `Mitos20` |
+
+---
+
+**AV1 - Semana 4**
+
+En el transcurso de dicha actividad, el equipo centro sus esfuerzos en desarrollar los siguientes puntos comprometidos para esta entrega, los cuales se mencionarán a continuación:
+
+  - **Informe del proyecto:** (Carátula, Registro de versiones, Project Report Collaboration Insights, _Student Outcomes_ y Tabla de Contenidos)
+  - **Capítulos I - Introducción** 
+  - **Capítulo II - Requirements Elicitation & Analysis**
+  - **Capítulo III - Requirements Specification**
+  - **Capítulo IV - Solution Software Design**
+  - **Conclusiones y Recomendaciones** (Bibliografía, Anexos)
+  - **Keynote y Video de sustentación del avance**
+
+Cada capítulo ha sido desarrollado siguiendo las buenas práticas de *conventional commits* como los podemos apreciar en el siguiente ejemplo:
+
+```bash
+feat(user-stories): add the wording description and details about the impact mapping associate with ours users
+docs(user-stories): apply correction about the Epic ID associated with the User Stories
+```
+
+**Resumenes de colaboración - Github Analytics Insights:**
+
+![Project Report Collaboration Insights - AV1](./assets/images/project-collaboration-insights/project-collaboration-insights-av1.png)
+
+_Figura #1: Contribuciones por integrante realizados - AV1_
+
+![Commits History - AV1](./assets/images/project-collaboration-insights/commits-history-av1.png)
+
+_Figura #2: Historial de commits del repositorio - AV1_
 
 # Contentido
 
@@ -167,13 +217,24 @@
 - [6.4. Video About-The-Product](/docs/chapter-VI.md/#64-video-about-the-product)
 
 # Conclusiones
-- [Conclusiones y recomendaciones]()
-- [Video About-the-Team]()
+- [Conclusiones y recomendaciones](/upc-pre-1ASI0572-2610-17757-SATECHO/report/annexes/99-annexes.md)
+- [Video About-the-Team](/upc-pre-1ASI0572-2610-17757-SATECHO/report/annexes/99-annexes.md)
 
 # Bibliografía
-- [Bibliografía]()
+- [Bibliografía](/upc-pre-1ASI0572-2610-17757-SATECHO/report/annexes/99-annexes.md)
 
 # Anexos
-- [Anexos]()
+- [Anexos](/upc-pre-1ASI0572-2610-17757-SATECHO/report/annexes/99-annexes.md)
 
 # Student Outcome
+
+**ABET – EAC - Student Outcome 5**
+
+**Criterio:** La capacidad de funcionar efectivamente en un equipo cuyos miembros
+juntos proporcionan liderazgo, crean un entorno de colaboración e inclusivo,
+establecen objetivos, planifican tareas y cumplen objetivos
+
+| Criterios Específico | Acciones realizadas | Conclusiones |
+| :--- | :--- | :--- |
+| Trabaja en equipo para proporcionar liderazgo en forma conjunta | **Yasser Renteria Palacios:** Participó activamente en la mayoría de reuniones del equipo, contribuyendo en la definición del tema del proyecto y en la toma de decisiones iniciales. Asimismo, colaboró en la elaboración del informe, incluyendo el desarrollo y apoyo en los diagramas C4 para representar la arquitectura del sistema. También participó en la construcción del guion de entrevista y en el análisis de la información obtenida, manteniendo comunicación constante con el equipo y aportando ideas para mejorar la organización y claridad del trabajo. <br> **Raul Ronaldo Quispe Erasmo:** Participó en la parte de Event Storming para identificar los procesos principales del sistema. También ayudó a ordenar algunos bounded contexts, aportando a que la estructura del proyecto sea más clara. Se encargó de completar el canvas y revisó el trabajo parte por parte para detectar errores y hacer ajustes. Además, mantuvo comunicación con el equipo para coordinar mejora. <br> **Huamani Sánchez, José Diego:** Asumió el rol de *Team Leader*, coordinando la organización inicial del equipo, la planificación de actividades y el seguimiento del avance de la entrega. Desarrolló el **Capítulo I: Introducción**, incluyendo el perfil de la startup, el perfil de solución, los antecedentes, la problemática, el enfoque Lean UX y la definición de los segmentos objetivo. Asimismo, articuló la relación entre el problema identificado, la propuesta de valor de ParkingNow y el alcance inicial del producto. <br> **Gamioo Upiachihua, Brenda Lucía:** Asumió el rol de *Software Architect*, liderando el desarrollo del **Capítulo IV: Solution Software Design**. Definió la arquitectura estratégica y táctica de ParkingNow, incluyendo el diseño con *Domain-Driven Design*, la identificación de *Bounded Contexts*, el *Context Mapping*, los diagramas C4, la arquitectura de contenedores, el despliegue, los componentes, el diseño de clases del dominio y el diseño de base de datos del bounded context trabajado. <br> **Estrada Cajamune, Abraham Andrés:** Asumió el rol de *Device Maker* y desarrolló el *Capítulo II: Requirements Elicitation & Analysis, orientado a la investigación del dominio, análisis de competidores, entrevistas, needfinding, user personas, user task matrix, journey maps, empathy maps, big picture eventstorming y lenguaje ubicuo. Su trabajo aportó la base de comprensión del problema y de los usuarios para sustentar las decisiones posteriores de requisitos, arquitectura y diseño del dispositivo IoT. | **AV1:** La participación continua en reuniones y actividades permitió una adecuada coordinación del equipo y una toma de decisiones más clara respecto al enfoque del proyecto. El trabajo conjunto facilitó la integración de ideas tanto en la parte conceptual como en la representación del sistema, evidenciando un liderazgo compartido y una contribución activa en el desarrollo del informe. |
+| Crea un entorno colaborativo e inclusivo, establece metas, planifica tareas y cumple objetivos | **Yasser Renteria Palacios:** Contribuyó en la planificación del trabajo del equipo, participando en la definición de objetivos y en la organización de tareas relacionadas al informe. Apoyó en la estructuración del contenido, incluyendo el análisis del problema, la propuesta de solución y el desarrollo de diagramas C4. Además, cumplió con los entregables asignados y trabajó de manera colaborativa, considerando los aportes de sus compañeros y manteniendo una comunicación constante durante el desarrollo del proyecto. <br> **Raul Ronaldo Quispe Erasmo:** Contribuyó a la organización del trabajo del equipo, ayudando a definir tareas y mantener un orden en el desarrollo del proyecto. Promovió la participación de todos durante las actividades como el Event Storming, facilitando un ambiente colaborativo. Además, apoyó en el seguimiento de avances y en la revisión del cumplimiento de los objetivos, asegurando que el equipo mantuviera una línea de trabajo clara. <br> **Huamani Sánchez, José Diego:** Como *Team Leader*, promovió la planificación del trabajo para la entrega, organizó el avance por capítulos y consolidó los aportes del equipo dentro del informe. Además, realizó seguimiento de las tareas asignadas, verificó la coherencia general del documento y propuso ajustes para mantener alineados los objetivos del proyecto con el alcance solicitado por la rúbrica. <br> **Gamioo Upiachihua, Brenda Lucía:** Colaboró con el equipo definiendo una estructura técnica clara para el diseño de la solución, estableciendo criterios arquitectónicos para representar ParkingNow mediante DDD y C4 Model. Su aporte permitió ordenar las decisiones técnicas, diferenciar responsabilidades entre contextos y asegurar que el diseño de software mantuviera consistencia con el dominio del problema y con las tecnologías requeridas por el curso. <br> ***Estrada Cajamune, Abraham Andrés:** Contribuyó al entorno colaborativo mediante el levantamiento y análisis de información de usuarios y del mercado, permitiendo que el equipo tome decisiones basadas en evidencia. Desde su rol de *Device Maker, aportó una visión práctica sobre las necesidades del prototipo físico IoT y su relación con los hallazgos del Capítulo II, favoreciendo que la solución no se limite al software, sino que considere también el contexto real de uso del dispositivo. | **AV1:** Se logró estructurar un informe sólido que abarca desde la identificación del problema hasta la propuesta de solución, integrando herramientas como los diagramas C4 para una mejor comprensión del sistema. El equipo cumplió con los objetivos planteados en esta etapa, evidenciando una adecuada planificación, colaboración e inclusión en la toma de decisiones. |
