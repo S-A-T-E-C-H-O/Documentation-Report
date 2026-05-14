@@ -24,7 +24,89 @@ El logotipo utiliza una composición minimalista basada en elementos naturales y
 - **Contrastes**: El contraste entre el verde principal y el fondo neutral genera una excelente legibilidad para textos, métricas y navegación principal. El uso del tono tierra como color de acento permite destacar elementos importantes como botones CTA, alertas de humedad o estados activos sin romper la armonía visual. El gris secundario funciona bien para componentes secundarios, bordes y estados inactivos, creando jerarquía visual clara dentro de la aplicación. En conjunto, la combinación mantiene un balance entre tecnología y naturaleza, ideal para una web app de control de riego agrícola. <br>
 <img src="./assets/images/style-guidelines/ColorSystem.png" alt="Image color" width="500"/><br>
 
-### 5.1.2. Web, Mobile and IoT Style Guidelines.
+
+## 5.1.2. Web, Mobile and IoT  Guidelines 
+
+Este documento establece los estándares de diseño visual e interacción para el ecosistema SATECHO, asegurando coherencia, accesibilidad y eficiencia operativa en sus tres plataformas: Aplicación Web (Escritorio), Aplicación Móvil y Dispositivos IoT de campo.
+
+### 5.1.2.1. Web Application Style Guidelines 
+
+Orientada a la administración central, análisis profundo y supervisión técnica por parte de Agrónomos y Administradores de Sistema.
+
+#### 5.1.2.1.1. Estructure y Layout
+
+- **Grid:** Sistema de 12 columnas con un ancho máximo de contenedor de 1440px.
+- **Navegación:** Sidebar lateral persistente a la izquierda (ancho fijo: 256px). Permite acceso rápido a Dashboard, Zonas, Seguridad, Dispositivos y Ajustes.
+- **Jerarquía:** El contenido principal se organiza en tarjetas modulares con sombras sutiles para separar niveles de información sin saturar la vista.
+
+#### 5.1.2.1.2 Specific Components
+
+- **Tablas de Datos:** Filas con hover state en `#F4F3F1`. Uso de badges de estado (Normal, Atención, Crítico) para filtrado visual rápido.
+- **Gráficos de Monitoreo:** Líneas suaves con puntos de datos claros. Uso de la paleta de marca para diferenciar variables (Humedad: Azul, Temp: Naranja, EC: Púrpura).
+
+### 5.1.2.2 Mobile Application  Guidelines 
+
+Diseñada para la operación en campo, priorizando el uso con una sola mano y la legibilidad bajo luz solar directa.
+
+#### 5.1.2.2.1 Navigation and Gestures
+
+- **Barra Inferior:** Centro de navegación con los 5 destinos principales: Inicio, Parcelas, Alertas, Tareas y Más.
+- **Acciones Rápidas:** Uso de tarjetas grandes (mínimo 44px de altura táctil) para activar riegos o registrar actividades.
+- **Feedback Táctil:** Los botones y elementos interactivos deben mostrar un estado de pulsación claro (escala ligera o cambio de opacidad).
+
+#### 5.1.2.2.2 "Soft Minimalist" Aesthetics
+
+- **Tarjetas:** Esquinas redondeadas (12px-16px) y sombras muy suaves (`0 4px 20px rgba(0,0,0,0.05)`).
+- **Color:** Uso predominante de fondos claros (`#FAF9F5`) para evitar la fatiga visual. Los acentos verdes se usan solo en elementos activos para guiar el ojo.
+
+
+### 5.1.2.3 IoT Application  Guidelines 
+
+Estándares para la interacción con el hardware físico (sensores, válvulas y estaciones meteorológicas).
+
+#### 5.1.2.3.1 Device Visualization
+
+- **LCD/OLED:** Información alfanumérica clara. Prioridad: [Nombre de Zona] + [Valor Crítico].
+- **Señalización LED:**
+  - **Verde Continuo:** Operación normal / Válvula abierta.
+  - **Rojo Parpadeante:** Error de conexión / Batería crítica.
+  - **Ámbar:** Fuera de umbral de seguridad.
+
+#### 5.1.2.3.2 Data Consistency
+
+Los términos utilizados en el hardware (ej. "Hum. Suelo", "Zona A1") deben ser idénticos a los mostrados en la App y la Web para evitar confusiones al operario.
+
+
+### 5.1.2.4 Visual Foundations (Design Tokens)
+
+#### 5.1.2.4 Color Palette (Organic Professionalism)
+
+- **Surface (Fondo):** `#FAF9F5`
+- **Surface Dim (Secundario):** `#DADAD6`
+- **Primary Green (Marca):** `#476649`
+- **Primary Light (Acentos):** `#7A9A7A`
+- **Text (Charcoal):** `#1A1C18`
+- **Alert Red (Error):** `#BC4749`
+
+#### 5.1.2.4.1 Typography: Manrope
+
+- **Headlines (Bold):** Tracking -2%, para títulos de sección.
+- **Body (Regular):** 16px, line-height 1.5.
+- **Labels (Semibold):** 12px, para metadatos y categorías.
+
+#### 5.1.2.4.2 Iconography
+
+Uso exclusivo de **Material Symbols (Rounded)**.
+
+- **Activos:** Rellenos (Filled) en color `#476649`.
+- **Inactivos:** Estilo contorno (Outline) en color Slate/Gris.
+
+### 5.1.2.5 Accessibility and States
+
+- **Contraste:** Todos los textos deben cumplir con el estándar WCAG AA (mínimo 4.5:1).
+- **Error States:** Mensajes de error siempre acompañados de un icono descriptivo y un color de soporte (Earth Red).
+- **Loading:** Spinners o esqueletos (Skeletons) siguiendo el tono de la marca para evitar la sensación de latencia.
+
 ## 5.2. Information Architecture.
 ### 5.2.1. Organization Systems.
 ### 5.2.2. Labeling Systems.
