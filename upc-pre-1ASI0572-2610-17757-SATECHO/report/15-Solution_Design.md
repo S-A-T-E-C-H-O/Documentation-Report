@@ -1164,13 +1164,23 @@ Link del Figma: [https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?no
 
 #### User flow 1: Registro y Onboarding
 
- **User Goal:** Como visitante, quiero registrarme en la plataforma, escoger mi rol y comenzar a gestionar mi parcela
+ **User Goal:** Como visitante, quiero registrarme en la plataforma, escoger mi rol, ingresar y comenzar a gestionar mi parcela
 
 **Happy Path**
 
 Inicia cuando el usuario ingresa a la pantalla de inicio de sesión y selecciona la opción “Create Account”. Luego, el sistema le permite escoger el tipo de usuario, ya sea “Farmer” o “Agronomist”, para continuar con el proceso de registro. Después, el usuario completa sus datos personales y crea su cuenta exitosamente. Una vez registrada, la plataforma envía un correo de verificación y el usuario accede a su email para confirmar su cuenta. Tras la verificación exitosa, el sistema redirige nuevamente al login, donde el usuario inicia sesión. Posteriormente, comienza un proceso de configuración inicial guiado mediante varios pasos: primero registra los datos de su propiedad agrícola, luego define las zonas de irrigación, después configura sensores y dispositivos conectados, y finalmente establece los umbrales básicos de monitoreo, como temperatura, humedad y pH. Al completar todos los pasos, la cuenta queda configurada correctamente y el usuario accede al dashboard principal de la plataforma, donde puede visualizar y gestionar toda la información de su sistema agrícola inteligente.
 
-<div align="center"> <img src="./assets/images/userflow-wireflows/register_onboarding_happy_path_web.png" alt="Metodología IoT en 12 pasos"/> </div>
+<div align="center"> <img src="./assets/images/userflow-wireflows/register_onboarding_happy_path_web.png" alt="Happy_Path"/> </div>
+
+<br>
+
+**Unhappy Path**
+
+El visitante intenta ingresar con un correo equivocado o deja campos obligatorios vacíos. El sistema muestra mensajes de error en los campos correspondientes y bloquea el avance hasta que los datos sean corregidos.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/unhappy_login.png" alt="Happy_Path"/> </div>
+
+<br>
 
 ## 5.5. Applications Prototyping.
 
