@@ -33,6 +33,110 @@ Se especifican y describen las herramientas y productos de software que los miem
 
 ### 6.1.2. Source Code Management
 
+En esta sección se define el marco de gobernanza para la gestión del código fuente de SATECHO, utilizando GitHub como plataforma centralizada de control de versiones. El equipo implementa una estrategia de ramificación estructurada y estándares de comunicación que garantizan la trazabilidad, la integridad y la calidad del software en cada etapa del ciclo de vida.
+
+**Ecosistema de Repositorios**
+
+La solución SATECHO se descompone en repositorios modulares para facilitar el mantenimiento y el despliegue independiente de sus componentes.
+
+#### Repositorios de productos de software
+
+| Producto de software | URL del repositorio                         | 
+| -------------------- | --------------------------------------------| 
+| Landing Page         | [https://github.com/S-A-T-E-C-H-O/Landing-Page-SATECHO](https://github.com/S-A-T-E-C-H-O/Landing-Page-SATECHO)                                            | 
+| Web Application      | [https://github.com/S-A-T-E-C-H-O/Web-Application-SATECHO](https://github.com/S-A-T-E-C-H-O/Web-Application-SATECHO)                                            |
+| Mobile Application   |                                             |
+| REST Services API    | [https://github.com/S-A-T-E-C-H-O/Web-API-Service-SATECHO](https://github.com/S-A-T-E-C-H-O/Web-API-Service-SATECHO)                                            |
+| Edge Services API    |                                             |
+| Embedded Application |                                             |
+
+**GitFlow Workflow**
+
+Se adopta el modelo GitFlow para gestionar el flujo de trabajo colaborativo, permitiendo un desarrollo paralelo organizado y lanzamientos controlados.
+
+- main: Rama productiva que contiene exclusivamente código estable y verificado.
+
+- develop: Rama de integración principal donde convergen las nuevas funcionalidades.
+
+- deployment: Rama dedicada a la orquestación de despliegues en entornos de staging y pre-producción.
+
+**Ramas de Apoyo:**
+
+- Feature Branches (feature/): Utilizadas para el desarrollo de nuevas funcionalidades. Se originan y finalizan en develop.
+  - Ejemplo: `feature/sensor-humidity-integration`
+
+- Release Branches (release/): Ramas de estabilización para preparar un nuevo lanzamiento oficial
+  - Ejemplo: `release/v1.0.0`
+
+- Hotfix Branches (hotfix/): Ramas de emergencia para corregir errores críticos en main. Se sincronizan con main y develop.
+  - Ejemplo: `hotfix/api-connection-timeout`
+
+**Semantic Versioning**
+
+Para el control de versiones del software, se aplica el estándar Semantic Versioning (SemVer) bajo el formato `vX.Y.Z`:
+
+- X (Major): Cambios estructurales o de ruptura (breaking changes).
+
+- Y (Minor): Incorporación de nuevas funcionalidades compatibles con versiones anteriores.
+
+- Z (Patch): Correcciones menores, parches de seguridad y optimizaciones.
+
+**Conventional Commits**
+
+En SATECHO, el historial de Git no es simplemente un registro de cambios, sino la narrativa técnica de la evolución de nuestro producto; por lo tanto, para garantizar que cada contribución sea legible, rastreable y automatizable, adoptamos el estándar de *Conventional Commits*. Este marco transforma cada "commit" en una unidad de información con significado semántico inmediato.
+
+```bash
+<type>[optional scope]: <description>
+```
+
+**I. Taxonomía de Cambios (Types)**
+
+Definimos las siguientes categorías para clasificar la intención de cada intervención en el ecosistema:
+
+- feat: Introducción de una nueva capacidad o funcionalidad (asociada a ramas feature/).
+
+- fix: Resolución de bugs, errores de lógica o fallos técnicos detectados.
+
+- docs: Modificaciones en la documentación técnica del producto (archivos README, guías de arquitectura o comentarios de código).
+
+- refactor: Mejoras en la estructura del código que no alteran el comportamiento externo (limpieza, legibilidad o deuda técnica).
+
+- chore: Tareas de mantenimiento, actualización de dependencias o configuraciones de entorno (ej. initial commit).
+
+- test: Creación, actualización o reparación de pruebas unitarias, de integración o de carga.
+
+**II. El Componente de Contexto (Scope)**
+
+El scope es fundamental para identificar qué módulo está siendo intervenido. Debe escribirse entre paréntesis y referenciar de forma precisa el componente afectado (ej. iot, api, ui-web, auth).
+
+**III. Semántica de la Descripción**
+
+La descripción es el núcleo del mensaje y debe cumplir rigurosamente con los siguientes estándares de calidad:
+
+- Idioma: Debe redactarse exclusivamente en inglés, como lengua estándar de la industria.
+
+- Modo Imperativo: El mensaje debe leerse como una orden al código (ej. "add", no "added" o "adds").
+
+- Formato: Escritura en minúsculas y finalización obligatoria con un punto final (.).
+
+- Concisión: Debe ser un resumen directo del impacto del cambio, evitando detalles extensos que pertenecen a la sección opcional del body.
+
+**IV. Anatomía de un Commit de Excelencia**
+
+Un mensaje que cumple con nuestro estándar de ingeniería se visualiza de la siguiente manera:
+
+```bash
+feat(iot): implement soil moisture sensor calibration logic
+```
+
+**Proceso de Code Review**
+
+Todo cambio propuesto debe someterse a un proceso de revisión riguroso mediante Pull Requests (PRs) antes de ser integrado en las ramas de jerarquía superior (develop o main).
+
+- **Requisito de Aprobación:** Al menos un revisor debe validar el código para asegurar el cumplimiento de los estándares de arquitectura, seguridad y mantenibilidad.
+
+- **Validación:** El proceso busca mitigar la introducción de bugs y garantizar que la nueva contribución se alinee con el diseño sistémico de SATECHO.
+
 ### 6.1.3. Source Code Style Guide & Conventions
 
 #### 6.1.4. Software Deployment Configuration
