@@ -189,9 +189,69 @@ Etiquetas minimalistas para pantallas de cristal líquido (LCD) de 16x2 caracter
 
 ### 5.2.3. SEO Tags and Meta Tags
 ### 5.2.4. Searching Systems.
-## 5.2.5. Navigation Systems.
+### 5.2.5. Navigation Systems.
 ## 5.3. Landing Page UI Design.
-### 5.3.1. Landing Page Wireframe.
+
+En esta sección, el equipo de diseño traduce las decisiones tomadas en torno a la experiencia de usuario (UX) y la arquitectura de la información en una propuesta de interfaz de usuario (UI) para la página de aterrizaje de **SATECHO**. El objetivo es comunicar de forma efectiva el valor de la agricultura de precisión tanto a agricultores como a agrónomos.
+
+#### Diseño y Arquitectura de Información
+La propuesta de la Landing Page para SATECHO sigue el enfoque de **"Profesionalismo Orgánico"**, priorizando una navegación intuitiva y una jerarquía visual clara que transmita confianza técnica y calidez humana.
+
+Se han integrado los siguientes pilares de diseño:
+*   **Jerarquía visual:** Uso de tipografía Manrope en pesos Bold para encabezados de gran tamaño, facilitando que los mensajes de valor y los CTAs (Call to Action) sean lo primero que el usuario identifique.
+*   **Diseño inclusivo y accesible:** El uso de colores suaves como el crema (`#FAF9F5`) para el fondo y verdes profundos (`#476649`) para la acción asegura un contraste adecuado (cumpliendo WCAG AA) y una lectura cómoda bajo diversas condiciones de iluminación.
+*   **Sistema de diseño coherente:** Todos los componentes, desde las tarjetas de características hasta los selectores de planes, utilizan un radio de curvatura de 12px y sombras sutiles, manteniendo la cohesión con el ecosistema de aplicaciones web y móviles de SATECHO.
+
+### 5.3.1. Landing Page Wireframe
+
+La estructura del wireframe para la versión de escritorio se divide en las siguientes secciones estratégicas, diseñadas para guiar al usuario desde el interés inicial hasta la conversión:
+
+#### 1. Header (Encabezado)
+Incluye el logotipo de SATECHO a la izquierda, un menú de navegación centrado con los enlaces principales (Inicio, Funcionalidades, Planes, Demo, Contacto) y los botones de acción para "Iniciar Sesión" y un CTA destacado para "Registrarse".
+
+<img src="./assets/images/wireframes/landing_wireframe_header.png" alt="Image color" width="500"/><br>
+
+#### 2. Sección Hero
+Presenta la propuesta de valor principal: "Monitoreo inteligente de suelo e irrigación". Contiene un título de alto impacto, una descripción breve de los beneficios (ahorro de agua y optimización) y dos botones principales: "Empieza tu prueba gratuita" y "Ver demo". A la derecha, un marcador de posición para la imagen principal del producto.
+
+<img src="./assets/images/wireframes/landing_wireframe_hero.png" alt="Image color" width="500"/><br>
+
+#### 3. Sección de Estadísticas
+Un cinturón de datos clave que muestra métricas de éxito del sistema, como "10k+ Usuarios Activos" y "30% Ahorro de Agua", validando la eficacia de la plataforma de forma inmediata.
+
+<img src="./assets/images/wireframes/landing_wireframe_statistics.png" alt="Image color" width="500"/><br>
+
+#### 4. Sección de Características (Features)
+Utiliza iconos y descripciones breves para destacar las funcionalidades técnicas del ecosistema SATECHO: Monitoreo en tiempo real (sensores ESP32), automatización de riego y seguridad perimetral.
+
+<img src="./assets/images/wireframes/landing_wireframe_process.png" alt="Image color" width="500"/><br>
+
+#### 5. Sección para Agrónomos
+Un bloque diferenciado con fondo negro marca que comunica las herramientas específicas para agricultores: monitoreo multi-parcela, reportes marca blanca y análisis de datos históricos.
+
+<img src="./assets/images/wireframes/landing_wireframe_farmers.png" alt="Image color" width="500"/><br>
+
+#### 6. Sección de Proceso
+Un flujo visual de 3 pasos que explica lo sencillo que es comenzar: (1) Instalación de sensores, (2) Conexión a la nube y (3) Control total desde el dispositivo y solicitud de la demo.
+
+<img src="./assets/images/wireframes/landing_wireframe_demo.png" alt="Image color" width="500"/><br>
+
+#### 7. Planes y Precios
+Presentación comparativa de las suscripciones (Básico, Pro y Enterprise), destacando el plan "Pro" como el más popular para operaciones medianas.
+
+<img src="./assets/images/wireframes/landing_wireframe_plans.png" alt="Image color" width="500"/><br>
+
+#### 8. Forms (Pie de página)
+Formulario con diferentes secciones para poner tu nombre completo, email, telefono, tamaño de operación (hectáreas) y el rol.
+
+<img src="./assets/images/wireframes/landing_wireframe_footer.png" alt="Image color" width="500"/><br>
+
+#### 8. Footer (Pie de página)
+Información de contacto corporativa, enlaces legales (Privacidad, Términos) y accesos directos a redes sociales o soporte técnico vía WhatsApp.
+
+<img src="./assets/images/wireframes/landing_wireframe_footer.png" alt="Image color" width="500"/><br>
+
+
 ### 5.3.2. Landing Page Mock-up.
 ## 5.4. Applications UX/UI Design.
 ### 5.4.1. Applications Wireframes.
