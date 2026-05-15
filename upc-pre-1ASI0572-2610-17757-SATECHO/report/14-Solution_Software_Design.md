@@ -7,7 +7,7 @@ El diseño estratégico de la plataforma AgroSafe se abordó mediante un proceso
 ### 4.1.1. Design-Level EventStorming
 El proceso de Event Storming se realizó utilizando la herramienta MIRO como lienzo colaborativo infinito, siguiendo la metodología estandarizada de Domain-Driven Design para descubrir, validar y estructurar el comportamiento del dominio de AgroSafe. Este enfoque permitió al equipo trascender la visión técnica inicial y centrarse en el lenguaje ubicuo, la causalidad entre eventos y las fronteras naturales del negocio. El flujo de trabajo se estructuró en **10 pasos secuenciales**, cada uno con un objetivo específico y un artefacto de salida:
 
-![EventStorming-step1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/es-events.png)
+![EventStorming-step1](./assets/images/dl-eventstorming/es-events.png)
 
 _Evidencia del desarrollo del primer paso del DDD._
 
@@ -58,7 +58,7 @@ Inmediatamente después, el sistema presenta el `Starter guide complete` (Wizard
 9. `Starter guide complete` → Configuración operativa finalizada
 10. `Access the dashboard` → Usuario listo para generar valor
 
-![EventStorming-step2.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-1.png)
+![EventStorming-step2.1](./assets/images/dl-eventstorming/timelines/es-timelines-1.png)
 
 ---
 
@@ -88,7 +88,7 @@ Ambas ramas convergen en el evento `Account reactivated after payment was proces
 6. `Account reactivated after payment was processed` → Transición a estado activo.
 7. `Access restored and devices synchronized` → Restauración total del servicio y sincronización de dispositivos IoT.
 
-![EventStorming-step2.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-2.png)
+![EventStorming-step2.2](./assets/images/dl-eventstorming/timelines/es-timelines-2.png)
 
 ---
 
@@ -114,7 +114,7 @@ De esta manera, el incidente de pérdida se transforma en una oportunidad para d
 3. `Device credentials invalidated, telemetry stopped` → Revocación de acceso y cese definitivo de ingesta de datos.
 4. `Batch of IoT devices registered as available` → Reposición planificada de sensores listos para asignar.
 
-![EventStorming-step2.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-3.png)
+![EventStorming-step2.3](./assets/images/dl-eventstorming/timelines/es-timelines-3.png)
 
 ---
 
@@ -139,7 +139,7 @@ Tras el descarte, el sistema puede opcionalmente reforzar la confianza con un me
 2. `Alert confirmed as received` → Acuse de recibo que detiene contramedidas automáticas.
 3. `Security alert dismissed` → Cierre explícito del incidente por parte del usuario, restaurando la normalidad.
 
-![EventStorming-step2.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-4.png)
+![EventStorming-step2.4](./assets/images/dl-eventstorming/timelines/es-timelines-4.png)
 
 ---
 
@@ -165,7 +165,7 @@ Finalmente, cuando la configuración ha sido aplicada y verificada, el dispositi
 4. `Configuration Changed` → Ajuste de parámetros operativos por parte del usuario autorizado.
 5. `Ready for Operation` → Estado final que habilita el uso de la telemetría como fuente confiable.
 
-![EventStorming-step2.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-5.png)
+![EventStorming-step2.5](./assets/images/dl-eventstorming/timelines/es-timelines-5.png)
 
 ---
 
@@ -194,7 +194,7 @@ Este ciclo continuo de `Heartbeat → Telemetry → (opcional) Command Queued �
 4. `Command Executed` → Confirmación de que el hardware realizó la acción solicitada.
 5. `Sync Completed` → Cierre del ciclo con la reconciliación total del estado entre el dispositivo físico y su gemelo digital en la plataforma.
 
-![EventStorming-step2.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-6.png)
+![EventStorming-step2.6](./assets/images/dl-eventstorming/timelines/es-timelines-6.png)
 
 ---
 
@@ -224,8 +224,8 @@ En ambos casos, el cierre completo del timeline ocurre cuando la salud se normal
 3. `Firmware Update Completed` → Confirmación de que el dispositivo ya opera con la nueva versión de firmware.
 4. `Configuration Changed` → Ajuste de parámetros post-actualización para mantener la compatibilidad operativa.
 
-![EventStorming-step2.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-7.png)
-![EventStorming-step2.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-8.png)
+![EventStorming-step2.7](./assets/images/dl-eventstorming/timelines/es-timelines-7.png)
+![EventStorming-step2.8](./assets/images/dl-eventstorming/timelines/es-timelines-8.png)
 
 ---
 
@@ -245,7 +245,7 @@ Finalmente, se produce el cierre administrativo con `Device Decommissioned`. Est
 2. `Device Deactivated` → Transición a estado inactivo con datos históricos preservados.
 3. `Device Decommissioned` → Baja administrativa completa y liberación del activo digital.
 
-![EventStorming-step2.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-9.png)
+![EventStorming-step2.9](./assets/images/dl-eventstorming/timelines/es-timelines-9.png)
 
 ---
 
@@ -273,7 +273,7 @@ Acto seguido, se retoma el flujo normal con `Telemetry Received` (los datos fres
 6. `Device Sync Completed` → Volcado y reconciliación de todos los datos acumulados durante la desconexión.
 7. `Telemetry Received` → Reanudación del flujo normal de datos en tiempo real.
 
-![EventStorming-step2.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-10.png)
+![EventStorming-step2.10](./assets/images/dl-eventstorming/timelines/es-timelines-10.png)
 
 ---
 
@@ -302,7 +302,7 @@ Para confirmar la normalización, el flujo concluye con `Telemetry Received`, in
 7. `Sync Completed` → Confirmación de ejecución exitosa y reconciliación de estado.
 8. `Telemetry Received` → Reactivación del flujo normal de datos y restauración de la salud operativa.
 
-![EventStorming-step2.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-11.png)
+![EventStorming-step2.11](./assets/images/dl-eventstorming/timelines/es-timelines-11.png)
 
 ---
 
@@ -329,7 +329,7 @@ El sistema evalúa entonces los indicadores de salud del dispositivo: voltaje es
 5. `Battery Replaced` → Confirmación del cambio físico del componente.
 6. `Device Health Restored` → Validación final y retorno a estado operativo normal.
 
-![EventStorming-step2.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-12.png)
+![EventStorming-step2.12](./assets/images/dl-eventstorming/timelines/es-timelines-12.png)
 
 ---
 
@@ -350,7 +350,7 @@ Como consecuencia final en la capa de inventario, se emite `Device Deactivated`.
 3. `Telemetry Rejected` → Corte definitivo del canal de ingesta de datos.
 4. `Device Deactivated` → Transición de los dispositivos a estado inactivo con datos preservados.
 
-![EventStorming-step2.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-13.png)
+![EventStorming-step2.13](./assets/images/dl-eventstorming/timelines/es-timelines-13.png)
 
 ---
 
@@ -374,7 +374,7 @@ Para cerrar el ciclo y minimizar la ventana sin datos en campo, el sistema o el 
 4. `Device Decommissioned` → Baja administrativa definitiva y liberación del activo.
 5. `Replacement Device Registered` → Registro de un nuevo dispositivo que restaura la cobertura en campo.
 
-![EventStorming-step2.14](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-14.png)
+![EventStorming-step2.14](./assets/images/dl-eventstorming/timelines/es-timelines-14.png)
 
 ---
 
@@ -404,7 +404,7 @@ Finalmente, para cerrar el flujo de supervisión profesional, el evento `Agronom
 8. `Farmer notified of the change made by their agronomist` → Transparencia ante modificaciones del asesor.
 9. `Agronomist accesses the consolidated dashboard of his client plots` → Vista unificada de la cartera de clientes.
 
-![EventStorming-step2.15](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-15.png)
+![EventStorming-step2.15](./assets/images/dl-eventstorming/timelines/es-timelines-15.png)
 
 ---
 
@@ -430,7 +430,7 @@ Este flujo permite al agrónomo gobernar buenas prácticas agronómicas a escala
 4. `System processes each parcel` → Iteración atómica que actualiza cada parcela individualmente.
 5. `Farmer notified of the change made by their agronomist` → Notificación transparente a cada agricultor afectado.
 
-![EventStorming-step2.16](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-16.png)
+![EventStorming-step2.16](./assets/images/dl-eventstorming/timelines/es-timelines-16.png)
 
 ---
 
@@ -482,7 +482,7 @@ Para cerrar el ciclo con integridad, el evento `Synchronized data` reconcilia to
 12. `Irrigation completed` → Cierre del evento de riego correctivo.
 13. `Synchronized data` → Reconciliación total entre el gemelo digital y la realidad del campo.
 
-![EventStorming-step2.17](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-17.png)
+![EventStorming-step2.17](./assets/images/dl-eventstorming/timelines/es-timelines-17.png)
 
 ---
 
@@ -509,7 +509,7 @@ Paralelamente, el sistema ofrece una funcionalidad periódica. Un agricultor, o 
 7. `System compiles data` → Recolección y procesamiento de todas las fuentes de datos del período.
 8. `Monthly technical report generated for a client` → Emisión del informe estructurado, listo para consulta y descarga.
 
-![EventStorming-step2.18](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-18.png)
+![EventStorming-step2.18](./assets/images/dl-eventstorming/timelines/es-timelines-18.png)
 
 ---
 
@@ -529,7 +529,7 @@ El flujo se cierra con la perspectiva del agrónomo. Cuando este inicia sesión 
 2. `Agronomist linked to farmer as assigned advisor` → Establecimiento automático del vínculo de asesoría.
 3. `Agronomist accesses the consolidated dashboard of his client plots` → Toma de control del agrónomo sobre su cartera ampliada.
 
-![EventStorming-step2.19](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-19.png)
+![EventStorming-step2.19](./assets/images/dl-eventstorming/timelines/es-timelines-19.png)
 
 ---
 
@@ -553,7 +553,7 @@ Finalmente, para cerrar el ciclo hidráulico, se emite nuevamente `Solenoid valv
 4. `Event occurred` → Confirmación del ciclo de fertirrigación ejecutado.
 5. `Solenoid valve closed` → Cierre definitivo y retorno al estado de reposo.
 
-![EventStorming-step2.20](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-20.png)
+![EventStorming-step2.20](./assets/images/dl-eventstorming/timelines/es-timelines-20.png)
 
 ---
 
@@ -581,7 +581,7 @@ Este diseño permite a AgroSafe equilibrar la sensibilidad de la detección peri
 6. `Low priority event logged in history without urgent notification` → Registro histórico no intrusivo tras evaluación contextual.
 7. `Human intrusion alert triggered` → Registro formal imborrable de la intrusión humana en la bitácora de seguridad.
 
-![EventStorming-step2.21](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-21.png)
+![EventStorming-step2.21](./assets/images/dl-eventstorming/timelines/es-timelines-21.png)
 
 ---
 
@@ -622,7 +622,7 @@ Finalmente, con todo el contexto reunido, el equipo de producto lleva a cabo el 
 7. `Abandonment funnel identified in a specific feature` → Detección de un embudo de abandono en una funcionalidad concreta.
 8. `Roadmap decision made based on actual usage data` → Toma de decisión de evolución del producto fundamentada en datos reales.
 
-![EventStorming-step2.22](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/dl-eventstorming/timelines/es-timelines-22.png)
+![EventStorming-step2.22](./assets/images/dl-eventstorming/timelines/es-timelines-22.png)
 
 ---
 
@@ -662,7 +662,7 @@ La consecuencia directa es que el visitante debe reingresar toda su información
 - Mala percepción de calidad del producto desde el primer contacto.
 - Dispositivos IoT no vinculados, parcelas no creadas, retraso en la activación de suscripciones de pago.
 
-![EventStorming-step3.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-1.png)
+![EventStorming-step3.1](./assets/images/candidate-context-discovery/pain-points/es-pain-points-1.png)
 
 ---
 
@@ -699,7 +699,7 @@ La consecuencia es que se ejecuta `Customer account suspended`, lo que desencade
 - Desgaste del equipo de soporte corrigiendo decisiones apresuradas.
 - Registro de auditoría manchado con eventos de suspensión injustificada.
 
-![EventStorming-step3.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-2.png)
+![EventStorming-step3.2](./assets/images/candidate-context-discovery/pain-points/es-pain-points-2.png)
 
 ---
 
@@ -734,7 +734,7 @@ Solo cuando el staff completa la acción, se alcanza el evento `Device credentia
 - Daño reputacional si un incidente de seguridad se hace público.
 - Responsabilidad legal si un ataque afecta la producción agrícola de un cliente.
 
-![EventStorming-step3.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-3.png)
+![EventStorming-step3.3](./assets/images/candidate-context-discovery/pain-points/es-pain-points-3.png)
 
 ---
 
@@ -767,7 +767,7 @@ Las consecuencias son directas: el atacante podría hacerse pasar por el disposi
 - Necesidad de revocación masiva de credenciales si se descubre un patrón de ataque, impactando a múltiples agricultores.
 - Responsabilidad legal y reputacional por no garantizar un entorno de activación de dispositivos seguro por diseño.
 
-![EventStorming-step3.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-4.png)
+![EventStorming-step3.4](./assets/images/candidate-context-discovery/pain-points/es-pain-points-4.png)
 
 ----
 
@@ -799,7 +799,7 @@ El evento `Device Sync Completed` debería cerrar el ciclo de forma limpia, pero
 - Aumento de carga en la plataforma por sincronizaciones frecuentes y redundantes.
 - Desconfianza del agricultor y del agrónomo al ver indicadores de conectividad erráticos en el dashboard.
 
-![EventStorming-step3.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-5.png)
+![EventStorming-step3.5](./assets/images/candidate-context-discovery/pain-points/es-pain-points-5.png)
 
 ---
 
@@ -833,7 +833,7 @@ A partir de ahí, la plataforma reacciona con un reintento ciego: `Command Queue
 - Degradación frecuente de la salud del dispositivo, que puede enmascarar problemas reales de hardware.
 - Experiencia del usuario (agricultor/agrónomo) inconsistente: ven que sus órdenes no se ejecutan a tiempo o reciben notificaciones de fallo sin explicación clara del conflicto.
 
-![EventStorming-step3.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-6.png)
+![EventStorming-step3.6](./assets/images/candidate-context-discovery/pain-points/es-pain-points-6.png)
 
 ---
 
@@ -870,7 +870,7 @@ El cierre con `Device Health Restored` sella la intervención como exitosa a niv
 - Dificultad para auditar procedimientos de mantenimiento en certificaciones de calidad o cumplimiento normativo.
 - Riesgo de repetir errores de instalación si no se registra quién y cómo realizó el reemplazo.
 
-![EventStorming-step3.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-7.png)
+![EventStorming-step3.7](./assets/images/candidate-context-discovery/pain-points/es-pain-points-7.png)
 
 ---
 
@@ -909,7 +909,7 @@ El staff, que recibe múltiples notificaciones (`Staff Notified`) del mismo disp
 - Inconsistencia de versiones de firmware en la flota, dificultando el soporte y la evolución de funcionalidades.
 - Riesgo de que un agricultor pierda confianza al ver su dispositivo constantemente "en mantenimiento" en lugar de operativo.
 
-![EventStorming-step3.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-8.png)
+![EventStorming-step3.8](./assets/images/candidate-context-discovery/pain-points/es-pain-points-8.png)
 
 ---
 
@@ -945,7 +945,7 @@ El riesgo de fondo es doble: un agricultor puede operar durante días o semanas 
 - Riesgo de churn en el segmento de agricultores que valoran el control directo sobre sus configuraciones.
 - Dificultad para auditar responsabilidades si una decisión agronómica cuestionada fue impuesta sin consentimiento explícito.
 
-![EventStorming-step3.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-9.png)
+![EventStorming-step3.9](./assets/images/candidate-context-discovery/pain-points/es-pain-points-9.png)
 
 ---
 
@@ -979,7 +979,7 @@ Este problema se agrava si la recomendación incluye acciones que implican costo
 - Incremento de la carga de soporte: agricultores que contactan para preguntar "¿por qué mi agrónomo me pide que haga esto?", cuando la respuesta debería estar ya en la notificación.
 - Desalineación entre el valor real del monitoreo IoT y la percepción del agricultor, que no ve el vínculo entre los datos que recolectan sus sensores y las recomendaciones que recibe.
 
-![EventStorming-step3.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-10.png)
+![EventStorming-step3.10](./assets/images/candidate-context-discovery/pain-points/es-pain-points-10.png)
 
 ---
 
@@ -1030,7 +1030,7 @@ La suma de estos escenarios se traduce en el título del pain point: *Waste and 
 - Conflictos entre agrónomo y agricultor si la plataforma no distingue quién originó el comando fallido o conflictivo.
 - Incremento de tickets de soporte preguntando "¿se regó o no se regó?" o "¿por qué mi válvula se cerró sola?".
 
-![EventStorming-step3.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-11.png)
+![EventStorming-step3.11](./assets/images/candidate-context-discovery/pain-points/es-pain-points-11.png)
 
 ---
 
@@ -1073,7 +1073,7 @@ La fatiga de alertas es un problema bien documentado en sistemas de seguridad: e
 - Desperdicio de recursos de backend y de ancho de banda por procesamiento de eventos mal clasificados.
 - Responsabilidad legal si un incidente de seguridad real (robo, intrusión) no fue notificado adecuadamente y el cliente sufre pérdidas económicas.
 
-![EventStorming-step3.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-12.png)
+![EventStorming-step3.12](./assets/images/candidate-context-discovery/pain-points/es-pain-points-12.png)
 <<<<<<< HEAD
 
 ---
@@ -1118,7 +1118,7 @@ Mientras tanto, el equipo observa eventos como `Abandonment funnel identified in
 - Posible conflicto entre las áreas de Producto y Negocio si las decisiones de roadmap no se alinean con las métricas de retención y revenue.
 - Desperdicio de esfuerzo de desarrollo en iniciativas que no impactan la métrica más crítica del negocio: la retención de clientes.
 
-![EventStorming-step3.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-13.png)
+![EventStorming-step3.13](./assets/images/candidate-context-discovery/pain-points/es-pain-points-13.png)
 
 ---
 
@@ -1165,7 +1165,7 @@ Estas dos decisiones convierten el onboarding en un proceso tolerante a fallos d
 - Mejora de la percepción de robustez y profesionalidad de la plataforma.
 - Disminución de tickets de soporte del tipo “perdí todos mis datos al registrarme” o “tengo que volver a empezar la configuración”.
 
-![EventStorming-step4.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-1.png)
+![EventStorming-step4.1](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-1.png)
 
 ---
 
@@ -1211,7 +1211,7 @@ La cascada posterior (`Client access disabled, data retained` → `Notify the cu
 - Auditoría más robusta que registra la revisión consciente del operador antes de una acción crítica.
 - Protección de la reputación de AgroSafe como plataforma confiable y justa en la gestión de cuentas.
 
-![EventStorming-step4.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-2.png)
+![EventStorming-step4.2](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-2.png)
 
 ---
 
@@ -1250,7 +1250,7 @@ Adicionalmente, se implementa una notificación proactiva al agricultor y al agr
 - Mejora de la postura de seguridad de AgroSafe frente a auditorías y certificaciones.
 - Mayor confianza del agricultor al saber que reportar una pérdida bloquea instantáneamente el dispositivo, protegiendo la integridad de sus datos agronómicos.
 
-![EventStorming-step4.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-3.png)
+![EventStorming-step4.3](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-3.png)
 
 ---
 
@@ -1298,7 +1298,7 @@ Esta separación garantiza que la ventana de vulnerabilidad con credenciales de 
 - Mejora de la postura de seguridad general del ecosistema de dispositivos IoT de AgroSafe.
 - Facilita auditorías de seguridad al demostrar que las credenciales operativas solo existen en dispositivos que han superado la fase de configuración validada.
 
-![EventStorming-step4.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-4.png)
+![EventStorming-step4.4](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-4.png)
 
 ---
 
@@ -1350,7 +1350,7 @@ Si el sistema detecta que los eventos `Device Offline Detected` y `Device Online
 - Mayor confianza del agricultor y del agrónomo en la fiabilidad de la telemetría incluso en zonas de cobertura difícil.
 - Disminución de la carga de procesamiento en el backend al evitar sincronizaciones redundantes y parciales.
 
-![EventStorming-step4.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-5.png)
+![EventStorming-step4.5](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-5.png)
 
 ---
 
@@ -1416,7 +1416,7 @@ Con estas tres mejoras, el ciclo degenerativo de fallos se corta de raíz: el st
 - Mayor confianza en las actualizaciones OTA, facilitando la adopción de mejoras de seguridad y funcionalidad.
 - Históricos de telemetría más completos, ya que los dispositivos no pasan largos períodos reiniciándose o en mantenimiento.
 
-![EventStorming-step4.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-6.png)
+![EventStorming-step4.6](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-6.png)
 
 ---
 
@@ -1467,7 +1467,7 @@ Este diseño asegura que la parcela no quede nunca desatendida más tiempo del e
 - Experiencia de usuario mejorada: el agricultor percibe un servicio proactivo que repone sus dispositivos sin que él tenga que reclamar.
 - Optimización del inventario de dispositivos precertificados al consumirlos según políticas de prioridad.
 
-![EventStorming-step4.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-7.png)
+![EventStorming-step4.7](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-7.png)
 
 ---
 
@@ -1534,7 +1534,7 @@ Con este diseño, el flujo completo se mantiene eficiente para el agrónomo (sig
 - Trazabilidad completa de todo el ciclo de propuesta, aceptación/rechazo y posibles reversiones, facilitando la auditoría de decisiones agronómicas.
 - Disminución de tickets de soporte del tipo "¿por qué cambiaron mis umbrales?" o "no quiero que mi agrónomo toque mis configuraciones".
 
-![EventStorming-step4.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-8.png)
+![EventStorming-step4.8](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-8.png)
 
 
 ---
@@ -1595,7 +1595,7 @@ Estos informes enriquecidos no solo satisfacen la necesidad de trazabilidad y au
 - Los informes mensuales se convierten en un entregable de alto valor percibido, incrementando la retención de clientes en planes con asesoría y fomentando la renovación de suscripciones.
 - El agrónomo dispone de una herramienta de comunicación más persuasiva, que facilita la justificación de sus honorarios y la captación de nuevos clientes.
 
-![EventStorming-step4.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-9.png)
+![EventStorming-step4.9](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-9.png)
 
 ---
 
@@ -1647,7 +1647,7 @@ Con este diseño, la asesoría experta se convierte en parte integral del onboar
 - Los agrónomos construyen su cartera de clientes de forma orgánica y automática, sin depender de invitaciones manuales.
 - Mejora de la percepción de valor de los planes con asesoría incluida, justificando su precio y fomentando upgrades desde planes Básicos.
 
-![EventStorming-step4.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-10.png)
+![EventStorming-step4.10](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-10.png)
 
 ---
 
@@ -1715,7 +1715,7 @@ Con estos tres pilares, el sistema garantiza que el agua se aplica de forma prec
 - Disminución de tickets de soporte relacionados con "¿se regó o no se regó?".
 - Uso eficiente del agua gracias a la validación temporal que evita riegos fuera de ventana óptima o ya innecesarios.
 
-![EventStorming-step4.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-11.png)
+![EventStorming-step4.11](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-11.png)
 
 ---
 
@@ -1770,7 +1770,7 @@ Con estos tres componentes, el sistema pasa de ser frágil y dependiente de una 
 - Reducción de tickets de soporte por "falsas alarmas constantes" o "el sensor no detecta nada".
 - El sistema mejora con el tiempo y el uso, en lugar de degradarse por cambios estacionales o ambientales no contemplados en la calibración inicial.
 
-![EventStorming-step4.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-12.png)
+![EventStorming-step4.12](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-12.png)
 
 ---
 
@@ -1828,7 +1828,7 @@ El motor no se consulta solo en la revisión trimestral. De forma continua, moni
 - Optimización del esfuerzo de desarrollo: se priorizan features que no solo tienen alta adopción, sino que están vinculadas a la retención.
 - Ciclos de análisis más rápidos: de revisiones trimestrales a monitorización continua con alertas.
 
-![EventStorming-step4.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-13.png)
+![EventStorming-step4.13](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-13.png)
 
 ---
 
@@ -1870,7 +1870,7 @@ Similar al Agricultor en el flujo de verificación y wizard, pero con un perfil 
 **4. Sistema:**  
 Actúa como actor automatizado en un único pero crítico comando: `Enviar verificación de email`. Se dispara como reacción al registro exitoso, sin que el usuario lo solicite explícitamente. Es el guardián de la seguridad y la validez de las cuentas en AgroSafe.
 
-![EventStorming-step5.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-1.png)
+![EventStorming-step5.1](./assets/images/candidate-context-discovery/commands/es-commands-1.png)
 
 ---
 
@@ -1900,7 +1900,7 @@ Aunque no aparece explícitamente como actor que emite comandos en este flujo, e
 **3. Sistema:**  
 Actúa como actor automático en dos momentos críticos. Primero, tras la suspensión, ejecuta `Notificar al cliente` y `Registrar en log` sin intervención del staff, asegurando comunicación proactiva y trazabilidad. Segundo, cuando el pago se procesa automáticamente (por pasarela de pago), puede ejecutar `Reactivar cuenta` sin intervención manual. También gestiona toda la cascada técnica de bloqueo y restauración de acceso y dispositivos.
 
-![EventStorming-step5.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-2.png)
+![EventStorming-step5.2](./assets/images/candidate-context-discovery/commands/es-commands-2.png)
 
 ---
 
@@ -1931,7 +1931,7 @@ Es el actor que notifica la pérdida desde su dashboard o aplicación móvil, pr
 Es el actor más crítico en este flujo. Actúa de forma automática con dos comandos. Primero, `Revocar credenciales y detener telemetría` se ejecuta en segundos como reacción al reporte de pérdida, eliminando la ventana de vulnerabilidad. Segundo, `Registrar lote de dispositivos disponibles` se ejecuta según las políticas de reaprovisionamiento para restaurar la capacidad de monitoreo de la parcela afectada lo antes posible, sin depender de una acción manual del staff.
 
 
-![EventStorming-step5.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-3.png)
+![EventStorming-step5.3](./assets/images/candidate-context-discovery/commands/es-commands-3.png)
 
 ---
 
@@ -1957,7 +1957,7 @@ Actúa como el actor iniciador del flujo. Ante la detección de una anomalía de
 **2. Agricultor / Agrónomo:**  
 Es el actor central tras recibir la alerta. Ejecuta dos comandos: `Confirmar recepción de alerta`, que detiene cualquier contramedida automática y confirma que está al tanto; y `Descartar alerta de seguridad` cuando verifica que el incidente es un falso positivo o ya está bajo control, cerrando el ciclo de seguridad y restaurando la normalidad operativa. Si el usuario no confirma en el plazo estipulado, el sistema escala automáticamente con medidas de protección más agresivas.
 
-![EventStorming-step5.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-4.png)
+![EventStorming-step5.4](./assets/images/candidate-context-discovery/commands/es-commands-4.png)
 
 ---
 
@@ -1993,7 +1993,7 @@ Es el actor que ejecuta los comandos más frecuentes del flujo operativo: `Activ
 **3. Sistema:**  
 Actúa como actor automático en varios momentos clave. Con el comando `Generar credenciales`, dota al dispositivo de identidad segura sin intervención del usuario. Con `Confirmar listo para operar`, da el visto bueno final tras la configuración para que los datos del sensor se consideren fiables y puedan alimentar dashboards, alertas y modelos de recomendación agronómica. También puede ejecutar `Encolar comando` cuando una regla automática (diagnóstico de estrés hídrico, programación de riego) decide actuar sin intervención humana.
 
-![EventStorming-step5.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-5.png)
+![EventStorming-step5.5](./assets/images/candidate-context-discovery/commands/es-commands-5.png)
 
 ---
 
@@ -2026,7 +2026,7 @@ Actúa como el orquestador de la resiliencia. Ejecuta `Enviar comando al borde` 
 **3. Dispositivo:**  
 Es el actor que ejecuta o falla los comandos en el borde. Si la ejecución no es posible, emite `Command Failed`, forzando al sistema a activar la recuperación. En el reintento, si las condiciones son favorables, ejecuta el comando con éxito y lo confirma con la sincronización. Finalmente, retoma su operación normal con `Telemetry Received`, cerrando el ciclo de forma transparente para el usuario.
 
-![EventStorming-step5.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-6.png)
+![EventStorming-step5.6](./assets/images/candidate-context-discovery/commands/es-commands-6.png)
 
 ---
 
@@ -2062,7 +2062,7 @@ Es el actor central en el proceso de instalación. Ejecuta `Completar actualizac
 **3. Agricultor:**  
 Puede intervenir puntualmente ejecutando `Cambiar configuración` si el nuevo firmware modifica parámetros operativos que requieren ajustes manuales para alinearse con la estrategia agronómica de la parcela. En condiciones normales, no participa en la decisión de actualizar ni en la gestión de fallos.
 
-![EventStorming-step5.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-7.png)
+![EventStorming-step5.7](./assets/images/candidate-context-discovery/commands/es-commands-7.png)
 
 ---
 
@@ -2097,7 +2097,7 @@ Es el actor que desencadena el flujo de pérdida ejecutando `Reportar dispositiv
 **3. Sistema:**  
 Actúa como el ejecutor automático de las medidas de seguridad en ambos flujos. Ante una suspensión, ejecuta `Revocar credenciales`, `Rechazar telemetría` y `Desactivar dispositivo` para todos los dispositivos de la cuenta, garantizando atomicidad. Ante un reporte de pérdida, ejecuta `Revocar credenciales` y `Desactivar dispositivo` de forma inmediata, eliminando la ventana de vulnerabilidad sin esperar al staff. También puede ejecutar `Registrar dispositivo de reemplazo` si las políticas de reaprovisionamiento automático lo permiten.
 
-![EventStorming-step5.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-8.png)
+![EventStorming-step5.8](./assets/images/candidate-context-discovery/commands/es-commands-8.png)
 
 ---
 
@@ -2134,7 +2134,7 @@ Es el asesor experto que multiplica su conocimiento. Ejecuta `Crear plantilla de
 **3. Sistema:**  
 Actúa como el habilitador automático del flujo. Con `Cargar umbrales desde catálogo`, proporciona al agricultor valores seguros de partida. Con `Registrar cambio en auditoría`, deja trazabilidad inmutable de cada modificación. Con `Procesar cada parcela`, aplica las plantillas del agrónomo de forma atómica y masiva. Y con `Notificar cambio al agricultor`, cierra el bucle de comunicación garantizando transparencia. En el flujo mejorado, interpone una solicitud de confirmación previa a la aplicación masiva, empoderando al agricultor sin frenar la eficiencia del agrónomo.
 
-![EventStorming-step5.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-9.png)
+![EventStorming-step5.9](./assets/images/candidate-context-discovery/commands/es-commands-9.png)
 
 ---
 
@@ -2172,7 +2172,7 @@ Es el cerebro automatizado del flujo. Ejecuta `Evaluar umbrales` continuamente, 
 **3. Agricultor / Agrónomo:**  
 No ejecutan comandos directos en este flujo operativo, ya que la detección y el riego correctivo son completamente automáticos. Sin embargo, son responsables previos de la configuración de los umbrales que el sistema evalúa. Si el flujo mejorado incluye confirmación humana para diagnósticos críticos, podrían intervenir puntualmente aprobando o rechazando el comando de riego antes de su ejecución.
 
-![EventStorming-step5.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-10.png)
+![EventStorming-step5.10](./assets/images/candidate-context-discovery/commands/es-commands-10.png)
 
 ---
 
@@ -2206,7 +2206,7 @@ Ejecuta el comando `Vincular agrónomo como asesor`, abriendo la puerta a la col
 **3. Sistema:**  
 Actúa como el habilitador automático de la supervisión. Resalta visualmente las parcelas en condición crítica en el dashboard del agrónomo, facilitando la priorización. Captura el contexto de telemetría al redactar una recomendación y lo adjunta automáticamente para que el agricultor vea los datos que respaldan el consejo. Con `Compilar datos` y `Generar informe técnico`, automatiza la producción de informes mensuales enriquecidos con visualizaciones y resúmenes, liberando al agrónomo de trabajo manual y proporcionando un entregable de alto valor.
 
-![EventStorming-step5.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-11.png)
+![EventStorming-step5.11](./assets/images/candidate-context-discovery/commands/es-commands-11.png)
 
 ----
 
@@ -2240,7 +2240,7 @@ Son los emisores de la intención de riego. Ejecutan `Enviar comando de riego` d
 Ejecuta el comando en campo cuando lo recibe validado. Además, puede influir indirectamente en el descarte de comandos: si el Edge, por su mecanismo de seguridad, cerró la válvula automáticamente al perder conexión con el backend, el sistema puede marcar comandos de riego posteriores como "condición ya resuelta" y descartarlos, protegiendo el cultivo.
 
 
-![EventStorming-step5.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-12.png)
+![EventStorming-step5.12](./assets/images/candidate-context-discovery/commands/es-commands-12.png)
 
 ---
 
@@ -2270,7 +2270,7 @@ Es el actor principal que orquesta el proceso. Ejecuta `Enviar comando de riego 
 Es el ejecutor físico en campo. Con `Abrir válvula solenoide`, permite el flujo de agua. Con `Cerrar válvula solenoide`, lo corta tras recibir la orden del sistema. Es el nexo entre la decisión tomada en la plataforma y la acción que llega al cultivo.
 
 
-![EventStorming-step5.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-13.png)
+![EventStorming-step5.13](./assets/images/candidate-context-discovery/commands/es-commands-13.png)
 
 ---
 
@@ -2307,7 +2307,7 @@ Es el evaluador contextual. Recibe los eventos con alta confianza y decide si ej
 **4. Staff (instalador / operador):**  
 Interviene fundamentalmente en la puesta a punto inicial ejecutando `Configurar sensibilidad del PIR`, o posteriormente reajustando si las condiciones de la parcela cambian. Con la evolución hacia umbrales dinámicos, su intervención se vuelve menos frecuente, pero sigue siendo responsable de la configuración base del sensor.
 
-![EventStorming-step5.14](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-14.png)
+![EventStorming-step5.14](./assets/images/candidate-context-discovery/commands/es-commands-14.png)
 
 ---
 
@@ -2341,7 +2341,7 @@ Es el responsable de la ejecución y el análisis detallado. Ejecuta `Consultar 
 **3. Sistema:**  
 Actúa como el habilitador analítico. Con `Calcular KPIs`, entrega las métricas de negocio bajo demanda. Con `Generar comparativa con período anterior`, permite ver tendencias. Con la capa de correlación (motor de correlación de churn), puede resaltar automáticamente el `Abandonment funnel identified in a specific feature` y anotarlo con su impacto estimado en retención, facilitando que el Product Owner y el Product Manager tomen decisiones informadas y no basadas en intuiciones aisladas.
 
-![EventStorming-step5.15](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-15.png)
+![EventStorming-step5.15](./assets/images/candidate-context-discovery/commands/es-commands-15.png)
 =======
 >>>>>>> 931e592d2a9b6a137a1940e6bd6dbe1623928e71
 
@@ -2406,7 +2406,7 @@ Mientras tanto, el equipo observa eventos como `Abandonment funnel identified in
 - Posible conflicto entre las áreas de Producto y Negocio si las decisiones de roadmap no se alinean con las métricas de retención y revenue.
 - Desperdicio de esfuerzo de desarrollo en iniciativas que no impactan la métrica más crítica del negocio: la retención de clientes.
 
-![EventStorming-step3.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pain-points/es-pain-points-13.png)
+![EventStorming-step3.13](./assets/images/candidate-context-discovery/pain-points/es-pain-points-13.png)
 >>>>>>> 931e592d2a9b6a137a1940e6bd6dbe1623928e71
 
 ---
@@ -2477,7 +2477,7 @@ Estas dos decisiones convierten el onboarding en un proceso tolerante a fallos d
 - Mejora de la percepción de robustez y profesionalidad de la plataforma.
 - Disminución de tickets de soporte del tipo “perdí todos mis datos al registrarme” o “tengo que volver a empezar la configuración”.
 
-![EventStorming-step4.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-1.png)
+![EventStorming-step4.1](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-1.png)
 >>>>>>> 931e592d2a9b6a137a1940e6bd6dbe1623928e71
 
 ---
@@ -2533,7 +2533,7 @@ La cascada posterior (`Client access disabled, data retained` → `Notify the cu
 - Auditoría más robusta que registra la revisión consciente del operador antes de una acción crítica.
 - Protección de la reputación de AgroSafe como plataforma confiable y justa en la gestión de cuentas.
 
-![EventStorming-step4.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-2.png)
+![EventStorming-step4.2](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-2.png)
 >>>>>>> 931e592d2a9b6a137a1940e6bd6dbe1623928e71
 
 ---
@@ -2596,7 +2596,7 @@ Adicionalmente, se implementa una notificación proactiva al agricultor y al agr
 - Mejora de la postura de seguridad de AgroSafe frente a auditorías y certificaciones.
 - Mayor confianza del agricultor al saber que reportar una pérdida bloquea instantáneamente el dispositivo, protegiendo la integridad de sus datos agronómicos.
 
-![EventStorming-step4.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-3.png)
+![EventStorming-step4.3](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-3.png)
 >>>>>>> 931e592d2a9b6a137a1940e6bd6dbe1623928e71
 
 ---
@@ -2650,7 +2650,7 @@ Esta separación garantiza que la ventana de vulnerabilidad con credenciales de 
 - Mejora de la postura de seguridad general del ecosistema de dispositivos IoT de AgroSafe.
 - Facilita auditorías de seguridad al demostrar que las credenciales operativas solo existen en dispositivos que han superado la fase de configuración validada.
 
-![EventStorming-step4.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-4.png)
+![EventStorming-step4.4](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-4.png)
 
 ---
 
@@ -2702,7 +2702,7 @@ Si el sistema detecta que los eventos `Device Offline Detected` y `Device Online
 - Mayor confianza del agricultor y del agrónomo en la fiabilidad de la telemetría incluso en zonas de cobertura difícil.
 - Disminución de la carga de procesamiento en el backend al evitar sincronizaciones redundantes y parciales.
 
-![EventStorming-step4.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-5.png)
+![EventStorming-step4.5](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-5.png)
 
 ---
 
@@ -2768,7 +2768,7 @@ Con estas tres mejoras, el ciclo degenerativo de fallos se corta de raíz: el st
 - Mayor confianza en las actualizaciones OTA, facilitando la adopción de mejoras de seguridad y funcionalidad.
 - Históricos de telemetría más completos, ya que los dispositivos no pasan largos períodos reiniciándose o en mantenimiento.
 
-![EventStorming-step4.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-6.png)
+![EventStorming-step4.6](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-6.png)
 
 ---
 
@@ -2819,7 +2819,7 @@ Este diseño asegura que la parcela no quede nunca desatendida más tiempo del e
 - Experiencia de usuario mejorada: el agricultor percibe un servicio proactivo que repone sus dispositivos sin que él tenga que reclamar.
 - Optimización del inventario de dispositivos precertificados al consumirlos según políticas de prioridad.
 
-![EventStorming-step4.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-7.png)
+![EventStorming-step4.7](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-7.png)
 
 ---
 
@@ -2886,7 +2886,7 @@ Con este diseño, el flujo completo se mantiene eficiente para el agrónomo (sig
 - Trazabilidad completa de todo el ciclo de propuesta, aceptación/rechazo y posibles reversiones, facilitando la auditoría de decisiones agronómicas.
 - Disminución de tickets de soporte del tipo "¿por qué cambiaron mis umbrales?" o "no quiero que mi agrónomo toque mis configuraciones".
 
-![EventStorming-step4.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-8.png)
+![EventStorming-step4.8](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-8.png)
 
 
 ---
@@ -2947,7 +2947,7 @@ Estos informes enriquecidos no solo satisfacen la necesidad de trazabilidad y au
 - Los informes mensuales se convierten en un entregable de alto valor percibido, incrementando la retención de clientes en planes con asesoría y fomentando la renovación de suscripciones.
 - El agrónomo dispone de una herramienta de comunicación más persuasiva, que facilita la justificación de sus honorarios y la captación de nuevos clientes.
 
-![EventStorming-step4.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-9.png)
+![EventStorming-step4.9](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-9.png)
 
 ---
 
@@ -2999,7 +2999,7 @@ Con este diseño, la asesoría experta se convierte en parte integral del onboar
 - Los agrónomos construyen su cartera de clientes de forma orgánica y automática, sin depender de invitaciones manuales.
 - Mejora de la percepción de valor de los planes con asesoría incluida, justificando su precio y fomentando upgrades desde planes Básicos.
 
-![EventStorming-step4.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-10.png)
+![EventStorming-step4.10](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-10.png)
 
 ---
 
@@ -3067,7 +3067,7 @@ Con estos tres pilares, el sistema garantiza que el agua se aplica de forma prec
 - Disminución de tickets de soporte relacionados con "¿se regó o no se regó?".
 - Uso eficiente del agua gracias a la validación temporal que evita riegos fuera de ventana óptima o ya innecesarios.
 
-![EventStorming-step4.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-11.png)
+![EventStorming-step4.11](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-11.png)
 
 ---
 
@@ -3122,7 +3122,7 @@ Con estos tres componentes, el sistema pasa de ser frágil y dependiente de una 
 - Reducción de tickets de soporte por "falsas alarmas constantes" o "el sensor no detecta nada".
 - El sistema mejora con el tiempo y el uso, en lugar de degradarse por cambios estacionales o ambientales no contemplados en la calibración inicial.
 
-![EventStorming-step4.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-12.png)
+![EventStorming-step4.12](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-12.png)
 
 ---
 
@@ -3180,7 +3180,7 @@ El motor no se consulta solo en la revisión trimestral. De forma continua, moni
 - Optimización del esfuerzo de desarrollo: se priorizan features que no solo tienen alta adopción, sino que están vinculadas a la retención.
 - Ciclos de análisis más rápidos: de revisiones trimestrales a monitorización continua con alertas.
 
-![EventStorming-step4.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-13.png)
+![EventStorming-step4.13](./assets/images/candidate-context-discovery/pivotal-points/es-pivotal-points-13.png)
 
 ---
 
@@ -3222,7 +3222,7 @@ Similar al Agricultor en el flujo de verificación y wizard, pero con un perfil 
 **4. Sistema:**  
 Actúa como actor automatizado en un único pero crítico comando: `Enviar verificación de email`. Se dispara como reacción al registro exitoso, sin que el usuario lo solicite explícitamente. Es el guardián de la seguridad y la validez de las cuentas en AgroSafe.
 
-![EventStorming-step5.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-1.png)
+![EventStorming-step5.1](./assets/images/candidate-context-discovery/commands/es-commands-1.png)
 
 ---
 
@@ -3252,7 +3252,7 @@ Aunque no aparece explícitamente como actor que emite comandos en este flujo, e
 **3. Sistema:**  
 Actúa como actor automático en dos momentos críticos. Primero, tras la suspensión, ejecuta `Notificar al cliente` y `Registrar en log` sin intervención del staff, asegurando comunicación proactiva y trazabilidad. Segundo, cuando el pago se procesa automáticamente (por pasarela de pago), puede ejecutar `Reactivar cuenta` sin intervención manual. También gestiona toda la cascada técnica de bloqueo y restauración de acceso y dispositivos.
 
-![EventStorming-step5.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-2.png)
+![EventStorming-step5.2](./assets/images/candidate-context-discovery/commands/es-commands-2.png)
 
 ---
 
@@ -3283,7 +3283,7 @@ Es el actor que notifica la pérdida desde su dashboard o aplicación móvil, pr
 Es el actor más crítico en este flujo. Actúa de forma automática con dos comandos. Primero, `Revocar credenciales y detener telemetría` se ejecuta en segundos como reacción al reporte de pérdida, eliminando la ventana de vulnerabilidad. Segundo, `Registrar lote de dispositivos disponibles` se ejecuta según las políticas de reaprovisionamiento para restaurar la capacidad de monitoreo de la parcela afectada lo antes posible, sin depender de una acción manual del staff.
 
 
-![EventStorming-step5.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-3.png)
+![EventStorming-step5.3](./assets/images/candidate-context-discovery/commands/es-commands-3.png)
 
 ---
 
@@ -3309,7 +3309,7 @@ Actúa como el actor iniciador del flujo. Ante la detección de una anomalía de
 **2. Agricultor / Agrónomo:**  
 Es el actor central tras recibir la alerta. Ejecuta dos comandos: `Confirmar recepción de alerta`, que detiene cualquier contramedida automática y confirma que está al tanto; y `Descartar alerta de seguridad` cuando verifica que el incidente es un falso positivo o ya está bajo control, cerrando el ciclo de seguridad y restaurando la normalidad operativa. Si el usuario no confirma en el plazo estipulado, el sistema escala automáticamente con medidas de protección más agresivas.
 
-![EventStorming-step5.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-4.png)
+![EventStorming-step5.4](./assets/images/candidate-context-discovery/commands/es-commands-4.png)
 
 ---
 
@@ -3345,7 +3345,7 @@ Es el actor que ejecuta los comandos más frecuentes del flujo operativo: `Activ
 **3. Sistema:**  
 Actúa como actor automático en varios momentos clave. Con el comando `Generar credenciales`, dota al dispositivo de identidad segura sin intervención del usuario. Con `Confirmar listo para operar`, da el visto bueno final tras la configuración para que los datos del sensor se consideren fiables y puedan alimentar dashboards, alertas y modelos de recomendación agronómica. También puede ejecutar `Encolar comando` cuando una regla automática (diagnóstico de estrés hídrico, programación de riego) decide actuar sin intervención humana.
 
-![EventStorming-step5.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-5.png)
+![EventStorming-step5.5](./assets/images/candidate-context-discovery/commands/es-commands-5.png)
 
 ---
 
@@ -3378,7 +3378,7 @@ Actúa como el orquestador de la resiliencia. Ejecuta `Enviar comando al borde` 
 **3. Dispositivo:**  
 Es el actor que ejecuta o falla los comandos en el borde. Si la ejecución no es posible, emite `Command Failed`, forzando al sistema a activar la recuperación. En el reintento, si las condiciones son favorables, ejecuta el comando con éxito y lo confirma con la sincronización. Finalmente, retoma su operación normal con `Telemetry Received`, cerrando el ciclo de forma transparente para el usuario.
 
-![EventStorming-step5.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-6.png)
+![EventStorming-step5.6](./assets/images/candidate-context-discovery/commands/es-commands-6.png)
 
 ---
 
@@ -3414,7 +3414,7 @@ Es el actor central en el proceso de instalación. Ejecuta `Completar actualizac
 **3. Agricultor:**  
 Puede intervenir puntualmente ejecutando `Cambiar configuración` si el nuevo firmware modifica parámetros operativos que requieren ajustes manuales para alinearse con la estrategia agronómica de la parcela. En condiciones normales, no participa en la decisión de actualizar ni en la gestión de fallos.
 
-![EventStorming-step5.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-7.png)
+![EventStorming-step5.7](./assets/images/candidate-context-discovery/commands/es-commands-7.png)
 
 ---
 
@@ -3449,7 +3449,7 @@ Es el actor que desencadena el flujo de pérdida ejecutando `Reportar dispositiv
 **3. Sistema:**  
 Actúa como el ejecutor automático de las medidas de seguridad en ambos flujos. Ante una suspensión, ejecuta `Revocar credenciales`, `Rechazar telemetría` y `Desactivar dispositivo` para todos los dispositivos de la cuenta, garantizando atomicidad. Ante un reporte de pérdida, ejecuta `Revocar credenciales` y `Desactivar dispositivo` de forma inmediata, eliminando la ventana de vulnerabilidad sin esperar al staff. También puede ejecutar `Registrar dispositivo de reemplazo` si las políticas de reaprovisionamiento automático lo permiten.
 
-![EventStorming-step5.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-8.png)
+![EventStorming-step5.8](./assets/images/candidate-context-discovery/commands/es-commands-8.png)
 
 ---
 
@@ -3486,7 +3486,7 @@ Es el asesor experto que multiplica su conocimiento. Ejecuta `Crear plantilla de
 **3. Sistema:**  
 Actúa como el habilitador automático del flujo. Con `Cargar umbrales desde catálogo`, proporciona al agricultor valores seguros de partida. Con `Registrar cambio en auditoría`, deja trazabilidad inmutable de cada modificación. Con `Procesar cada parcela`, aplica las plantillas del agrónomo de forma atómica y masiva. Y con `Notificar cambio al agricultor`, cierra el bucle de comunicación garantizando transparencia. En el flujo mejorado, interpone una solicitud de confirmación previa a la aplicación masiva, empoderando al agricultor sin frenar la eficiencia del agrónomo.
 
-![EventStorming-step5.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-9.png)
+![EventStorming-step5.9](./assets/images/candidate-context-discovery/commands/es-commands-9.png)
 
 ---
 
@@ -3524,7 +3524,7 @@ Es el cerebro automatizado del flujo. Ejecuta `Evaluar umbrales` continuamente, 
 **3. Agricultor / Agrónomo:**  
 No ejecutan comandos directos en este flujo operativo, ya que la detección y el riego correctivo son completamente automáticos. Sin embargo, son responsables previos de la configuración de los umbrales que el sistema evalúa. Si el flujo mejorado incluye confirmación humana para diagnósticos críticos, podrían intervenir puntualmente aprobando o rechazando el comando de riego antes de su ejecución.
 
-![EventStorming-step5.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-10.png)
+![EventStorming-step5.10](./assets/images/candidate-context-discovery/commands/es-commands-10.png)
 
 ---
 
@@ -3558,7 +3558,7 @@ Ejecuta el comando `Vincular agrónomo como asesor`, abriendo la puerta a la col
 **3. Sistema:**  
 Actúa como el habilitador automático de la supervisión. Resalta visualmente las parcelas en condición crítica en el dashboard del agrónomo, facilitando la priorización. Captura el contexto de telemetría al redactar una recomendación y lo adjunta automáticamente para que el agricultor vea los datos que respaldan el consejo. Con `Compilar datos` y `Generar informe técnico`, automatiza la producción de informes mensuales enriquecidos con visualizaciones y resúmenes, liberando al agrónomo de trabajo manual y proporcionando un entregable de alto valor.
 
-![EventStorming-step5.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-11.png)
+![EventStorming-step5.11](./assets/images/candidate-context-discovery/commands/es-commands-11.png)
 
 ----
 
@@ -3592,7 +3592,7 @@ Son los emisores de la intención de riego. Ejecutan `Enviar comando de riego` d
 Ejecuta el comando en campo cuando lo recibe validado. Además, puede influir indirectamente en el descarte de comandos: si el Edge, por su mecanismo de seguridad, cerró la válvula automáticamente al perder conexión con el backend, el sistema puede marcar comandos de riego posteriores como "condición ya resuelta" y descartarlos, protegiendo el cultivo.
 
 
-![EventStorming-step5.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-12.png)
+![EventStorming-step5.12](./assets/images/candidate-context-discovery/commands/es-commands-12.png)
 
 ---
 
@@ -3622,7 +3622,7 @@ Es el actor principal que orquesta el proceso. Ejecuta `Enviar comando de riego 
 Es el ejecutor físico en campo. Con `Abrir válvula solenoide`, permite el flujo de agua. Con `Cerrar válvula solenoide`, lo corta tras recibir la orden del sistema. Es el nexo entre la decisión tomada en la plataforma y la acción que llega al cultivo.
 
 
-![EventStorming-step5.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-13.png)
+![EventStorming-step5.13](./assets/images/candidate-context-discovery/commands/es-commands-13.png)
 
 ---
 
@@ -3659,7 +3659,7 @@ Es el evaluador contextual. Recibe los eventos con alta confianza y decide si ej
 **4. Staff (instalador / operador):**  
 Interviene fundamentalmente en la puesta a punto inicial ejecutando `Configurar sensibilidad del PIR`, o posteriormente reajustando si las condiciones de la parcela cambian. Con la evolución hacia umbrales dinámicos, su intervención se vuelve menos frecuente, pero sigue siendo responsable de la configuración base del sensor.
 
-![EventStorming-step5.14](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-14.png)
+![EventStorming-step5.14](./assets/images/candidate-context-discovery/commands/es-commands-14.png)
 
 ---
 
@@ -3693,7 +3693,7 @@ Es el responsable de la ejecución y el análisis detallado. Ejecuta `Consultar 
 **3. Sistema:**  
 Actúa como el habilitador analítico. Con `Calcular KPIs`, entrega las métricas de negocio bajo demanda. Con `Generar comparativa con período anterior`, permite ver tendencias. Con la capa de correlación (motor de correlación de churn), puede resaltar automáticamente el `Abandonment funnel identified in a specific feature` y anotarlo con su impacto estimado en retención, facilitando que el Product Owner y el Product Manager tomen decisiones informadas y no basadas en intuiciones aisladas.
 
-![EventStorming-step5.15](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/commands/es-commands-15.png)
+![EventStorming-step5.15](./assets/images/candidate-context-discovery/commands/es-commands-15.png)
 
 ---
 
@@ -3721,7 +3721,7 @@ El usuario inicia el wizard tras verificar su email. Completa el paso 1 (delimit
 - `User resumes wizard` → `Wizard progress found`
 - `Starter guide complete` (solo cuando todos los pasos están finalizados)
 
-![EventStorming-step6.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-1.png)
+![EventStorming-step6.1](./assets/images/candidate-context-discovery/policies/es-policies-1.png)
 
 ---
 
@@ -3746,7 +3746,7 @@ Un cliente acumula varios ciclos de factura impagada. El sistema marca la cuenta
 - `It is recorded in a log` (auditoría con el registro de la revisión).
 - `Activate account` (para el flujo de reactivación, cuando el cliente regulariza su situación).
 
-![EventStorming-step6.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-2.png)
+![EventStorming-step6.2](./assets/images/candidate-context-discovery/policies/es-policies-2.png)
 
 ---
 
@@ -3776,7 +3776,7 @@ El dispositivo se encuentra en una parcela remota con cobertura celular intermit
 - `Telemetry Received` → reanudación del flujo normal de datos.
 - `Heartbeat Received` → señal de que el ciclo operativo vuelve a la normalidad.
 
-![EventStorming-step6.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-3.png)
+![EventStorming-step6.3](./assets/images/candidate-context-discovery/policies/es-policies-3.png)
 
 ---
 
@@ -3810,7 +3810,7 @@ El agricultor ordena abrir una válvula de riego desde su aplicación móvil (`Q
 - `Sync Completed` (si el reintento es exitoso)
 - `Telemetry Received` (el dispositivo sigue operativo parcialmente)
 
-![EventStorming-step6.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-4.png)
+![EventStorming-step6.4](./assets/images/candidate-context-discovery/policies/es-policies-4.png)
 
 ---
 
@@ -3844,7 +3844,7 @@ El dispositivo envía periódicamente su heartbeat con el voltaje medido. Durant
 - `Device Health Restored`
 - `Lack of traceability in maintenance` (evento de mejora identificado)
 
-![EventStorming-step6.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-5.png)
+![EventStorming-step6.5](./assets/images/candidate-context-discovery/policies/es-policies-5.png)
 
 ---
 
@@ -3879,7 +3879,7 @@ El staff libera una nueva versión de firmware para un lote de sensores de humed
 - `Request Firmware Update Available` (futuro reintento, opcional)
 - `Configuration Changed` (para ajustes post-reversión, si es necesario)
 
-![EventStorming-step6.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-6.png)
+![EventStorming-step6.6](./assets/images/candidate-context-discovery/policies/es-policies-6.png)
 
 ---
 
@@ -3919,7 +3919,7 @@ El agricultor nota que un sensor de humedad ha desaparecido de su parcela. Desde
 - `Device Decommissioned` (posterior, opcional)
 - `Replacement Device Registered` (posterior, opcional)
 
-![EventStorming-step6.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-7.png)
+![EventStorming-step6.7](./assets/images/candidate-context-discovery/policies/es-policies-7.png)
 
 ---
 
@@ -3949,7 +3949,7 @@ El agricultor ha delimitado su zona (`Select zone`) y ha seleccionado el tipo de
 - `Threshold change recorded in audit` (tras aplicación)
 - `Farmer notified of the change made by their agronomist` (si aplica)
 
-![EventStorming-step6.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-8.png)
+![EventStorming-step6.8](./assets/images/candidate-context-discovery/policies/es-policies-8.png)
 
 ---
 
@@ -3984,7 +3984,7 @@ El agrónomo ha creado una plantilla de umbrales optimizada para el cultivo de m
 - `Threshold change recorded in audit`
 - `Farmer notified of the change made by their agronomist` (notificación de consolidación)
 
-![EventStorming-step6.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-9.png)
+![EventStorming-step6.9](./assets/images/candidate-context-discovery/policies/es-policies-9.png)
 
 ---
 
@@ -4020,7 +4020,7 @@ Los sensores de humedad y pH están activos en la parcela. El sensor de humedad 
 - `Solenoid valve closed` → `Irrigation completed`
 - `Synchronized data`
 
-![EventStorming-step6.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-10.png)
+![EventStorming-step6.10](./assets/images/candidate-context-discovery/policies/es-policies-10.png)
 
 ---
 
@@ -4058,7 +4058,7 @@ El agrónomo ingresa a su panel consolidado. El sistema analiza automáticamente
 - `Technical recommendation sent to the farmer with attached sensor data` (con datos adjuntos)
 - `Request monthly report` → `System compiles data` → `Monthly technical report generated for a client`
 - 
-  ![EventStorming-step6.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-11.png)
+  ![EventStorming-step6.11](./assets/images/candidate-context-discovery/policies/es-policies-11.png)
 
 ---
 
@@ -4107,7 +4107,7 @@ Este policy implementa el **Pivotal Point 11** (Resolutor de conflictos de coman
 - `Canceled Irrigation Command` / `Disable Irrigation Command`
 - `Delete failed commands`
 
-![EventStorming-step6.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-12.png)
+![EventStorming-step6.12](./assets/images/candidate-context-discovery/policies/es-policies-12.png)
 
 ---
 
@@ -4140,7 +4140,7 @@ El sensor PIR instalado en el perímetro de una parcela de maíz detecta movimie
 - `Low priority event logged in history without urgent notification`
 - `Human intrusion alert triggered`
 
-![EventStorming-step6.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/policies/es-policies-13.png)
+![EventStorming-step6.13](./assets/images/candidate-context-discovery/policies/es-policies-13.png)
 
 ---
 ### Paso 7: Read Models (Modelos de Lectura)
@@ -4195,7 +4195,7 @@ Persistida en el backend, asociada al `user_id`. Contiene: `último_paso_complet
 **Uso y consultas típicas:**  
 Consultado cada vez que el usuario accede a la sección de configuración antes de completar el wizard. Si existe un progreso, se carga automáticamente el paso correspondiente. Si el wizard ya está completado, se redirige directamente al dashboard principal (`Access the dashboard`).
 
-![EventStorming-step7.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-1.png)
+![EventStorming-step7.1](./assets/images/candidate-context-discovery/read-models/es-read-models-1.png)
 
 ---
 
@@ -4250,7 +4250,7 @@ Una tabla (o colección) de registros inmutables, ordenados cronológicamente, a
 - **Cliente:** Tras reactivación, puede consultar su propio log para entender qué ocurrió durante el período de suspensión.
 - **Auditoría:** Se utiliza para responder a reclamaciones legales o comerciales, demostrando que se siguieron los procedimientos.
     
-![EventStorming-step7.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-2.png)
+![EventStorming-step7.2](./assets/images/candidate-context-discovery/read-models/es-read-models-2.png)
 
 ---
 
@@ -4284,7 +4284,7 @@ Una tabla (o colección) con un registro por dispositivo, que incluye:
 - **Staff:** Consulta para ver todos los dispositivos de un agricultor, filtrar por estado (ej. “dispositivos con credenciales activas pero sin heartbeat reciente” para detectar vulnerabilidades), o revisar el historial de un dispositivo reportado como perdido.
 - **Sistema:** Utilizado internamente para validar si un dispositivo puede ser reemplazado o si sus credenciales siguen vigentes.
 
-![EventStorming-step7.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-3.png)
+![EventStorming-step7.3](./assets/images/candidate-context-discovery/read-models/es-read-models-3.png)
 
 ---
 
@@ -4317,7 +4317,7 @@ Una vista por dispositivo que incluye:
 - **Agrónomo:** Supervisa la salud de conectividad de las parcelas de sus clientes, especialmente en zonas de cobertura inestable.
 - **Staff:** Utiliza el dashboard para detectar dispositivos que llevan más de 5 minutos sin heartbeat y activar procedimientos de verificación en campo.
 
-![EventStorming-step7.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-4.png)
+![EventStorming-step7.4](./assets/images/candidate-context-discovery/read-models/es-read-models-4.png)
 
 ---
 
@@ -4352,7 +4352,7 @@ Una tabla (o colección) de registros inmutables, ordenados por timestamp, asoci
 - **Staff / Soporte:** Utiliza el log para diagnosticar problemas de conectividad o fallos sistemáticos en un dispositivo.
 - **Sistema:** El log alimenta el cálculo de métricas de fiabilidad de comandos por dispositivo y por zona.
 
-![EventStorming-step7.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-5.png)
+![EventStorming-step7.5](./assets/images/candidate-context-discovery/read-models/es-read-models-5.png)
 
 ---
 
@@ -4389,7 +4389,7 @@ Adicionalmente, puede incluir un histórico de las últimas N actualizaciones po
 - **Sistema:** Utiliza este read model para decidir si ofrecer nuevamente una actualización a un dispositivo (si la versión actual es anterior y no hay fallos recientes).
 - **Soporte:** Cuando un agricultor reporta un comportamiento extraño, el staff consulta la versión de firmware para saber si coincide con una versión problemática conocida.
 
-![EventStorming-step7.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-6.png)
+![EventStorming-step7.6](./assets/images/candidate-context-discovery/read-models/es-read-models-6.png)
 
 ---
 
@@ -4424,7 +4424,7 @@ Una tabla (o colección) de tareas de mantenimiento, cada una con:
 - **Agricultor:** Consulta una versión reducida para saber cuándo se espera el mantenimiento de sus dispositivos y programar sus actividades.
 - **Sistema:** Utiliza la vista para decidir si reducir automáticamente la frecuencia de muestreo (cuando hay una tarea crítica pendiente).
 
-![EventStorming-step7.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-7.png)
+![EventStorming-step7.7](./assets/images/candidate-context-discovery/read-models/es-read-models-7.png)
 
 ---
 
@@ -4456,7 +4456,7 @@ Una vista desnormalizada por `(farmer_id, parcela_id, zona_id)`, con los siguien
 - **Agrónomo:** Consulta para revisar los umbrales de sus clientes y sugerir ajustes. Si modifica un valor, el agricultor recibe una notificación detallada (`Farmer notified of the change made by their agronomist`).
 - **Sistema:** Utiliza esta vista para evaluar si una lectura de sensor supera los umbrales (`Humidity threshold exceeded`, `pH out of range detected`).
 
-![EventStorming-step7.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-8.png)
+![EventStorming-step7.8](./assets/images/candidate-context-discovery/read-models/es-read-models-8.png)
 
 ---
 
@@ -4488,7 +4488,7 @@ Una tabla o colección con un registro por plantilla, asociada al `agronomist_id
 - **Agrónomo:** Consulta su biblioteca para seleccionar una plantilla al aplicar configuración masiva a sus clientes. Filtra por cultivo o nombre. Previsualiza los valores antes de aplicar.
 - **Sistema:** No consulta directamente esta vista para la ejecución, pero se referencia cuando se aplica una plantilla (`Template applied to client plot`).
 
-![EventStorming-step7.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-9.png)
+![EventStorming-step7.9](./assets/images/candidate-context-discovery/read-models/es-read-models-9.png)
 
 ---
 
@@ -4563,7 +4563,7 @@ No es una tabla viva, sino un **documento generado bajo demanda** con:
 - **Agricultor:** Lo consulta (vista en línea o PDF) para entender la evolución de su cultivo.
 - **Sistema:** Puede generar informes automáticos al final de cada mes y almacenarlos para consulta posterior.
 
-![EventStorming-step7.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-10.png)
+![EventStorming-step7.10](./assets/images/candidate-context-discovery/read-models/es-read-models-10.png)
 
 ---
 
@@ -4649,7 +4649,7 @@ Una tabla inmutable (append-only) con los siguientes campos:
 - **Staff / Soporte:** Utiliza el log para diagnosticar fallos sistemáticos en la comunicación con dispositivos.
 - **Sistema:** Puede consultar el log para calcular métricas de fiabilidad de comandos por parcela.
 
-![EventStorming-step7.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-11.png)
+![EventStorming-step7.11](./assets/images/candidate-context-discovery/read-models/es-read-models-11.png)
 
 ---
 
@@ -4727,7 +4727,7 @@ Una vista optimizada para lecturas frecuentes, con baja latencia, que contiene s
 - **Agrónomo (si tiene permisos):** Puede ver el feed de sus clientes para supervisar incidentes de seguridad.
 - **Staff:** Monitorea el feed agregado de todas las parcelas para detectar patrones de intrusión a nivel regional.
 
-![EventStorming-step7.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-12.png)
+![EventStorming-step7.12](./assets/images/candidate-context-discovery/read-models/es-read-models-12.png)
 
 ---
 
@@ -4837,7 +4837,7 @@ Una vista por flujo funcional, que calcula:
 - **Equipo de UX:** Utiliza los datos para rediseñar pasos con alto abandono.
 - **Sistema:** Puede generar alertas automáticas cuando un embudo supera un umbral de abandono.
 
-![EventStorming-step7.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/read-models/es-read-models-13.png)
+![EventStorming-step7.13](./assets/images/candidate-context-discovery/read-models/es-read-models-13.png)
 
 ---
 
@@ -4858,7 +4858,7 @@ Twilio es el servicio externo de comunicaciones que utiliza AgroSafe para enviar
 - `Alert confirmed as received` → cuando el usuario pulsa el botón de confirmación en el mensaje de WhatsApp, Twilio notifica al backend de AgroSafe. Esta confirmación detiene los temporizadores de escalado automático (como el bloqueo preventivo de cuenta) y registra que el legítimo dueño está al tanto del incidente.
 - Opcionalmente, Twilio puede notificar fallos de entrega o estados de mensaje no entregado, lo que AgroSafe debe registrar en el log de auditoría y considerar mecanismos de respaldo (ej. reintento o canal alternativo).
 
-![EventStorming-step8.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-1.png)
+![EventStorming-step8.1](./assets/images/candidate-context-discovery/external-systems/es-external-systems-1.png)
 
 ---
 
@@ -4875,7 +4875,7 @@ El proveedor de pagos (por ejemplo, Stripe, Mercado Pago, PayPal) es el servicio
 - `Payment failed` → notificación de que un cargo fue rechazado (tarjeta expirada, fondos insuficientes). AgroSafe incrementa un contador de fallos, notifica al cliente y, tras varios fallos, puede iniciar el proceso de suspensión (`Customer account suspended due to non-payment`).
 - Opcionalmente, `Subscription cancelled` (si el cliente cancela desde el portal del proveedor) o `Refund processed` (para reembolsos).
 
-![EventStorming-step8.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-2.png)
+![EventStorming-step8.2](./assets/images/candidate-context-discovery/external-systems/es-external-systems-2.png)
 
 ---
 
@@ -4892,7 +4892,7 @@ El servicio de correo electrónico (por ejemplo, SendGrid, AWS SES, Mailgun) es 
 - `Email delivery success` / `Email delivery failed` → notificaciones de estado de entrega (opcional, según configuración). AgroSafe puede registrar fallos para reintentos o para alertar al staff si hay problemas de entregabilidad masivos.
 - `Email opened` / `Link clicked` → si se configura tracking, el servicio puede notificar cuando el usuario hace clic en el enlace de verificación. Sin embargo, lo habitual es que el propio backend de AgroSafe reciba la petición del enlace y verifique el token, sin depender del webhook de apertura.
 
-![EventStorming-step8.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-3.png)
+![EventStorming-step8.3](./assets/images/candidate-context-discovery/external-systems/es-external-systems-3.png)
 
 ---
 
@@ -4907,7 +4907,7 @@ La API meteorológica externa (por ejemplo, OpenWeatherMap, Weather.com, Tomorro
 **Eventos que AgroSafe recibe de la Weather API:**
 - `Weather data received` → incluye temperatura actual, humedad relativa, presión atmosférica, velocidad del viento, precipitaciones recientes, radiación solar, y evapotranspotranspiración de referencia (ET0). AgroSafe utiliza estos valores para enriquecer el diagnóstico.
 
-![EventStorming-step8.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-4.png)
+![EventStorming-step8.4](./assets/images/candidate-context-discovery/external-systems/es-external-systems-4.png)
 
 ---
 
@@ -4922,7 +4922,7 @@ El generador de PDF (por ejemplo, una librería interna como iText, Apache PDFBo
 **Eventos que AgroSafe recibe del PDF Generator:**
 - `Technical report generated` → el generador devuelve el documento PDF (como archivo temporal, URL o bytes) y su metadata (tamaño, número de páginas). AgroSafe almacena el PDF (en un servicio de almacenamiento) y emite `Monthly technical report generated for a client`, poniendo el informe a disposición del usuario para descarga.
 
-![EventStorming-step8.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/external-systems/es-external-systems-5.png)
+![EventStorming-step8.5](./assets/images/candidate-context-discovery/external-systems/es-external-systems-5.png)
 
 ---
 
@@ -4964,7 +4964,7 @@ Gestionar el ciclo de vida de una cuenta de usuario en AgroSafe, ya sea agricult
 - Puede contener como objeto de valor `WizardProgress` (último paso, datos parciales).
 - Para agricultores, referencia al `agronomist_id` (raíz de otro `User` de tipo agrónomo).
 
-![EventStorming-step9.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-1.png)
+![EventStorming-step9.1](./assets/images/candidate-context-discovery/aggregates/es-aggregates-1.png)
 
 ---
 
@@ -5002,7 +5002,7 @@ Gestionar el contrato de pago de un usuario (agricultor o agrónomo) con AgroSaf
 - Pertenece a un `User`.
 - Interactúa con el sistema externo `Payment Provider` a través de los comandos `Process Payment` y `Cancel Subscription`.
 
-![EventStorming-step9.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-2.png)
+![EventStorming-step9.2](./assets/images/candidate-context-discovery/aggregates/es-aggregates-2.png)
 
 ---
 
@@ -5036,7 +5036,7 @@ Mantener el estado del asistente de configuración inicial (`Starter Guide`) que
 - Pertenece a un `User`.
 - No depende de otros agregados, pero los datos almacenados (ej. `device_id`) deben referenciar agregados `Device` que se crearán al finalizar el paso correspondiente.
 
-![EventStorming-step9.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-1.png)
+![EventStorming-step9.3](./assets/images/candidate-context-discovery/aggregates/es-aggregates-1.png)
 
 ---
 
@@ -5066,7 +5066,7 @@ Gestionar el envío de alertas de seguridad a través de canales externos (Whats
 - Se apoya en el sistema externo `Twilio`.
 - Se asocia a un evento de seguridad (`SecurityEventList` como read model).
 
-![EventStorming-step9.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-4.png)
+![EventStorming-step9.4](./assets/images/candidate-context-discovery/aggregates/es-aggregates-4.png)
 
 ---
 
@@ -5100,7 +5100,7 @@ Administrar el ciclo de vida de la cuenta de un cliente desde la perspectiva adm
 - Contiene o referencia a múltiples agregados `Device`.
 - Sus eventos alimentan los read models `Customer Account View` y `Account Log View`.
 
-![EventStorming-step9.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-5.png)
+![EventStorming-step9.5](./assets/images/candidate-context-discovery/aggregates/es-aggregates-5.png)
 
 ---
 
@@ -5145,7 +5145,7 @@ Modelar el ciclo de vida completo de un dispositivo IoT (sensor de humedad, pH, 
 - Sus eventos de telemetría alimentan el historial de sensores (read models).
 - Los eventos de conectividad actualizan el `Device Health Dashboard`.
 
-![EventStorming-step9.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-6.png)
+![EventStorming-step9.6](./assets/images/candidate-context-discovery/aggregates/es-aggregates-6.png)
 
 ---
 
@@ -5181,7 +5181,7 @@ Gestionar el ciclo de vida de un comando enviado desde la plataforma a un dispos
 - Sus eventos alimentan el read model `Command Execution Log`.
 - Puede actualizar el estado de salud del dispositivo (a través del agregado `Device`).
 
-![EventStorming-step9.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-7.png)
+![EventStorming-step9.7](./assets/images/candidate-context-discovery/aggregates/es-aggregates-7.png)
 
 ---
 
@@ -5268,7 +5268,7 @@ Gestionar el catálogo agronómico maestro de AgroSafe, que contiene los umbrale
 - Es consultado por el agregado `ZoneThreshold` para cargar valores iniciales y validar rangos seguros.
 - Sus datos se exponen en el read model `Crop Threshold Catalog`.
 
-![EventStorming-step9.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-8.png)
+![EventStorming-step9.8](./assets/images/candidate-context-discovery/aggregates/es-aggregates-8.png)
 
 ---
 
@@ -5310,7 +5310,7 @@ Gestionar el ciclo de actualización de firmware de un dispositivo IoT, incluyen
 - Sus eventos de mantenimiento alimentan el read model `Maintenance Schedule View`.
 - Interactúa con el staff a través de notificaciones y comandos.
 
-![EventStorming-step9.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-9.png)
+![EventStorming-step9.9](./assets/images/candidate-context-discovery/aggregates/es-aggregates-9.png)
 
 ---
 
@@ -5366,7 +5366,7 @@ Gestionar la generación de diagnósticos agronómicos basados en las condicione
 - Puede invocar comandos sobre `IrrigationCommand` para riego automático.
 - Sus eventos alimentan el read model de diagnósticos y el historial de la parcela.
 
-![EventStorming-step9.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-10.png)
+![EventStorming-step9.10](./assets/images/candidate-context-discovery/aggregates/es-aggregates-10.png)
 
 ---
 
@@ -5461,7 +5461,7 @@ Gestionar los comandos de riego que fueron emitidos desde la aplicación móvil 
 - Se sincroniza entre cliente (app móvil) y backend.
 - Sus notificaciones de descarte alimentan la transparencia para el usuario.
 
-![EventStorming-step9.11](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-11.png)
+![EventStorming-step9.11](./assets/images/candidate-context-discovery/aggregates/es-aggregates-11.png)
 
 ---
 
@@ -5521,7 +5521,7 @@ Gestionar la generación y almacenamiento de informes técnicos mensuales (y baj
 - Consume datos de los read models de telemetría, auditoría de umbrales, y recomendaciones.
 - Los informes generados se asocian a una parcela y a un período.
 
-![EventStorming-step9.12](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-12.png)
+![EventStorming-step9.12](./assets/images/candidate-context-discovery/aggregates/es-aggregates-12.png)
 
 ---
 
@@ -5587,7 +5587,7 @@ Gestionar el ciclo de vida de una alerta de seguridad generada por un evento PIR
 - Los eventos de confirmación y descarte actualizan el read model `Security Alert Feed`.
 - Puede asociarse a un `User` (agricultor) y a una `Parcel`.
 
-![EventStorming-step9.13](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-13.png)
+![EventStorming-step9.13](./assets/images/candidate-context-discovery/aggregates/es-aggregates-13.png)
 
 ---
 
@@ -5670,7 +5670,7 @@ Gestionar la recolección y agregación de métricas de adopción de funcionalid
 - Se correlaciona con `ChurnRecord` para análisis de retención.
 - Alimenta los read models `Feature Adoption View` y `Funnel Analysis View`.
 
-![EventStorming-step9.14](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/aggregates/es-aggregates-14.png)
+![EventStorming-step9.14](./assets/images/candidate-context-discovery/aggregates/es-aggregates-14.png)
 
 ---
 
@@ -5713,7 +5713,7 @@ Gestionar el primer contacto del visitante con AgroSafe, desde que llega a la la
 **Consideraciones de frontera:**  
 El onboarding termina cuando el usuario completa el wizard y accede al dashboard. A partir de ahí, la responsabilidad pasa a otros contextos (gestión de dispositivos, monitoreo, etc.). El progreso del wizard se mantiene dentro de este contexto hasta su finalización.
 
-![EventStorming-step10.1](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-1.png)
+![EventStorming-step10.1](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-1.png)
 
 ---
 
@@ -5751,7 +5751,7 @@ Gestionar el ciclo de vida comercial de las suscripciones de los clientes de Agr
 **Consideraciones de frontera:**  
 El contexto de suscripciones no conoce los detalles de los usuarios más allá de su identificador y su estado de pago. La suspensión de cuenta por impago se comunica mediante eventos asíncronos al contexto de Identity & Access Management, que es el responsable de ejecutar el bloqueo real.
 
-![EventStorming-step10.2](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-2.png)
+![EventStorming-step10.2](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-2.png)
 
 ---
 
@@ -5792,7 +5792,7 @@ Gestionar la identidad de los usuarios (agricultores y agrónomos), sus credenci
 **Consideraciones de frontera:**  
 IAM es el contexto más sensible de AgroSafe. Contiene toda la información de identidad y control de acceso. Las suspensiones manuales por parte del staff requieren una revisión obligatoria del historial de pagos (Pivotal Point 2), lo que implica una integración con Subscriptions & Payments (a través del read model `Customer Account View`). La auditoría de todas las acciones administrativas se almacena dentro de este contexto (`Account Log View`).
 
-![EventStorming-step10.3](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-3.png)
+![EventStorming-step10.3](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-3.png)
 
 ---
 
@@ -5811,7 +5811,7 @@ Gestionar el envío de notificaciones y alertas a través de canales externos (W
 - Recibe comandos desde **Security & Alerts** cuando se confirma una intrusión humana.
 - Depende del sistema externo `Twilio`.
 
-![EventStorming-step10.4](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-4.png)
+![EventStorming-step10.4](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-4.png)
 
 ---
 
@@ -5838,7 +5838,7 @@ Gestionar el ciclo de vida completo de los dispositivos IoT (sensores y actuador
 - Notifica eventos de salud y telemetría a **Soil Monitoring & Diagnosis** y **Security & Alerts**.
 - Depende del sistema externo de comunicación MQTT (broker).
 
-![EventStorming-step10.5](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-5.png)
+![EventStorming-step10.5](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-5.png)
 
 ---
 
@@ -5866,7 +5866,7 @@ Supervisar las condiciones del suelo (humedad, pH, temperatura, conductividad, e
 - Envía `Irrigation recommendation issued` a **Irrigation & Command Execution**.
 - Colabora con **Collaborative Supervision** para las recomendaciones del agrónomo basadas en umbrales.
 
-![EventStorming-step10.6](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-6.png)
+![EventStorming-step10.6](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-6.png)
 
 ---
 
@@ -5891,7 +5891,7 @@ Facilitar la colaboración entre agrónomos y agricultores, proporcionando al ag
 - Utiliza el sistema externo `PDF Generator`.
 - Puede enviar notificaciones vía **Communication** cuando se genera un informe.
 
-![EventStorming-step10.7](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-7.png)
+![EventStorming-step10.7](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-7.png)
 
 ---
 
@@ -5916,7 +5916,7 @@ Gestionar la ejecución de comandos de riego sobre actuadores (válvulas solenoi
 - Envía comandos al **IoT Device Management** para que los ejecute en el Edge.
 - Consulta el estado de válvulas desde el **Valve State View** (read model).
 
-![EventStorming-step10.8](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-8.png)
+![EventStorming-step10.8](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-8.png)
 
 ---
 
@@ -5940,7 +5940,7 @@ Detectar movimientos en el perímetro de las parcelas mediante sensores PIR, cla
 - Envía comandos de notificación a **Communication** (Twilio).
 - Las alertas registradas alimentan los read models `Security Event List View` y `Security Alert Feed`.
 
-![EventStorming-step10.9](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-9.png)
+![EventStorming-step10.9](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-9.png)
 
 ---
 
@@ -5964,7 +5964,7 @@ Recolectar, agregar y presentar métricas de negocio (KPIs) y de adopción de fu
 - Recibe datos de suscripciones y cancelaciones desde **Subscriptions & Payments** para correlacionar churn con adopción.
 - Los análisis y dashboards se sirven a través de read models (`Executive Dashboard`, `Feature Adoption View`, `Funnel Analysis View`).
 
-![EventStorming-step10.10](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-10.png)
+![EventStorming-step10.10](./assets/images/candidate-context-discovery/bounded-contexts/es-bounded-contexts-10.png)
 
 ---
 >>>>>>> 931e592d2a9b6a137a1940e6bd6dbe1623928e71
@@ -6198,7 +6198,7 @@ Este bounded context gestiona la experiencia del visitante desde que llega a la 
 
 #### Diccionario de Clases
 
-![Onboarding-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/onboarding/dictionary-onboarding-1.png)
+![Onboarding-Dictionary](./assets/images/bounded-context/onboarding/dictionary-onboarding-1.png)
 
 ![Onboarding-Dictionary](./assets/images/bounded-context/onboarding/dictionary-onboarding-2.png)
 
@@ -6407,7 +6407,7 @@ Este bounded context gestiona la experiencia del visitante desde que llega a la 
 
 #### Diccionario de Clases
 
-![Soil-Monitoring-Dictionary](upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-1.png)
+![Soil-Monitoring-Dictionary](./assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-1.png)
 
 ![Soil-Monitoring-Dictionary](./assets/images/bounded-context/soil-monitoring-diagnosis/dictionary-soil-monitoring-diagnosis-2.png)
 
