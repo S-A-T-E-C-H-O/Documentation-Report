@@ -185,8 +185,28 @@ En esta fase, hemos desarrollado de manera conjunta los wireframes para visualiz
 
 Para la versión de escritorio, el diseño se enfocó en maximizar el uso del espacio en pantalla, estableciendo una jerarquía visual clara y una navegación expansiva.
 
+<img src="./assets/images/wireframes/web_wireframe_1.png" alt="Image color" width="500"/><br>
+
+<img src="./assets/images/wireframes/web_wireframe_2.png" alt="Image color" width="500"/><br>
+
+<img src="./assets/images/wireframes/web_wireframe_3.png" alt="Image color" width="500"/><br>
+
+
 #### Mobile Application Wireframes
 En la versión móvil, la prioridad fue la optimización del espacio, la ergonomía y la accesibilidad táctil.
+
+<img src="./assets/images/wireframes/mobile_wireframe_1.png" alt="Image color" width="500"/><br>
+
+<img src="./assets/images/wireframes/mobile_wireframe_2.png" alt="Image color" width="500"/><br>
+
+<img src="./assets/images/wireframes/mobile_wireframe_3.png" alt="Image color" width="500"/><br>
+
+<img src="./assets/images/wireframes/mobile_wireframe_4.png" alt="Image color" width="500"/><br>
+
+<img src="./assets/images/wireframes/mobile_wireframe_5.png" alt="Image color" width="500"/><br>
+
+<img src="./assets/images/wireframes/mobile_wireframe_6.png" alt="Image color" width="500"/><br>
+
 
 ### 5.4.2. Applications Wireflow Diagrams.
 ### 5.4.2. Applications Mock-ups.
