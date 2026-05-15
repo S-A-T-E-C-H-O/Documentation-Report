@@ -139,4 +139,120 @@ Todo cambio propuesto debe someterse a un proceso de revisión riguroso mediante
 
 ### 6.1.3. Source Code Style Guide & Conventions
 
+En **SATECHO**, el código no solo debe ser funcional, sino también legible, mantenible y estéticamente profesional. Esta guía establece el "lenguaje común" para nuestro equipo multidisciplinario, asegurando que cualquier desarrollador pueda navegar por el ecosistema del proyecto con total claridad.
+
+**Fundamentos Globales de Nomenclatura**
+
+Independientemente del lenguaje de programación, aplicamos tres reglas inquebrantables:
+
+1. **Código en Inglés:** Todo el léxico técnico (variables, métodos, clases, comentarios técnicos y nombres de archivos) se redactará exclusivamente en inglés para mantener la compatibilidad con estándares globales de la industria.
+
+2. **Significado sobre Brevedad:** Preferimos nombres descriptivos como sensorReadingInterval sobre abreviaturas ambiguas como sri.
+
+3. **Consistencia de Casos:**
+
+- camelCase: Utilizado para variables, funciones y métodos. (Ej: getSoilMoisture()).
+
+- PascalCase: Reservado para clases, interfaces, tipos y componentes. (Ej: AuthService).
+
+- snake_case: Exclusivo para nombres de archivos y recursos físicos. (Ej: main_navigation.dart).
+
+- kebab-case: Utilizado en clases CSS y selectores HTML. (Ej: btn-primary).
+
+**Estándares por Tecnología**
+
+#### Capa Web (HTML5 & CSS3)
+
+Nos regimos por la [Google HTML/CSS Style Guide.](https://google.github.io/styleguide/htmlcssguide.html)
+
+- **Semántica:** Uso obligatorio de etiquetas main, section, article y nav.
+
+- **CSS BEM (Block Element Modifier):** Estructuramos las clases para evitar colisiones de estilos
+  - Bloque: `.card`
+  - Elemento: `.card__title`
+  - Modificador: `.card__title--highlighted`
+
+```html
+<!-- Ejemplo de implementación semántica y BEM -->
+<section class="crop-status">
+  <h2 class="crop-status__title">Niveles de Humedad</h2>
+  <button class="btn btn--success">Actualizar</button>
+</section>
+```
+
+#### Lógica de Interacción (JavaScript ES6+)
+
+Basado en la [Google JavaScript Style Guide.](https://google.github.io/styleguide/jsguide.html)
+
+- **Inmutabilidad:** Priorizamos const sobre let. El uso de var queda estrictamente prohibido.
+
+- **Programación Funcional:** Preferencia por funciones flecha (`=>`) y métodos de array (`map`, `filter`, `reduce`).
+
+```javascript
+const formatSensorData = (data) => {
+  return data.map(reading => reading.toFixed(2));
+};
+```
+
+#### Backend Robusto (Java & Spring Boot)
+
+Seguimos los estándares de Clean Code y la guía de Google para Java.
+
+- **Encapsulamiento:** Todo atributo de clase debe ser `private` y el acceso a métodos debe ser explícito (`public`, `protected`).
+
+- **Inyección de Dependencias:** Preferimos la inyección por constructor sobre el uso de `@Autowired` en campos.
+
+```java
+public class SensorController {
+    private final SensorService sensorService;
+
+    public SensorController(SensorService sensorService) {
+        this.sensorService = sensorService;
+    }
+
+    public ResponseEntity<String> getHumidity(Long id) {
+        return ResponseEntity.ok("Reading: " + sensorService.getById(id));
+    }
+}
+```
+
+#### Desarrollo Móvil (Dart & Flutter)
+
+Aplicamos las directrices de [Effective Dart.](https://dart.dev/effective-dart)
+
+- **Tipado Fuerte:** Se debe declarar explícitamente el tipo de dato para evitar errores en tiempo de ejecución.
+
+- **Widgets:** Dividir las interfaces en widgets pequeños y reutilizables.
+
+```dart
+class MoistureDisplay extends StatelessWidget {
+  final double value;
+
+  const MoistureDisplay({required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Humedad: $value%');
+  }
+}
+```
+
+**Comunicación del Negocio (Gherkin)**
+
+Para nuestras pruebas de aceptación, utilizamos el lenguaje **Gherkin** con el fin de que los stakeholders entiendan el comportamiento del sistema sin leer código fuente.
+
+- **Claridad:** Los archivos `.feature` deben describir procesos de negocio, no interacciones de UI (ej: usar "Inicia sesión" en lugar de "Hace click en el botón azul").
+
+```gherkin
+Feature: Monitoreo de Cultivos
+  As a farmer
+  I want to receive an alert when the soil is dry
+  So that I can irrigate my crops on time
+
+  Scenario: Detección de humedad baja
+    Given the humidity sensor is active
+    When the moisture level drops below 20%
+    Then the system sends a notification to the mobile app
+```
+
 #### 6.1.4. Software Deployment Configuration
