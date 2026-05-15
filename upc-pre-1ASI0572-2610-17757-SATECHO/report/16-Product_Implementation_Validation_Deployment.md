@@ -410,6 +410,16 @@ El objetivo de este primer Sprint es establecer la base de identidad digital y l
 
 #### 6.2.1.2. Aspect Leaders and Collaborations
 
+Iniciamos nuestra trayectoria transformando la complejidad en orden. Durante este Sprint 1, definimos los pilares estratégicos del proyecto mediante una arquitectura de contextos delimitados, blindando la lógica de negocio desde la seguridad hasta el monitoreo operativo en los exigentes entornos de retail y restaurantes. Esta visión se traduce en acción a través de nuestra Matriz LACX, una brújula de colaboración que asigna responsabilidades claras para garantizar la cohesión del producto. Bajo este esquema de trabajo, el equipo ha convergido para dar vida a 41 puntos de historia, asegurando que cada funcionalidad no sea solo un requisito cumplido, sino una pieza clave de una infraestructura escalable y resiliente.
+
+| Team Member (Last Name, First Name) |  GitHub Username  |     IAM     |     OnBoarding    | i18n | Dashboard |
+| :---------------------------------- | :----------------: | :---------: | :---------: | :-------------------: | :--------------: 
+| Huamani Sánchez, José Diego       |  `ProgramadorHuamani`  | **L** |            |           C           |                  |
+| Estrada Cajamune, Abraham Andrés        |     `Abraham0310`     |            |      **L**      |           C           |        C        |
+| Gamio Upiachihua, Brenda Lucía         |     `B-Gamio`     |            |      C      |                      |          **L**        |
+| Quispe Erasmo, Raul Ronaldo      |    `Raul-QE`   |      C      |            |                      |        C        |
+| Palacios, Yasser Renteria        |      `Mitos20`     |            |      C      |      **L**      |                  |
+
 #### 6.2.1.3. Sprint Backlog 3
 
 #### 6.2.1.4. Development Evidence for Sprint Review
