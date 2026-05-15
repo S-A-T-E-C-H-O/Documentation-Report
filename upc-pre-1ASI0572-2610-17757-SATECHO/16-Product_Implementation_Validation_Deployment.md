@@ -256,3 +256,85 @@ Feature: Monitoreo de Cultivos
 ```
 
 #### 6.1.4. Software Deployment Configuration
+
+Para esta sección, el despliegue no es el final del camino, sino el inicio de la entrega de valor. Esta sección describe los protocolos y plataformas utilizados para transformar nuestro código fuente en productos digitales accesibles y funcionales. Hemos diseñado un ecosistema de despliegue híbrido que aprovecha lo mejor de cada proveedor de nube para garantizar alta disponibilidad y rendimiento.
+
+#### Landing Page (GitHub Pages)
+
+Nuestro portal informativo se despliega como un sitio estático optimizado, garantizando tiempos de carga mínimos y seguridad total.
+
+- **Plataforma:** GitHub Pages.
+
+- **Proceso de Despliegue:**
+
+1. **Preparación: **Asegurar que el archivo principal sea un index.html en la raíz del repositorio SATECHO-static.
+
+2. **Configuración de Origen:** Acceder a los Settings del repositorio en GitHub y navegar a la sección Pages.
+
+3. **Activación:** Seleccionar la rama main como fuente de despliegue.
+
+4. **Automatización:** GitHub generará automáticamente una URL bajo el dominio github.io. Cada push a la rama main actualizará el sitio en tiempo real.
+
+#### Web Application (Vercel)
+
+La aplicación administrativa de SATECHO, desarrollada en Vue.js, requiere un entorno ágil que soporte el renderizado moderno y despliegues atómicos.
+
+- **Plataforma:** Vercel.
+
+- Guía Detallada de Despliegue:
+
+1. **Vinculación:** Iniciar sesión en Vercel e importar el repositorio `SATECHO-WebApp`.
+
+2. **Configuración de Framework:** Vercel detectará automáticamente que se trata de un proyecto Vue.js. Validar que el comando de build sea `npm run build` y el directorio de salida sea `dist`.
+
+3. **Variables de Entorno:** Configurar las variables `VUE_APP_API_URL` para apuntar a nuestro backend en Azure.
+
+4. **Deployment:** Ejecutar el despliegue inicial. Vercel proporcionará una URL de previsualización para cada Pull Request y una URL productiva para la rama main.
+
+#### Web Services - Backend (Azure App Service)
+
+El corazón lógico de SATECHO, construido en Java con Spring Boot, se aloja en un entorno empresarial que garantiza escalabilidad y seguridad de datos.
+
+- **Plataforma:** Azure App Service.
+
+- **Proceso de Despliegue:**
+
+1. **Instancia de Servicio:** Se crea un Web App en Azure seleccionando el stack de ejecución Java 17+ y el servidor web embebido.
+
+2. **Pipeline de CI/CD:** Configuramos un archivo de flujo de trabajo en GitHub Actions que compile el proyecto usando Maven (mvn clean package).
+
+3. **Publicación:** El artefacto .jar generado se envía automáticamente a Azure App Service mediante el perfil de publicación configurado en los Secrets de GitHub.
+
+4. **Monitoreo:** Se habilita Application Insights para rastrear el rendimiento de los endpoints y posibles excepciones en tiempo real.
+
+#### Mobile Application (Firebase App Distribution)
+
+Para nuestra fase de prototipado y validación con usuarios clave, utilizamos un canal de distribución ágil antes del lanzamiento en tiendas oficiales.
+
+- **Plataforma:** Firebase App Distribution.
+
+- **Proceso de Despliegue:**
+
+1. **Compilación:** Generar el paquete binario de la aplicación (.apk para Android o .ipa para iOS) desde el entorno de Flutter.
+
+2. **Carga en Firebase:** Subir el binario a la consola de Firebase en la sección de App Distribution.
+
+3. **Gestión de Testers:** Definir los correos electrónicos de los usuarios de prueba en SATECHO.
+
+4. **Instalación:** Los usuarios reciben una invitación por correo para descargar la aplicación de forma segura a través de la app App Tester.
+
+#### Embedded IoT Application (Firmware Over-The-Air)
+
+El despliegue en hardware requiere un enfoque de actualización remota para evitar la intervención física en cada sensor instalado en el campo.
+
+- **Método:** Actualización remota de firmware (OTA) y Flasheo Serial inicial.
+
+- **Proceso de Despliegue:**
+
+1. **Flasheo Inicial:** Durante la fabricación, se carga la versión estable mediante el Arduino IDE o PlatformIO.
+
+2. **Preparación de Binarios:** Las nuevas versiones se compilan en archivos `.bin.`
+
+3. **Almacenamiento de Updates:** Los binarios se cargan en Azure Blob Storage, el cual actúa como nuestro repositorio de firmware.
+
+4. **Sincronización:** Los dispositivos ESP32 están programados para consultar periódicamente un endpoint de control. Si detectan una versión superior, descargan el binario de forma segura y reinician el sistema con el nuevo firmware.
