@@ -599,7 +599,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 | **Resultados accionables** | Cada resultado debe permitir una acción inmediata sin navegación adicional (EP-004-US010, EP-009-US004) | Tarjetas de resultado con CTAs contextuales ("Regar", "Ver detalles", "Contactar") |
 | **Manejo explícito de "sin resultados"** | En entornos rurales con conectividad intermitente, la ausencia de datos debe comunicarse claramente (EP-004-US008) | Estados vacíos con mensajes explicativos y sugerencias de ajuste de filtros |
 
----
 
 ## Opciones de Búsqueda por Módulo y Rol
 
@@ -627,8 +626,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 6. Usuario hace clic en un registro → modal con diagnóstico y CTA "Regar ahora"
 ```
 
----
-
 ### Módulo: Gestión de Clientes y Reportes (Agrónomo)
 
 **Contexto de búsqueda:** Localizar clientes, recomendaciones y reportes para escalar la asesoría técnica.
@@ -654,8 +651,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 6. Al confirmar, sistema envía recordatorio y actualiza estado a "Recordatorio enviado"
 ```
 
----
-
 ### Módulo: Operaciones y Soporte (Staff/Admin)
 
 **Contexto de búsqueda:** Gestionar cuentas, dispositivos y auditoría con eficiencia operativa.
@@ -680,8 +675,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 6. Al enviar, sistema registra la acción y actualiza estado a "Contactado"
 ```
 
----
-
 ### Módulo: Analytics Estratégico (Product Owner)
 
 **Contexto de búsqueda:** Explorar métricas de negocio para priorizar roadmap y validar hipótesis.
@@ -705,8 +698,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 5. Owner presiona "Crear ticket" → modal pre-llenado con métricas y contexto
 6. Al confirmar, sistema crea ticket en Jira vinculado a esta métrica
 ```
-
----
 
 ## Componentes de Interfaz de Búsqueda
 
@@ -1167,10 +1158,12 @@ Link del Figma: https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?nod
    <img src="./assets/images/applications-Mock-ups/mockup13.png" alt="mockups13">
 </p>
 
-Link del Figma: https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?node-id=62-3&t=xO8wagJEELxWIC7s-1 
+Link del Figma: [https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?node-id=62-3&t=xO8wagJEELxWIC7s-1](https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?node-id=62-3&t=xO8wagJEELxWIC7s-1)
 
 ### 5.4.3. Applications User Flow Diagrams.
+
 ## 5.5. Applications Prototyping.
+
 ## 5.6. IoT Device Design.
 
 ### Diseño del dispositivo IoT
@@ -1180,7 +1173,6 @@ Por un lado, se utiliza la metodología de diseño de dispositivos IoT en 12 pas
 
 <div align="center"> <img src="./assets/images/iot-device-design/design-steps.png" alt="Metodología IoT en 12 pasos"/> </div>
 
----
 ### Paso 1: Definición de los requisitos del sistema
 En este paso se consideran los requisitos generales del sistema IoT relacionados con la capacidad de suministro energético y las restricciones de tiempo de respuesta del dispositivo. Estos requisitos permiten definir posteriormente la arquitectura física, lógica y de comunicación del sistema.
 
@@ -1242,7 +1234,6 @@ En este paso se consideran los requisitos generales del sistema IoT relacionados
   </tr>
 </table>
 
----
 ### Paso 2: Elección de la tipología de sistema IoT
 
 En este paso se identifica la tipología adecuada del sistema IoT considerando las capacidades de alimentación energética y las restricciones de retardo temporal definidas previamente. Esto permite establecer el comportamiento operativo del sistema y orientar las decisiones arquitectónicas de los siguientes pasos.
@@ -1295,7 +1286,6 @@ En este paso se identifica la tipología adecuada del sistema IoT considerando l
   </tr>
 </table>
 
----
 ### Paso 3: Definición de requisitos para la capa física
 
 En este paso se definen los nodos, sensores, actuadores y requerimientos físicos del sistema IoT. Asimismo, se establecen los niveles de precisión esperados, el tipo de señales utilizadas y la capacidad de procesamiento necesaria en el nodo Edge basado en ESP32.
@@ -1373,7 +1363,6 @@ En este paso se definen los nodos, sensores, actuadores y requerimientos físico
   </tr>
 </table>
 
----
 ### Paso 4: Definición de requisitos para la capa de intercambio de datos
 
 En este paso se define la forma en la que los datos son transportados desde el nodo IoT hacia la infraestructura backend. Asimismo, se establecen restricciones de latencia, protocolos de comunicación, topología de red y mecanismos de seguridad para garantizar una transmisión confiable y segura.
@@ -1448,7 +1437,6 @@ En este paso se define la forma en la que los datos son transportados desde el n
   </tr>
 </table>
 
----
 ### Paso 5: Definición de requisitos para la capa de información
 
 En este paso se definen los usuarios finales del sistema IoT, los servicios requeridos por cada uno y la información necesaria para satisfacer dichos servicios. Asimismo, se establece cómo será distribuido el procesamiento entre el nodo Edge (ESP32) y la nube, considerando la arquitectura basada en interrupciones y adaptación de Domain-Driven Design (DDD).
@@ -1578,7 +1566,6 @@ En este paso se definen los usuarios finales del sistema IoT, los servicios requ
   </tr>
 </table>
 
----
 ### Paso 6: Definición de requisitos para la capa de servicios de aplicación
 
 Luego de definir la información y los usuarios del sistema, en este paso se especifican los servicios de aplicación responsables de coordinar la lógica de negocio, la comunicación entre capas y la interacción con las interfaces del sistema IoT. Asimismo, se determina la complejidad computacional asociada a cada servicio.
@@ -1682,7 +1669,6 @@ Luego de definir la información y los usuarios del sistema, en este paso se esp
 - Si un sensor deja de responder o entrega valores inválidos, se genera una alerta de mantenimiento.
 - Los eventos críticos tendrán prioridad de transmisión sobre las lecturas periódicas ambientales.
 
----
 ### Paso 7: Selección de la arquitectura de intercambio de datos e integración de información
 
 Con los requisitos definidos en los pasos anteriores, se selecciona la arquitectura final para las capas de intercambio de datos e integración de información del sistema IoT agrícola.
@@ -1820,7 +1806,6 @@ Asimismo, se evalúan los tiempos de comunicación para verificar que el sistema
   </tr>
 </table>
 
----
 ### Paso 8: Selección de sensores y actuadores
 
 Al tener definida la arquitectura del sistema y los requisitos de comunicación y procesamiento, se seleccionan los sensores y actuadores que cumplen con las necesidades funcionales, eléctricas y de precisión del sistema IoT agrícola.
@@ -1881,7 +1866,6 @@ Al tener definida la arquitectura del sistema y los requisitos de comunicación 
   </tr>
 </table>
 
----
 ### Paso 9: Selección del microcontrolador y transceptores de radio
 
 Luego de seleccionar los sensores y actuadores del sistema, se define el microcontrolador encargado del procesamiento local y el transceptor de radio utilizado para la comunicación inalámbrica con la infraestructura backend.
@@ -1974,7 +1958,6 @@ El ESP32 permite implementar las siguientes capacidades necesarias para el siste
 
 Asimismo, posee suficiente capacidad computacional para ejecutar filtros de suavizado, validación de lecturas, gestión de colas de eventos y lógica de dominio basada en una adaptación de Domain-Driven Design (DDD) para sistemas embebidos.
 
----
 ### Paso 10: Definición del procesamiento de datos en cada nodo y en la nube
 
 En esta etapa se definen los algoritmos responsables del procesamiento de datos dentro del ecosistema IoT agrícola.
@@ -2076,7 +2059,6 @@ Los algoritmos se distribuyen entre el nodo ESP32 (Edge Computing) y el backend 
   </tr>
 </table>
 
----
 ### Paso 11: Análisis del tiempo de procesamiento
 
 Luego de definir los algoritmos implementados tanto en el nodo ESP32 como en el backend, se analiza el esfuerzo computacional asociado considerando complejidad algorítmica, uso de memoria y tiempo de ejecución estimado.
