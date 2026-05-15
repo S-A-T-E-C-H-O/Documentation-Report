@@ -1162,6 +1162,62 @@ Link del Figma: [https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?no
 
 ### 5.4.3. Applications User Flow Diagrams.
 
+#### User flow 1: Registro y Onboarding
+
+ **User Goal:** Como visitante, quiero registrarme en la plataforma, escoger mi rol y comenzar a gestionar mi parcela
+
+**Happy Path**
+
+Inicia cuando el usuario ingresa a la pantalla de inicio de sesión y selecciona la opción “Create Account”. Luego, el sistema le permite escoger el tipo de usuario, ya sea “Farmer” o “Agronomist”, para continuar con el proceso de registro. Después, el usuario completa sus datos personales y crea su cuenta exitosamente. Una vez registrada, la plataforma envía un correo de verificación y el usuario accede a su email para confirmar su cuenta. Tras la verificación exitosa, el sistema redirige nuevamente al login, donde el usuario inicia sesión. Posteriormente, comienza un proceso de configuración inicial guiado mediante varios pasos: primero registra los datos de su propiedad agrícola, luego define las zonas de irrigación, después configura sensores y dispositivos conectados, y finalmente establece los umbrales básicos de monitoreo, como temperatura, humedad y pH. Al completar todos los pasos, la cuenta queda configurada correctamente y el usuario accede al dashboard principal de la plataforma, donde puede visualizar y gestionar toda la información de su sistema agrícola inteligente.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/register_onboarding_happy_path_web.png" alt="Happy_Path"/> </div>
+
+<br>
+
+**Unhappy Path**
+
+El visitante ingresa de datos que son incorrectos o invalidos. Además, el server no respondió el request de la imagen. Para después ver que hay discrepancia entre las zonas que ha esocogido.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/unhappy_onboarding.png" alt="Happy_Path"/> </div>
+
+<br>
+
+#### User flow 2: Login
+
+ **User Goal:** Como visitante, quiero ingresar con mi credenciales a la plataforma y acceder al dashboard
+
+**Happy Path**
+
+Inicia cuando el usuario ingresa a la pantalla de inicio de sesión, escribe sus credenciales correctamente e ingrea al dashboard correspondiente.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/happy_login.png" alt="Happy_Path"/> </div>
+
+<br>
+
+**Unhappy Path**
+
+El visitante ingresa de datos que son incorrectos o están vacíos lo que detendrá el avance al dashboard hasta que se escriba los datos correctos.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/unhappy_login.png" alt="Happy_Path"/> </div>
+
+<br>
+
+#### User flow 3: Dashboard
+
+ **User Goal:** Como usuario, quiero ingresar al dashboard de la plataforma y acceder a las funcionalidades importantes de la aplicación
+
+**Happy Path**
+
+Comienza cuando el usuario accede a la vista principal de la plataforma, donde puede observar un resumen general de su propiedad agrícola, incluyendo métricas de consumo, estado de zonas de irrigación, sensores activos y alertas recientes. Desde allí, el usuario navega al módulo “Zones and Irrigation”, donde monitorea y controla las distintas zonas de riego en tiempo real, visualizando datos como humedad, temperatura y estado operativo de cada sector. Luego, puede acceder al apartado “Historical” para revisar el historial de activaciones y eventos relacionados con el sistema de irrigación. Posteriormente, el usuario ingresa al módulo “Security”, donde visualiza alertas de seguridad y eventos detectados dentro de la propiedad, como movimientos sospechosos o incidencias críticas. Desde esta sección también puede dirigirse a “Configuration”, donde ajusta parámetros de monitoreo, sensibilidad de alertas y reglas de automatización del sistema. Después, el usuario accede al módulo “Devices” para administrar los dispositivos IoT conectados, revisar su estado y verificar su funcionamiento. A continuación, entra a “Notifications”, donde configura las preferencias de notificaciones según el tipo de evento y el canal deseado, incluyendo opciones como correo electrónico, SMS o WhatsApp. Finalmente, el flujo termina en la sección “My Profile”, donde el usuario administra la información de su cuenta, seguridad, credenciales y configuraciones personales del sistema.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/happy_dashboard_web.png" alt="Happy_Path"/> </div>
+
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/happy_dashboard_mobile.png" alt="Happy_Path"/> </div>
+
+<br>
+
+
 ## 5.5. Applications Prototyping.
 
 ## 5.6. IoT Device Design.
