@@ -109,9 +109,224 @@ Uso exclusivo de **Material Symbols (Rounded)**.
 
 ## 5.2. Information Architecture.
 
+En esta sección el equipo plantea las decisiones y sustento que dirigen la manera como se organizará el contenido en las experiencias web y móvil de AgroSafe, incluyendo el Landing Page y las Aplicaciones. Dichas propuestas están orientadas a que los visitantes y usuarios se adapten con facilidad a la funcionalidad de cada producto y puedan encontrar todo aquello que necesiten sin esfuerzo cognitivo excesivo. Se incluyen las decisiones sobre los **Organization Systems**, **Labeling Systems**, **SEO Tags and Meta Tags**, **Navigation Systems** y **Searching Systems**, todas ellas trazadas explícitamente con las User Stories del Capítulo III y los Bounded Contexts definidos en el Event Storming.
+
 ### 5.2.1. Organization Systems.
 
+El sistema de organización de información de AgroSafe aplica diferentes esquemas según el contexto de uso, el rol del usuario y la naturaleza de los datos. A continuación se detalla en qué grupos de información se aplica cada sistema y su justificación basada en necesidades del dominio
+
+### 1. Organización Visual Jerárquica (Visual Hierarchy)
+
+**Aplicación:** Landing Page, Dashboard Principal, Paneles de Configuración.
+
+**Justificación:** La jerarquía visual guía la atención del usuario hacia la información más crítica primero, reduciendo la carga cognitiva y acelerando la toma de decisiones. Este esquema es fundamental para usuarios con baja alfabetización digital (como el segmento de agricultores tradicionales identificado en las entrevistas).
+
+**Implementación por contexto:**
+
+| Contexto | Elementos de Mayor Jerarquía | Elementos Secundarios | User Story Relacionada |
+|----------|----------------------------|---------------------|----------------------|
+| **Landing Page** | Título de propuesta de valor, CTA principal ("Comenzar Prueba Gratis") | Testimonios, enlaces de footer, detalles de planes | EP-001-US001, EP-001-US002 |
+| **Dashboard Agricultor** | Barra de estado global (🟢/🟡/🔴), tarjeta de diagnóstico automático, botón de acción rápida "Regar" | Gráficos históricos, historial de riego, configuración avanzada | EP-002-US001, EP-002-US002, EP-002-US003 |
+| **Dashboard Agrónomo** | Alertas críticas pendientes, tarjetas de parcelas con estado urgente, CTA "Enviar recomendación" | Lista completa de clientes, historial de intervenciones, métricas de adopción | EP-009-US001, EP-009-US002, EP-009-US004 |
+| **Panel Admin** | Cuentas suspendidas o con mora, dispositivos offline >24h, métricas de churn | Lista completa de usuarios, inventario de dispositivos, logs de auditoría | EP-011-US001, EP-010-US001 |
+
+**Principio de diseño:** "Lo crítico primero". Cualquier estado que requiera acción inmediata (estrés hídrico, intrusión humana, cuenta suspendida) se coloca en la parte superior del viewport con indicadores visuales de alto contraste (rojo/amarillo) y iconografía clara.
+
+### 2. Organización Secuencial (Step-by-Step)
+
+**Aplicación:** Wizard de Onboarding, Registro de Dispositivos, Configuración de Umbrales, Generación de Reportes.
+
+**Justificación:** Los flujos complejos que requieren múltiples decisiones se descomponen en pasos secuenciales para reducir la ansiedad del usuario y garantizar que no se omita información crítica. Este esquema es esencial para cumplir con los criterios de aceptación de las User Stories de onboarding y configuración.
+
+### 3. Organización Matricial (Matrix/Grid)
+
+**Aplicación:** Dashboard Multi-Parcela (Agrónomo), Tabla de Dispositivos, Heatmap de Adopción (Analytics).
+
+**Justificación:** Cuando el usuario necesita comparar múltiples entidades simultáneamente (parcelas, dispositivos, métricas), la organización matricial permite escaneo rápido y identificación de patrones. Este esquema es crítico para roles que gestionan múltiples clientes o grandes volúmenes de datos.
+
+**Implementación por contexto:**
+
+| Contexto | Ejes de la Matriz | Beneficio para el Usuario | User Story Relacionada |
+|----------|------------------|-------------------------|----------------------|
+| **Dashboard Multi-Parcela** | Filas: Clientes/Parcelas • Columnas: Métricas clave (humedad, EC, estado) | Identificación rápida de parcelas que requieren atención sin navegar a detalles | EP-009-US001 |
+| **Tabla de Dispositivos** | Filas: Dispositivos • Columnas: Estado, batería, última actividad, acciones | Gestión eficiente de flota con filtrado y acciones masivas | EP-004-US019, EP-010-US001 |
+| **Heatmap de Adopción** | Filas: Funcionalidades • Columnas: Frecuencia de uso por segmento | Priorización de roadmap basada en evidencia de uso real | EP-012-US023 |
+
+**Principio de diseño:** "Comparar sin navegar". El usuario debe poder identificar diferencias y tomar decisiones sin hacer clic en cada elemento individual.
+
+---
+
+### Esquemas de Categorización de Contenido
+
+Adicionalmente a la organización visual, AgroSafe aplica diferentes esquemas de categorización según el tipo de información y la audiencia objetivo.
+
+#### 1. Categorización por Tópicos (Topical)
+
+**Aplicación:** Menú de navegación principal, módulos del dashboard, secciones de configuración.
+
+**Justificación:** Los usuarios buscan funcionalidades por tarea ("quiero regar", "quiero ver alertas"), no por estructura técnica. La categorización tópica alinea la arquitectura de información con el lenguaje ubicuo del dominio.
+### 3. Organización Matricial (Matrix/Grid)
+
+**Aplicación:** Dashboard Multi-Parcela (Agrónomo), Tabla de Dispositivos, Heatmap de Adopción (Analytics).
+
+**Justificación:** Cuando el usuario necesita comparar múltiples entidades simultáneamente (parcelas, dispositivos, métricas), la organización matricial permite escaneo rápido y identificación de patrones. Este esquema es crítico para roles que gestionan múltiples clientes o grandes volúmenes de datos.
+
+**Implementación por contexto:**
+
+| Contexto | Ejes de la Matriz | Beneficio para el Usuario | User Story Relacionada |
+|----------|------------------|-------------------------|----------------------|
+| **Dashboard Multi-Parcela** | Filas: Clientes/Parcelas • Columnas: Métricas clave (humedad, EC, estado) | Identificación rápida de parcelas que requieren atención sin navegar a detalles | EP-009-US001 |
+| **Tabla de Dispositivos** | Filas: Dispositivos • Columnas: Estado, batería, última actividad, acciones | Gestión eficiente de flota con filtrado y acciones masivas | EP-004-US019, EP-010-US001 |
+| **Heatmap de Adopción** | Filas: Funcionalidades • Columnas: Frecuencia de uso por segmento | Priorización de roadmap basada en evidencia de uso real | EP-012-US023 |
+
+**Principio de diseño:** "Comparar sin navegar". El usuario debe poder identificar diferencias y tomar decisiones sin hacer clic en cada elemento individual.
+
+---
+
+### Esquemas de Categorización de Contenido
+
+Adicionalmente a la organización visual, AgroSafe aplica diferentes esquemas de categorización según el tipo de información y la audiencia objetivo.
+
+#### 1. Categorización por Tópicos (Topical)
+
+**Aplicación:** Menú de navegación principal, módulos del dashboard, secciones de configuración.
+
+**Justificación:** Los usuarios buscan funcionalidades por tarea ("quiero regar", "quiero ver alertas"), no por estructura técnica. La categorización tópica alinea la arquitectura de información con el lenguaje ubicuo del dominio.
+
+#### 2. Categorización por Audiencia (Audience-Based)
+
+**Aplicación:** Landing Page, flujos de registro, dashboards role-specific.
+
+**Justificación:** Agricultores y agrónomos tienen necesidades, lenguaje y niveles de expertise distintos. Separar la experiencia por audiencia reduce la fricción de descubrimiento y mejora la relevancia del contenido.
+
+**Implementación:**
+
+| Punto de Contacto | Segmento Agricultor | Segmento Agrónomo | Justificación |
+|------------------|-------------------|------------------|--------------|
+| **Landing Page** | Sección "Para Agricultores": beneficios de ahorro de agua, control remoto, seguridad | Sección "Para Agrónomos": escalabilidad de asesoría, reportes profesionales, gestión multi-cliente | EP-001-US001 vs EP-001-US005 |
+| **Registro** | Toggle "Soy Agricultor" muestra campos: cultivo, hectáreas, dispositivos propios | Toggle "Soy Agrónomo" muestra campos: colegiatura, especialidad, años de experiencia | EP-001-US002 |
+| **Dashboard** | Vista de una parcela, acciones operativas (regar, configurar alertas) | Vista multi-parcela, acciones consultivas (recomendar, reportar, ajustar umbrales) | EP-002-US001 vs EP-009-US001 |
+| **Configuración** | Umbrales por zona, notificaciones personales | Plantillas de cultivo, permisos por cliente, historial de intervenciones | EP-002-US018 vs EP-009-US005 |
+
+#### 3. Categorización Cronológica (Chronological)
+
+**Aplicación:** Historial de riego, timeline de eventos de seguridad, logs de auditoría, reportes generados.
+
+**Justificación:** Cuando el usuario necesita entender la evolución temporal de un fenómeno (estrés hídrico, intrusiones, cambios de configuración), el orden cronológico es el esquema más intuitivo.
+#### 2. Categorización por Audiencia (Audience-Based)
+
+**Aplicación:** Landing Page, flujos de registro, dashboards role-specific.
+
+**Justificación:** Agricultores y agrónomos tienen necesidades, lenguaje y niveles de expertise distintos. Separar la experiencia por audiencia reduce la fricción de descubrimiento y mejora la relevancia del contenido.
+
+**Implementación:**
+
+| Punto de Contacto | Segmento Agricultor | Segmento Agrónomo | Justificación |
+|------------------|-------------------|------------------|--------------|
+| **Landing Page** | Sección "Para Agricultores": beneficios de ahorro de agua, control remoto, seguridad | Sección "Para Agrónomos": escalabilidad de asesoría, reportes profesionales, gestión multi-cliente | EP-001-US001 vs EP-001-US005 |
+| **Registro** | Toggle "Soy Agricultor" muestra campos: cultivo, hectáreas, dispositivos propios | Toggle "Soy Agrónomo" muestra campos: colegiatura, especialidad, años de experiencia | EP-001-US002 |
+| **Dashboard** | Vista de una parcela, acciones operativas (regar, configurar alertas) | Vista multi-parcela, acciones consultivas (recomendar, reportar, ajustar umbrales) | EP-002-US001 vs EP-009-US001 |
+| **Configuración** | Umbrales por zona, notificaciones personales | Plantillas de cultivo, permisos por cliente, historial de intervenciones | EP-002-US018 vs EP-009-US005 |
+
+#### 3. Categorización Cronológica (Chronological)
+
+**Aplicación:** Historial de riego, timeline de eventos de seguridad, logs de auditoría, reportes generados.
+
+**Justificación:** Cuando el usuario necesita entender la evolución temporal de un fenómeno (estrés hídrico, intrusiones, cambios de configuración), el orden cronológico es el esquema más intuitivo.
+
+**Filtros cronológicos disponibles:**
+- Rango de fechas personalizado (date picker)
+- Atajos: "Hoy", "Últimos 7 días", "Este mes", "Personalizado"
+- Agrupación opcional: por día, por semana, por mes
+
+#### 4. Categorización Alfabética (Alphabetical)
+
+**Aplicación:** Listas de clientes (agronómo), catálogo de dispositivos en inventario, selección de cultivos en dropdowns.
+
+**Justificación:** Cuando el usuario necesita encontrar un elemento específico dentro de un conjunto grande y conocido (nombre de cliente, serie de dispositivo, tipo de cultivo), el orden alfabético reduce el tiempo de búsqueda.
+
+**Implementación:**
+
+| Contexto | Elementos Ordenados Alfabéticamente | Búsqueda Complementaria |
+|----------|-----------------------------------|------------------------|
+| Gestión de Clientes (Agrónomo) | Lista de clientes por nombre/apellido | Buscador por nombre/email/RUC |
+| Catálogo de Dispositivos (Admin) | Dispositivos por número de serie | Filtros por tipo, estado, cliente |
+| Selector de Cultivo | Dropdown de cultivos: [Arándano, Café, Maíz, Palta, Uva...] | Búsqueda dentro del dropdown |
+
+**Principio de diseño:** "Alfabético + búsqueda". El orden alfabético facilita el escaneo, pero se complementa siempre con un campo de búsqueda para usuarios que conocen exactamente lo que buscan.
+
 ### 5.2.2. Labeling Systems.
+
+El sistema de etiquetado de AgroSafe prioriza la simplicidad, la claridad y la consistencia con el lenguaje ubicuo definido en el Capítulo II. Cada etiqueta está diseñada para representar conjuntos de información con el mínimo número de palabras, evitando ambigüedades y reduciendo la carga cognitiva para usuarios con diversos niveles de expertise técnico.
+
+### Principios de Etiquetado
+
+1. **Máximo 3 palabras por etiqueta de navegación**: Facilita el escaneo rápido en menús y botones.
+2. **Verbos de acción para CTAs**: "Regar", "Configurar", "Enviar" en lugar de sustantivos abstractos.
+3. **Icono + texto para acciones críticas**: Refuerza el significado mediante redundancia visual (accesibilidad).
+4. **Consistencia cross-role**: Mismos términos para mismos conceptos en todos los roles (ej: "Zona de Riego" no cambia entre agricultor y agrónomo).
+5. **Lenguaje ubicuo explícito**: Términos del glosario de dominio aparecen tal cual en la UI (ej: "Estrés Hídrico", no "Falta de agua").
+
+### Etiquetas de Navegación Principal
+
+| Etiqueta          | Contexto de Uso                  | Término en Ubiquitous Language | User Story Vinculada       |
+| ----------------- | -------------------------------- | ------------------------------ | -------------------------- |
+| **Dashboard**     | Menú principal (todos los roles) | Real-Time Soil Dashboard       | EP-002-US001, EP-009-US001 |
+| **Riego**         | Menú agricultor                  | Irrigation Control             | EP-002-US003, EP-002-US004 |
+| **Seguridad**     | Menú agricultor                  | Perimeter Security             | EP-003-US005, EP-003-US006 |
+| **Dispositivos**  | Menú agricultor/admin            | IoT Device Management          | EP-004-US017, EP-004-US019 |
+| **Clientes**      | Menú agrónomo                    | Client Management              | EP-009-US001, EP-009-US002 |
+| **Reportes**      | Menú agrónomo                    | Technical Report Generation    | EP-009-US003               |
+| **Configuración** | Menú principal (todos)           | Configuration & Preferences    | EP-002-US018, EP-008-US020 |
+
+
+### Etiquetas de Estados y Alertas
+
+| Estado      | Etiqueta Visual        | Color              | Significado para el Usuario        | Política de Negocio Vinculada          |
+| ----------- | ---------------------- | ------------------ | ---------------------------------- | -------------------------------------- |
+| Óptimo      | "Dentro de rango"      | Verde (#4CAF50)    | No se requiere acción              | Umbral superior/inferior no superado   |
+| Advertencia | "Cercano al límite"    | Amarillo (#FBC02D) | Monitorear, posible acción pronto  | Valor dentro de 10% del umbral crítico |
+| Crítico     | "Requiere atención"    | Rojo (#D32F2F)     | Acción inmediata recomendada       | Umbral crítico superado                |
+| Offline     | "Sin conexión"         | Gris (#9E9E9E)     | Verificar dispositivo/conectividad | Heartbeat no recibido en 5 min         |
+| Silenciado  | "Modo silencio activo" | Gris con icono     | Alertas no críticas pausadas       | Horario de silencio configurado        |
+
+### Etiquetas de Acciones (CTAs)
+
+| Acción               | Etiqueta del Botón     | Contexto                    | Criterio de Aceptación Vinculado                                                                       |
+| -------------------- | ---------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Activar riego        | "Regar [Zona]"         | Dashboard, Control de Riego | EP-002-US003: "Then the system sends the command, confirms the start"                                  |
+| Detener riego        | "Detener Riego"        | Cuando riego está activo    | EP-002-US004: "Then the system asks for confirmation, stops the water flow"                            |
+| Configurar umbrales  | "Ajustar Umbrales"     | Configuración, Dashboard    | EP-002-US018: "Then the system warns me of the risk, allows me to confirm"                             |
+| Enviar recomendación | "Enviar Recomendación" | Dashboard Agrónomo          | EP-009-US004: "Then I can send it to the farmer via WhatsApp, backed by sensor data"                   |
+| Generar reporte      | "Generar Reporte"      | Panel Agrónomo              | EP-009-US003: "Then the system compiles data, charts, and recommendations into an exportable document" |
+| Ver detalles         | "Ver Detalles"         | Tablas, listas de eventos   | Criterio transversal: acceso a información contextual sin saturar la vista principal                   |
+
+### Etiquetas de Parámetros Técnicos (Para Usuarios No Técnicos)
+
+Para garantizar que agricultores con baja alfabetización técnica comprendan los datos, los parámetros técnicos se etiquetan con lenguaje natural + tooltip explicativo:
+
+| Parámetro Técnico         | Etiqueta en UI         | Tooltip Explicativo                                             | Valor de Referencia Visible |
+| ------------------------- | ---------------------- | --------------------------------------------------------------- | ------------------------- |
+| `soil_moisture_pct`       | "Humedad del Suelo"    | "Agua disponible para las raíces. Óptimo: 35-55%"               | "42% Dentro de rango"     |
+| `electrical_conductivity` | "Salinidad (EC)"       | "Concentración de sales. >2.5 puede bloquear absorción de agua" | "2.1 dS/m Cercano al límite" |
+| `soil_ph`                 | "Acidez (pH)"          | "Nivel de acidez. Óptimo para maíz: 5.5-7.5"                    | "6.8 Óptimo"              |
+| `soil_temperature`        | "Temperatura de Suelo" | "Afecta absorción de nutrientes. Óptimo: 18-28°C"               | "24°C +2°C vs ayer"       |
+| `pir_classification`      | "Evento Perimetral"    | "Clasificación de movimiento detectado"                         | "Humano (92% confianza)"  |
+
+**Principio de diseño:** "Técnico para expertos, simple para todos". Los valores numéricos están disponibles para usuarios avanzados (tooltip o vista de detalles), pero la etiqueta principal comunica el significado en lenguaje natural.
+
+### Consistencia Cross-Platform
+
+Las etiquetas se mantienen consistentes entre web y móvil para reducir la curva de aprendizaje:
+
+| Funcionalidad | Etiqueta Web          | Etiqueta Móvil | Justificación                                       |
+| ------------- | -------------------- | -------------- | --------------------------------------------------- |
+| Activar riego | "Regar Zona Nort      | "Regar Norte"  | Móvil: abreviación por espacio, mismo icono y verbo |
+| Ver alertas   | "Ver Alertas (        | "3 Alertas"    | Móvil: prioridad al contador, mismo icono           |
+| Configuración | "Configurac           | "Ajustes"      | Sinónimos aceptados por consistencia semántica      |
+| Historial  "Historial de Riego" iego" | "Riegos"       | Móvil: simplificación por contexto implícito        |
+
+**Validación de etiquetas:** Antes de cada release, el equipo de UX realiza pruebas de comprensión con usuarios reales (agricultores y agrónomos) para asegurar que las etiquetas sean intuitivas y no generen ambigüedad.
 
 ### 5.2.3. SEO Tags and Meta Tags
 
