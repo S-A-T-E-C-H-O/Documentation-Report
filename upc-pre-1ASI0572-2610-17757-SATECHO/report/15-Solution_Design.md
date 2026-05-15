@@ -1164,7 +1164,7 @@ Link del Figma: [https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?no
 
 #### User flow 1: Registro y Onboarding
 
- **User Goal:** Como visitante, quiero registrarme en la plataforma, escoger mi rol, ingresar y comenzar a gestionar mi parcela
+ **User Goal:** Como visitante, quiero registrarme en la plataforma, escoger mi rol y comenzar a gestionar mi parcela
 
 **Happy Path**
 
@@ -1176,11 +1176,13 @@ Inicia cuando el usuario ingresa a la pantalla de inicio de sesión y selecciona
 
 **Unhappy Path**
 
-El visitante intenta ingresar con un correo equivocado o deja campos obligatorios vacíos. El sistema muestra mensajes de error en los campos correspondientes y bloquea el avance hasta que los datos sean corregidos.
+El visitante ingresa de datos que son incorrectos o invalidos. Además, el server no respondió el request de la imagen. Para después ver que hay discrepancia entre las zonas que ha esocogido.
 
-<div align="center"> <img src="./assets/images/userflow-wireflows/unhappy_login.png" alt="Happy_Path"/> </div>
+<div align="center"> <img src="./assets/images/userflow-wireflows/unhappy_onboarding.png" alt="Happy_Path"/> </div>
 
 <br>
+
+
 
 ## 5.5. Applications Prototyping.
 
