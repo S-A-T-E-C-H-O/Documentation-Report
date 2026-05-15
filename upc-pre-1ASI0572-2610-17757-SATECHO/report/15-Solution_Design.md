@@ -110,83 +110,6 @@ Uso exclusivo de **Material Symbols (Rounded)**.
 ## 5.2. Information Architecture.
 ### 5.2.1. Organization Systems.
 ### 5.2.2. Labeling Systems.
-
-En esta sección se presenta el sistema de etiquetado (labeling system) para el ecosistema integral de SATECHO. Este sistema prioriza la claridad semántica, la sencillez visual y el uso de términos familiares para el sector agrícola, manteniendo la estética de "Profesionalismo Orgánico" definida en nuestros estándares.
-
-Se ha buscado una coherencia absoluta entre el lenguaje técnico de los agrónomos y el lenguaje operativo de los agricultores, facilitando la adopción tecnológica y reduciendo la carga cognitiva en entornos de campo.
-
-### A. Landing Page
-El etiquetado en el sitio público utiliza un lenguaje directo, tecnológico y enfocado en la eficiencia de recursos.
-
-#### Navigation Sections:
-*   **Inicio:** Sección de bienvenida con la propuesta de valor de agricultura inteligente.
-*   **Funcionalidades:** Detalle técnico de los sensores, automatización y análisis de datos.
-*   **Planes:** Modelos de suscripción adaptados al tamaño de la operación (Hectáreas).
-*   **Demo:** Acceso a una vista previa interactiva del panel de control.
-*   **Contacto:** Canal directo para asesoría técnica y comercial.
-
-#### Call-to-Action Buttons (CTA):
-*   **"Registrarse" / "Probar gratis":** Invita al usuario a iniciar la configuración de su predio.
-*   **"Iniciar Sesión":** Acceso seguro para usuarios registrados (Agricultores, Agrónomos, Admins).
-*   **"Solicitar Demo":** Petición de asesoría personalizada.
-*   **"Contactar experto":** Enlace directo a soporte o ventas vía WhatsApp.
-
-### B. Web Application 
-El etiquetado se adapta dinámicamente según el rol del usuario para optimizar los flujos de trabajo especializados.
-
-#### Farmer Dashboard
-*   **Dashboard:** Resumen operativo de clima, estado de zonas y alertas críticas hoy.
-*   **Zonas y Riego:** Control directo de válvulas y monitoreo de humedad/EC por parcela.
-*   **Seguridad:** Visualización de eventos de cámaras y alertas perimetrales.
-*   **Dispositivos:** Listado técnico de salud de sensores, puertas de enlace (Edge) y baterías.
-*   **Historial:** Registro histórico de riegos ejecutados (automáticos y manuales).
-
-#### Agronomist Dashboard:
-*   **Cartera de Clientes:** Listado de predios bajo supervisión con indicadores de riesgo.
-*   **Análisis Pro:** Herramientas de comparación de datos históricos y tendencias de suelo.
-*   **Recomendaciones:** Módulo para redactar y enviar propuestas técnicas a los agricultores.
-*   **Agenda:** Calendario de visitas técnicas programadas a campo.
-
-#### Administration Dashboard (Admin):
-*   **Infraestructura:** Estado global de servidores, nodos IoT y conectividad rural.
-*   **Usuarios:** Gestión de permisos y roles del sistema.
-*   **Configuración Global:** Ajuste de umbrales por defecto y ventanas de mantenimiento.
-
-### C. Mobile Application
-Optimizada para la consulta rápida y la operación táctil en exteriores, utiliza etiquetas concisas en español.
-
-#### Bottom Navigation Bar:
-*   **Inicio:** Resumen de "Hoy" y acceso rápido a riegos pendientes.
-*   **Parcelas:** Mapa o lista de sectores con telemetría en tiempo real.
-*   **Alertas:** Centro de notificaciones urgentes (Humedad crítica, Fallo de sensor).
-*   **Tareas:** Lista de actividades programadas o recomendaciones del agrónomo.
-*   **Más:** Acceso a perfil, ajustes de notificaciones y modo offline.
-
-### D. Form Labels and Operational Buttons
-Estandarización de entradas de datos para garantizar la integridad de la base de datos agrícola.
-
-#### Form Fields:
-*   **"Nombre del Predio":** Identificador de la finca o instalación.
-*   **"Superficie (ha)":** Tamaño de la operación en hectáreas.
-*   **"Tipo de Cultivo":** Selección (Maíz, Soja, Trigo, etc.) para aplicar umbrales biológicos.
-*   **"Humedad Actual (%)":** Lectura porcentual del sensor de suelo.
-*   **"Umbral Crítico":** Punto de activación de alerta automática.
-
-#### Operational Action Buttons:
-*   **"Abrir Válvula" / "Cerrar Válvula":** Comandos manuales de irrigación.
-*   **"Registrar Actividad":** Botón para documentar fertilización u observaciones.
-*   **"Sincronizar":** Forzar actualización de datos en zonas de baja conectividad.
-*   **"Guardar Configuración":** Confirma cambios en umbrales o horarios.
-*   **"Marcar como revisado":** Resuelve visualmente un evento de seguridad.
-
-### E. IoT Interface 
-Etiquetas minimalistas para pantallas de cristal líquido (LCD) de 16x2 caracteres.
-
-*   **"Hum. Suelo":** Etiqueta para el valor de humedad.
-*   **"Temp. Amb":** Temperatura capturada por el nodo.
-*   **"Válvula: ON/OFF":** Estado del actuador de riego.
-*   **"Buscando WiFi...":** Estado de conexión del dispositivo ESP32.
-
 ### 5.2.3. SEO Tags and Meta Tags
 ### 5.2.4. Searching Systems.
 ### 5.2.5. Navigation Systems.
@@ -255,6 +178,16 @@ Información de contacto corporativa, enlaces legales (Privacidad, Términos) y 
 ### 5.3.2. Landing Page Mock-up.
 ## 5.4. Applications UX/UI Design.
 ### 5.4.1. Applications Wireframes.
+
+En esta fase, hemos desarrollado de manera conjunta los wireframes para visualizar detalladamente la arquitectura y el diseño de las interfaces de usuario. Gracias a este esfuerzo colaborativo, transformamos los requisitos funcionales en esquemas gráficos precisos, definiendo así la distribución y presentación de cada componente en la aplicación definitiva.
+
+#### Web Application Wireframes
+
+Para la versión de escritorio, el diseño se enfocó en maximizar el uso del espacio en pantalla, estableciendo una jerarquía visual clara y una navegación expansiva.
+
+#### Mobile Application Wireframes
+En la versión móvil, la prioridad fue la optimización del espacio, la ergonomía y la accesibilidad táctil.
+
 ### 5.4.2. Applications Wireflow Diagrams.
 ### 5.4.2. Applications Mock-ups.
 ### 5.4.3. Applications User Flow Diagrams.
