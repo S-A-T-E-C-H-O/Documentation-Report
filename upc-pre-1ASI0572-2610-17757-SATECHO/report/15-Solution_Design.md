@@ -1182,7 +1182,25 @@ El visitante ingresa de datos que son incorrectos o invalidos. Además, el serve
 
 <br>
 
+#### User flow 2: Login
 
+ **User Goal:** Como visitante, acceder a la plataforma y visualizar el dashboard de mi parcela
+
+**Happy Path**
+
+Inicia cuando el usuario ingresa a la pantalla de inicio de sesión, escribe sus credenciales correctamente e ingrea al dashboard correspondiente.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/happy_login.png" alt="Happy_Path"/> </div>
+
+<br>
+
+**Unhappy Path**
+
+El visitante ingresa de datos que son incorrectos o están vacíos lo que detendrá el avance al dashboard hasta que se escriba los datos correctos.
+
+<div align="center"> <img src="./assets/images/userflow-wireflows/unhappy_login.png" alt="Happy_Path"/> </div>
+
+<br>
 
 ## 5.5. Applications Prototyping.
 
