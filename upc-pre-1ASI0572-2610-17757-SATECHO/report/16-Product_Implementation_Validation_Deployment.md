@@ -338,3 +338,88 @@ El despliegue en hardware requiere un enfoque de actualización remota para evit
 3. **Almacenamiento de Updates:** Los binarios se cargan en Azure Blob Storage, el cual actúa como nuestro repositorio de firmware.
 
 4. **Sincronización:** Los dispositivos ESP32 están programados para consultar periódicamente un endpoint de control. Si detectan una versión superior, descargan el binario de forma segura y reinician el sistema con el nuevo firmware.
+
+## 6.2. Landing Page, Services & Applications Implementation
+
+Tras consolidar los cimientos estratégicos del proyecto —trasladando los requisitos de negocio hacia un diseño de arquitectura robusto (C4 y diagramas de clase) y validando la experiencia de usuario (UX) mediante prototipos de alta fidelidad— entramos en la fase de materialización digital. En este apartado, la abstracción se convierte en ejecución: cada componente de la solución, desde la lógica embebida en los sensores hasta la interfaz de gestión en la nube, se desarrolla bajo un estándar de ingeniería de software de alto nivel.
+
+El ecosistema de SATECHO se despliega a través de una suite de productos interconectados que comprenden:
+
+- **Interfaces de Usuario:** Landing Page (captación), Aplicación Web (administración) y Aplicación Móvil (monitoreo en campo).
+
+- **Núcleo de Datos:** REST API (procesamiento central) y Edge Services (gestión de latencia).
+
+- **Hardware Layer:** Aplicación embebida para el control y lectura de sensores en tiempo real.
+
+Para garantizar una entrega continua y controlada, la implementación se ha orquestado en tres ciclos iterativos (Sprints). Cada Sprint actúa como un hito evolutivo donde los objetivos definen el alcance técnico, permitiendo que la solución crezca de forma modular, segura y, sobre todo, alineada con las necesidades reales del sector agrícola.
+
+### 6.2.1. Sprint 1
+
+Dentro de este primer sprint, detallamos el proceso completo de implementación, pruebas, documentación y despliegue de los distintos componentes que conforman la solución DittoBox. Esto incluye el desarrollo de nuestra Landing Page, que sirve como punto de entrada y presentación de nuestro producto al público general, así como la implementación de los Servicios Web, Aplicaciones Web, Aplicaciones Móviles y Aplicaciones Embebidas que constituyen el núcleo funcional de nuestra propuesta.
+
+A lo largo de esta sección, explicamos cómo hemos abordado cada fase del ciclo de vida del desarrollo de software para estos componentes, desde la planificación inicial y el diseño, hasta la ejecución de pruebas y el despliegue en entornos de producción. Detallamos las tecnologías utilizadas, los desafíos enfrentados y las soluciones implementadas para asegurar que cada componente cumpla con los requisitos establecidos y proporcione una experiencia de usuario óptima.
+
+#### 6.2.1.1. Sprint Planning 1
+
+<table>
+  <tr>
+    <td>Sprint #</td>
+    <td>Sprint 1</td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>Sprint Planning Background</strong></td>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td>2026-05-06</td>
+  </tr>
+  <tr>
+    <td>Time</td>
+    <td>21:35 p.m (GMT-5)</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>Remoto, mediante la plataforma de reuniones Discord</td>
+  </tr>
+  <tr>
+    <td>Prepared By</td>
+    <td>Huamani Sánchez, José Diego</td>
+  </tr>
+  <tr>
+    <td>Attendees (to planning meeting)</td>
+    <td>Estrada Cajamune, Abraham Andrés / Gamio Upiachihua, Brenda Lucía / Quispe Erasmo, Raul Ronaldo / Palacios, Yasser Renteria </td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>Sprint Goal & User Stories</strong></td>
+  </tr>
+  <tr>
+    <td>Sprint 1 Goal</td>
+    <td>
+El objetivo de este primer Sprint es establecer la base de identidad digital y la arquitectura funcional inicial de SATECHO, centrándose en el despliegue de una Landing Page de alto impacto orientada a captar clientes potenciales del sector agrícola y agrónomos interesados en la integridad de datos. Nos enfocaremos en proyectar nuestra solución como el fin de las suposiciones empíricas sobre el riego y la iluminación, sustituyéndolas por un monitoreo automatizado y veraz. <br> Simultáneamente, desarrollaremos el núcleo de la Web Application, implementando un sistema de Authentication Management y un Dashboard preliminar mediante un Fake API para validar la navegación, las reglas de acceso y la visualización de datos. <br> Con este avance, buscamos confirmar la viabilidad del flujo de usuario y la solidez de la interfaz, asegurando que nuestra infraestructura sea capaz de transformar la incertidumbre del campo en decisiones precisas y seguras desde cualquier dispositivo inteligente.
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 1 Velocity</td>
+    <td>41</td>
+  </tr>
+  <tr>
+    <td>Sum of Story Points</td>
+    <td>41</td>
+  </tr>
+</table>
+
+#### 6.2.1.2. Aspect Leaders and Collaborations
+
+#### 6.2.1.3. Sprint Backlog 3
+
+#### 6.2.1.4. Development Evidence for Sprint Review
+
+#### 6.2.1.5. Testing Suite Evidence for Sprint Review
+
+#### 6.2.1.6. Execution Evidence for Sprint Review
+
+#### 6.2.1.7. Services Documentation Evidence for Sprint Review
+
+#### 6.2.1.8. Software Deployment Evidence for Sprint Review
+
+#### 6.2.1.9. Team Collaborations Insights during Sprint
