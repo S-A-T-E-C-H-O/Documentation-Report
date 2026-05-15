@@ -500,6 +500,146 @@ Dado el carácter de este primer sprint, enfocado en el despliegue visual de la 
 
 #### 6.2.1.6. Execution Evidence for Sprint Review
 
+En este apartado, se presenta la ejecución de los productos digitales desarrollados en esta primer sprint junto con su evidencia de despliegue para el acceso desde cualquier dispositivo y por cualquier usuario.
+
+Es de esta manea que se se muestran las capturas de pantalla y enlaces de acceso a cada producto implementado para reflejar el resultado y el recorrido relacionado a la usabilidad que el usuario tengan dentro de las mismas.
+
+#### Landing Page
+
+En primera instancia, se evidencia la ejecución oficial alcanzanda del desarrollo de la Landing Page para este Sprint 1, consolidando sus objetivos en habilitar secciones clave para que los visitantes a la página puedan comprender el giro del negocio, la propuesta de valor ofrecida y la infomración asociada a los grandes resultados que lograron otros clientes al utilizar nuestro servicio.
+
+A continuación, se presenta el vídeo de demostración donde se evidencia la navegación y los flujos implementados en la interación de los cuales vienen a ser:
+
+- **Acerca de nosotros:** Sección que muestra información sobre la startup SATECHO.
+- **Beneficios:** Sección que presenta los beneficios que ofrece la plataforma para cada segmento objetivo.
+- **Planes de pagos:** Sección que muestra los diferentes planes de pago con los diversos beneficios que ofrece para el monitoreo/sewguimiento del cultivo.
+
+![Referential Video - Landing Page](./assets/images/sprint-1/Landing-Page-Execution-Video.png)
+
+**Landing Page - SATECHO:** [Landing Page - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/IQAzgRZhyeACQ7t-xSswqGFuAROOoE3IEV-bGoTvCeJOn-M?e=hGWKTQ&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
+
+**Sección Hero**
+
+Introduce la propuesta de valor central de la plataforma mediante un mensaje de impacto y un llamado a la acción diseñado para cautivar a agricultores y agrónomos desde el primer segundo.
+
+![Hero-Section](./assets/images/sprint-1/Hero-Section.png)
+
+**Beneficios**
+
+Detalla de forma visual y analítica las ventajas competitivas del sistema, destacando la eliminación de suposiciones empíricas gracias al monitoreo automatizado de variables críticas en tiempo real.
+
+![Benefits-Section](./assets/images/sprint-1/Benefits-Section.png)
+
+**Registro - Segmento Objetivo Agrónomo**
+
+Punto de conversión estratégico diseñado para captar perfiles técnicos agrícolas, permitiéndoles registrarse para acceder a un ecosistema optimizado de toma de decisiones basada en datos veraces.
+
+![Register-Section](./assets/images/sprint-1/Register-Section.png)
+
+**Demo Promocional**
+
+Espacio audiovisual interactivo que evidencia el funcionamiento práctico de nuestras interfaces web y móviles, validando la navegación del ecosistema automatizado ante potenciales clientes.
+
+![Promotional-Section](./assets/images/sprint-1/Promotional-Demo-Section.png)
+
+**Planes de Pago**
+
+Matriz comercial transparente que desglosa las opciones de suscripción, adaptando los servicios de monitoreo a las necesidades operativas de pequeños productores y grandes empresas agrícolas.
+
+![Payment-Plans-Section](./assets/images/sprint-1/Payment-Plans-Section.png)
+
+**Formulario de Contacto**
+
+Canal de comunicación directa diseñado para resolver consultas personalizadas, facilitando un puente directo entre el equipo de soporte técnico y los usuarios interesados en la tecnología.
+
+![Contact-Forms-Section](./assets/images/sprint-1/Forms-Contact-Section.png)
+
+**Footer**
+
+Cierre institucional que consolida los enlaces de navegación rápida, políticas legales, redes sociales y derechos reservados, reafirmando la identidad corporativa y seriedad de la organización.
+
+![Footer-Section](./assets/images/sprint-1/Footer-Section.png)
+
+#### Web Application
+
+Por consiguiente, la sección sobre el **Web Application** evidencia el desarrollo para la navegación e interacción del usuario - comenzando por el registro de su cuenta, hasta la visualización de cada uno de los módulos para el monitoreo y configuración tanto de su perfil de usuario como las hectáreas que está realizando seguimiento. 
+
+Mediante el siguiente vídeo, se evidencias los flujos implementados de los cuales podemos apreciar los siguientes:
+
+[Referential Video - Web Application](./assets/images/sprint-1/Web-Application-Execution-Evidence.png)
+
+**Landing Page - SATECHO:** [Web Application - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/IQChu96vm6jCSLCSP2Y-AbjgAZ4_lsSfu0sH6sJZoUdHH9g?e=9Dnaaf&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
+
+**Login**
+
+Interfaz de acceso seguro que valida las credenciales del usuario, garantizando un ingreso protegido al ecosistema de monitoreo de la plataforma.
+
+![Login-Section](./assets/images/sprint-1/Login-Section.png)
+
+**Create Account**
+
+Formulario de registro inicial estructurado para recopilar los datos esenciales e iniciar el flujo de alta en el sistema.
+
+![Create-Account-Section](./assets/images/sprint-1/Create-Account-Section.png)
+
+**User Account**
+
+Sección de tipificación donde se define la identidad y el rol específico del usuario dentro de la infraestructura de control.
+
+![User-Account-Section](./assets/images/sprint-1/User-Account-Section.png)
+
+**Password**
+
+Módulo de seguridad dedicado a la creación y validación de contraseñas robustas bajo criterios exigentes de protección de datos.
+
+![Password-Section](./assets/images/sprint-1/Password-Section.png)
+
+**Succesfully Creation Account**
+
+Pantalla de confirmación y éxito que valida la correcta persistencia del nuevo perfil antes de avanzar a la configuración operativa.
+
+![Successfully-Creation-Account-Section](./assets/images/sprint-1/Succefully-Creation-Account.png)
+
+**Configuration Profile**
+
+Asistente secuencial de parametrización donde el usuario configura sus datos, establece umbrales de riego y pre-selecciona los dispositivos IoT a vincular.
+
+![Configuration-Profile](./assets/images/sprint-1/Confguration-Profile.png)
+
+![Irrigation-Configuration-Profile](./assets/images/sprint-1/Irrigation-Configuration-Section.png)
+
+![IoT-Devices-Selection-Section](./assets/images/sprint-1/Iot-Devices-Selection.png)
+
+**Dashboard**
+
+Centro de control principal que unifica y visualiza las métricas críticas en tiempo real, eliminando suposiciones mediante gráficos predictivos y claros.
+
+![Dashboard-Section](./assets/images/sprint-1/Dashboard-Section.png)
+
+**Security**
+
+Panel de gobernanza técnica diseñado para administrar credenciales, tokens de acceso y la seguridad general de la cuenta del usuario.
+
+![Security-Section](./assets/images/sprint-1/Security-Section.png)
+
+**Notification**
+
+Módulo de alertas tempranas encargado de reflejar las notificaciones críticas del sistema ante cualquier alteración en las variables del cultivo.
+
+![Notification-Section](./assets/images/sprint-1/Notification-Section.png)
+
+**Suscription**
+
+Interfaz comercial que permite gestionar el estado de los planes de pago actuales y escalar los servicios según las necesidades del terreno.
+
+![Suscription-Section](./assets/images/sprint-1/Suscriptions-Section.png)
+
+**IoT Devices Section**
+
+Inventario operativo dedicado a listar, monitorear el estado de conexión y administrar de forma centralizada cada hardware (ESP32) desplegado.
+
+![Iot-Devices-Section](./assets/images/sprint-1/IoT-Devices-Section.png)
+
 #### 6.2.1.7. Services Documentation Evidence for Sprint Review
 
 #### 6.2.1.8. Software Deployment Evidence for Sprint Review
