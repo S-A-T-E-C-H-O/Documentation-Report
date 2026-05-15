@@ -1142,6 +1142,33 @@ En la versión móvil, la prioridad fue la optimización del espacio, la ergonom
 
 ### 5.4.2. Applications Wireflow Diagrams.
 ### 5.4.2. Applications Mock-ups.
+En esta sección, nos hemos enfocado en desarrollar mock-ups de nuestra solución con el propósito de representar de manera visual el diseño y la experiencia de las interfaces de usuario. Mediante este proceso, convertimos las ideas y requerimientos del proyecto en representaciones gráficas detalladas y cercanas al resultado final de la aplicación. Estos mock-ups nos permitieron definir con precisión la apariencia visual del sistema, abarcando aspectos como la estructura de la interfaz, la paleta de colores, la tipografía y los distintos elementos gráficos.
+
+**Web Application Mock-ups**
+<p align="center">
+   <img src="./assets/images/applications-Mock-ups/mockup1.png" alt="mockups1">
+    <img src="./assets/images/applications-Mock-ups/mockup2.png" alt="mockups2">
+    <img src="./assets/images/applications-Mock-ups/mockup3.png" alt="mockups3">
+    <img src="./assets/images/applications-Mock-ups/mockup4.png" alt="mockups4">
+    <img src="./assets/images/applications-Mock-ups/mockup5.png" alt="mockups5">
+    <img src="./assets/images/applications-Mock-ups/mockup6.png" alt="mockups6">
+    <img src="./assets/images/applications-Mock-ups/mockup7.png" alt="mockups7">
+    <img src="./assets/images/applications-Mock-ups/mockup8.png" alt="mockups8">
+    <img src="./assets/images/applications-Mock-ups/mockup9.png" alt="mockups9">
+    <img src="./assets/images/applications-Mock-ups/mockup10.png" alt="mockups10">
+    <img src="./assets/images/applications-Mock-ups/mockup11.png" alt="mockups11">
+</p>
+
+Link del Figma: https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?node-id=79-10117&t=xO8wagJEELxWIC7s-1 
+
+**Mobile Application Mock-ups**
+<p align="center">
+   <img src="./assets/images/applications-Mock-ups/mockup12.png" alt="mockups12">
+   <img src="./assets/images/applications-Mock-ups/mockup13.png" alt="mockups13">
+</p>
+
+Link del Figma: https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?node-id=62-3&t=xO8wagJEELxWIC7s-1 
+
 ### 5.4.3. Applications User Flow Diagrams.
 ## 5.5. Applications Prototyping.
 ## 5.6. IoT Device Design.
