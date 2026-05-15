@@ -394,11 +394,10 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 ```
 **Alineación:** Refuerza la propuesta de valor de `EP-001-US001` y `EP-002-US002` para compartir en redes sociales y WhatsApp (`EP-008-US021`).
 
----
-
 ## Landing Page – Agrónomos (`/agronomos`)
 
 ### Title
+
 ```html
 <title>AgroSafe para Agrónomos | Dashboard Multi-Parcela y Reportes Técnicos</title>
 ```
@@ -407,9 +406,8 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 - `EP-009-US001`: "View Multi-Parcel Dashboard" → Destaca la funcionalidad core para agrónomos.
 - `EP-009-US003`: "Generate Technical Report for Client" → Incluye "Reportes Técnicos" como beneficio profesional.
 
----
-
 ### Meta Description
+
 ```html
 <meta name="description" content="Supervisa múltiples parcelas desde un solo dashboard. Analiza tendencias de humedad, EC y pH, ajusta umbrales de riego de forma remota y genera reportes técnicos listos para compartir.">
 ```
@@ -422,27 +420,23 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 | "ajusta umbrales de riego de forma remota" | `EP-009-US002`: Adjust Client Irrigation Thresholds Remotely | "Then the system applies the values, notifies the farmer, and logs the change" |
 | "genera reportes técnicos listos para compartir" | `EP-009-US003`: Generate Technical Report for Client | "Then the system compiles data, charts, and recommendations into an exportable document" |
 
----
-
 ### Meta Keywords
+
 ```html
 <meta name="keywords" content="software para agrónomos, consultoría agronómica remota, dashboard multi-parcela, reportes de suelo automáticos, monitoreo de clientes agrícolas, ajuste de umbrales de riego, asesoría técnica remota, agricultura de precisión B2B">
 ```
 **Alineación:** Keywords B2B específicas para `EP-009` (Agronomist Consulting), enfocadas en escalabilidad operativa y profesionalización del servicio.
 
----
-
 ## Dashboard Principal – Agricultor (`/dashboard`)
 
 ### Title
+
 ```html
 <title>Dashboard AgroSafe | Monitoreo de Suelo y Riego en Tiempo Real</title>
 ```
 **Alineación con User Stories:**
 - `EP-002-US001`: "View Real-Time Soil Dashboard" → Título funcional para usuarios autenticados.
 - `EP-004-US011`: "View Live Valve Status from Mobile" → Incluye "Tiempo Real" como diferenciador técnico.
-
----
 
 ### Meta Description
 ```html
@@ -459,11 +453,10 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 
 **Nota técnica:** Esta página lleva `<meta name="robots" content="noindex, nofollow">` por ser área privada post-login.
 
----
-
 ## Seguridad Perimetral (`/seguridad`)
 
 ### Title
+
 ```html
 <title>Seguridad Perimetral AgroSafe | Alertas de Intrusión con IA</title>
 ```
@@ -471,9 +464,8 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 - `EP-003-US005`: "View Perimeter Security Events" → Título específico para el módulo de seguridad.
 - `EP-003-US006`: "Receive Perimeter Intrusion Alert" → Incluye "IA" como diferenciador de clasificación térmica.
 
----
-
 ### Meta Description
+
 ```html
 <meta name="description" content="Protege tu parcela con sensores PIR inteligentes. Clasificación automática de intrusiones (persona/animal/viento), alertas inmediatas por WhatsApp y disuasión automática.">
 ```
@@ -486,11 +478,10 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 | "alertas inmediatas por WhatsApp" | `EP-008-US021`: Receive WhatsApp Alert with Direct Action Link | "Then the message includes a summary in plain language and a link that opens the control screen" |
 | "disuasión automática" | `EP-003-US007`: Configure Perimeter Security Settings | "Then the system applies the settings to the device and confirms the changes" |
 
----
-
 ## Dashboard Agrónomo (`/agronomo/dashboard`)
 
 ### Title
+
 ```html
 <title>Panel Agrónomo AgroSafe | Gestión Multi-Cliente y Reportes</title>
 ```
@@ -498,9 +489,8 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 - `EP-009-US001`: "View Multi-Parcel Dashboard" → Título funcional para el rol profesional.
 - `EP-009-US003`: "Generate Technical Report for Client" → Incluye "Reportes" como valor profesional.
 
----
-
 ### Meta Description
+
 ```html
 <meta name="description" content="Supervisa hasta 20 parcelas desde un solo panel. Ajusta umbrales de riego remotamente, genera reportes técnicos PDF y monitorea alertas críticas de tus clientes en tiempo real.">
 ```
@@ -512,8 +502,6 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 | "Ajusta umbrales de riego remotamente" | `EP-009-US002`: Adjust Client Irrigation Thresholds Remotely | "Then the system applies the values, notifies the farmer, and logs the change" |
 | "genera reportes técnicos PDF" | `EP-009-US003`: Generate Technical Report for Client | "Then the system compiles data, charts, and recommendations into an exportable document" |
 | "monitorea alertas críticas en tiempo real" | `EP-009-US004`: Monitor Remote Parcels Between Visits | "Then I receive an alert with details about the plot, the parameter, and access to the history" |
-
----
 
 ## Panel Admin / Staff (`/admin/*`)
 
@@ -527,11 +515,10 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 
 **Nota:** Todas las rutas `/admin/*` llevan `<meta name="robots" content="noindex, nofollow">` por ser área interna operativa.
 
----
-
 ## Mobile App (`/app/*`)
 
 ### Title
+
 ```html
 <title>AgroSafe Mobile | Controla tu Parcela desde el Celular</title>
 ```
@@ -539,12 +526,12 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 - `EP-004-US008`: "Use App in Offline Mode" → Título enfocado en movilidad y acceso en campo.
 - `EP-004-US009`: "Receive and Interact with Push Notifications Natively" → Implícito en "desde el Celular".
 
----
-
 ### Meta Description
+
 ```html
 <meta name="description" content="App móvil AgroSafe: Monitorea tus cultivos, recibe alertas y controla el riego incluso sin internet. Disponible para Android y iOS. Descarga gratis.">
 ```
+
 **Alineación con User Stories:**
 
 | Fragmento | User Story Relacionada | Criterio de Aceptación Vinculado |
@@ -599,8 +586,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 | **Resultados accionables** | Cada resultado debe permitir una acción inmediata sin navegación adicional (EP-004-US010, EP-009-US004) | Tarjetas de resultado con CTAs contextuales ("Regar", "Ver detalles", "Contactar") |
 | **Manejo explícito de "sin resultados"** | En entornos rurales con conectividad intermitente, la ausencia de datos debe comunicarse claramente (EP-004-US008) | Estados vacíos con mensajes explicativos y sugerencias de ajuste de filtros |
 
----
-
 ## Opciones de Búsqueda por Módulo y Rol
 
 ### Módulo: Dashboard de Suelo y Riego (Agricultor)
@@ -627,8 +612,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 6. Usuario hace clic en un registro → modal con diagnóstico y CTA "Regar ahora"
 ```
 
----
-
 ### Módulo: Gestión de Clientes y Reportes (Agrónomo)
 
 **Contexto de búsqueda:** Localizar clientes, recomendaciones y reportes para escalar la asesoría técnica.
@@ -641,6 +624,7 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 | **Búsqueda en reportes generados** | • Cliente [dropdown]<br>• Tipo de reporte: [Resumen] [Técnico] [Comparativo]<br>• Fecha de generación [range]<br>• Estado de envío: [Entregado] [Pendiente] [Fallido] | Lista con thumbnail del PDF, metadatos, badge de estado, botón "Reenviar" o "Descargar" | EP-009-US003 |
 
 **Ejemplo de flujo de búsqueda de recomendaciones ignoradas:**
+
 ```
 1. Agrónomo accede a Historial de Recomendaciones
 2. Aplica filtros: Estado "Ignorada", Últimos 7 días
@@ -654,8 +638,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 6. Al confirmar, sistema envía recordatorio y actualiza estado a "Recordatorio enviado"
 ```
 
----
-
 ### Módulo: Operaciones y Soporte (Staff/Admin)
 
 **Contexto de búsqueda:** Gestionar cuentas, dispositivos y auditoría con eficiencia operativa.
@@ -667,6 +649,7 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 | **Búsqueda en logs de auditoría** | • Acción: [Suspensión] [Reactivación] [Cambio de umbrales]<br>• Usuario: [Staff] [Sistema] [Cliente]<br>• Fecha [range]<br>• Entidad afectada: [Cuenta] [Dispositivo] [Parcela] | Lista cronológica con detalles de cambio, usuario responsable, CTA "Ver contexto completo" | EP-011-US001 (auditoría implícita) |
 
 **Ejemplo de búsqueda de dispositivos offline:**
+
 ```
 1. Staff accede a Gestión de Dispositivos
 2. Aplica filtro: Estado "Offline", Últimas 24h
@@ -679,8 +662,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 5. Staff presiona "Contactar cliente" → modal con plantilla de mensaje WhatsApp
 6. Al enviar, sistema registra la acción y actualiza estado a "Contactado"
 ```
-
----
 
 ### Módulo: Analytics Estratégico (Product Owner)
 
@@ -706,8 +687,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 6. Al confirmar, sistema crea ticket en Jira vinculado a esta métrica
 ```
 
----
-
 ## Componentes de Interfaz de Búsqueda
 
 ### Barra de Búsqueda Global (Contextual por Rol)
@@ -724,6 +703,7 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 ```
 
 ### Panel de Filtros Avanzados (Colapsable)
+
 ```
 ┌─────────────────────────────────────────┐
 │ Filtros Avanzados [▼]               │
@@ -742,6 +722,7 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 ```
 
 ### Tarjeta de Resultado de Búsqueda (Patrón Reutilizable)
+
 ```
 ┌─────────────────────────────────────────┐
 │ [Badge de Estado] Título del resultado │
@@ -759,8 +740,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 └─────────────────────────────────────────┘
 ```
 
----
-
 ## Estados de Búsqueda y Manejo de Casos Límite
 
 | Estado | Comportamiento | Mensaje al Usuario | Criterio de Aceptación |
@@ -770,8 +749,6 @@ El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales 
 | **Sin resultados** | Ilustración amigable + mensaje explicativo + sugerencias de ajuste de filtros | "No se encontraron resultados. Intenta: • Ampliar el rango de fechas • Limpiar algunos filtros • Verificar ortografía" | EP-004-US008: Manejo claro de ausencia de datos en modo offline |
 | **Error de búsqueda** | Toast de error + opción de reintentar, barra de búsqueda mantiene el término | "No pudimos completar la búsqueda. Verifica tu conexión e intenta nuevamente." | Sistema registra error en auditoría para diagnóstico técnico |
 | **Búsqueda guardada** | Badge "Guardada" en barra, acceso rápido desde menú lateral | "Vista guardada: 'Alertas críticas - Últimos 7 días'" | Usuario puede reutilizar filtros complejos con un clic |
-
----
 
 ## Integración con Bounded Contexts y Arquitectura
 
@@ -818,8 +795,6 @@ El sistema de búsqueda está diseñado para respetar las fronteras de los Bound
 - El `Search Orchestrator` actúa como Anti-Corruption Layer para consultas que requieren combinar datos de múltiples contextos (ej: "Mostrar clientes con dispositivos offline").
 - Los índices de base de datos están alineados con los patrones de búsqueda más frecuentes identificados en las User Stories.
 
----
-
 ## Criterios de Validación de Búsqueda (Gherkin)
 
 ```gherkin
@@ -853,8 +828,6 @@ Scenario: Product Owner busca funcionalidades con baja adopción
   And puedo crear ticket de mejora pre-llenado con métricas
 ```
 
----
-
 ## Métricas de Éxito del Sistema de Búsqueda
 
 | KPI | Meta | Herramienta de Medición |
@@ -865,11 +838,7 @@ Scenario: Product Owner busca funcionalidades con baja adopción
 | **Uso de filtros avanzados** | >40% de búsquedas aplican ≥1 filtro avanzado | Event tracking personalizado |
 | **Satisfacción percibida** | >4.0/5.0 en encuesta post-búsqueda | Survey integrado en UI |
 
----
-
 > **Nota para implementación**: Todos los componentes de búsqueda se documentarán en el Design System de AgroSafe (Figma library) con estados, variantes por rol y guías de accesibilidad. La API de búsqueda seguirá el patrón CQRS: endpoints de consulta (`GET /api/v1/search/{context}`) separados de endpoints de comando, garantizando que las búsquedas no tengan efectos secundarios.
-
-
 
 ### 5.2.5. Navigation Systems.
 
@@ -894,7 +863,6 @@ Permite desplazarse entre las secciones principales del Landing Page y entre los
 - **Staff/Admin**: Ve módulos operativos internos (Gestión de Cuentas, Dispositivos, Salud de Flota).
 - **Product Owner**: Ve módulos de analytics (Dashboard Ejecutivo, Heatmap de Adopción).
 
----
 ### Navegación Local
 Facilita el acceso a subniveles dentro de una misma sección o módulo, reduciendo la profundidad de clics para acciones frecuentes.
 
@@ -909,8 +877,9 @@ Facilita el acceso a subniveles dentro de una misma sección o módulo, reducien
 
 **Principio de "One-Click Action"**: Para acciones críticas (regar, detener riego, confirmar alerta), el sistema minimiza la navegación local a un solo clic desde la vista principal, con confirmación biométrica/PIN si está configurado (EP-002-TS026).
 
----
+
 ### Sistemas de Orientación
+
 Ayudan al usuario a entender dónde está y cómo volver, especialmente en flujos complejos o tras deep links.
 
 | Contexto | Patrón Implementado | Ejemplo de Uso | User Stories Relacionadas |
@@ -1071,7 +1040,11 @@ Información de contacto corporativa, enlaces legales (Privacidad, Términos) y 
 
 
 ### 5.3.2. Landing Page Mock-up.
+
+
+
 ## 5.4. Applications UX/UI Design.
+
 ### 5.4.1. Applications Wireframes.
 
 En esta fase, hemos desarrollado de manera conjunta los wireframes para visualizar detalladamente la arquitectura y el diseño de las interfaces de usuario. Gracias a este esfuerzo colaborativo, transformamos los requisitos funcionales en esquemas gráficos precisos, definiendo así la distribución y presentación de cada componente en la aplicación definitiva.
@@ -1101,7 +1074,6 @@ En la versión móvil, la prioridad fue la optimización del espacio, la ergonom
 <img src="./assets/images/wireframes/mobile_wireframe_5.png" alt="Image color" width="500"/><br>
 
 <img src="./assets/images/wireframes/mobile_wireframe_6.png" alt="Image color" width="500"/><br>
-
 
 ### 5.4.2. Applications Wireflow Diagrams.
 ### 5.4.2. Applications Mock-ups.
