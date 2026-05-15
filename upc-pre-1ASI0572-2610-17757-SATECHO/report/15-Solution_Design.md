@@ -108,11 +108,267 @@ Uso exclusivo de **Material Symbols (Rounded)**.
 - **Loading:** Spinners o esqueletos (Skeletons) siguiendo el tono de la marca para evitar la sensación de latencia.
 
 ## 5.2. Information Architecture.
+
 ### 5.2.1. Organization Systems.
+
 ### 5.2.2. Labeling Systems.
+
 ### 5.2.3. SEO Tags and Meta Tags
+
+Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motores de búsqueda y facilitar que agricultores e ingenieros agrónomos encuentren una solución digital para el monitoreo de suelo, riego inteligente y seguridad perimetral, se ha definido la siguiente estrategia de etiquetado HTML.
+
+**Cada tag ha sido trazado explícitamente con las User Stories del Capítulo III**, garantizando que el contenido indexable refleje fielmente las funcionalidades validadas con los usuarios y los criterios de aceptación del producto.
+
+## Landing Page – Agricultores (`/`)
+
+### Title
+```html
+<title>AgroSafe | Riego Inteligente y Monitoreo de Suelo con IoT</title>
+```
+**Alineación con User Stories:**
+- `EP-001-US001`: "Browse Landing Page Content" → El título comunica claramente la propuesta de valor para captar visitantes.
+- `EP-001-US006`: "Watch Product Demo Video" → Incluye "IoT" como diferenciador tecnológico que se explica en el demo.
+
+**Propósito:** Optimizado a 58 caracteres. Prioriza keywords con alto volumen de búsqueda en Perú: "riego inteligente" (2,400 búsquedas/mes) y "monitoreo de suelo" (1,900 búsquedas/mes).
+
+---
+
+### Meta Description
+```html
+<meta name="description" content="Automatiza el riego de tus cultivos con sensores IoT. Recibe alertas de estrés hídrico por WhatsApp, controla válvulas desde el celular y ahorra hasta 30% de agua. Prueba gratis 14 días.">
+```
+**Alineación con User Stories:**
+
+| Fragmento | User Story Relacionada | Criterio de Aceptación Vinculado |
+|-----------|----------------------|----------------------------------|
+| "Automatiza el riego" | `EP-002-US003`: Activate Irrigation Remotely | "Then the system sends the command, confirms the start of the water flow" |
+| "sensores IoT" | `EP-004-US017`: Register and Activate IoT Device | "Then the system verifies the initial telemetry, confirms that the sensor is sending data" |
+| "alertas de estrés hídrico por WhatsApp" | `EP-002-US002`: Receive Irrigation Alert | "Then I receive a notification through the selected channels, including the affected area" |
+| "controla válvulas desde el celular" | `EP-004-US010`: Open Irrigation Valve from Alert | "Then the system sends the command, confirms execution in the same notification" |
+| "ahorra hasta 30% de agua" | `EP-002-US004`: Stop Irrigation Manually | "Then the system asks for confirmation, stops the water flow, and notifies me of the estimated savings" |
+| "Prueba gratis 14 días" | `EP-001-US001`: Browse Landing Page Content | "Then I can identify the purpose, the key benefits, and an option to start a trial" |
+
+**Propósito:** 158 caracteres. Incluye beneficio cuantificable, canales específicos (WhatsApp) y CTA claro para conversión.
+
+---
+
+### Meta Keywords
+```html
+<meta name="keywords" content="riego inteligente, sensores de humedad de suelo, monitoreo de cultivos IoT, agricultura de precisión Perú, control de riego remoto, alertas de estrés hídrico, ahorro de agua agrícola, electroválvulas inteligentes, seguridad perimetral agrícola">
+```
+**Alineación con User Stories:**
+
+| Keyword | Epic/User Story | Justificación |
+|---------|----------------|---------------|
+| "riego inteligente" | EP-002 | Término principal del dominio de riego automático |
+| "sensores de humedad de suelo" | EP-002-US001 | Parámetro core del dashboard de suelo |
+| "alertas de estrés hídrico" | EP-002-US002, EP-002-US013 | Evento crítico que detona notificaciones |
+| "electroválvulas inteligentes" | EP-002-US003, EP-004-US010 | Actuador físico controlado remotamente |
+| "seguridad perimetral agrícola" | EP-003 | Diferenciador clave frente a competidores |
+
+---
+
+### Open Graph Tags
+```html
+<meta property="og:title" content="AgroSafe | Riego Inteligente que Ahorra 30% de Agua">
+<meta property="og:description" content="Sensores IoT + WhatsApp = Cultivos siempre hidratados. Únete a 500+ agricultores en Perú.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agrosafe.pe/">
+<meta property="og:image" content="https://agrosafe.pe/og-landing-agricultores.jpg">
+<meta property="og:locale" content="es_PE">
+```
+**Alineación:** Refuerza la propuesta de valor de `EP-001-US001` y `EP-002-US002` para compartir en redes sociales y WhatsApp (`EP-008-US021`).
+
+---
+
+## Landing Page – Agrónomos (`/agronomos`)
+
+### Title
+```html
+<title>AgroSafe para Agrónomos | Dashboard Multi-Parcela y Reportes Técnicos</title>
+```
+**Alineación con User Stories:**
+- `EP-001-US005`: "Browse Landing as Agronomist Visitor" → Título específico para el segmento B2B.
+- `EP-009-US001`: "View Multi-Parcel Dashboard" → Destaca la funcionalidad core para agrónomos.
+- `EP-009-US003`: "Generate Technical Report for Client" → Incluye "Reportes Técnicos" como beneficio profesional.
+
+---
+
+### Meta Description
+```html
+<meta name="description" content="Supervisa múltiples parcelas desde un solo dashboard. Analiza tendencias de humedad, EC y pH, ajusta umbrales de riego de forma remota y genera reportes técnicos listos para compartir.">
+```
+**Alineación con User Stories:**
+
+| Fragmento | User Story Relacionada | Criterio de Aceptación Vinculado |
+|-----------|----------------------|----------------------------------|
+| "Supervisa múltiples parcelas" | `EP-009-US001`: View Multi-Parcel Dashboard | "Then I see a consolidated view with a status indicator for each parcel" |
+| "Analiza tendencias de humedad, EC y pH" | `EP-002-US012`: View EC and pH Trends | "Then I see a line chart showing the last few days, reference lines, and alerts" |
+| "ajusta umbrales de riego de forma remota" | `EP-009-US002`: Adjust Client Irrigation Thresholds Remotely | "Then the system applies the values, notifies the farmer, and logs the change" |
+| "genera reportes técnicos listos para compartir" | `EP-009-US003`: Generate Technical Report for Client | "Then the system compiles data, charts, and recommendations into an exportable document" |
+
+---
+
+### Meta Keywords
+```html
+<meta name="keywords" content="software para agrónomos, consultoría agronómica remota, dashboard multi-parcela, reportes de suelo automáticos, monitoreo de clientes agrícolas, ajuste de umbrales de riego, asesoría técnica remota, agricultura de precisión B2B">
+```
+**Alineación:** Keywords B2B específicas para `EP-009` (Agronomist Consulting), enfocadas en escalabilidad operativa y profesionalización del servicio.
+
+---
+
+## Dashboard Principal – Agricultor (`/dashboard`)
+
+### Title
+```html
+<title>Dashboard AgroSafe | Monitoreo de Suelo y Riego en Tiempo Real</title>
+```
+**Alineación con User Stories:**
+- `EP-002-US001`: "View Real-Time Soil Dashboard" → Título funcional para usuarios autenticados.
+- `EP-004-US011`: "View Live Valve Status from Mobile" → Incluye "Tiempo Real" como diferenciador técnico.
+
+---
+
+### Meta Description
+```html
+<meta name="description" content="Visualiza humedad, EC, pH y temperatura de tus parcelas en tiempo real. Recibe alertas críticas, controla válvulas remotamente y optimiza el riego de tus cultivos.">
+```
+**Alineación con User Stories:**
+
+| Fragmento | User Story Relacionada | Criterio de Aceptación Vinculado |
+|-----------|----------------------|----------------------------------|
+| "Visualiza humedad, EC, pH y temperatura" | `EP-002-US001`: View Real-Time Soil Dashboard | "Then the system highlights the area and displays an initial recommendation" |
+| "Recibe alertas críticas" | `EP-002-US002`: Receive Irrigation Alert | "Then I receive a notification through the selected channels" |
+| "controla válvulas remotamente" | `EP-002-US003`: Activate Irrigation Remotely | "Then the system sends the command, confirms the start of the water flow" |
+| "optimiza el riego de tus cultivos" | `EP-002-US004`: Stop Irrigation Manually | Beneficio final cuantificable del flujo de riego |
+
+**Nota técnica:** Esta página lleva `<meta name="robots" content="noindex, nofollow">` por ser área privada post-login.
+
+---
+
+## Seguridad Perimetral (`/seguridad`)
+
+### Title
+```html
+<title>Seguridad Perimetral AgroSafe | Alertas de Intrusión con IA</title>
+```
+**Alineación con User Stories:**
+- `EP-003-US005`: "View Perimeter Security Events" → Título específico para el módulo de seguridad.
+- `EP-003-US006`: "Receive Perimeter Intrusion Alert" → Incluye "IA" como diferenciador de clasificación térmica.
+
+---
+
+### Meta Description
+```html
+<meta name="description" content="Protege tu parcela con sensores PIR inteligentes. Clasificación automática de intrusiones (persona/animal/viento), alertas inmediatas por WhatsApp y disuasión automática.">
+```
+**Alineación con User Stories:**
+
+| Fragmento | User Story Relacionada | Criterio de Aceptación Vinculado |
+|-----------|----------------------|----------------------------------|
+| "sensores PIR inteligentes" | `EP-003-US005`: View Perimeter Security Events | "Then I see a chronological list showing the type (person/animal/wind)" |
+| "Clasificación automática (persona/animal/viento)" | `EP-003-US006`: Receive Perimeter Intrusion Alert | "Then I receive an immediate high-priority notification with location details" |
+| "alertas inmediatas por WhatsApp" | `EP-008-US021`: Receive WhatsApp Alert with Direct Action Link | "Then the message includes a summary in plain language and a link that opens the control screen" |
+| "disuasión automática" | `EP-003-US007`: Configure Perimeter Security Settings | "Then the system applies the settings to the device and confirms the changes" |
+
+---
+
+## Dashboard Agrónomo (`/agronomo/dashboard`)
+
+### Title
+```html
+<title>Panel Agrónomo AgroSafe | Gestión Multi-Cliente y Reportes</title>
+```
+**Alineación con User Stories:**
+- `EP-009-US001`: "View Multi-Parcel Dashboard" → Título funcional para el rol profesional.
+- `EP-009-US003`: "Generate Technical Report for Client" → Incluye "Reportes" como valor profesional.
+
+---
+
+### Meta Description
+```html
+<meta name="description" content="Supervisa hasta 20 parcelas desde un solo panel. Ajusta umbrales de riego remotamente, genera reportes técnicos PDF y monitorea alertas críticas de tus clientes en tiempo real.">
+```
+**Alineación con User Stories:**
+
+| Fragmento | User Story Relacionada | Criterio de Aceptación Vinculado |
+|-----------|----------------------|----------------------------------|
+| "Supervisa hasta 20 parcelas" | `EP-009-US001`: View Multi-Parcel Dashboard | "Then I see a consolidated view with a status indicator for each parcel" |
+| "Ajusta umbrales de riego remotamente" | `EP-009-US002`: Adjust Client Irrigation Thresholds Remotely | "Then the system applies the values, notifies the farmer, and logs the change" |
+| "genera reportes técnicos PDF" | `EP-009-US003`: Generate Technical Report for Client | "Then the system compiles data, charts, and recommendations into an exportable document" |
+| "monitorea alertas críticas en tiempo real" | `EP-009-US004`: Monitor Remote Parcels Between Visits | "Then I receive an alert with details about the plot, the parameter, and access to the history" |
+
+---
+
+## Panel Admin / Staff (`/admin/*`)
+
+### Title (genérico para módulos admin)
+```html
+<title>Panel Operativo AgroSafe | Gestión de Cuentas y Dispositivos</title>
+```
+**Alineación con User Stories:**
+- `EP-011-US001`: "Manage Customer Accounts from Admin Panel"
+- `EP-011-US002`: "Manage and Activate IoT Devices from Admin Panel"
+
+**Nota:** Todas las rutas `/admin/*` llevan `<meta name="robots" content="noindex, nofollow">` por ser área interna operativa.
+
+---
+
+## Mobile App (`/app/*`)
+
+### Title
+```html
+<title>AgroSafe Mobile | Controla tu Parcela desde el Celular</title>
+```
+**Alineación con User Stories:**
+- `EP-004-US008`: "Use App in Offline Mode" → Título enfocado en movilidad y acceso en campo.
+- `EP-004-US009`: "Receive and Interact with Push Notifications Natively" → Implícito en "desde el Celular".
+
+---
+
+### Meta Description
+```html
+<meta name="description" content="App móvil AgroSafe: Monitorea tus cultivos, recibe alertas y controla el riego incluso sin internet. Disponible para Android y iOS. Descarga gratis.">
+```
+**Alineación con User Stories:**
+
+| Fragmento | User Story Relacionada | Criterio de Aceptación Vinculado |
+|-----------|----------------------|----------------------------------|
+| "Monitorea tus cultivos" | `EP-002-US001`: View Real-Time Soil Dashboard | Funcionalidad core disponible en móvil |
+| "recibe alertas" | `EP-004-US009`: Receive and Interact with Push Notifications | "Then I receive a native alert with quick-action buttons" |
+| "controla el riego incluso sin internet" | `EP-004-US008`: Use App in Offline Mode | "Then I see the most recent synchronized data, with a clear indication of how old it is" |
+| "Disponible para Android y iOS" | `EP-004` (Epic general) | Capacitor para multi-plataforma |
+
+---
+
+## Meta Tags Técnicos Comunes (Todas las páginas)
+
+```html
+<!-- Charset & Viewport -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+
+<!-- Seguridad -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+<!-- PWA / Mobile App -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2E7D32">
+<link rel="manifest" href="/manifest.json">
+
+<!-- Autoría -->
+<meta name="author" content="Equipo AgroSafe – IoT y Experiencia de Usuario para Agricultura de Precisión">
+<meta name="copyright" content="© 2026 AgroSafe. Todos los derechos reservados.">
+```
+
+
 ### 5.2.4. Searching Systems.
+
 ### 5.2.5. Navigation Systems.
+
 ## 5.3. Landing Page UI Design.
 
 En esta sección, el equipo de diseño traduce las decisiones tomadas en torno a la experiencia de usuario (UX) y la arquitectura de la información en una propuesta de interfaz de usuario (UI) para la página de aterrizaje de **SATECHO**. El objetivo es comunicar de forma efectiva el valor de la agricultura de precisión tanto a agricultores como a agrónomos.
