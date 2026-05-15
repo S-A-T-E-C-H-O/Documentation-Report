@@ -1172,3 +1172,1161 @@ Link del Figma: https://www.figma.com/design/qC5bkfY7zL1A1EGWeWPWR4/AgroSafe?nod
 ### 5.4.3. Applications User Flow Diagrams.
 ## 5.5. Applications Prototyping.
 ## 5.6. IoT Device Design.
+
+### Diseño del dispositivo IoT
+Además del diseño de experiencia e interfaces de las aplicaciones web y móviles, es necesario detallar el diseño del dispositivo IoT encargado del monitoreo ambiental y agrícola mediante sensores de humedad de suelo, temperatura, humedad ambiental y detección de movimiento.
+
+Por un lado, se utiliza la metodología de diseño de dispositivos IoT en 12 pasos propuesta por Eulalia Balestrieri et al., la cual permite estructurar la arquitectura física, lógica y de procesamiento del sistema considerando restricciones de energía, latencia y procesamiento distribuido.
+
+<div align="center"> <img src="./assets/images/iot-device-design/design-steps.png" alt="Metodología IoT en 12 pasos"/> </div>
+
+---
+### Paso 1: Definición de los requisitos del sistema
+En este paso se consideran los requisitos generales del sistema IoT relacionados con la capacidad de suministro energético y las restricciones de tiempo de respuesta del dispositivo. Estos requisitos permiten definir posteriormente la arquitectura física, lógica y de comunicación del sistema.
+
+<table>
+  <tr>
+    <th>Criterio</th>
+    <th>Detalle</th>
+  </tr>
+
+  <tr>
+    <td rowspan="3"><strong>Capacidades de suministro de energía</strong></td>
+    <td>
+      <strong>Centro de operación:</strong>
+      El sistema operará en entornos cerrados (más específicamente, en almacenes) de las tiendas retail y restaurantes donde se dispone de acceso constante a la red eléctrica comercial.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Entrada de alimentación:</strong>
+      Se requiere una entrada de alimentación estándar (enchufe) que proporcione <strong>5V DC</strong> con una capacidad de corriente mínima de <strong>2 A</strong> para cubrir el consumo del microcontrolador y los sensores periféricos.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Limitaciones:</strong>
+      No se contempla el uso de baterías ni sistemas de recolección de energía (harvesting).
+    </td>
+  </tr>
+
+  <tr>
+    <td rowspan="4"><strong>Restricciones de time-delay</strong></td>
+    <td>
+      <strong>Sistema basado en eventos:</strong>
+      El sistema operará bajo un modelo de programación reactiva (event-driven) para optimizar la eficiencia del procesamiento en el borde (Edge Analytics).
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Reacción ante cambios físicos:</strong>
+      La detección de cambios físicos (cambios de peso ≥ 5–10 g) deberá activar una notificación inmediata con un tiempo de respuesta en el nodo no mayor a 300 ms.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Lectura de estado de salud:</strong>
+      Para garantizar la calidad de servicio (QoS) y la detección de fallos de red, el sistema enviará un mensaje de estado ("heartbeat") cada 60 segundos en ausencia de eventos.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Reacción ante eventos críticos:</strong>
+      Ante un evento crítico (discrepancia detectada o temperatura fuera de rango), el sistema priorizará este paquete sobre el tráfico normal, garantizando una latencia end-to-end (sensor a nube) menor a 2 segundos para permitir una toma de decisiones en tiempo casi real por parte del administrador.
+    </td>
+  </tr>
+</table>
+
+---
+### Paso 2: Elección de la tipología de sistema IoT
+
+En este paso se identifica la tipología adecuada del sistema IoT considerando las capacidades de alimentación energética y las restricciones de retardo temporal definidas previamente. Esto permite establecer el comportamiento operativo del sistema y orientar las decisiones arquitectónicas de los siguientes pasos.
+
+<table>
+  <tr>
+    <th>Parámetro de clasificación</th>
+    <th>Estructura definida</th>
+    <th>Justificación técnica</th>
+  </tr>
+
+  <tr>
+    <td><strong>Capacidades de suministro de energía</strong></td>
+    <td>System alimentado por red eléctrica (Network-powered IoT System)</td>
+    <td>
+      El nodo IoT basado en ESP32 operará conectado a una fuente de alimentación estable de 5V DC mediante adaptador externo, debido a que el sistema requiere conectividad WiFi continua, procesamiento local y operación simultánea de múltiples sensores ambientales.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Restricción de retardo (time-delay)</strong></td>
+    <td>Low Delay / Near Real-Time System</td>
+    <td>
+      El sistema debe responder rápidamente ante eventos críticos, especialmente en la detección de movimiento mediante el sensor PIR HC-SR501, donde la notificación y procesamiento deberán ocurrir en un tiempo menor a 2 segundos. Asimismo, las interrupciones permiten minimizar la latencia en la captura de eventos físicos.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Modelo de procesamiento</strong></td>
+    <td>Edge Computing</td>
+    <td>
+      El procesamiento preliminar de datos se realiza localmente en el ESP32 mediante filtros, validación y priorización de eventos antes de transmitir la información al backend monolítico, reduciendo tráfico de red y tiempos de respuesta.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Modelo de operación</strong></td>
+    <td>Event-Driven + Time-Triggered Hybrid System</td>
+    <td>
+      El sistema combina eventos por interrupciones para sensores críticos (PIR) y temporizadores programados para lecturas periódicas de sensores ambientales como DHT11, YL-69, DS18B20 y HR202L.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Tipología final</strong></td>
+    <td>Network-powered Edge-based IIoT Monitoring System</td>
+    <td>
+      La solución corresponde a un sistema IoT industrial/agroambiental alimentado por red eléctrica, con capacidades de Edge Computing y procesamiento híbrido basado en interrupciones y tareas temporizadas.
+    </td>
+  </tr>
+</table>
+
+---
+### Paso 3: Definición de requisitos para la capa física
+
+En este paso se definen los nodos, sensores, actuadores y requerimientos físicos del sistema IoT. Asimismo, se establecen los niveles de precisión esperados, el tipo de señales utilizadas y la capacidad de procesamiento necesaria en el nodo Edge basado en ESP32.
+
+<table>
+  <tr>
+    <th>Parámetro</th>
+    <th>Definición</th>
+  </tr>
+
+  <tr>
+    <td><strong>Número y tipos de nodos, sensores y actuadores</strong></td>
+    <td>
+      - Se requiere 1 nodo IoT principal basado en ESP32 para el monitoreo ambiental y agrícola.<br><br>
+      - Sensores:<br>
+      • 1 sensor de humedad de suelo YL-69<br>
+      • 1 sensor DHT11 para temperatura y humedad ambiental<br>
+      • 1 sensor PIR HC-SR501 para detección de movimiento<br>
+      • 1 sensor DS18B20 impermeable para temperatura exterior/líquidos<br>
+      • 1 sensor HR202L para humedad ambiental resistiva<br><br>
+      - Actuadores:<br>
+      • 1 LED RGB para alertas visuales y estado del sistema
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Target uncertainty relacionada con las cantidades físicas medidas por cada sensor</strong></td>
+    <td>
+      - Sensor YL-69: precisión aproximada de ±5% en humedad de suelo.<br>
+      - Sensor DHT11: precisión de ±2 °C para temperatura y ±5% HR para humedad relativa.<br>
+      - Sensor DS18B20: precisión máxima de ±0.5 °C en el rango operacional.<br>
+      - Sensor HR202L: precisión aproximada de ±3% HR.<br>
+      - Sensor PIR HC-SR501: detección de movimiento con alcance aproximado de 7 metros y ángulo de 120°.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Target accuracy and precision de los actuadores</strong></td>
+    <td>
+      - El LED RGB deberá reflejar correctamente el estado del sistema y las alertas críticas en tiempo real.<br>
+      - El cambio de estado visual deberá ejecutarse con una latencia menor a 1 segundo desde la detección del evento.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Interfaces físicas y señales utilizadas</strong></td>
+    <td>
+      - Señales analógicas: YL-69 y HR202L mediante ADC del ESP32.<br>
+      - Señales digitales: DHT11 y HC-SR501.<br>
+      - Comunicación One-Wire: DS18B20.<br>
+      - Señales PWM: LED RGB para notificaciones visuales.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Processing Power para los algoritmos de procesamiento implementados en el nodo</strong></td>
+    <td>
+      - El nodo deberá disponer de al menos 520 KB de SRAM para manejo de buffers, tareas FreeRTOS y conectividad WiFi.<br><br>
+      - Se implementarán algoritmos de procesamiento Edge tales como:<br>
+      1) Filtro de media móvil para estabilización de lecturas.<br>
+      2) Validación y descarte de outliers.<br>
+      3) Priorización de eventos mediante interrupciones.<br>
+      4) Compensación de lecturas usando calibración basada en temperatura.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Requerimientos eléctricos</strong></td>
+    <td>
+      - Alimentación principal de 5V DC.<br>
+      - Voltaje operativo del ESP32: 3.3V.<br>
+      - Consumo máximo estimado: 500 mA durante transmisión WiFi.<br>
+      - Regulador de voltaje AMS1117-3.3V para estabilización energética.
+    </td>
+  </tr>
+</table>
+
+---
+### Paso 4: Definición de requisitos para la capa de intercambio de datos
+
+En este paso se define la forma en la que los datos son transportados desde el nodo IoT hacia la infraestructura backend. Asimismo, se establecen restricciones de latencia, protocolos de comunicación, topología de red y mecanismos de seguridad para garantizar una transmisión confiable y segura.
+
+<table>
+  <tr>
+    <th>Parámetro</th>
+    <th>Definición</th>
+  </tr>
+
+  <tr>
+    <td><strong>Máximo time-delay permitido</strong></td>
+    <td>
+      El tiempo máximo de transmisión desde el nodo ESP32 hacia el backend no deberá exceder los 2 segundos para eventos críticos como detección de movimiento o alertas ambientales, permitiendo una respuesta en tiempo casi real.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Tipología de comunicación</strong></td>
+    <td>
+      Se requiere comunicación inalámbrica (wireless) mediante WiFi, debido a la necesidad de flexibilidad de instalación, facilidad de despliegue y transmisión continua de datos ambientales sin depender de cableado físico.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Tipología de la red</strong></td>
+    <td>
+      Topología estrella (Star Topology), donde el nodo ESP32 se comunica directamente con un router o punto de acceso central conectado al backend monolítico.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Distancias de comunicación</strong></td>
+    <td>
+      El sistema deberá operar en rangos aproximados de 30 a 50 metros en interiores y hasta 150 metros en exteriores abiertos, dependiendo de obstáculos físicos y condiciones de señal WiFi.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Protocolo de transporte y aplicación</strong></td>
+    <td>
+      - Transporte inalámbrico: WiFi IEEE 802.11 b/g/n (2.4 GHz).<br>
+      - Protocolo de aplicación: HTTPS REST API.<br>
+      - Método principal de transmisión: HTTP POST.<br>
+      - Formato de intercambio de datos: JSON.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Consumo de potencia máximo en comunicación</strong></td>
+    <td>
+      El módulo WiFi del ESP32 podrá alcanzar consumos de hasta 500 mA durante ráfagas de transmisión activa (Tx/Rx). Debido a que el sistema es alimentado por red eléctrica, este consumo se considera aceptable para garantizar estabilidad y disponibilidad de comunicación.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Calidad de servicio (QoS)</strong></td>
+    <td>
+      - Eventos críticos como detección de movimiento tendrán prioridad alta y entrega inmediata.<br>
+      - Sensores ambientales utilizarán transmisión periódica con tolerancia moderada a retrasos.<br>
+      - El sistema implementará reintentos automáticos ante pérdida de conectividad.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Tipo de criptografía y seguridad de datos</strong></td>
+    <td>
+      - Comunicación segura mediante TLS 1.2/1.3.<br>
+      - Compatibilidad con WPA2/WPA3 para autenticación WiFi.<br>
+      - Cifrado de datos mediante HTTPS para proteger la integridad y confidencialidad de la telemetría enviada al backend.
+    </td>
+  </tr>
+</table>
+
+---
+### Paso 5: Definición de requisitos para la capa de información
+
+En este paso se definen los usuarios finales del sistema IoT, los servicios requeridos por cada uno y la información necesaria para satisfacer dichos servicios. Asimismo, se establece cómo será distribuido el procesamiento entre el nodo Edge (ESP32) y la nube, considerando la arquitectura basada en interrupciones y adaptación de Domain-Driven Design (DDD).
+
+<table>
+  <tr>
+    <th>Criterios</th>
+    <th>Especificación</th>
+  </tr>
+
+  <tr>
+    <td rowspan="2"><strong>Definición de usuarios finales</strong></td>
+    <td>
+      <strong>Operador del sistema:</strong>
+      responsable de la supervisión técnica, mantenimiento del nodo ESP32, conectividad y estado general de sensores y servicios IoT.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Administrador o usuario de monitoreo ambiental:</strong>
+      encargado de visualizar variables ambientales, recibir alertas y supervisar condiciones de humedad, temperatura y eventos críticos detectados por el sistema.
+    </td>
+  </tr>
+
+  <tr>
+    <td rowspan="2"><strong>Servicios por usuario final identificado</strong></td>
+    <td>
+      <strong>Operador del sistema:</strong>
+      monitoreo del estado del nodo, conectividad WiFi, disponibilidad del sistema, intensidad de señal (RSSI) y funcionamiento de sensores.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Administrador o usuario de monitoreo:</strong>
+      visualización de datos ambientales en tiempo real, acceso al histórico de mediciones, configuración de umbrales y recepción de alertas por condiciones críticas.
+    </td>
+  </tr>
+
+  <tr>
+    <td rowspan="5"><strong>Necesidades de información para satisfacer cada servicio identificado</strong></td>
+    <td>
+      <strong>Supervisión del estado del dispositivo:</strong>
+      se requieren datos de uptime, intensidad de señal WiFi (RSSI), estado de conexión y nivel de estabilidad energética del nodo.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Monitoreo ambiental:</strong>
+      se requieren lecturas periódicas de humedad de suelo, temperatura ambiental, humedad relativa y temperatura exterior/líquidos.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Detección de eventos críticos:</strong>
+      se requieren datos inmediatos provenientes del sensor PIR HC-SR501 y evaluación de umbrales definidos para temperatura y humedad.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Gestión de alertas:</strong>
+      se necesitan configuraciones de límites críticos definidos por el usuario para activar notificaciones automáticas.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Análisis histórico:</strong>
+      se requiere almacenamiento de registros temporales de sensores para generar tendencias y reportes históricos.
+    </td>
+  </tr>
+
+  <tr>
+    <td rowspan="2"><strong>Arquitectura de procesamiento (Nodo vs. Nube)</strong></td>
+    <td>
+      <strong>En el nodo ESP32 (Edge):</strong>
+      adquisición de datos mediante interrupciones y temporizadores, filtrado de ruido, validación de lecturas, descarte de valores atípicos y priorización de eventos críticos.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>En la nube (Backend monolítico):</strong>
+      almacenamiento histórico, agregación de datos, análisis estadístico, generación de reportes y administración de alertas y usuarios.
+    </td>
+  </tr>
+
+  <tr>
+    <td rowspan="2"><strong>Evaluación de complejidad computacional</strong></td>
+    <td>
+      <strong>Nodo ESP32:</strong>
+      complejidad baja-media debido al uso de filtros simples, validaciones y procesamiento basado en interrupciones.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Backend Cloud:</strong>
+      complejidad media por procesamiento de datos históricos, consultas en base de datos y administración de notificaciones en tiempo real.
+    </td>
+  </tr>
+
+  <tr>
+    <td rowspan="2"><strong>Tiempo de procesamiento requerido</strong></td>
+    <td>
+      <strong>Procesamiento de sensores ambientales:</strong>
+      generación y validación de datos en menos de 1 segundo antes de transmisión.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong>Eventos críticos y alertas:</strong>
+      detección, procesamiento y notificación en menos de 2 segundos desde la ocurrencia del evento físico.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Modelo de información (DDD adaptado)</strong></td>
+    <td>
+      El sistema implementa una adaptación de Domain-Driven Design (DDD) en el software embebido. Cada sensor se representa mediante clases desacopladas responsables de adquisición, validación, calibración y publicación de eventos, eliminando la dependencia de un <code>loop()</code> tradicional y favoreciendo una arquitectura basada en interrupciones y eventos.
+    </td>
+  </tr>
+</table>
+
+---
+### Paso 6: Definición de requisitos para la capa de servicios de aplicación
+
+Luego de definir la información y los usuarios del sistema, en este paso se especifican los servicios de aplicación responsables de coordinar la lógica de negocio, la comunicación entre capas y la interacción con las interfaces del sistema IoT. Asimismo, se determina la complejidad computacional asociada a cada servicio.
+
+<table>
+  <tr>
+    <th>Requisitos</th>
+    <th>Especificación de requisitos asociados</th>
+    <th>Complejidad de algoritmos en dispositivo/usuario</th>
+  </tr>
+
+  <tr>
+    <td><strong>Servicio de monitoreo ambiental en tiempo real</strong></td>
+    <td>
+      - Visualización en dashboard web de humedad de suelo, temperatura y humedad ambiental.<br>
+      - Actualización periódica de métricas provenientes del ESP32.<br>
+      - Visualización del estado de sensores y conectividad del nodo.
+    </td>
+    <td>
+      Baja: renderizado de datos y actualización dinámica de métricas en tiempo real.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Servicio de recolección y procesamiento de datos</strong></td>
+    <td>
+      - Captura de datos mediante interrupciones y temporizadores programados.<br>
+      - Aplicación de filtros de media móvil y validación de lecturas.<br>
+      - Priorización de eventos críticos antes de transmisión.
+    </td>
+    <td>
+      Media: procesamiento Edge local utilizando tareas desacopladas y colas de eventos.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Servicio de alertas y eventos críticos</strong></td>
+    <td>
+      - Generación de alertas por humedad baja, temperatura elevada o detección de movimiento.<br>
+      - Envío de notificaciones en tiempo real hacia la aplicación web.<br>
+      - Priorización de paquetes críticos sobre tráfico normal.
+    </td>
+    <td>
+      Baja: evaluación de reglas y disparadores basados en umbrales.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Servicio de conectividad y sincronización</strong></td>
+    <td>
+      - Gestión de conexión WiFi y reconexión automática.<br>
+      - Almacenamiento temporal local cuando no existe conectividad.<br>
+      - Sincronización diferida con el backend cuando la conexión es restaurada.
+    </td>
+    <td>
+      Media: manejo de estados de red, colas de sincronización y control de errores.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Servicio de gestión energética</strong></td>
+    <td>
+      - Control de modos Deep Sleep del ESP32.<br>
+      - Activación mediante RTC timers e interrupciones externas.<br>
+      - Desactivación de periféricos no utilizados para reducir consumo energético.
+    </td>
+    <td>
+      Baja: programación de temporizadores y control de periféricos.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Servicio de visualización histórica y analítica</strong></td>
+    <td>
+      - Gráficos históricos de temperatura, humedad y eventos detectados.<br>
+      - Consulta de registros almacenados en la nube.<br>
+      - Generación de reportes y tendencias ambientales.
+    </td>
+    <td>
+      Media: procesamiento de datos históricos y renderizado de gráficos dinámicos.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Servicio de mantenimiento y supervisión del nodo</strong></td>
+    <td>
+      - Supervisión de estado de sensores y disponibilidad del ESP32.<br>
+      - Generación de alertas por desconexión o fallos de sensores.<br>
+      - Monitoreo de RSSI y uptime del dispositivo.
+    </td>
+    <td>
+      Baja: verificación periódica de estados y envío de notificaciones.
+    </td>
+  </tr>
+</table>
+
+#### Reglas de negocio implementadas
+- Si la humedad del suelo es menor al 30%, se genera una alerta de riego.
+- Si el sensor PIR detecta movimiento, se genera una alerta de seguridad.
+- Si la temperatura supera los 40 °C, se genera una alerta crítica.
+- Si un sensor deja de responder o entrega valores inválidos, se genera una alerta de mantenimiento.
+- Los eventos críticos tendrán prioridad de transmisión sobre las lecturas periódicas ambientales.
+
+---
+### Paso 7: Selección de la arquitectura de intercambio de datos e integración de información
+
+Con los requisitos definidos en los pasos anteriores, se selecciona la arquitectura final para las capas de intercambio de datos e integración de información del sistema IoT agrícola.
+Asimismo, se evalúan los tiempos de comunicación para verificar que el sistema cumpla con las restricciones de latencia definidas previamente.
+
+<table>
+  <tr>
+    <th>Capa</th>
+    <th>Arquitectura seleccionada</th>
+    <th>Justificación técnica</th>
+  </tr>
+
+  <tr>
+    <td><strong>Intercambio de Datos</strong></td>
+    <td>Arquitectura basada en eventos (Event-Driven)</td>
+    <td>
+      El sistema utiliza una arquitectura orientada a eventos debido a la naturaleza reactiva de los sensores críticos como el PIR HC-SR501. La comunicación entre el nodo ESP32 y el backend se realiza mediante HTTPS sobre WiFi, permitiendo el envío inmediato de eventos críticos y telemetría ambiental. Además, el uso de interrupciones y temporizadores evita el uso de un <code>loop()</code> tradicional, optimizando el rendimiento del procesamiento Edge.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Integración de Información</strong></td>
+    <td>Arquitectura Monolítica Modular</td>
+    <td>
+      Se selecciona un backend monolítico modular para centralizar la lógica de negocio, autenticación, almacenamiento y procesamiento de datos ambientales. Esta arquitectura simplifica el despliegue inicial, facilita el mantenimiento del sistema y permite integrar servicios de alertas, análisis histórico y visualización de datos dentro de una única plataforma.
+    </td>
+  </tr>
+</table>
+
+#### Arquitectura lógica del dispositivo
+
+```text
+┌─────────────────────────────────────┐
+│ Presentation Layer (REST/HTTPS)     │
+├─────────────────────────────────────┤
+│ Application Services Layer          │
+│ (Interrupt Manager + Services)      │
+├─────────────────────────────────────┤
+│ Domain Layer (DDD Adaptation)       │
+│ Entities + Aggregates + Rules       │
+├─────────────────────────────────────┤
+│ Infrastructure Layer                │
+│ GPIO + ADC + WiFi + Timers          │
+└─────────────────────────────────────┘
+```
+
+#### Patrón de integración
+
+<table>
+  <tr>
+    <th>Componente</th>
+    <th>Tecnología seleccionada</th>
+  </tr>
+
+  <tr>
+    <td><strong>Backend</strong></td>
+    <td>Arquitectura monolítica modular</td>
+  </tr>
+
+  <tr>
+    <td><strong>Comunicación</strong></td>
+    <td>HTTPS REST</td>
+  </tr>
+
+  <tr>
+    <td><strong>Base de datos</strong></td>
+    <td>PostgreSQL + TimescaleDB</td>
+  </tr>
+
+  <tr>
+    <td><strong>Comunicación en tiempo real</strong></td>
+    <td>WebSocket</td>
+  </tr>
+
+  <tr>
+    <td><strong>Proxy / API Gateway</strong></td>
+    <td>Nginx</td>
+  </tr>
+</table>
+
+
+#### Análisis de retardo en la comunicación
+
+<table>
+  <tr>
+    <th>Segmento del flujo de datos</th>
+    <th>Acción técnica</th>
+    <th>Retardo estimado (ms)</th>
+    <th>Justificación</th>
+  </tr>
+
+  <tr>
+    <td><strong>Sensor → ESP32</strong></td>
+    <td>Lectura mediante interrupciones o temporizadores</td>
+    <td>10 – 50 ms</td>
+    <td>
+      Las lecturas de sensores ambientales se realizan mediante timers, mientras que el PIR utiliza interrupciones GPIO para respuesta inmediata.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>ESP32 → Backend</strong></td>
+    <td>Envío HTTPS vía WiFi</td>
+    <td>100 – 500 ms</td>
+    <td>
+      El ESP32 transmite paquetes JSON hacia el backend utilizando WiFi 802.11 b/g/n y HTTPS con TLS 1.2.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Backend → Base de Datos</strong></td>
+    <td>Persistencia y validación de datos</td>
+    <td>50 – 100 ms</td>
+    <td>
+      El backend procesa la información recibida y la almacena en PostgreSQL y TimescaleDB para análisis histórico.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Backend → Dashboard Web</strong></td>
+    <td>Actualización vía WebSocket</td>
+    <td>100 – 300 ms</td>
+    <td>
+      Las alertas y datos en tiempo real se transmiten inmediatamente hacia la interfaz web del usuario.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Total Estimado (End-to-End)</strong></td>
+    <td>Latencia total del sistema</td>
+    <td>&lt; 2 s</td>
+    <td>
+      La latencia total estimada cumple con el límite máximo definido en los requisitos de QoS del sistema.
+    </td>
+  </tr>
+</table>
+
+---
+### Paso 8: Selección de sensores y actuadores
+
+Al tener definida la arquitectura del sistema y los requisitos de comunicación y procesamiento, se seleccionan los sensores y actuadores que cumplen con las necesidades funcionales, eléctricas y de precisión del sistema IoT agrícola.
+
+<table>
+  <tr>
+    <th>Sensor o actuador identificado</th>
+    <th>Modelo elegido</th>
+    <th>Justificación técnica</th>
+  </tr>
+
+  <tr>
+    <td><strong>Medición de humedad de suelo</strong></td>
+    <td>Sensor YL-69 + módulo YL-38</td>
+    <td>
+      El sensor YL-69 permite medir niveles de humedad del suelo mediante salida analógica y digital. Se selecciona por su bajo costo, facilidad de integración con ESP32 y compatibilidad con sistemas de monitoreo agrícola y riego automático. El módulo YL-38 incorpora un comparador LM393 que facilita la calibración y detección de umbrales.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Medición de temperatura y humedad ambiental</strong></td>
+    <td>Sensor digital DHT11</td>
+    <td>
+      El DHT11 permite medir simultáneamente temperatura y humedad ambiental utilizando un único pin digital. Se selecciona por su simplicidad de integración, bajo consumo energético y suficiente precisión para aplicaciones de monitoreo ambiental básico.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Detección de movimiento</strong></td>
+    <td>Sensor PIR HC-SR501</td>
+    <td>
+      El HC-SR501 detecta movimiento mediante radiación infrarroja pasiva (PIR), siendo ideal para sistemas de seguridad y monitoreo. Además, permite trabajar mediante interrupciones GPIO del ESP32, reduciendo el consumo energético y mejorando la capacidad de respuesta del sistema.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Medición de temperatura en líquidos y exteriores</strong></td>
+    <td>Sensor DS18B20 Waterproof</td>
+    <td>
+      El DS18B20 proporciona mediciones digitales de temperatura con una precisión aproximada de ±0.5°C. Su encapsulado impermeable permite operar en ambientes húmedos, exteriores o contacto con líquidos. Asimismo, utiliza protocolo 1-Wire, reduciendo el uso de pines del microcontrolador.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Medición resistiva de humedad ambiental</strong></td>
+    <td>Sensor HR202L</td>
+    <td>
+      El HR202L funciona mediante variación resistiva de humedad relativa ambiental. Se utiliza como complemento del DHT11 para realizar comparaciones y validación cruzada de lecturas ambientales.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Indicador visual del sistema (Actuador)</strong></td>
+    <td>LED RGB</td>
+    <td>
+      El LED RGB permite indicar visualmente el estado operativo del sistema, alertas críticas y conectividad WiFi. Además, presenta bajo consumo energético y fácil integración mediante señales PWM del ESP32.
+    </td>
+  </tr>
+</table>
+
+---
+### Paso 9: Selección del microcontrolador y transceptores de radio
+
+Luego de seleccionar los sensores y actuadores del sistema, se define el microcontrolador encargado del procesamiento local y el transceptor de radio utilizado para la comunicación inalámbrica con la infraestructura backend.
+
+<table>
+  <tr>
+    <th>Nodo asignado</th>
+    <th>Modelo seleccionado</th>
+    <th>Transceptor de radio</th>
+    <th>Justificación técnica</th>
+  </tr>
+
+  <tr>
+    <td><strong>Nodo IoT principal</strong></td>
+    <td>ESP32-WROOM-32 / ESP32 DevKit V1</td>
+    <td>WiFi 802.11 b/g/n integrado</td>
+    <td>
+      El ESP32 fue seleccionado debido a su capacidad de procesamiento dual-core de 240 MHz, conectividad WiFi integrada y soporte para múltiples periféricos analógicos y digitales. Además, permite implementar arquitecturas basadas en interrupciones, temporizadores RTC y multitarea mediante FreeRTOS, eliminando la necesidad de un <code>loop()</code> tradicional. Cuenta con suficientes GPIO para la integración simultánea de sensores analógicos, digitales y actuadores visuales.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Comunicación inalámbrica</strong></td>
+    <td>WiFi integrado ESP32</td>
+    <td>IEEE 802.11 b/g/n (2.4 GHz)</td>
+    <td>
+      La conectividad WiFi integrada permite la transmisión directa de datos hacia el backend monolítico mediante HTTPS, evitando el uso de módulos externos adicionales. Asimismo, soporta protocolos de seguridad WPA2/WPA3 y cifrado TLS para garantizar la protección de la información transmitida.
+    </td>
+  </tr>
+</table>
+
+#### Especificaciones principales del ESP32
+
+<table>
+  <tr>
+    <th>Parámetro</th>
+    <th>Valor</th>
+  </tr>
+
+  <tr>
+    <td><strong>CPU</strong></td>
+    <td>Dual-core Tensilica LX6 @ 240 MHz</td>
+  </tr>
+
+  <tr>
+    <td><strong>Memoria RAM</strong></td>
+    <td>520 KB SRAM</td>
+  </tr>
+
+  <tr>
+    <td><strong>Memoria Flash</strong></td>
+    <td>4 MB</td>
+  </tr>
+
+  <tr>
+    <td><strong>ADC</strong></td>
+    <td>12 bits</td>
+  </tr>
+
+  <tr>
+    <td><strong>GPIO disponibles</strong></td>
+    <td>34 pines</td>
+  </tr>
+
+  <tr>
+    <td><strong>Conectividad WiFi</strong></td>
+    <td>2.4 GHz IEEE 802.11 b/g/n</td>
+  </tr>
+
+  <tr>
+    <td><strong>Bluetooth</strong></td>
+    <td>BLE 4.2</td>
+  </tr>
+
+  <tr>
+    <td><strong>Consumo en Deep Sleep</strong></td>
+    <td>~10 μA</td>
+  </tr>
+</table>
+
+#### Justificación técnica adicional
+El ESP32 permite implementar las siguientes capacidades necesarias para el sistema IoT agrícola:
+
+- procesamiento concurrente mediante FreeRTOS
+- interrupciones externas para eventos críticos
+- temporizadores RTC para tareas periódicas
+- comunicación segura mediante HTTPS/TLS
+- procesamiento Edge local
+- arquitectura híbrida Event-Driven + Time-Triggered
+
+Asimismo, posee suficiente capacidad computacional para ejecutar filtros de suavizado, validación de lecturas, gestión de colas de eventos y lógica de dominio basada en una adaptación de Domain-Driven Design (DDD) para sistemas embebidos.
+
+---
+### Paso 10: Definición del procesamiento de datos en cada nodo y en la nube
+
+En esta etapa se definen los algoritmos responsables del procesamiento de datos dentro del ecosistema IoT agrícola.
+Los algoritmos se distribuyen entre el nodo ESP32 (Edge Computing) y el backend monolítico en la nube, permitiendo optimizar el rendimiento, reducir la latencia y mejorar la calidad de la información procesada.
+
+<table>
+  <tr>
+    <th>Algoritmo a implementar</th>
+    <th>Responsabilidad</th>
+    <th>Ubicación</th>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de filtrado de ruido</strong></td>
+    <td>
+      Aplica filtros de promedio móvil y suavizado para estabilizar las lecturas analógicas provenientes de los sensores YL-69 y HR202L, reduciendo fluctuaciones eléctricas y ruido ambiental.
+    </td>
+    <td>En el Nodo IoT (ESP32)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de validación de datos</strong></td>
+    <td>
+      Verifica que las lecturas obtenidas se encuentren dentro de rangos válidos previamente definidos, descartando valores atípicos o inconsistentes.
+    </td>
+    <td>En el Nodo IoT (ESP32)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de compensación térmica</strong></td>
+    <td>
+      Compensa las variaciones del sensor de humedad de suelo YL-69 utilizando la temperatura obtenida desde el sensor DS18B20 para mejorar la estabilidad de la medición.
+    </td>
+    <td>En el Nodo IoT (ESP32)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de priorización de eventos</strong></td>
+    <td>
+      Gestiona la prioridad de procesamiento y transmisión de eventos críticos, otorgando máxima prioridad a detección de movimiento y alertas ambientales.
+    </td>
+    <td>En el Nodo IoT (ESP32)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de compresión de datos</strong></td>
+    <td>
+      Reduce el tamaño del payload JSON mediante técnicas simples de compactación y eliminación de redundancia antes de la transmisión inalámbrica.
+    </td>
+    <td>En el Nodo IoT (ESP32)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de gestión por interrupciones</strong></td>
+    <td>
+      Administra la ejecución de tareas mediante interrupciones GPIO y temporizadores RTC, evitando el uso de un <code>loop()</code> tradicional y optimizando el procesamiento Edge.
+    </td>
+    <td>En el Nodo IoT (ESP32)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de validación de payload</strong></td>
+    <td>
+      Verifica la estructura y consistencia de los datos JSON recibidos desde los nodos IoT antes de almacenarlos en la base de datos.
+    </td>
+    <td>En la nube (Backend)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de agregación histórica</strong></td>
+    <td>
+      Genera promedios y estadísticas horarias, diarias y semanales para análisis histórico y visualización en dashboards.
+    </td>
+    <td>En la nube (Backend)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de generación de alertas</strong></td>
+    <td>
+      Evalúa reglas de negocio relacionadas con humedad, temperatura, conectividad y movimiento para emitir alertas en tiempo real.
+    </td>
+    <td>En la nube (Backend)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de actualización en tiempo real</strong></td>
+    <td>
+      Publica eventos y actualizaciones hacia el dashboard web utilizando WebSocket para mantener sincronización inmediata con los usuarios conectados.
+    </td>
+    <td>En la nube (Backend)</td>
+  </tr>
+
+  <tr>
+    <td><strong>Algoritmo de generación de reportes</strong></td>
+    <td>
+      Procesa información histórica almacenada para generar reportes ambientales y estadísticas exportables en formatos CSV y PDF.
+    </td>
+    <td>En la nube (Backend)</td>
+  </tr>
+</table>
+
+---
+### Paso 11: Análisis del tiempo de procesamiento
+
+Luego de definir los algoritmos implementados tanto en el nodo ESP32 como en el backend, se analiza el esfuerzo computacional asociado considerando complejidad algorítmica, uso de memoria y tiempo de ejecución estimado.
+
+<table>
+  <tr>
+    <th>Algoritmo implementado</th>
+    <th>Complejidad (Big O)</th>
+    <th>Uso en memoria</th>
+    <th>Tiempo estimado</th>
+    <th>Ubicación</th>
+  </tr>
+
+  <tr>
+    <td><strong>Filtrado de ruido (promedio móvil)</strong></td>
+    <td>O(N)</td>
+    <td>Bajo (~2 KB)</td>
+    <td>50 ms</td>
+    <td>Nodo ESP32</td>
+  </tr>
+
+  <tr>
+    <td><strong>Validación de datos</strong></td>
+    <td>O(1)</td>
+    <td>Mínimo (Bytes)</td>
+    <td>10 ms</td>
+    <td>Nodo ESP32</td>
+  </tr>
+
+  <tr>
+    <td><strong>Compensación térmica</strong></td>
+    <td>O(1)</td>
+    <td>Bajo (&lt; 1 KB)</td>
+    <td>20 ms</td>
+    <td>Nodo ESP32</td>
+  </tr>
+
+  <tr>
+    <td><strong>Priorización de eventos</strong></td>
+    <td>O(1)</td>
+    <td>Bajo (&lt; 1 KB)</td>
+    <td>&lt; 1 ms</td>
+    <td>Nodo ESP32</td>
+  </tr>
+
+  <tr>
+    <td><strong>Compresión de datos</strong></td>
+    <td>O(N)</td>
+    <td>Bajo (~2 KB)</td>
+    <td>30 ms</td>
+    <td>Nodo ESP32</td>
+  </tr>
+
+  <tr>
+    <td><strong>Validación de payload JSON</strong></td>
+    <td>O(N)</td>
+    <td>Moderado (~5 KB)</td>
+    <td>40 ms</td>
+    <td>Backend Monolítico</td>
+  </tr>
+
+  <tr>
+    <td><strong>Persistencia de datos históricos</strong></td>
+    <td>O(log N)</td>
+    <td>Moderado (~10 KB)</td>
+    <td>100 ms</td>
+    <td>Backend Monolítico</td>
+  </tr>
+
+  <tr>
+    <td><strong>Generación de alertas</strong></td>
+    <td>O(1)</td>
+    <td>Bajo (&lt; 1 KB)</td>
+    <td>20 ms</td>
+    <td>Backend Monolítico</td>
+  </tr>
+
+  <tr>
+    <td><strong>Actualización de dashboard en tiempo real</strong></td>
+    <td>O(1)</td>
+    <td>Moderado (~5 KB)</td>
+    <td>50 ms</td>
+    <td>Backend Monolítico</td>
+  </tr>
+</table>
+
+#### Justificación técnica de los parámetros
+
+1. Complejidad computacional
+- Los algoritmos de filtrado y compresión presentan complejidad **O(N)** debido a que procesan múltiples muestras antes de generar una salida estabilizada.  
+- Los algoritmos de validación, compensación y priorización utilizan operaciones aritméticas simples y comparaciones directas, por lo que operan en tiempo constante **O(1)**.  
+- La persistencia histórica en base de datos utiliza índices temporales, por ello se estima una complejidad aproximada de **O(log N)**.  
+
+2. Tiempo de ejecución
+- El **ESP32** funcionando a 240 MHz permite ejecutar operaciones de validación y eventos críticos en pocos milisegundos.  
+- La detección **PIR** mediante interrupciones posee prioridad máxima y tiempo de respuesta menor a **1 ms**.  
+- La lectura del sensor **DS18B20** es la operación más lenta debido al protocolo One-Wire y al tiempo interno de conversión térmica.  
+
+3. Uso de memoria
+- El procesamiento local utiliza buffers pequeños y estructuras livianas compatibles con los **520 KB de SRAM** del ESP32.  
+- El backend monolítico requiere mayor memoria debido al manejo de conexiones HTTP, persistencia y actualización en tiempo real del dashboard.  
+
+4. Impacto en la QoS del sistema <br>
+La suma de tiempos de procesamiento y transmisión se mantiene dentro del límite de latencia definido previamente.  
+- **Eventos críticos:** menor a 2 segundos end-to-end.  
+- **Lecturas periódicas:** transmisión asíncrona optimizada mediante procesamiento local y priorización de eventos.
+
+---
+### Paso 12: Definición de la interfaz gráfica de usuario
+
+En esta etapa final se definen los módulos visuales que permitirán a los usuarios supervisar el estado ambiental, visualizar datos históricos, administrar alertas y monitorear el funcionamiento del sistema IoT.
+
+<table>
+  <tr>
+    <th>Servicio/Módulo</th>
+    <th>Plataforma</th>
+    <th>Elementos clave</th>
+    <th>Justificación funcional</th>
+  </tr>
+
+  <tr>
+    <td><strong>Dashboard principal</strong></td>
+    <td>Web</td>
+    <td>
+      Visualización de humedad de suelo, temperatura, humedad ambiental, movimiento detectado y estado general del sistema.
+    </td>
+    <td>
+      Permite supervisar en tiempo real las variables ambientales recolectadas por los sensores del nodo ESP32.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Monitoreo histórico</strong></td>
+    <td>Web</td>
+    <td>
+      Gráficas de tendencias ambientales, registros históricos y estadísticas por sensor.
+    </td>
+    <td>
+      Facilita el análisis de comportamiento ambiental y la toma de decisiones basada en datos históricos almacenados en la nube.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Gestión de alertas</strong></td>
+    <td>Web</td>
+    <td>
+      Configuración de umbrales críticos, reglas de negocio y visualización de alertas activas.
+    </td>
+    <td>
+      Permite personalizar condiciones de monitoreo y reaccionar rápidamente ante eventos críticos detectados por el sistema.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Estado de dispositivos</strong></td>
+    <td>Web</td>
+    <td>
+      Indicadores de conectividad WiFi, uptime, intensidad de señal (RSSI) y estado de sensores.
+    </td>
+    <td>
+      Facilita la supervisión técnica del nodo IoT y la detección temprana de fallos de conectividad o hardware.
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Notificaciones en tiempo real</strong></td>
+    <td>Web / Mobile (futuro)</td>
+    <td>
+      Alertas visuales y notificaciones push para eventos críticos.
+    </td>
+    <td>
+      Cumple con los requisitos de QoS definidos previamente para eventos que requieren atención inmediata.
+    </td>
+  </tr>
+</table>
+
+#### Tecnologías utilizadas para la interfaz
+
+<table>
+  <tr>
+    <th>Componente</th>
+    <th>Tecnología seleccionada</th>
+  </tr>
+
+  <tr>
+    <td><strong>Frontend Web</strong></td>
+    <td>Vue.js + Vite</td>
+  </tr>
+
+  <tr>
+    <td><strong>Visualización gráfica</strong></td>
+    <td>Chart.js</td>
+  </tr>
+
+  <tr>
+    <td><strong>Comunicación en tiempo real</strong></td>
+    <td>WebSocket</td>
+  </tr>
+
+  <tr>
+    <td><strong>Mapas y localización</strong></td>
+    <td>Leaflet</td>
+  </tr>
+</table>
+
+#### Funcionalidades principales de la interfaz
+- Visualización de humedad del suelo en tiempo real.
+- Monitoreo de temperatura ambiental y temperatura exterior.
+- Visualización de humedad ambiental.
+- Registro histórico de datos ambientales.
+- Configuración de umbrales y reglas de alertas.
+- Estado de conectividad del ESP32.
+- Visualización de eventos detectados por el sensor PIR.
+- Exportación de reportes históricos.
+- Actualización de datos en tiempo real mediante WebSocket.
+
+#### Resumen general de arquitectura
+```
+Sensores
+   ↓
+ESP32 (Interrupciones + DDD Adaptado)
+   ↓
+HTTPS REST API
+   ↓
+Backend Monolítico
+   ↓
+PostgreSQL + TimescaleDB
+   ↓
+Frontend Web (Vue.js)
+```
+
+#### Diseño físico y flujo de interacción del dispositivo IoT
+El dispositivo IoT estará compuesto por un nodo central ESP32 conectado a sensores ambientales y de movimiento mediante entradas analógicas, digitales e interrupciones externas.
+El flujo de interacción del sistema será el siguiente:
+
+```
+Sensores → ESP32 → Procesamiento local →
+Validación y filtrado →
+Transmisión HTTPS →
+Backend →
+Base de datos →
+Dashboard Web
+```
+La arquitectura implementa un modelo híbrido:
+
+- Event-driven: para eventos críticos como movimiento detectado.
+- Time-triggered: para lecturas periódicas ambientales.
+
+Además, el sistema evita el uso de `loop()` continuo, utilizando interrupciones, timers RTC y servicios desacoplados para optimizar procesamiento y consumo energético.
+
+<div align="center">
+  <img src="./assets/images/iot-device-design/circuit_image.png" alt="Prototipo del dispositivo IoT"/>
+</div>
