@@ -579,7 +579,297 @@ Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motor
 <meta name="copyright" content="© 2026 AgroSafe. Todos los derechos reservados.">
 ```
 
-### 5.2.4. Searching Systems.
+### 5.2.4. Searching Systems
+
+En esta sección, el equipo explica qué medios de ayuda se brindarán al usuario para la búsqueda de datos dentro de los productos digitales de AgroSafe (Web Application, Mobile Application y Back-Office Admin). Dichas decisiones sobre los sistemas de búsqueda y filtrado tratan de evitar que los usuarios sufran de sobrecarga cognitiva o se sientan perdidos ante el masivo volumen de información generado por nuestra arquitectura IoT (lecturas continuas de telemetría, eventos de seguridad perimetral, recomendaciones agronómicas y métricas de negocio). 
+
+Esta densidad de datos abarca lecturas continuas de telemetría (humedad, pH, temperatura, conductividad), historiales de riego, cientos de detecciones térmicas y eventos de seguridad perimetral, así como recomendaciones agronómicas, registros de auditoría y métricas de negocio.
+
+Para garantizar que cada perfil encuentre información procesable y crítica en el menor tiempo posible, a continuación se especifican las opciones de búsqueda que ofrecerán las aplicaciones, con qué filtros contará el usuario en cada caso y cómo lucirá la representación visual de los datos después de la búsqueda. Todo ello se encuentra alineado de forma trazable con las User Stories del Capítulo III y los Bounded Contexts modelados durante el EventStorming.
+
+
+## Principios de Diseño de Búsqueda
+
+El sistema de búsqueda de AgroSafe se rige por cuatro principios fundamentales derivados de las necesidades de nuestros User Personas:
+
+| Principio | Justificación desde el Dominio | Implementación Técnica |
+|-----------|-------------------------------|----------------------|
+| **Búsqueda contextual por rol** | Agricultores, agrónomos y staff buscan información distinta con propósitos diferentes (EP-002-US001, EP-009-US001, EP-011-US001) | Barra de búsqueda global que adapta sugerencias y filtros según el rol autenticado |
+| **Filtros progresivos** | Evitar sobrecarga cognitiva: mostrar solo filtros relevantes al contexto actual (EP-002-US012, EP-003-US005) | Panel de filtros colapsable que se expande según el módulo activo |
+| **Resultados accionables** | Cada resultado debe permitir una acción inmediata sin navegación adicional (EP-004-US010, EP-009-US004) | Tarjetas de resultado con CTAs contextuales ("Regar", "Ver detalles", "Contactar") |
+| **Manejo explícito de "sin resultados"** | En entornos rurales con conectividad intermitente, la ausencia de datos debe comunicarse claramente (EP-004-US008) | Estados vacíos con mensajes explicativos y sugerencias de ajuste de filtros |
+
+---
+
+## Opciones de Búsqueda por Módulo y Rol
+
+### Módulo: Dashboard de Suelo y Riego (Agricultor)
+
+**Contexto de búsqueda:** Consultar histórico de telemetría, eventos de riego y alertas para tomar decisiones operativas.
+
+| Tipo de Búsqueda | Filtros Disponibles | Visualización de Resultados | User Stories Relacionadas |
+|-----------------|-------------------|---------------------------|-------------------------|
+| **Búsqueda en histórico de suelo** | • Rango de fechas [date picker]<br>• Zona de riego [dropdown]<br>• Parámetro: [Humedad] [EC] [pH] [Temperatura]<br>• Estado: [Todos] [Crítico] [Advertencia] [Óptimo] | Gráfico de líneas con marcadores de eventos, tabla resumen con valores promedio/máx/mín, badge de estado por fila | EP-002-US001, EP-002-US012 |
+| **Búsqueda en historial de riego** | • Fecha de ejecución [range]<br>• Zona [dropdown]<br>• Estado: [Exitoso] [Fallido] [Pendiente]<br>• Tipo: [Manual] [Automático] [Programado] | Timeline visual con iconos por estado, tooltip con duración/consumo, botón "Reintentar" en fallos | EP-002-US003, EP-002-US004 |
+| **Búsqueda en eventos de seguridad** | • Tipo de evento: [Humano] [Animal] [Viento]<br>• Fecha [range]<br>• Confianza: [>80%] [50-80%] [<50%]<br>• Estado: [Revisado] [Pendiente] | Lista cronológica con iconos de clasificación, badge de confianza, acciones rápidas ("Marcar revisado") | EP-003-US005, EP-003-US006 |
+| **Búsqueda en dispositivos** | • Tipo: [Sensor Suelo] [PIR] [Edge]<br>• Estado: [Online] [Offline] [Baja batería]<br>• Zona asignada [dropdown] | Tarjetas por dispositivo con indicador de estado, barra de batería, última actividad, CTA "Ver guía" | EP-004-US019, EP-007-US019 |
+
+**Ejemplo de flujo de búsqueda en histórico de suelo:**
+```
+1. Usuario hace clic en "Buscar en histórico" desde el dashboard
+2. Panel de filtros se expande con opciones contextuales
+3. Usuario selecciona: Zona "Norte", Parámetro "Humedad", Estado "Crítico", Últimos 7 días
+4. Sistema recalcula gráfico y tabla en <500ms
+5. Resultados muestran:
+   - Gráfico con picos rojos en momentos críticos
+   - Tabla con 3 registros: fechas, valores, duración del evento
+   - Badge: "3 eventos críticos encontrados"
+6. Usuario hace clic en un registro → modal con diagnóstico y CTA "Regar ahora"
+```
+
+---
+
+### Módulo: Gestión de Clientes y Reportes (Agrónomo)
+
+**Contexto de búsqueda:** Localizar clientes, recomendaciones y reportes para escalar la asesoría técnica.
+
+| Tipo de Búsqueda | Filtros Disponibles | Visualización de Resultados | User Stories Relacionadas |
+|-----------------|-------------------|---------------------------|-------------------------|
+| **Búsqueda de clientes** | • Nombre/email [text input con autocomplete]<br>• Cultivo: [Maíz] [Uva] [Palta] [Todos]<br>• Estado de vinculación: [Activa] [Pendiente] [Inactiva]<br>• Hectáreas: [range slider] | Tabla con columnas clave, badge de estado por fila, acciones rápidas ("Ver dashboard", "Enviar mensaje") | EP-009-US001, EP-009-US002 |
+| **Búsqueda en recomendaciones** | • Cliente [dropdown]<br>• Tipo: [Riego] [Umbrales] [Reporte] [Alerta]<br>• Estado: [Enviada] [Leída] [Atendida] [Ignorada]<br>• Fecha [range] | Lista expandible con contexto, canales de envío, respuesta del cliente, CTA "Reenviar recordatorio" | EP-009-US004, EP-009-US005 |
+| **Búsqueda en plantillas de cultivo** | • Nombre/cultivo [text input]<br>• Visibilidad: [Mis privadas] [Públicas]<br>• Parámetro: [Humedad] [EC] [pH] [Todos] | Grid de tarjetas con resumen de umbrales, badge de visibilidad, acciones "Aplicar", "Editar" | EP-009-US005 |
+| **Búsqueda en reportes generados** | • Cliente [dropdown]<br>• Tipo de reporte: [Resumen] [Técnico] [Comparativo]<br>• Fecha de generación [range]<br>• Estado de envío: [Entregado] [Pendiente] [Fallido] | Lista con thumbnail del PDF, metadatos, badge de estado, botón "Reenviar" o "Descargar" | EP-009-US003 |
+
+**Ejemplo de flujo de búsqueda de recomendaciones ignoradas:**
+```
+1. Agrónomo accede a Historial de Recomendaciones
+2. Aplica filtros: Estado "Ignorada", Últimos 7 días
+3. Sistema muestra 2 recomendaciones sin respuesta del cliente
+4. Cada tarjeta incluye:
+   - Contexto: humedad 28%, umbral 30%
+   - Canales usados: WhatsApp + Push
+   - Tiempo transcurrido: "4 días sin respuesta"
+   - CTA: "Reenviar recordatorio"
+5. Agrónomo presiona CTA → modal con mensaje pre-redactado
+6. Al confirmar, sistema envía recordatorio y actualiza estado a "Recordatorio enviado"
+```
+
+---
+
+### Módulo: Operaciones y Soporte (Staff/Admin)
+
+**Contexto de búsqueda:** Gestionar cuentas, dispositivos y auditoría con eficiencia operativa.
+
+| Tipo de Búsqueda | Filtros Disponibles | Visualización de Resultados | User Stories Relacionadas |
+|-----------------|-------------------|---------------------------|-------------------------|
+| **Búsqueda de cuentas** | • Nombre/email/RUC [text input]<br>• Plan: [Básico] [Premium] [Empresa]<br>• Estado: [Activa] [Suspendida] [Pendiente]<br>• Fecha de registro [range] | Tabla con perfil resumido, badge de estado, acciones "Ver", "Suspender", "Reactivar" | EP-011-US001 |
+| **Búsqueda de dispositivos** | • Serie/nombre [text input]<br>• Tipo: [Sensor] [PIR] [Edge]<br>• Estado: [Online] [Offline] [Perdido]<br>• Cliente [dropdown] | Tarjetas con indicador de estado, batería, última actividad, CTA "Forzar sync" o "Reportar perdido" | EP-011-US002, EP-010-US001 |
+| **Búsqueda en logs de auditoría** | • Acción: [Suspensión] [Reactivación] [Cambio de umbrales]<br>• Usuario: [Staff] [Sistema] [Cliente]<br>• Fecha [range]<br>• Entidad afectada: [Cuenta] [Dispositivo] [Parcela] | Lista cronológica con detalles de cambio, usuario responsable, CTA "Ver contexto completo" | EP-011-US001 (auditoría implícita) |
+
+**Ejemplo de búsqueda de dispositivos offline:**
+```
+1. Staff accede a Gestión de Dispositivos
+2. Aplica filtro: Estado "Offline", Últimas 24h
+3. Sistema muestra 5 dispositivos sin conexión reciente
+4. Cada tarjeta incluye:
+   - Cliente afectado y zona
+   - Última actividad: "hace 26h"
+   - Posible causa (inferida): "Batería crítica" / "Sin señal"
+   - CTA: "Contactar cliente" o "Programar visita"
+5. Staff presiona "Contactar cliente" → modal con plantilla de mensaje WhatsApp
+6. Al enviar, sistema registra la acción y actualiza estado a "Contactado"
+```
+
+---
+
+### Módulo: Analytics Estratégico (Product Owner)
+
+**Contexto de búsqueda:** Explorar métricas de negocio para priorizar roadmap y validar hipótesis.
+
+| Tipo de Búsqueda | Filtros Disponibles | Visualización de Resultados | User Stories Relacionadas |
+|-----------------|-------------------|---------------------------|-------------------------|
+| **Búsqueda en KPIs ejecutivos** | • Segmento: [Agricultores] [Agrónomos]<br>• Plan: [Básico] [Premium]<br>• Período: [Trimestre] [Año] [Personalizado]<br>• Métrica: [Crecimiento] [Retención] [Churn] [MRR] | Tarjetas de KPI con tendencia sparkline, comparativa vs período anterior, badge "Fuera de meta" si aplica | EP-012-US022 |
+| **Búsqueda en adopción de funcionalidades** | • Funcionalidad: [Dashboard] [Riego] [Seguridad] [Reportes]<br>• Segmento [dropdown]<br>• Frecuencia de uso: [Diaria] [Semanal+] [Cualquier uso] | Matriz de calor con gradientes de color, tooltip con números absolutos, fila expandible con embudo de uso | EP-012-US023 |
+| **Búsqueda en causas de churn** | • Motivo: [Precio] [Falta de uso] [Problemas técnicos] [Otro]<br>• Segmento [dropdown]<br>• Período [range] | Gráfico de pastel con desglose, lista de testimonios asociados, CTA "Ver análisis cualitativo" | EP-012-US022 |
+
+**Ejemplo de búsqueda en adopción de funcionalidades:**
+```
+1. Product Owner accede a Heatmap de Adopción
+2. Aplica filtros: Segmento "Agricultores", Frecuencia "Uso diario"
+3. Sistema recalcula matriz: funcionalidades más usadas aparecen en verde intenso
+4. Owner hace clic en fila "Control de riego" → se expande detalle:
+   - Embudo: 94% acceden, 61% ejecutan acción
+   - Drop-off crítico: 31 usuarios abandonan tras ver gráfico
+   - Hipótesis: "Falta de contexto en leyenda"
+   - CTA: "Ver sesión grabada" (Hotjar) o "Crear ticket de mejora"
+5. Owner presiona "Crear ticket" → modal pre-llenado con métricas y contexto
+6. Al confirmar, sistema crea ticket en Jira vinculado a esta métrica
+```
+
+---
+
+## Componentes de Interfaz de Búsqueda
+
+### Barra de Búsqueda Global (Contextual por Rol)
+```
+┌─────────────────────────────────────────┐
+│ Buscar en [Dashboard de Suelo ▼]    │
+│ • Placeholder dinámico:               │
+│   - Agricultor: "Buscar en histórico... "│
+│   - Agrónomo: "Buscar cliente o recomendación... "│
+│   - Staff: "Buscar cuenta o dispositivo... "│
+│ • Autocomplete con sugerencias por rol │
+│ • Atajo de teclado: Ctrl+K / Cmd+K    │
+└─────────────────────────────────────────┘
+```
+
+### Panel de Filtros Avanzados (Colapsable)
+```
+┌─────────────────────────────────────────┐
+│ Filtros Avanzados [▼]               │
+│                                         │
+│ [Sección visible al expandir]          │
+│ • Filtro 1: [Dropdown con búsqueda]   │
+│ • Filtro 2: [Date range picker]       │
+│ • Filtro 3: [Multi-select con chips]  │
+│ • Toggle: "Guardar como búsqueda guardada"│
+│                                         │
+│ [Botones]                              │
+│ • "Aplicar filtros" (primario)        │
+│ • "Limpiar todos" (secundario)        │
+│ • "Guardar vista" (terciario)         │
+└─────────────────────────────────────────┘
+```
+
+### Tarjeta de Resultado de Búsqueda (Patrón Reutilizable)
+```
+┌─────────────────────────────────────────┐
+│ [Badge de Estado] Título del resultado │
+│ • Subtítulo con contexto clave        │
+│ • Metadatos: fecha, usuario, ubicación│
+│                                         │
+│ [Resumen accionable]                  │
+│ • 1-2 líneas con información crítica │
+│ • Iconos de estado o clasificación   │
+│                                         │
+│ [Acciones Rápidas]                    │
+│ • "Ver detalles"                   │
+│ • "Contactar" (si aplica)          │
+│ • "Marcar como atendido" (si aplica)│
+└─────────────────────────────────────────┘
+```
+
+---
+
+## Estados de Búsqueda y Manejo de Casos Límite
+
+| Estado | Comportamiento | Mensaje al Usuario | Criterio de Aceptación |
+|--------|---------------|-------------------|----------------------|
+| **Búsqueda en progreso** | Spinner en barra de búsqueda, resultados anteriores permanecen visibles | "Buscando... " en placeholder | EP-002-TS020: Actualización en tiempo real sin bloqueo de UI |
+| **Resultados encontrados** | Lista/grid de tarjetas con paginación o infinite scroll, contador "X resultados encontrados" | "Se encontraron 12 resultados para '[término]'" | Resultados cargan en <1s para consultas típicas |
+| **Sin resultados** | Ilustración amigable + mensaje explicativo + sugerencias de ajuste de filtros | "No se encontraron resultados. Intenta: • Ampliar el rango de fechas • Limpiar algunos filtros • Verificar ortografía" | EP-004-US008: Manejo claro de ausencia de datos en modo offline |
+| **Error de búsqueda** | Toast de error + opción de reintentar, barra de búsqueda mantiene el término | "No pudimos completar la búsqueda. Verifica tu conexión e intenta nuevamente." | Sistema registra error en auditoría para diagnóstico técnico |
+| **Búsqueda guardada** | Badge "Guardada" en barra, acceso rápido desde menú lateral | "Vista guardada: 'Alertas críticas - Últimos 7 días'" | Usuario puede reutilizar filtros complejos con un clic |
+
+---
+
+## Integración con Bounded Contexts y Arquitectura
+
+El sistema de búsqueda está diseñado para respetar las fronteras de los Bounded Contexts definidos en el Event Storming:
+
+```
+┌─────────────────────────────────────────┐
+│ Frontend (Vue.js)                       │
+│ • Barra de búsqueda contextual          │
+│ • Panel de filtros por módulo          │
+│ • Renderizado de resultados            │
+└──────────────┬──────────────────────────┘
+               │ API REST unificada
+               ▼
+┌─────────────────────────────────────────┐
+│ Backend Modular Monolith (Spring Boot)  │
+│                                         │
+│ ┌─────────────────────────────────┐    │
+│ │ Search Orchestrator Service    │    │
+│ │ • Enruta consulta al BC correcto│    │
+│ │ • Aplica filtros por rol/permiso│    │
+│ │ • Combina resultados si es necesario││
+│ └──────────────┬────────────────┘    │
+│                │                      │
+│ ┌──────────────▼──────────────┐      │
+│ │ Bounded Context específico │      │
+│ │ • Soil Monitoring: búsqueda│      │
+│ │   en telemetría            │      │
+│ │ • Account Management:      │      │
+│ │   búsqueda en cuentas      │      │
+│ │ • IoT Device Mgmt:         │      │
+│ │   búsqueda en dispositivos │      │
+│ └────────────────────────────┘      │
+│                                      │
+│ PostgreSQL con índices optimizados  │
+│ • Índices compuestos por (fecha, zona, parámetro)│
+│ • Full-text search en campos de texto│
+│ • Materialized views para métricas frecuentes│
+└─────────────────────────────────────────┘
+```
+
+**Justificación arquitectónica:**
+- La búsqueda no cruza límites de Bounded Context: cada consulta se resuelve dentro del contexto propietario de los datos.
+- El `Search Orchestrator` actúa como Anti-Corruption Layer para consultas que requieren combinar datos de múltiples contextos (ej: "Mostrar clientes con dispositivos offline").
+- Los índices de base de datos están alineados con los patrones de búsqueda más frecuentes identificados en las User Stories.
+
+---
+
+## Criterios de Validación de Búsqueda (Gherkin)
+
+```gherkin
+Scenario: Agricultor busca eventos críticos de humedad en histórico
+  Given que estoy en el Dashboard de Suelo
+  When ingreso "humedad crítica" en la barra de búsqueda
+  And aplico filtros: Zona "Norte", Últimos 7 días
+  Then veo 3 tarjetas de resultado con fechas y valores exactos
+  And cada tarjeta tiene CTA "Regar ahora" habilitado
+  And el gráfico principal resalta los períodos críticos
+
+Scenario: Agrónomo busca recomendaciones ignoradas para priorizar seguimiento
+  Given que accedo a Historial de Recomendaciones
+  When aplico filtro: Estado "Ignorada", Últimos 7 días
+  Then veo solo recomendaciones sin respuesta del cliente
+  And cada resultado muestra tiempo transcurrido y canales usados
+  And puedo reenviar recordatorio con un clic desde la tarjeta
+
+Scenario: Staff busca dispositivos offline para programar mantenimiento
+  Given que estoy en Gestión de Dispositivos
+  When filtro por Estado "Offline" y Últimas 24h
+  Then veo lista de dispositivos con posible causa inferida
+  And cada tarjeta tiene CTA "Contactar cliente" o "Programar visita"
+  And al contactar, el sistema registra la acción en auditoría
+
+Scenario: Product Owner busca funcionalidades con baja adopción
+  Given que accedo a Heatmap de Adopción
+  When filtro por Segmento "Agricultores" y Frecuencia "Cualquier uso"
+  Then veo matriz de calor con funcionalidades poco usadas en rojo
+  And al expandir una fila, veo embudo de uso y drop-offs críticos
+  And puedo crear ticket de mejora pre-llenado con métricas
+```
+
+---
+
+## Métricas de Éxito del Sistema de Búsqueda
+
+| KPI | Meta | Herramienta de Medición |
+|-----|------|------------------------|
+| **Tiempo para primer resultado** | <500ms para consultas típicas | Lighthouse / Web Vitals |
+| **Tasa de búsquedas sin resultados** | <10% del total de búsquedas | Google Analytics 4 |
+| **Click-through en resultados** | >60% de usuarios hacen clic en al menos un resultado | Mixpanel / Amplitude |
+| **Uso de filtros avanzados** | >40% de búsquedas aplican ≥1 filtro avanzado | Event tracking personalizado |
+| **Satisfacción percibida** | >4.0/5.0 en encuesta post-búsqueda | Survey integrado en UI |
+
+---
+
+> **Nota para implementación**: Todos los componentes de búsqueda se documentarán en el Design System de AgroSafe (Figma library) con estados, variantes por rol y guías de accesibilidad. La API de búsqueda seguirá el patrón CQRS: endpoints de consulta (`GET /api/v1/search/{context}`) separados de endpoints de comando, garantizando que las búsquedas no tengan efectos secundarios.
+
+
 
 ### 5.2.5. Navigation Systems.
 
