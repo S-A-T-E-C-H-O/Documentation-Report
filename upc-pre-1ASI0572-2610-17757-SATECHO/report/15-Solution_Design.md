@@ -257,6 +257,77 @@ Adicionalmente a la organización visual, AgroSafe aplica diferentes esquemas de
 
 ### 5.2.2. Labeling Systems.
 
+El sistema de etiquetado de AgroSafe prioriza la simplicidad, la claridad y la consistencia con el lenguaje ubicuo definido en el Capítulo II. Cada etiqueta está diseñada para representar conjuntos de información con el mínimo número de palabras, evitando ambigüedades y reduciendo la carga cognitiva para usuarios con diversos niveles de expertise técnico.
+
+### Principios de Etiquetado
+
+1. **Máximo 3 palabras por etiqueta de navegación**: Facilita el escaneo rápido en menús y botones.
+2. **Verbos de acción para CTAs**: "Regar", "Configurar", "Enviar" en lugar de sustantivos abstractos.
+3. **Icono + texto para acciones críticas**: Refuerza el significado mediante redundancia visual (accesibilidad).
+4. **Consistencia cross-role**: Mismos términos para mismos conceptos en todos los roles (ej: "Zona de Riego" no cambia entre agricultor y agrónomo).
+5. **Lenguaje ubicuo explícito**: Términos del glosario de dominio aparecen tal cual en la UI (ej: "Estrés Hídrico", no "Falta de agua").
+
+### Etiquetas de Navegación Principal
+
+| Etiqueta          | Contexto de Uso                  | Término en Ubiquitous Language | User Story Vinculada       |
+| ----------------- | -------------------------------- | ------------------------------ | -------------------------- |
+| **Dashboard**     | Menú principal (todos los roles) | Real-Time Soil Dashboard       | EP-002-US001, EP-009-US001 |
+| **Riego**         | Menú agricultor                  | Irrigation Control             | EP-002-US003, EP-002-US004 |
+| **Seguridad**     | Menú agricultor                  | Perimeter Security             | EP-003-US005, EP-003-US006 |
+| **Dispositivos**  | Menú agricultor/admin            | IoT Device Management          | EP-004-US017, EP-004-US019 |
+| **Clientes**      | Menú agrónomo                    | Client Management              | EP-009-US001, EP-009-US002 |
+| **Reportes**      | Menú agrónomo                    | Technical Report Generation    | EP-009-US003               |
+| **Configuración** | Menú principal (todos)           | Configuration & Preferences    | EP-002-US018, EP-008-US020 |
+
+
+### Etiquetas de Estados y Alertas
+
+| Estado      | Etiqueta Visual        | Color              | Significado para el Usuario        | Política de Negocio Vinculada          |
+| ----------- | ---------------------- | ------------------ | ---------------------------------- | -------------------------------------- |
+| Óptimo      | "Dentro de rango"      | Verde (#4CAF50)    | No se requiere acción              | Umbral superior/inferior no superado   |
+| Advertencia | "Cercano al límite"    | Amarillo (#FBC02D) | Monitorear, posible acción pronto  | Valor dentro de 10% del umbral crítico |
+| Crítico     | "Requiere atención"    | Rojo (#D32F2F)     | Acción inmediata recomendada       | Umbral crítico superado                |
+| Offline     | "Sin conexión"         | Gris (#9E9E9E)     | Verificar dispositivo/conectividad | Heartbeat no recibido en 5 min         |
+| Silenciado  | "Modo silencio activo" | Gris con icono     | Alertas no críticas pausadas       | Horario de silencio configurado        |
+
+### Etiquetas de Acciones (CTAs)
+
+| Acción               | Etiqueta del Botón     | Contexto                    | Criterio de Aceptación Vinculado                                                                       |
+| -------------------- | ---------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Activar riego        | "Regar [Zona]"         | Dashboard, Control de Riego | EP-002-US003: "Then the system sends the command, confirms the start"                                  |
+| Detener riego        | "Detener Riego"        | Cuando riego está activo    | EP-002-US004: "Then the system asks for confirmation, stops the water flow"                            |
+| Configurar umbrales  | "Ajustar Umbrales"     | Configuración, Dashboard    | EP-002-US018: "Then the system warns me of the risk, allows me to confirm"                             |
+| Enviar recomendación | "Enviar Recomendación" | Dashboard Agrónomo          | EP-009-US004: "Then I can send it to the farmer via WhatsApp, backed by sensor data"                   |
+| Generar reporte      | "Generar Reporte"      | Panel Agrónomo              | EP-009-US003: "Then the system compiles data, charts, and recommendations into an exportable document" |
+| Ver detalles         | "Ver Detalles"         | Tablas, listas de eventos   | Criterio transversal: acceso a información contextual sin saturar la vista principal                   |
+
+### Etiquetas de Parámetros Técnicos (Para Usuarios No Técnicos)
+
+Para garantizar que agricultores con baja alfabetización técnica comprendan los datos, los parámetros técnicos se etiquetan con lenguaje natural + tooltip explicativo:
+
+| Parámetro Técnico         | Etiqueta en UI         | Tooltip Explicativo                                             | Valor de Referencia Visible |
+| ------------------------- | ---------------------- | --------------------------------------------------------------- | ------------------------- |
+| `soil_moisture_pct`       | "Humedad del Suelo"    | "Agua disponible para las raíces. Óptimo: 35-55%"               | "42% Dentro de rango"     |
+| `electrical_conductivity` | "Salinidad (EC)"       | "Concentración de sales. >2.5 puede bloquear absorción de agua" | "2.1 dS/m Cercano al límite" |
+| `soil_ph`                 | "Acidez (pH)"          | "Nivel de acidez. Óptimo para maíz: 5.5-7.5"                    | "6.8 Óptimo"              |
+| `soil_temperature`        | "Temperatura de Suelo" | "Afecta absorción de nutrientes. Óptimo: 18-28°C"               | "24°C +2°C vs ayer"       |
+| `pir_classification`      | "Evento Perimetral"    | "Clasificación de movimiento detectado"                         | "Humano (92% confianza)"  |
+
+**Principio de diseño:** "Técnico para expertos, simple para todos". Los valores numéricos están disponibles para usuarios avanzados (tooltip o vista de detalles), pero la etiqueta principal comunica el significado en lenguaje natural.
+
+### Consistencia Cross-Platform
+
+Las etiquetas se mantienen consistentes entre web y móvil para reducir la curva de aprendizaje:
+
+| Funcionalidad | Etiqueta Web          | Etiqueta Móvil | Justificación                                       |
+| ------------- | -------------------- | -------------- | --------------------------------------------------- |
+| Activar riego | "Regar Zona Nort      | "Regar Norte"  | Móvil: abreviación por espacio, mismo icono y verbo |
+| Ver alertas   | "Ver Alertas (        | "3 Alertas"    | Móvil: prioridad al contador, mismo icono           |
+| Configuración | "Configurac           | "Ajustes"      | Sinónimos aceptados por consistencia semántica      |
+| Historial  "Historial de Riego" iego" | "Riegos"       | Móvil: simplificación por contexto implícito        |
+
+**Validación de etiquetas:** Antes de cada release, el equipo de UX realiza pruebas de comprensión con usuarios reales (agricultores y agrónomos) para asegurar que las etiquetas sean intuitivas y no generen ambigüedad.
+
 ### 5.2.3. SEO Tags and Meta Tags
 
 Con el objetivo de mejorar el posicionamiento orgánico de AgroSafe en los motores de búsqueda y facilitar que agricultores e ingenieros agrónomos encuentren una solución digital para el monitoreo de suelo, riego inteligente y seguridad perimetral, se ha definido la siguiente estrategia de etiquetado HTML.
