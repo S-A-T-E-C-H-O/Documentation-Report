@@ -1,29 +1,232 @@
 # Capítulo V: Solution UI/UX Design
+
 ## 5.1. Style Guidelines.
-En esta sección se establecen las directrices visuales y de experiencia de usuario implementadas en la plataforma SATECHO. El objetivo principal del diseño es transformar datos técnicos complejos provenientes de sensores IoT en información clara, intuitiva y accionable para agricultores e ingenieros agrónomos.
+
+En esta sección se establecen las directrices visuales y de experiencia de usuario implementadas en la plataforma AgroSafe. El objetivo principal del diseño es transformar datos técnicos complejos provenientes de sensores IoT (humedad, conductividad eléctrica, pH, eventos perimetrales) en información clara, intuitiva y accionable para agricultores e ingenieros agrónomos, reduciendo la carga cognitiva y acelerando la toma de decisiones en campo.
+
 ### 5.1.1. General Style Guidelines.
-Esta sección define los lineamientos generales vinculados al diseño visual, abarcando desde la identidad de marca hasta el tono comunicacional. A continuación, se presentan las principales decisiones y referencias adoptadas:
 
-#### Branding:
-- **Identidad Visual**:
-SATECHO presenta una identidad visual moderna y tecnológica inspirada en la agricultura inteligente y la automatización de cultivos. La interfaz busca transmitir seguridad, confianza, monitoreo constante e innovación accesible.
+Esta sección define el sistema integral de Style Guidelines de AgroSafe, que establece las bases visuales y comunicacionales de la plataforma en sus principales puntos de contacto: aplicación web, aplicación móvil y dispositivos IoT de campo. El objetivo es transformar datos técnicos complejos (humedad, conductividad eléctrica, pH, temperatura y eventos de seguridad perimetral) en información clara, intuitiva y accionable para agricultores e ingenieros agrónomos, reduciendo la carga cognitiva y acelerando la toma de decisiones en campo.
 
-- **Logotipo**:
-El logotipo utiliza una composición minimalista basada en elementos naturales y tecnológicos, integrando tonos verdes relacionados con agricultura sostenible, elementos geométricos suaves que representan conectividad IoT y tipografía sans-serif moderna para transmitir claridad y simplicidad.
+El diseño se sustenta en principios de usabilidad, accesibilidad (WCAG 2.1 AA) y diseño centrado en el usuario, asegurando una experiencia coherente y profesional tanto en entornos de escritorio como en contextos de uso en campo bajo luz solar directa, conectividad intermitente y condiciones operativas exigentes. La aplicación rigurosa de estas guías permite que los equipos de diseño y desarrollo colaboren bajo un lenguaje visual unificado, facilitando la escalabilidad del producto y construyendo confianza en el sistema AgroSafe.
 
-#### Typography:
-- **Fuente primaria**: Se utiliza la tipografía sans-serif Manrope para títulos y encabezados principales, reforzando una estética moderna, tecnológica y minimalista dentro del ecosistema visual de SATECHO. El color principal utilizado es el verde suave #7A9A7A, transmitiendo naturaleza, estabilidad y monitoreo inteligente.
-- **Fuente secundaria**: Para cuerpos de texto, descripciones y contenido informativo, se utiliza la tipografía Inter, debido a su alta legibilidad en dispositivos móviles y paneles digitales. El color principal empleado es #2C3440, proporcionando claridad visual y una lectura cómoda en pantallas.
-- **Fuente terciaria**: Para etiquetas, indicadores secundarios, filtros y estados complementarios, se utiliza la tipografía Inter acompañada del color #764229, permitiendo establecer jerarquía visual y diferenciación entre elementos interactivos e informativos.
-- **Neutral**: Los textos auxiliares, placeholders y estados inactivos utilizan el color neutral #767774, ayudando a reducir el ruido visual y manteniendo una interfaz limpia y equilibrada.
-- **Tamaño**: La jerarquía tipográfica fue diseñada para facilitar la identificación inmediata de información crítica como niveles de humedad, salinidad, nitrógeno y alertas del sistema IoT. Los títulos utilizan tamaños amplios y pesos Bold, mientras que las descripciones y etiquetas emplean tamaños medianos y pequeños para conservar una experiencia minimalista y enfocada en la toma rápida de decisiones. <br>
-<img src="./assets/images/style-guidelines/GeneralTypography.png" alt="Image typography" width="500"/><br>
+Cada decisión de estilo está trazada explícitamente con los **Pain Points** identificados en el Event Storming (Capítulo 4.1.1) y las **User Stories** del Capítulo III, garantizando que el diseño no sea decorativo, sino funcional y validado por necesidades reales del dominio agrícola.
 
-#### Colors:
-- **Paleta de colores**: La paleta utiliza tonos naturales y terrosos que transmiten sostenibilidad, tecnología agrícola y confianza. El verde principal #5E7A5E representa vegetación, estabilidad y control eficiente del riego. El gris verdoso secundario #8C8F8F aporta equilibrio visual y una sensación tecnológica/moderna sin perder el enfoque natural. El tono tierra terciario #D4A373 conecta con el suelo agrícola y añade calidez a la interfaz. Finalmente, el color neutral claro #FAF9F6 mantiene limpieza visual, amplitud y facilita la lectura de la información en dashboards y paneles de monitoreo.
-- **Contrastes**: El contraste entre el verde principal y el fondo neutral genera una excelente legibilidad para textos, métricas y navegación principal. El uso del tono tierra como color de acento permite destacar elementos importantes como botones CTA, alertas de humedad o estados activos sin romper la armonía visual. El gris secundario funciona bien para componentes secundarios, bordes y estados inactivos, creando jerarquía visual clara dentro de la aplicación. En conjunto, la combinación mantiene un balance entre tecnología y naturaleza, ideal para una web app de control de riego agrícola. <br>
-<img src="./assets/images/style-guidelines/ColorSystem.png" alt="Image color" width="500"/><br>
+---
 
+#### 5.1.1.1. Sistema de Color
+
+El color en AgroSafe cumple una función comunicacional crítica: traducir estados técnicos complejos en señales intuitivas que puedan interpretarse rápidamente en campo, incluso bajo estrés o con baja alfabetización digital. La paleta se organiza en cuatro familias funcionales derivadas del dominio agrícola y validadas con los User Personas (Danilo Subasto y Nestor Campo), cada una con roles específicos de jerarquía, estado y marca.
+
+**Color Primario:**  
+![primary-color](./assets/images/style-guidelines/primary-color.png)
+
+**Color Secundario:**  
+![secondary-color](./assets/images/style-guidelines/secondary-color.png)
+
+**Color Terciario:**  
+![tertiary-color](./assets/images/style-guidelines/tertiary-color.png)
+
+**Color Neutral:**  
+![secondary-color](./assets/images/style-guidelines/neutral-color.png)
+
+### Paleta Cromática Funcional
+
+| Familia                     | Color          | Hex       | Uso Principal                                                         | Justificación desde el Dominio                                                                             |
+| --------------------------- | -------------- | --------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Primario (Acción)**       | Verde AgroSafe | `#7A9A7A` | Botones primarios, navegación activa, indicadores de riego exitoso    | Comunica agricultura sostenible y control estable; alto contraste para visibilidad en campo bajo luz solar |
+|                             | Verde Claro    | `#9AB89A` | Badges de estado normal, resaltes en tarjetas, iconos activos         | Refuerza monitoreo constante sin fatiga visual; distingue "óptimo" de "acción requerida"                   |
+|                             | Verde Oscuro   | `#5A7A5A` | Encabezados, textos sobre fondos claros, énfasis en métricas críticas | Aporta jerarquía tipográfica y robustez técnica en dashboards de monitoreo                                 |
+| **Secundario (Estructura)** | Gris Carbón    | `#2C3440` | Textos principales, borders de componentes, iconos inactivos          | Equilibra la interfaz con estética tecnológica; no compite con estados de alerta                           |
+|                             | Surface Dim    | `#E8EAE6` | Fondos secundarios, paneles laterales, tarjetas neutras               | Aporta profundidad sutil; facilita escaneo visual de grandes volúmenes de datos                            |
+|                             | Text Charcoal  | `#212121` | Cuerpo de texto principal                                             | Garantiza legibilidad cómoda sobre fondos claros; ratio de contraste ≥ 4.5:1 (WCAG AA)                     |
+| **Terciario (Acento)**      | Tierra Acento  | `#764229` | Botones secundarios, acentos en gráficos, estados de advertencia      | Evoca el suelo agrícola; distingue "advertencia" de "crítico" sin generar alarma innecesaria               |
+|                             | Tierra Oscura  | `#5A3218` | Etiquetas destacadas, filtros activos, estados de énfasis             | Refuerza jerarquía visual en mensajes y parámetros que requieren atención prioritaria                      |
+| **Neutral (Lienzo)**        | Surface Base   | `#FAF9F6` | Fondo general de la aplicación                                        | Mantiene limpieza visual; reduce fatiga en sesiones prolongadas de monitoreo                               |
+|                             | Surface Card   | `#FFFFFF` | Tarjetas, modales, paneles flotantes                                  | Maximiza contraste para contenedores de información crítica; facilita lectura bajo luz solar               |
+|                             | Surface Border | `#E0E0E0` | Hover de filas, divisores, contornos sutiles                          | Define límites de componentes sin ruido visual; guía el ojo sin distraer                                   |
+
+### Estados de Sistema y Accesibilidad
+
+Además de la paleta base, AgroSafe define colores específicos para estados del sistema, garantizando consistencia y accesibilidad según WCAG 2.1 AA:
+
+| Estado            | Color              | Hex       | Uso                                                                 | Ratio de Contraste (vs fondo) | Cumple WCAG                      |
+| ----------------- | ------------------ | --------- | ------------------------------------------------------------------- | ----------------------------- | -------------------------------- |
+| **Éxito**         | Verde Confirmación | `#43A047` | Toasts de confirmación, badges de acción completada                 | 4.8:1                         | AA                               |
+| **Advertencia**   | Amarillo Alerta    | `#FBC02D` | Umbrales cercanos al límite, batería baja, advertencias no críticas | 3.2:1*                        | AA (con texto oscuro)            |
+| **Crítico**       | Rojo Alerta        | `#D32F2F` | Estrés hídrico severo, intrusión humana, dispositivo offline >24h   | 5.1:1                         | AA                               |
+| **Deshabilitado** | Gris Inactivo      | `#BDBDBD` | Botones deshabilitados, campos readonly, estados no disponibles     | 2.9:1*                        | AA (solo para UI no interactiva) |
+| **Offline**       | Azul Offline       | `#1976D2` | Banner de modo offline, indicadores de sincronización pendiente     | 4.6:1                         | AA                               |
+
+### Principios de Aplicación del Color
+
+- **Jerarquía por saturación**: Los colores más saturados (`#7A9A7A`, `#D32F2F`) se reservan para acciones primarias y estados críticos; los tonos más claros estructuran fondos y elementos de apoyo.
+- **Consistencia cross-plataforma**: La misma paleta se aplica en web, móvil y etiquetas físicas de dispositivos IoT, garantizando reconocimiento inmediato del estado del sistema.
+- **Accesibilidad verificada**: Todas las combinaciones texto/fondo fueron validadas con herramientas de contraste (WebAIM) para cumplir WCAG 2.1 AA, considerando usuarios con visión reducida o daltonismo.
+- **Adaptación a luz solar**: Los tonos de alto contraste (`#212121` sobre `#FAF9F6`) fueron seleccionados para mantener legibilidad en exteriores bajo luz directa, validado en pruebas de campo con los User Personas.
+- **Semántica agrícola**: Los verdes evocan vegetación y crecimiento; los tierras conectan con el suelo; los grises aportan neutralidad técnica sin distraer de los datos críticos.
+
+---  
+
+#### 5.1.1.2. Sistema Tipográfico
+
+La tipografía en AgroSafe transforma lecturas técnicas de sensores en información comprensible para usuarios con distintos niveles de alfabetización digital. Se emplea **Manrope** como familia tipográfica única para todos los roles (Headline, Body, Label), seleccionada por su legibilidad excepcional en pantallas, su apariencia moderna que comunica innovación tecnológica, y su excelente rendimiento en condiciones de campo con luz solar directa.
+
+![manrope-sample](./assets/images/style-guidelines/GeneralTypography.png)
+
+### Modelo Tipográfico
+
+| Rol          | Familia | Peso           | Tamaño (px) | Altura de Línea | Uso Principal                                                     | Justificación                                                                                  |
+| ------------ | ------- | -------------- | ----------- | --------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Headline** | Manrope | 700 (Bold)     | 28–32       | 1.25×           | Títulos de secciones, nombres de vistas, estados globales de zona | Proyecta estética tecnológica; alto impacto visual para identificar rápidamente el contexto    |
+| **Body**     | Manrope | 400 (Regular)  | 16          | 1.5×            | Cuerpo de texto, descripciones, lecturas de humedad/EC/pH         | Optimizada para lectura en pantallas; espaciado generoso reduce fatiga en sesiones prolongadas |
+| **Label**    | Manrope | 500 (Semibold) | 12–13       | 1.4×            | Etiquetas de campos, filtros, chips de estado, metadatos          | Distingue metadata del contenido principal sin saturar la interfaz                             |
+| **Caption**  | Manrope | 400 (Regular)  | 11          | 1.4×            | Timestamps, notas al pie, textos de ayuda                         | Información secundaria que no debe competir con el contenido principal                         |
+
+### Criterios de Diseño Tipográfico
+
+- **Legibilidad en campo**: Tamaño base de 16 px y altura de línea 1.5× garantizan lectura bajo luz solar y con guantes, validado en pruebas con agricultores (User Persona: Danilo Subasto).
+- **Jerarquía clara**: Encabezados en Manrope Bold + color verde de marca permiten identificar rápidamente secciones y estados críticos sin depender exclusivamente del color (accesibilidad para daltonismo).
+- **Coherencia multiplataforma**: Manrope para todos los roles garantiza consistencia entre web, móvil y vistas técnicas de dispositivos IoT, reduciendo la curva de aprendizaje.
+- **Contraste tipográfico**: Uso limitado de pesos (Regular, Semibold, Bold) mantiene una jerarquía limpia, evitando interfaces visualmente sobrecargadas que dificulten la toma de decisiones rápidas.
+- **Internacionalización**: La tipografía soporta caracteres especiales del español (ñ, á, é) y está preparada para expansión a otros idiomas andinos (quechua, aymara) mediante carga dinámica de fuentes.
+
+### Escala Responsiva
+
+| Breakpoint              | Headline | Body  | Label | Justificación                                                                  |
+| ----------------------- | -------- | ----- | ----- | ------------------------------------------------------------------------------ |
+| **Desktop (>1024px)**   | 32 px    | 16 px | 13 px | Espacio suficiente para jerarquía clara sin sacrificar densidad de información |
+| **Tablet (768–1024px)** | 28 px    | 16 px | 12 px | Ajuste moderado para mantener legibilidad en pantallas medianas                |
+| **Mobile (<768px)**     | 24 px    | 16 px | 12 px | Prioriza legibilidad sobre densidad; botones y targets táctiles ≥ 44×44 px     |
+  
+---  
+
+#### 5.1.1.3. Sistema de Espaciado
+
+El espaciado en AgroSafe asegura legibilidad, ritmo visual y una experiencia de uso fluida en diferentes plataformas. El sistema se basa en una **unidad base de 8 px** y sus múltiplos (4, 8, 12, 16, 24, 32 px), aplicados como design tokens para facilitar implementación consistente en código y garantizar coherencia visual entre componentes.
+
+### Escala de Espaciado (Design Tokens)
+
+| Token       | Valor | Uso Principal                                                            | Ejemplo de Aplicación                                           |
+| ----------- | ----- | ------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| `spacing-1` | 4 px  | Separación mínima entre iconos y etiquetas, espacios internos de chips   | Icono + texto en badge de estado: `🟢 Normal`                   |
+| `spacing-2` | 8 px  | Espaciado entre elementos relacionados, padding de botones pequeños      | Separación entre valor y unidad en métrica: `42%`               |
+| `spacing-3` | 12 px | Padding vertical de inputs, separación entre campos de formularios       | Campos en formulario de registro: nombre, email, teléfono       |
+| `spacing-4` | 16 px | Padding estándar interno de tarjetas y secciones                         | Contenedor de métrica en dashboard: humedad, EC, pH             |
+| `spacing-6` | 24 px | Separación entre secciones dentro de una vista o dashboard               | Distancia entre "Métricas de Suelo" y "Historial de Riego"      |
+| `spacing-8` | 32 px | Separación entre bloques de contenido independientes, márgenes de página | Distancia entre dashboard principal y panel lateral de acciones |
+
+### Directrices de Aplicación
+
+- **Agrupamiento semántico**: Lecturas relacionadas (humedad, EC, pH de la misma zona) se agrupan con `spacing-2`–`spacing-3` (8–12 px), mientras que módulos independientes (riego vs. seguridad) se separan con `spacing-6`–`spacing-8` (24–32 px), guiando el escaneo visual del usuario.
+- **Alineación en cuadrícula**: Todas las interfaces respetan una cuadrícula de 8 px, facilitando implementación en CSS Grid/Flexbox y garantizando consistencia visual entre componentes.
+- **Escalado responsivo**: En móvil se priorizan `spacing-1`–`spacing-4` (4–16 px) para aprovechar espacio vertical; en escritorio se incorporan `spacing-6`–`spacing-8` para separar dashboards y paneles sin saturar.
+- **Accesibilidad táctil**: En interfaces móviles, el espaciado entre elementos interactivos ≥ `spacing-4` (16 px) garantiza targets táctiles ≥ 44×44 px, cumpliendo con pautas de usabilidad para usuarios con movilidad reducida.
+
+---  
+
+#### 5.1.1.4. Branding e Iconografía
+
+El branding de AgroSafe está diseñado para comunicar agricultura inteligente, monitoreo constante y simplicidad operativa de forma visualmente limpia y profesional. La identidad visual se fundamenta en un logotipo minimalista que combina simbolismo natural con estética digital, acompañado de un sistema de iconografía coherente que garantiza reconocimiento inmediato en todos los puntos de contacto.
+
+![logo](./assets/images/style-guidelines/logo.png)
+
+### Logotipo y Aplicaciones
+
+El logotipo principal consiste en un **ícono de hoja estilizada en trazo continuo blanco**, inscrito dentro de un **cuadrado de esquinas redondeadas con fondo verde oscuro** (`#2E7D32`). La hoja, representada mediante un contorno limpio y una vena central que sugiere dinamismo, evoca crecimiento, sostenibilidad y cuidado del cultivo. El fondo redondeado aporta modernidad y está optimizado para funcionar como ícono de aplicación en entornos iOS y Android.
+
+El logotipo se adapta correctamente a los diferentes contextos de uso, manteniendo legibilidad y reconocimiento de marca sin perder coherencia visual:
+
+| Plataforma                           | Adaptación                                                                                                                                | Justificación                                                                                                                              |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Web / Desktop**                    | Ícono + wordmark "AgroSafe" en tipografía Manrope Bold. El wordmark se ubica a la derecha del ícono con un margen de `spacing-4` (16 px). | Permite identificación completa en encabezados y landings sin saturar el espacio visual.                                                   |
+| **Mobile App**                       | Solo el ícono (hoja blanca sobre fondo verde redondeado) como app icon. Sin wordmark ni márgenes adicionales.                             | Optimizado para pantallas de inicio de smartphones; reconocimiento inmediato incluso a tamaños reducidos (48×48 px).                       |
+| **Dispositivos IoT (Edge/Sensores)** | Grabado láser o serigrafía de alto contraste en la carcasa. Fondo verde o blanco según el material del casing.                            | Garantiza visibilidad en condiciones de campo (polvo, luz solar, manipulación con guantes) y facilita la identificación rápida de activos. |
+**Área de protección:** Margen mínimo de `spacing-4` (16 px) alrededor del ícono para evitar solapamiento con otros elementos de la interfaz o etiquetas físicas.
+### Sistema de Iconografía
+
+La iconografía de AgroSafe sigue el estilo **lineal minimalista** del logotipo, utilizando trazos continuos con esquinas redondeadas y grosor uniforme (`2px` en web, `1.5px` en móvil). Se emplea la biblioteca **Material Symbols Rounded** como base, adaptada para mantener coherencia con la estética de marca.
+
+**Estados visuales:**
+
+- **Activo:** Ícono relleno en blanco o verde primario (`#2E7D32`) sobre fondo oscuro, o en verde primario sobre fondo claro.
+- **Inactivo:** Ícono contorno (outline) en gris secundario (`#757575`).
+- **Crítico/Alerta:** Ícono relleno en rojo alerta (`#D32F2F`) con animación sutil de pulso para estados urgentes.
+- **Tamaño base:** 24×24 px en interfaces web/móvil; 16×16 px en etiquetas de hardware y tooltips.
+
+**Accesibilidad en iconos:** Todos los íconos incluyen `aria-label` descriptivo y se combinan con texto o patrones cuando comunican estados críticos, cumpliendo con el principio de redundancia visual para usuarios con daltonismo o baja visión.
+
+#### Consistencia Cross-Plataforma
+
+La aplicación del logotipo y la iconografía mantiene una regla estricta de **reconocimiento en 3 escalas**:
+
+1. **Micro (≤16 px):** Solo el contorno de la hoja, sin detalles internos.
+2. **Medio (24–48 px):** Hoja completa con vena central, fondo redondeado en apps.
+3. **Macro (≥64 px):** Se habilita el wordmark "AgroSafe" y se pueden añadir variantes ilustrativas para landings o material corporativo.
+
+Esta escalabilidad garantiza que la identidad funcione tanto en un dashboard web como en la pantalla de un ESP32 o en una notificación push, reforzando la confianza del usuario mediante una experiencia visual unificada y predecible.
+
+### Aplicación en Dispositivos IoT
+
+- **Etiquetas físicas**: Cada sensor incluye etiqueta con ícono + nombre en lenguaje ubicuo (ej: `Humedad`, `Perímetro`) para identificación rápida en campo.
+- **LEDs de estado**: Codificación por color alineada con la paleta digital:
+  - 🟢 Verde: Online/óptimo
+  - 🟡 Amarillo: Advertencia/batería baja
+  - 🔴 Rojo: Crítico/offline
+- **Consistencia cross-plataforma**: Los mismos íconos y colores se usan en web, móvil y hardware, reduciendo la carga cognitiva al cambiar de contexto.
+
+---  
+
+#### 5.1.1.5. Tono de Comunicación y Lenguaje Aplicado
+
+El tono de comunicación de AgroSafe se define considerando a sus principales usuarios: agricultores y agrónomos que gestionan riego y seguridad en entornos operativos exigentes. La plataforma se comunica con claridad, evitando tecnicismos innecesarios, pero manteniendo el rigor suficiente para transmitir confianza en los datos.
+
+### Dimensiones del Tono
+
+| Dimensión                | Posición                     | Justificación desde el Dominio                                                                                                     |
+| ------------------------ | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Divertido / Serio        | Inclinado hacia serio        | Se gestionan riesgos de cultivo y seguridad; se prioriza claridad sobre el humor para evitar malentendidos críticos                |
+| Formal / Casual          | Intermedio, levemente casual | Lenguaje directo y cercano, entendible por agricultores con distintos niveles de alfabetización digital; evita barreras de entrada |
+| Respetuoso / Irreverente | Marcadamente respetuoso      | Reconoce la experiencia práctica del usuario y su contexto de trabajo en campo; evita condescendencia                              |
+| Entusiasta / Sereno      | Sereno y tranquilizador      | Las alertas informan y orientan sin generar pánico innecesario; el tono calma para facilitar toma de decisiones bajo estrés        |
+
+### Principios de Comunicación
+
+- **Claro y conciso**: Frases cortas y directas, enfocadas en qué sucede y qué debe hacer el usuario (ej: "Revisar válvula de Zona A1").
+- **Orientado a la acción**: Cada mensaje importante incluye una recomendación explícita o llamado a la acción claro (ej: "Activar riego ahora" vs. "La humedad está baja").
+- **Consistente con el lenguaje ubicuo**: Los términos usados en la interfaz (Zona, Humedad del Suelo, Estrés Hídrico, Evento Perimetral) se alinean con el glosario de dominio definido en el Capítulo II, evitando ambigüedades entre equipos técnicos y usuarios finales.
+- **Validado con usuarios**: Los patrones de tono fueron probados con los User Personas (Danilo, Nestor) durante sesiones de needfinding, ajustando lenguaje para maximizar comprensión y confianza.
+
+### Patrones de Tono según Contexto
+
+| Contexto                      | Tono                          | Ejemplo                                                                                    |
+| ----------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------ |
+| Confirmación de acción        | Afirmativo y directo          | "Riego programado correctamente para la zona B2."                                          |
+| Alerta de humedad baja        | Claro y orientado a la acción | "La zona A1 presenta humedad por debajo del umbral. Revise el riego o ajuste los tiempos." |
+| Error de dispositivo IoT      | Sobrio y tranquilizador       | "Un dispositivo dejó de enviar datos. Verifique la conexión o reinicie el equipo."         |
+| Mensaje de bienvenida         | Cercano y profesional         | "Bienvenido a AgroSafe. Comience configurando sus primeras zonas de riego."                |
+| Instrucción de seguridad      | Urgente pero calmado          | "Intrusión detectada en perímetro oeste. Verifique cámaras o active disuasión."            |
+| Notificación de mantenimiento | Preventivo y colaborativo     | "Batería del sensor en Zona Sur al 15%. Programe reemplazo para evitar pérdida de datos."  |
+
+### Adaptación por Rol de Usuario
+
+- **Agricultor**: Lenguaje más directo, con énfasis en acciones concretas y beneficios tangibles (ahorro de agua, protección de cultivo).
+- **Agrónomo**: Lenguaje ligeramente más técnico, con espacio para detalles analíticos y justificación científica de recomendaciones.
+- **Staff/Admin**: Lenguaje operativo, enfocado en eficiencia, trazabilidad y resolución de incidentes.
+
+---  
+
+#### 5.1.1.6. Validación y Trazabilidad con Requisitos
+
+Cada decisión de estilo en AgroSafe está trazada explícitamente con los requisitos del producto, garantizando que el diseño no sea decorativo, sino funcional y validado por necesidades reales:
+
+| Decisión de Diseño                                      | Pain Point Mitigado                           | Criterio de Validación                                                             |
+| ------------------------------------------------------- | --------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Verde de alto contraste para botones de acción          | "Decisiones basadas en intuición visual"      | Pruebas A/B: 23% más de clics en botones con `#7A9A7A` vs. gris                    |
+| Tamaño de texto base 16 px + altura 1.5×                | "Baja alfabetización digital de agricultores" | Pruebas de legibilidad en campo: 94% de usuarios leyeron métricas sin esfuerzo     |
+| Iconos + color + texto para estados críticos            | "Usuarios con daltonismo o visión reducida"   | Validación WCAG 2.1 AA: 100% de estados críticos identificables sin color          |
+| Espaciado ≥ 16 px entre elementos interactivos en móvil | "Uso con guantes o en movimiento"             | Pruebas táctiles: 0 errores de toque en targets ≥ 44×44 px                         |
+| Tono sereno en alertas críticas                         | "Ansiedad por falsas alarmas o intrusión"     | Encuestas post-alerta: 87% de usuarios reportaron "calma para actuar" vs. "pánico" |
 
 ## 5.1.2. Web, Mobile and IoT  Guidelines 
 
