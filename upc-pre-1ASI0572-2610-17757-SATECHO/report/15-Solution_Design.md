@@ -1271,38 +1271,38 @@ En esta sección se presentan y explican los *Mock-ups* de alta fidelidad del *L
 A continuación, se detalla cómo las decisiones de diseño se materializan en las interfaces finales y se presentan las distintas secciones que componen el *Scroll Lineal* del Landing Page, evidenciando la transformación de los *Wireframes* hacia un diseño de alta fidelidad basado en nuestro enfoque de "Profesionalismo Orgánico":
 
 **1. Hero Section y Propuesta de Valor**
-![Landing Page - Sección Principal](.\assets\images\landing-page-mockups\Hero-section-Landing-Page.jpeg)
+![Landing Page - Sección Principal](./assets/images/landing-page-mockups/Hero-section-Landing-Page.jpeg)
 *Figura 1: Landing Page Mock-up - Sección Principal.*
+
 *   **Descripción de UI/UX:** Esta vista inicial captura la atención del usuario en los primeros segundos (*above-the-fold*). Se emplea la tipografía *Manrope* en alto peso (Bold) para el titular principal, asegurando máxima legibilidad. El diseño utiliza el color fondo crema (`#FAF9F5`) para dar respiro visual, contrastando fuertemente con el botón de *Call to Action* (CTA) en nuestro *Primary Green* (`#476649`). Esto crea un "Camino Claro hacia la Acción", invitando al visitante a explorar la solución, alineado directamente con la User Story **EP-001-US001 (Browse Landing Page Content)**.
 
 **2. Información del Producto y Características (Features)**
-![Landing Page - Información del Producto](.\assets\images\landing-page-mockups\Steps-section-Landing-Page.jpeg)
+![Landing Page - Información del Producto](./assets/images/landing-page-mockups/Steps-section-Landing-Page.jpeg)
 *Figura 2: Landing Page Mock-up - Información del Producto y Características.*
 *   **Descripción de UI/UX:** En esta sección se desglosan los pilares tecnológicos de AgroSafe (monitoreo IoT, automatización de riego y seguridad perimetral). Se aplica una organización visual matricial (*Grid*) mediante tarjetas con estética *Soft Minimalist* (bordes redondeados de 12px y sombras tenues). La iconografía lineal (estilo *Outline* de *Material Symbols*) reduce la carga cognitiva, permitiendo que tanto agricultores como agrónomos comprendan los beneficios funcionales con un simple escaneo visual.
 
 **3. Product Demo y Solicitud Comercial**
-![Landing Page - Registro Comercial y Demo](.\assets\images\landing-page-mockups\demo-form-section-Landing-Page.jpeg)
+![Landing Page - Registro Comercial y Demo](./assets/images/landing-page-mockups/demo-form-section-Landing-Page.jpeg)
 *Figura 3: Landing Page Mock-up - Sección de Demo y Solicitud Comercial.*
 *   **Descripción de UI/UX:** Para facilitar la conversión B2B, esta sección integra un reproductor de video embebido y un formulario comercial de contacto. El *layout* de dos columnas divide eficientemente el contenido audiovisual del formulario de captura de datos. Cumpliendo con **EP-001-US006 (Watch Product Demo Video)** y **EP-001-US007 (Request Commercial Demo)**, el diseño de los *inputs* del formulario mantiene bordes sutiles y etiquetas claras (Labeling System), garantizando accesibilidad (a11y) y previniendo errores durante la introducción de datos de fincas o empresas.
 
 **4. Planes de Suscripción (Pricing)**
-![Landing Page - Planes y Precios](.\assets\images\landing-page-mockups\pricing-section-Landing-Page.jpeg)
+![Landing Page - Planes y Precios](./assets/images/landing-page-mockups/pricing-section-Landing-Page.jpeg)
 *Figura : Landing Page Mock-up - Comparativa de Planes de Suscripción.*
 *   **Descripción de UI/UX:** Respondiendo al principio de "Comparar sin navegar", esta sección expone los *tiers* de suscripción (Básico, Pro/Premium, Enterprise). El diseño emplea tarjetas elevadas con listas de verificación (*checkmarks*) que contrastan las funcionalidades incluidas. Se destaca visualmente el plan intermedio (estrategia de *Pricing Decoy* en UX) utilizando el color verde primario, guiando sutilmente la decisión de compra del agricultor o agrónomo, tal como se mapea en **EP-006-US014**.
 
 **5. Formulario de Registro Principal (Lead Onboarding)**
-![Landing Page - Formulario de Contacto y Registro](.\assets\images\landing-page-mockups\agriculture-form-section-Landing-Page.jpeg)
+![Landing Page - Formulario de Contacto y Registro](./assets/images/landing-page-mockups/agriculture-form-section-Landing-Page.jpeg)
 *Figura 5: Landing Page Mock-up - Formulario para creación de cuenta.*
 *   **Descripción de UI/UX:** Esta vista representa el embudo final de conversión (EP-001-US002). El formulario de registro solicita datos estratégicos mediante una interfaz limpia y libre de distracciones. Se incluye un *dropdown* para seleccionar el rol ("Agricultor" o "Agrónomo"), el cual determinará dinámicamente la experiencia del usuario post-registro. Se mantienen consistentes los *Error States* y las validaciones de campos (marcados explícitamente como "obligatorio" u "opcional") para respetar las heurísticas de prevención de errores.
 
 **6. Footer Corporativo**
-![Landing Page - Footer](.\assets\images\landing-page-mockups\footer-section-Landing-Page.jpeg)
+![Landing Page - Footer](./assets/images/landing-page-mockups/footer-section-Landing-Page.jpeg)
 *Figura 6: Landing Page Mock-up - Pie de página (Footer).*
 *   **Descripción de UI/UX:** El pie de página adopta una organización tópica estructurada en cuatro columnas (Empresa, Legal, Contacto y Redes/Idioma). Utiliza la tipografía secundaria *Inter* en un tamaño menor para optimizar el espacio sin perder legibilidad. Esta sección otorga soporte secundario y transparencia corporativa, alojando enlaces mandatorios como los términos de servicio, políticas de privacidad e información directa de contacto (teléfono y correo), asegurando una experiencia de usuario confiable y profesional.
 
-
-
 ## 5.4. Applications UX/UI Design.
+
 ### 5.4.1. Applications Wireframes.
 
 En esta fase, hemos desarrollado de manera conjunta los wireframes para visualizar detalladamente la arquitectura y el diseño de las interfaces de usuario. Gracias a este esfuerzo colaborativo, transformamos los requisitos funcionales en esquemas gráficos precisos, definiendo así la distribución y presentación de cada componente en la aplicación definitiva.
@@ -1335,6 +1335,7 @@ En la versión móvil, la prioridad fue la optimización del espacio, la ergonom
 
 
 ### 5.4.2. Applications Wireflow Diagrams.
+
 ### 5.4.2. Applications Mock-ups.
 En esta sección, nos hemos enfocado en desarrollar mock-ups de nuestra solución con el propósito de representar de manera visual el diseño y la experiencia de las interfaces de usuario. Mediante este proceso, convertimos las ideas y requerimientos del proyecto en representaciones gráficas detalladas y cercanas al resultado final de la aplicación. Estos mock-ups nos permitieron definir con precisión la apariencia visual del sistema, abarcando aspectos como la estructura de la interfaz, la paleta de colores, la tipografía y los distintos elementos gráficos.
 
