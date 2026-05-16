@@ -1192,7 +1192,7 @@ En esta sección, se evidencian pruebas de uso del prototipo de la aplicación w
 
 <br>
 
-Video demostrativo de la aplicación web: https://acortar.link/7YOBQ5
+Video demostrativo de la aplicación web: https://acortar.link/7YOBQ5 
 
 ## 5.6. IoT Device Design.
 
