@@ -433,41 +433,41 @@ Para transformar esta visión en un desarrollo ágil y ejecutable, el equipo rea
 
 A continuación, se presenta la tabla con las tareas designadas junto con cada uno de los miembros del equipo para que se sean completados de manera satisfactoria durante este primer sprint.
 
+# Sprint 1 – Sprint Backlog
+ 
 | Sprint 1 | Sprint Backlog 1 | | | | | | |
 |----------|-----------------|----------------|-------|-------------|-------------------|-------------|--------|
-| **User Story** | **Título** | **Work Item/Task** | **Título** | **Descripción** | **Estimation (SP)** | **Assigned to** | **Status** |
-| UTI-439 | US-11: Gestión de perfil | UTI-592 | Desarrollar la visualización de la información del perfil | Como usuario de la plataforma, quiero gestionar la información de mi perfil, para asegurar que mi información sea la correcta. | 0.5 | José Jahaziel Guerra Perez | Done |
-| | | UTI-593 | Implementar la edición de datos básicos | | | Gabriela Nicole Shapiama Rivera | Done |
-| | | UTI-595 | Configurar preferencias del sistema | | | Matias D. | Done |
-| UTI-429 | US-01: Conocer el valor de negocio de la plataforma | UTI-526 | Desarrollar la sección de beneficios | Como visitante del sitio web estático, quiero determinar el valor de negocio, para tomar la decisión de convertirme en usuario de la plataforma. | 0.4 | Julio Castro Alejos | Done |
-| | | UTI-527 | Crear y estructurar la sección de preguntas frecuentes | | | Matias D. | Done |
-| | | UTI-542 | Implementar Media Queries en el CSS | | | Matias D. | Done |
-| | | UTI-545 | Implementar etiquetas ARIA  | | | Gabriela Nicole Shapiama Rivera | Done |
-| | | UTI-548 | Permitir el cambio dinámico de idioma | | | Julio Castro Alejos | Done |
-| UTI-430 | US-02: Aumento de confianza sobre la plataforma | UTI-528 | Implementar la sección de testimonios | Como visitante, quiero conocer sobre el producto y quienes fueron los creadores, para aumentar la confianza sobre el uso de la plataforma. | 0.5 | Matias D. | Done |
-| | | UTI-529 | Crear la sección de términos y condiciones | | | Gabriela Nicole Shapiama Rivera | Done |
-| | | UTI-538 | Crear la sección de políticas de privacidad | | | Julio Castro Alejos | Done |
-| | | UTI-543 | Implementar Media Queries en el CSS | | | Matias D. | Done |
-| | | UTI-546 | Implementar etiquetas ARIA (Accesibilidad) | | | Gabriela Nicole Shapiama Rivera | Done |
-| | | UTI-549 | Permitir el cambio dinámico de idioma | | | Julio Castro Alejos | Done |
-| UTI-431 | US-03: Acceso a las aplicaciones | UTI-531 | Implementar el flujo de redirección a la app móvil | Como visitante, quiero acceder o descargar la aplicación, para empezar a usarla en mis operaciones de negocio. | 0.4 | Julio Castro Alejos | Done |
-| | | UTI-532 | Implementar el flujo de acceso a la plataforma web | | | Gabriela Nicole Shapiama Rivera | Done |
-| | | UTI-533 | Diseñar la interfaz de selección entre plataformas | | | Matias D. | Done |
-| | | UTI-544 | Implementar Media Queries en el CSS | | | Matias D. | Done |
-| | | UTI-547 | Implementar etiquetas ARIA (Accesibilidad) | | | Gabriela Nicole Shapiama Rivera | Done |
-| UTI-432 | US-04: Registro de usuario | UTI-534 | Desarrollar lógica de creación de cuenta | Como visitante, quiero registrarme como administrador de una tienda retail, para acceder a las funcionalidades de la aplicación. | 0.5 | Matias D. | Done |
-| | | UTI-535 | Integrar verificación de seguridad de contraseña | | | Antonio Navarro | Done |
-| | | UTI-536 | Redirigir al usuario tras registro exitoso | | | Matias D. | Done |
-| | | UTI-537 | Desarrollar un registro del negocio del usuario | | | Antonio Navarro | Done |
-| UTI-445 | US-17: Control y ajuste de stock en lotes | UTI-554 | Implementar la funcionalidad de registro de ingreso de mercadería | Como administrador del negocio, quiero registrar los movimientos de entrada y salida de suministros, así como definir sus niveles de reserva, para garantizar que el inventario esté siempre actualizado. | 0.3 | Julio Castro Alejos | Done |
-| | | UTI-556 | Implementar validaciones para el registro de movimientos | | | Julio Castro Alejos | Done |
-| | | UTI-557 | Registrar historial de movimientos y ajustes de stock | | | Gabriela Nicole Shapiama Rivera | In-Progress |
-| UTI-460 | US-32: Gestionar y consultar las ventas del negocio | UTI-578 | Implementar la funcionalidad de registro de ventas | Como administrador del negocio, quiero registrar y consultar las ventas de productos o combos, para mantener actualizado el inventario y hacer seguimiento al desempeño comercial. | 0.5 | Nicolás Juárez | Done |
-| | | UTI-579 | Implementar la funcionalidad de consulta de ventas | | | Farid Coronel | To-Review |
-| | | UTI-580 | Visualizar el detalle de una venta | | | José Jahaziel Guerra Perez | Done |
-| UTI-449 | US-21: Administrar dispositivos y sus parámetros de abastecimiento | UTI-562 | Implementar la configuración y almacenamiento de parámetros de abastecimiento | Como administrador, quiero administrar los dispositivos y sus límites de reposición, para organizar el stock en tienda y evitar discrepancias de inventario. | 0.5 | Farid Coronel | Done |
-| | | UTI-564 | Diseñar la interfaz de administración de dispositivos | | | Gabriela Nicole Shapiama Rivera | In-Progress |
-| | | UTI-565 | Desarrollar la edición de dispositivos | | | Nicolás Juárez | Done |
+| **User Story** | **Title** | **Work Item/Task** | **Title** | **Description** | **Estimation (SP)** | **Assigned to** | **Status** |
+| EP-001-US001 | US-01: Browse Landing Page Content | EP-001-US001-T01 | Design the main structure and content of the landing page | As a visitor, I want to browse landing page content so that I can understand the product's value proposition and available plans. | 2 | Jose Huamani | Done |
+| | | EP-001-US001-T02 | Implement the plans and value proposition section | | | Yasser Palacios | Done |
+| EP-001-US005 | US-02: Browse Landing as Agronomist Visitor | EP-001-US005-T01 | Develop the benefits section for agronomist consultants | As an agronomist visitor, I want to browse the landing page so that I can see the benefits tailored to consultants. | 1 | Brenda Gamio | Done |
+| EP-001-US006 | US-03: Watch Product Demo Video | EP-001-US006-T01 | Integrate and configure the product demo video player | As a visitor, I want to watch the product demo video so that I can understand real-world use cases before signing up. | 1 | Abraham Estrada | Done |
+| EP-001-US007 | US-04: Request Commercial Demo | EP-001-US007-T01 | Develop the commercial demo request form | As a visitor, I want to request a commercial demo so that a representative can contact me to evaluate the solution. | 2 | Raul Quispe | Done |
+| | | EP-001-US007-T02 | Implement request notification and confirmation | | | Jose Huamani | Done |
+| EP-001-US002 | US-05: Register as Lead | EP-001-US002-T01 | Develop account creation logic for new users | As a visitor, I want to register as a lead so that I can create my account and start the onboarding process. | 3 | Yasser Palacios | Done |
+| | | EP-001-US002-T02 | Implement security validations on the registration form | | | Abraham Estrada | Done |
+| | | EP-001-US002-T03 | Redirect the user to the onboarding flow after successful registration | | | Raul Quispe | Done |
+| EP-001-US003 | US-06: Verify Email Account | EP-001-US003-T01 | Implement verification email dispatch with token | As a newly registered user, I want to verify my email account so that I can confirm my identity and activate my access. | 3 | Brenda Gamio | Done |
+| | | EP-001-US003-T02 | Develop account validation and activation flow | | | Jose Huamani | Done |
+| | | EP-001-US003-T03 | Handle token expiration and verification email resend | | | Yasser Palacios | In-Progress |
+| EP-001-US004 | US-07: Complete Onboarding Wizard | EP-001-US004-T01 | Design and implement the initial setup wizard | As a newly registered user, I want to complete the onboarding wizard so that I can configure my plot data, irrigation zones, and get guided into the platform from day one. | 5 | Abraham Estrada | Done |
+| | | EP-001-US004-T02 | Develop the plot configuration and crop data step | | | Raul Quispe | Done |
+| | | EP-001-US004-T03 | Implement irrigation zone configuration in the wizard | | | Brenda Gamio | In-Progress |
+| | | EP-001-US004-T04 | Integrate welcome screen and platform end guide | | | Jose Huamani | To-Do |
+| EP-002-US001 | US-08: View Real-Time Soil Dashboard | EP-002-US001-T01 | Implement real-time soil moisture and temperature visualization | As an agriculturist, I want to view the real-time soil dashboard so that I can monitor moisture, EC, pH, and temperature of my parcels at any time. | 8 | Yasser Palacios | In-Progress |
+| | | EP-002-US001-T02 | Develop EC and pH widgets with real-time updates | | | Abraham Estrada | In-Progress |
+| | | EP-002-US001-T03 | Implement parcel selector on the dashboard | | | Raul Quispe | To-Do |
+| | | EP-002-US001-T04 | Integrate visual alerts for out-of-range values | | | Brenda Gamio | To-Do |
+| | | EP-002-US001-T05 | Perform dashboard performance testing with real-time data | | | Jose Huamani | To-Do |
+| EP-007-TS021 | TS-01: Implement Lazy Loading and Code Splitting for Dashboard Modules | EP-007-TS021-T01 | Configure lazy loading for dashboard modules | As a Developer, I want the system to implement lazy loading of dashboard modules so that the initial load time is reduced. | 5 | Yasser Palacios | To-Do |
+| | | EP-007-TS021-T02 | Implement code splitting by routes and critical components | | | Abraham Estrada | To-Do |
+| | | EP-007-TS021-T03 | Measure and document improvement in initial load times | | | Raul Quispe | To-Do |
+| EP-007-TS022 | TS-02: Implement Global State Management for Dashboard | EP-007-TS022-T01 | Select and integrate a global state manager in the web frontend | As a Developer, I want to implement a global state manager on the web frontend so that sensor data, alerts, and configuration are synchronized between components without redundant API calls. | 5 | Brenda Gamio | To-Do |
+| | | EP-007-TS022-T02 | Centralize sensor data and alerts state | | | Jose Huamani | To-Do |
+| | | EP-007-TS022-T03 | Eliminate redundant API calls through shared state | | | Yasser Palacios | To-Do |
+| EP-007-TS027 | TS-03: Internationalization Support | EP-007-TS027-T01 | Configure the internationalization library (i18n) in the project | As a Developer, I want the system to support internationalization so that the platform can be used comfortably without language barriers. | 3 | Abraham Estrada | To-Do |
+| | | EP-007-TS027-T02 | Implement dynamic language switching and translation files | | | Raul Quispe | To-Do |
+| EP-007-TS028 | TS-04: Accessibility Compliance | EP-007-TS028-T01 | Implement ARIA labels across all interface components | As a Developer, I want the system to comply with accessibility standards so that users with disabilities can access all features without barriers. | 3 | Brenda Gamio | To-Do |
 
 #### 6.2.1.4. Development Evidence for Sprint Review
 
@@ -642,6 +642,39 @@ Inventario operativo dedicado a listar, monitorear el estado de conexión y admi
 
 #### 6.2.1.7. Services Documentation Evidence for Sprint Review
 
+Esta sección expone el estado de la documentación y los contratos de interfaz establecidos para los servicios de la plataforma durante el Sprint 1. Con el objetivo de garantizar el desacoplamiento técnico y permitir que el equipo de desarrollo frontend avanzara sin dependencias del backend definitivo, se implementó una estrategia táctica de emulación de servicios (API Mocking) utilizando la plataforma Beeceptor. Esta aproximación metodológica permitió modelar los esquemas de datos y validar el comportamiento de la solución web de forma idéntica a un entorno productivo.
+
+Para esta entrega inicial, se diseñaron, estructuraron y documentaron cuatro endpoints críticos que simulan las operaciones esenciales del sistema (abarcando flujos de autenticación, gestión de perfiles, métricas del Dashboard y aprovisionamiento de hardware IoT). Aunque en este ciclo las respuestas consisten en cargas útiles fijas (JSON estáticos), estos servicios actúan como el contrato formal y la arquitectura base sobre la cual se desplegará el REST API real en Java con Spring Boot y su documentación definitiva con OpenAPI/Swagger en los sprints subsecuentes.
+
+A continuación, se mencionan los _endpoints_ simulados para esta fase de validación de experiencia de usuario:
+
+- https://satecho-auth.free.beeceptor.com
+- https://satecho-onboarding.free.beeceptor.com
+- https://satecho-farm.free.beeceptor.com
+- https://satecho-operations.free.beeceptor.com
+
 #### 6.2.1.8. Software Deployment Evidence for Sprint Review
 
+
+
 #### 6.2.1.9. Team Collaborations Insights during Sprint
+
+**Landing Page**
+
+Con el objetivo de consolidar una _Landing Page_ que no solo informe, sino que proyecte legitimidad y capture el interés del segmento objetivo, el equipo sustituyó el desarrollo lineal por un flujo de trabajo paralelo y coordinado. Esta estrategia de co-creación se fundamentó en una descomposición modular de la interfaz, donde las responsabilidades fueron asignadas por bloques específicos (Hero, Funcionalidades, Beneficios, Planes de Pago y Formulario de Contacto), permitiendo a cada desarrollador operar con autonomía sin generar fricciones en el código base.
+
+La integridad del repositorio se salvaguardó mediante la adopción estricta de un protocolo de comunicación atómica en Git. Cada miembro ejecutó contribuciones frecuentes y acotadas, documentadas bajo reglas semánticas claras, lo que simplificó los procesos de auditoría interna y trazabilidad de cambios. Asimismo, la integración de código se rigió bajo un modelo de calidad estricto: ninguna funcionalidad fue fusionada directamente en la rama central de integración (develop); en su lugar, se canalizaron a través de **Pull Requests** (PRs) donde un responsable o responsables del equipo evaluan la conformidad de la misma para su aprobación o su rechazo junto con comentarios para que se puedan levantar estas observaciones. Este esfuerzo técnico se complementó con un control de calidad estético (QA Visual) enfocado en la responsividad multi-dispositivo y en una rigurosa estandarización del árbol de directorios para los recursos estáticos (src/public/assets/images), asegurando un proyecto limpio y escalable.
+
+Las métricas e indicadores visuales presentados a continuación —extraídos directamente de los insights analíticos de GitHub— certifican el ritmo de trabajo, la distribución del esfuerzo y la madurez colaborativa del equipo en este ciclo inicial:
+
+[Team-Collaboration-Insights-Landing](./assets/images/sprint-1/Team-Collaboration-Insights-Landing-Sprint1.png)
+
+**Web Application**
+
+De manera simultánea a los esfuerzos de maquetación comercial, el Sprint 1 albergó funcionalidad de la Aplicación Web, un hito de alta complejidad técnica que abarcó el despliegue de las interfaces críticas para la operación del negocio, tales como la sección de Dashboard, Seguridad, Gestión de los Dispositivos IoT y las notificaciones. Para mitigar la entropía y el riesgo de colisiones en el código fuente ante un volumen tan robusto de entregables, el equipo adoptó una estrategia de desarrollo altamente coordinada basada en los principios de **Domain-Driven Design (DDD)**. Esta aproximación arquitectónica nos permitió segmentar la lógica y las vistas en contextos delimitados bien definidos, asegurando que la responsabilidad de cada componente estuviera aislada y permitiendo adoptar un desarrollo en paralelo con una comprensión nítida del dominio del sistema.
+
+Asimismo, ante la ausencia temporal de servicios backend productivos, el equipo implementó una estrategia de desacoplamiento temprano mediante la emulación de respuestas con un **Fake API** (Beeceptor); este enfoque de simulación permitió inyectar datos estáticos fijos y modelar los contratos de consumo de manera idéntica a una infraestructura real, desbloqueando las pruebas de experiencia de usuario de forma inmediata. Finalmente, el rigor metodológico se consolidó mediante una política de trazabilidad absoluta, donde cada _commit_ regular incorporó metadatos estructurados que enlazaban directamente el cambio de código con su respectiva tarea y punto de historia dentro de la planificación de Jira, blindando el ciclo de auditoría del proyecto.
+
+El comportamiento analítico de estas interacciones se ven respaldados a continuación por las métricas de colaboración provistas por los insights de GitHub:
+
+[Team-Collaboration-Insights-Web-Application](./assets/images/sprint-1/Team-Collaboration-Insights-Web-Application-Sprint1.png)
