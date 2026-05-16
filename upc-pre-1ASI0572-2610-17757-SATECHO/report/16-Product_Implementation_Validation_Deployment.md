@@ -705,7 +705,7 @@ La integridad del repositorio se salvaguardó mediante la adopción estricta de 
 
 Las métricas e indicadores visuales presentados a continuación —extraídos directamente de los insights analíticos de GitHub— certifican el ritmo de trabajo, la distribución del esfuerzo y la madurez colaborativa del equipo en este ciclo inicial:
 
-[Team-Collaboration-Insights-Landing](./assets/images/sprint-1/Team-Collaboration-Insights-Landing-Sprint1.png)
+![Team-Collaboration-Insights-Landing](./assets/images/sprint-1/Team-Collaboration-Insights-Landing-Sprint1.png)
 
 **Web Application**
 
@@ -715,4 +715,4 @@ Asimismo, ante la ausencia temporal de servicios backend productivos, el equipo 
 
 El comportamiento analítico de estas interacciones se ven respaldados a continuación por las métricas de colaboración provistas por los insights de GitHub:
 
-[Team-Collaboration-Insights-Web-Application](./assets/images/sprint-1/Team-Collaboration-Insights-Web-Application-Sprint1.png)
+![Team-Collaboration-Insights-Web-Application](./assets/images/sprint-1/Team-Collaboration-Insights-Web-Application-Sprint1.png)

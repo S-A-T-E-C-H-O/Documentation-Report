@@ -110,8 +110,6 @@ Nuestro servicio ofrece a los agricultores independientes y pequeños una plataf
 
 Hemos observado que los agricultores no están cumpliendo sus objetivos de productividad y eficiencia en el uso de recursos, dado que las decisiones sobre cuándo y cuánto regar o fertilizar se toman en base a observación visual y rutinas fijas, sin datos objetivos sobre el estado real del suelo. Esto genera pérdidas en los cultivos, desperdicio de agua y fertilizantes, y costos innecesarios que afectan la viabilidad económica de los agricultores independientes y pequeños en Perú.
 
-**¿Cómo podríamos mejorar el acceso a información objetiva y oportuna sobre el estado del suelo para que los agricultores puedan tomar decisiones de riego y fertilización basadas en datos reales, reduciendo pérdidas y optimizando el uso de sus recursos?**
-
 #### 1.2.2.2. Lean UX Assumptions
 
 1. **User Assumptions**

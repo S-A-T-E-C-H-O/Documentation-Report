@@ -28,4 +28,4 @@ Ingeniería de Software
 * U20211b682 - Quispe Erasmo, Raul Ronaldo
 * U202214130 - Palacios, Yasser Renteria
 
-Abril, 2026
+Mayo, 2026
