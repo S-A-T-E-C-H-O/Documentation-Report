@@ -655,7 +655,45 @@ A continuación, se mencionan los _endpoints_ simulados para esta fase de valida
 
 #### 6.2.1.8. Software Deployment Evidence for Sprint Review
 
+El viaje hacia la nube comienza en la terminal de comandos dentro del directorio raíz del proyecto local. El primer paso crítico es "despertar" las capacidades de Firebase en nuestra carpeta de trabajo y vincularla con un proyecto en la consola de Google.
 
+![Configuration-Firebase-Web-App-Deploy](./assets/images/sprint-1/Configuration-Firebase-Web-App-Deploy.png)
+
+Como se observa en la Figura, el ingeniero ejecuta el comando firebase init hosting. Tras confirmar el inicio del proceso, la herramienta nos guía por un asistente visual. En este escenario, hemos optado por la opción "Create a new project" (Crear un nuevo proyecto). Es aquí donde definimos la identidad única de nuestra aplicación en la nube; para este ejemplo, hemos establecido tanto el ID como el nombre del proyecto como agrosafe-web-app. Una vez que la herramienta confirma con éxito la creación de los recursos en Google Cloud Platform, estamos listos para la configuración operativa.
+
+**Fase 2: Parametrización del Entorno de Hosting**
+
+Con el proyecto creado en la nube, debemos indicarle a Firebase qué archivos locales debe subir y cómo debe comportarse el servidor al recibirlos. Este paso es crucial para asegurar que la arquitectura de nuestra aplicación (ya sea una página estática o una Single Page Application bajo DDD) funcione correctamente.
+
+![Define-parameters-to-configure-deployment-Web-App](./assets/images/sprint-1/Define-parameters-to-configure-deployment-Web-App.png)
+
+Dicha figura ilustra esta fase de parametrización. El asistente nos formula preguntas clave:
+
+Directorio Público: Definimos dist como la carpeta que contiene los archivos finales listos para producción (resultado de nuestro proceso de construcción o build).
+
+Single-Page App: Respondemos "Yes" para configurar las reglas de reescritura de URL, asegurando que todas las rutas apunten a index.html, vital para la navegación fluida de nuestra Web App.
+
+Automatización: Para este hito inicial, hemos declinado la configuración de builds automáticos con GitHub Actions ("No") para mantener el despliegue bajo control manual directo.
+
+Al finalizar este asistente, Firebase confirma la creación de los archivos de configuración .firebaserc y firebase.json, marcando el éxito de la inicialización.
+
+**Fase 3: Ejecución del Despliegue (The Push to Cloud)**
+
+Este es el momento de la verdad. Con todo configurado, procedemos a transferir nuestros archivos locales desde la carpeta dist hacia los servidores globales de Firebase.
+
+![Successfully-Web-App-Deployment](./assets/images/sprint-1/Successfully-Web-App-Deployment.png)
+
+Como se muestra en la Figura Z (image_3.png), el ingeniero ejecuta el comando final: firebase deploy --only hosting. La terminal actúa como un diario de bitácora en tiempo real: vemos cómo Firebase inicia el proceso, detecta los archivos en la carpeta dist (en este caso, 3 archivos), realiza la carga completa, finaliza la versión y, finalmente, libera la nueva actualización. La confirmación "+ Deploy complete!" es el indicador del éxito, proporcionándonos de inmediato la URL pública operativa (ej. https://agrosafe-web-app.web.app) y el enlace directo a la consola de administración.
+
+**Fase 4: Verificación en la Consola de Administración**
+
+El proceso no termina hasta que verificamos el estado del despliegue en el panel de control oficial. Esto nos da la certeza absoluta de que la versión productiva corresponde a lo ejecutado.
+
+![Firebase-Monitoring-Web-App-Deployment](./assets/images/sprint-1/Firebase-Monitoring-Web-App-Deployment.png)
+
+![Firebase-Monitoring-Landing-Deployment](./assets/images/sprint-1/Firebase-Monitoring-Landing-Deployment.png)
+
+Finalmente, nos muestra la vista de la consola web de Firebase para el proyecto agrosafe-web-app. En la sección de "Hosting", podemos confirmar visualmente el "Historial de implementaciones". El panel ratifica que la versión ha sido "Implementada" exitosamente (en este ejemplo, el 15 de mayo de 2026 a las 11:02 a.m.) e identifica al miembro del equipo responsable de dicha acción. Esta trazabilidad garantiza el control de configuración requerido para el Spring Review.
 
 #### 6.2.1.9. Team Collaborations Insights during Sprint
 
