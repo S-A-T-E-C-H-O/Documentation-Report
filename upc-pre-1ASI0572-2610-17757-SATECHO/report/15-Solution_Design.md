@@ -1424,6 +1424,16 @@ Comienza cuando el usuario accede a la vista principal de la plataforma, donde p
 
 ## 5.5. Applications Prototyping.
 
+En esta sección, se evidencian pruebas de uso del prototipo de la aplicación web. Además, se adjunta un video donde se usa el prototipo y las interacciones con el prototipo se basan en los User Flows descritos previamente.
+
+#### Prototipo de la aplicación web
+
+<div align="center"> <img src="./assets/images/prototyping/proto_web.png" alt="Happy_Path"/> </div>
+
+<br>
+
+Video demostrativo de la aplicación web: https://acortar.link/7YOBQ5 
+
 ## 5.6. IoT Device Design.
 
 ### Diseño del dispositivo IoT
