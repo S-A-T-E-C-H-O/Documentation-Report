@@ -395,7 +395,9 @@ A lo largo de esta sección, explicamos cómo hemos abordado cada fase del ciclo
   <tr>
     <td>Sprint 1 Goal</td>
     <td>
-El objetivo de este primer Sprint es establecer la base de identidad digital y la arquitectura funcional inicial de SATECHO, centrándose en el despliegue de una Landing Page de alto impacto orientada a captar clientes potenciales del sector agrícola y agrónomos interesados en la integridad de datos. Nos enfocaremos en proyectar nuestra solución como el fin de las suposiciones empíricas sobre el riego y la iluminación, sustituyéndolas por un monitoreo automatizado y veraz. <br> Simultáneamente, desarrollaremos el núcleo de la Web Application, implementando un sistema de Authentication Management y un Dashboard preliminar mediante un Fake API para validar la navegación, las reglas de acceso y la visualización de datos. <br> Con este avance, buscamos confirmar la viabilidad del flujo de usuario y la solidez de la interfaz, asegurando que nuestra infraestructura sea capaz de transformar la incertidumbre del campo en decisiones precisas y seguras desde cualquier dispositivo inteligente.
+<strong>Nuestro objetivo</strong> es establecer la identidad digital de SATECHO y validar el flujo de interacción principal de la plataforma. <br>
+<strong>Creemos que esto</strong> genera confianza inicial en el mercado y proporciona a nuestros clientes del sector agrícola capacidades para la toma de decisiones basadas en datos. <br>
+<strong>Esto se confirmará cuando</strong> los clientes potenciales interactúen con la propuesta de valor en nuestra página de inicio y los usuarios internos puedan autenticarse de forma segura y visualizar los datos preliminares de los sensores a través del panel de control.
     </td>
   </tr>
   <tr>
@@ -420,7 +422,7 @@ Iniciamos nuestra trayectoria transformando la complejidad en orden. Durante est
 | Quispe Erasmo, Raul Ronaldo      |    `Raul-QE`   |      C      |            |                      |        C        |
 | Palacios, Yasser Renteria        |      `Mitos20`     |            |      C      |      **L**      |                  |
 
-#### 6.2.1.3. Sprint Backlog 3
+#### 6.2.1.3. Sprint Backlog 1
 
 Alineado con los objetivos estratégicos definidos en nuestra planificación, este backlog constituye la hoja de ruta técnica diseñada para materializar el primer incremento funcional de la plataforma. El propósito central de este ciclo se divide en dos frentes críticos: en primer lugar, el despliegue de una Landing Page de alto impacto orientada a proyectar el valor de negocio del ecosistema; en segundo lugar, la construcción de la interfaz frontend de la Aplicación Web. Esta última habilitará las capacidades esenciales que permitirán a los administradores de restaurantes y tiendas retail gestionar perfiles, autenticarse de manera segura, controlar existencias en inventario, administrar dispositivos IoT y registrar transacciones comerciales de forma intuitiva.
 
@@ -716,3 +718,73 @@ Asimismo, ante la ausencia temporal de servicios backend productivos, el equipo 
 El comportamiento analítico de estas interacciones se ven respaldados a continuación por las métricas de colaboración provistas por los insights de GitHub:
 
 ![Team-Collaboration-Insights-Web-Application](./assets/images/sprint-1/Team-Collaboration-Insights-Web-Application-Sprint1.png)
+
+### 6.2.2. Sprint 2
+
+En este apartado se detalla cada uno de los progresos y mejoras alcazandos por el equipo durante el desarrollo del segundo sprint del proyecto **AgroSafe**, destacando para el lado del _Landing Page_, la implementación de las secciones del video _"about-the-Product"_, la sección de integrantes del equipo de desarrollo de la startup **Satecho** y la eliminación de interacciones y secciones dedicadas a ofrecer planes _freemium_ (esto con el objetivo de que **Satecho**, al utilizar tecnología IoT, necesita solvencia monetaria para seguir progresando e innovando en su solución). Por otro lado, en relación al **Web Application**, se corrigió las vistas asociadas a la autenticación - debido a que, una cuenta registrada en la aplicación, debía configurar su perfil "agregando por su cuenta" el tipo de sensor y dispositivo IoT que utilizará en su escenario.
+
+Luego de precisar las mejoras implementadas, adicionalmente, se priorizó el desarrollo de las nuevas funcionalidades dedicadas para el **Web Application** agregando las vistas de asociadas al monitoreo y el dashboard; por consiguiente, se elaboró las primeras versiones de los nuevos productos tales como el **RESTFUL API**, **Embedded** (para la recolección de los datos del ambiente mediante los sensores de tierra y humedad), el **Edge API** y el **Mobile Application** - orientadas a las funcionalidades de Dashboard, Parcerlas, Control de Riesgo y Registro de Actividad para el Agricultor; por otro lado, para el ingeniero agrónomo, se desarrollará las funcionalidades respecto al seguimiento de clientes, alertas y agenda.
+
+#### 6.2.2.1. Sprint Planning 2
+
+<table>
+  <tr>
+    <td>Sprint #</td>
+    <td>Sprint 2</td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>Sprint Planning Background</strong></td>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td>2026-05-25</td>
+  </tr>
+  <tr>
+    <td>Time</td>
+    <td>23:00 p.m (GMT-5)</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>Sesión Asíncrona organizada dentro de la plataforma de comunicación Discord</td>
+  </tr>
+  <tr>
+    <td>Prepared By</td>
+    <td>Huamani Sánchez, José Diego</td>
+  </tr>
+  <tr>
+    <td>Attendees (to planning meeting)</td>
+    <td>Estrada Cajamune, Abraham Andrés / Gamio Upiachihua, Brenda Lucía / Quispe Erasmo, Raul Ronaldo / Palacios, Yasser Renteria</td>
+  </tr>
+  <tr>
+    <td>Sprint 1 Review Summary</td>
+    <td>En relación al sprint pasado, el equio implemetó las secciones asociadas a la descripción del startup, descripción de la implementación, beneficios, planes de pago, formulario de contacto - esto con la finalidad de que los <em>leads</em> sepan el compromiso que tiene Satecho en la solución propuesta en la Landing Page. Por otra parte, se implementó secciones primordiales relacionadas al monitero de indicadores, Seguridad, Notificaciones, Suscripción, sección IoT para la aplicación web; esto progreso permitió al equipo completar la gran mayoría de funcionalidades Core previstas para la aplicación.</td>
+  </tr>
+  <tr>
+    <td>Sprint 1 Restrospective Summary</td>
+    <td>De acuerdo a la sesión de retrospectiva realizada con todo el equipo de SATECHO, destacamos la proactividad y coordinación planificada entre cada uno de los miembros del equipo para alinear los avances previstos en relación al sprint 1 y poder llegar al objetivo de presentar una primera versión hacia nuestros stakeholders; sin embargo, unánimamente como puntos de mejora sentimos que, al ser demasiados entregables en un lapso de tiempo muy limitado, la dependencia de avance se centralizaba en una persona debido a que, como uno ya solía avanzar por su cuenta, había demoras por la magnitud de desarrollo - generando colas de espera para poder seguir continuando con más labores tanto a nivel de reporte como de implementación de los artefactos digitales. Es por ello que, a raíz de estas problemáticas, se restructuro la forma de planificación del trabajo centralizando de manera experimental el enfoque de trabajo <q>Team Software Process</q> para medir la capacidad de madurez y agilidad de los entregables a nivel de equipo y nos determina las brechas - mediante métricas de los aspectos positivos alcazandos como los niveles de mejora en relación a la colaboración y medición de entregables.</td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>Sprint Goal & User Stories</strong></td>
+  </tr>
+  <tr>
+    <td>Sprint 2 Goal</td>
+    <td>
+<strong>Nos enfocamos</strong> en ofrecer información clara en el vídeo "about-the-Product", una sección detallada sobre los integrantes del equipo de la startup Satecho y la eliminación de interacciones o secciones dedicadas a planes freemium para asegurar la solvencia y viabilidad comercial en el Landing Page; así como, proveer a los agricultores independientes e ingenieros agrónomos de herramientas en la versión final de la Web Application que incluyen vistas corregidas de autenticación para la autoconfiguración personalizada de perfiles con sus propios dispositivos IoT, además de vistas completas asociadas al monitoreo y un dashboard interactivo de datos; también, implementar funcionalidades principales para los agricultores y los ingenieros agrónomos, para sus dispositivos móviles mediante la Mobile Application, que incluyen para el primer rol la gestión de parcelas, control de riego, dashboard en tiempo real y registro de actividad, y para el segundo rol el seguimiento de clientes, alertas y agenda; además, la implementación de funcionalidades en las primeras versiones de la Embedded Application y el Edge API encargadas de la recolección, lectura, procesamiento local y filtrado de datos ambientales mediante sensores de tierra y humedad; e incrementar las posibilidades de implementar funcionalidades en el backend mediante la primera versión del RESTful API orientadas a dar soporte al control de riego, gestión de parcelas, registro de actividad, seguimiento de clientes, gestión de alertas críticas, sincronización offline de telemetría y automatización avanzada de fertirrigación. <br>
+<strong>Creemos que esto</strong> proporciona confianza a los visitantes y potenciales clientes del sector agrícola interesados en adquirir una solución tecnológica sostenible bajo un modelo premium; mayor rapidez en la toma de decisiones agronómicas basadas en evidencias científicas, eliminación de las suposiciones empíricas en los cultivos y un conocimiento veraz en tiempo real sobre el estado hídrico del suelo para los agricultores e ingenieros agrónomos usuarios de la plataforma web; mejora en la eficiencia operativa en la gestión y supervisión remota de múltiples parcelas agrícolas desde los dispositivos móviles de los agricultores y asesores técnicos independientes; la posibilidad de validar el flujo de ingesta, transmisión y consistencia de datos de telemetría en tiempo real desde el borde físico del hardware para el equipo de desarrollo; y, una mayor oportunidad para implementar funcionalidades relacionadas al control automático de electroválvulas, calibración de umbrales específicos por tipo de cultivo, generación automática de reportes técnicos en formato PDF y análisis cruzado de analíticas estratégicas de negocio para el equipo de desarrollo. <br>
+<strong>Esto se confirmará cuando</strong> nuevos visitantes decidan registrarse e interactuar con la propuesta de valor comercial premium en el Landing Page; los agricultores e ingenieros agrónomos puedan autoconfigurar sus perfiles vinculando exitosamente sus dispositivos IoT y tomar mejores decisiones hídricas analizando el dashboard de la Web Application; los agricultores y agrónomos utilicen las herramientas de control de riego, parcelas, agendas, alertas y seguimiento desde sus dispositivos móviles de forma rutinaria en las operaciones diarias del campo; el equipo de desarrollo implemente e integre con éxito la arquitectura vertical de extremo a extremo conformada por la Embedded Application, el Edge API, el RESTful API central, la Mobile Application y la versión final de la Web Application trabajando de manera cohesiva.
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 2 Velocity</td>
+    <td>POR CALCULAR</td>
+  </tr>
+  <tr>
+    <td>Sum of Story Points</td>
+    <td>POR CALCULAR</td>
+  </tr>
+</table>
+
+#### 6.2.2.2. Aspect Leaders and Collaborations
+
+
+#### 6.2.2.3. Sprint Backlog 2
