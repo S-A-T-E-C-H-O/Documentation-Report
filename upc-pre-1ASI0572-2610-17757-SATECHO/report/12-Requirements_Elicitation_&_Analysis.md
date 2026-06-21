@@ -25,6 +25,8 @@ En este capítulo se examina el panorama competitivo para identificar las brecha
 | **Oportunidades**                                         | - Creciente adopción de AgTech en Perú <br> - Aumento de robos en zonas agrícolas <br> - Expansión de cultivos de alto valor (arándanos, paltas) <br> - Alianzas con cooperativas y programas gubernamentales (MINAGRI) <br> - Ser la "puerta de entrada" tecnológica para el agricultor tradicional                                                                                                                               | - Expansión hacia pequeños agricultores con plan lite <br> - Sumar hardware propio o alianzas con fabricantes                                                                  | - Localización para mercados latinoamericanos <br> - Desarrollo de sensores de suelo propios                                                               | - Expansión hacia Latinoamérica con precios adaptados <br> - Desarrollo de funciones de seguridad                                                        | - Línea "lite" para pequeños agricultores sin vendor lock-in <br> - Expansión en mercados emergentes                                           | - Capacitación técnica gratuita disponible (SENASA, MINAGRI) <br> - Acceso a subsidios para tecnificación de riego                                                                                                                                                                                                                                                 |
 | **Amenazas**                                              | - SpaceAG o CropX podrían lanzar un plan accesible para pequeños agricultores <br> - Importación de sensores más baratos desde Asia <br> - Resistencia cultural al cambio tecnológico <br> - Problemas de conectividad rural que afecten la experiencia                                                                                                                                                                            | - Soluciones todo-en-uno como AgroSafe que eliminan la necesidad de integrar hardware de terceros                                                                              | - Soluciones más baratas y locales que capturen primero el mercado latinoamericano                                                                         | - Competidores locales con mejor conocimiento del agricultor peruano <br> - Resistencia al precio por parte de pequeños productores                      | - Competidores con soluciones más abiertas y compatibles con cualquier infraestructura                                                   | - AgroSafe y soluciones similares que ofrezcan valor tangible desde el primer ciclo <br> - Pérdidas por robo o estrés hídrico que empujen al agricultor a buscar alternativas tecnológicas                                                                                                                                                                         |
 
+<div class="page"></div>
+
 ### 2.1.2. Estrategias y tácticas frente a competidores
 
 ### ESTRATEGIAS OFENSIVAS (Atacar debilidades de competidores)
@@ -158,6 +160,8 @@ En este capítulo se examina el panorama competitivo para identificar las brecha
 | Expansión de arándanos/paltas | Especialización vertical por cultivo | "Kits por cultivo": configuración pre-optimizada para arándanos, paltas o sandías (umbrales pre-cargados) |
 | Resistencia al cambio de agricultores tradicionales | Demostración de valor rápida y tangible | Garantía "Ahorro o te devolvemos": si no ahorras agua en el primer ciclo, devolución del 100% |
 | Importación de sensores más baratos | Valor agregado más allá del hardware | Mensaje: "No vendemos sensores · Vendemos tranquilidad + ahorro + datos" |
+
+<div class="page"></div>
 
 ## 2.2. Entrevistas
 
@@ -305,7 +309,7 @@ Entrevista 2:
 
 Resumen de la entrevista: Bruno Chaud, ingeniero agrónomo egresado de la Cayetano y consultor independiente, identifica que el error más crítico que cometen los agricultores es regar o usar fertilizantes sin ningún tipo de guía, basándose solo en su criterio y no en datos estudiados. Esto lleva a la pérdida de nutrientes, estrés en las plantas y una disminución significativa del rendimiento del cultivo. Destaca que los problemas de acumulación de sales son muy comunes, especialmente en zonas con riego intensivo. Actualmente, recopila información mediante visitas físicas, observaciones directas y análisis puntuales del suelo, utilizando medidores portátiles de humedad y análisis de laboratorio. Bruno requiere urgentemente información en tiempo real del estado del suelo para una recomendación más precisa sin necesidad de estar físicamente en el campo. Considera indispensables para tomar decisiones de riego confiables la humedad del suelo, el pH, la temperatura y la conductividad eléctrica. Estaría dispuesto a colaborar con la calibración de umbrales por tipo de cultivo para un sistema de monitoreo de suelos, ya que esto mejoraría la precisión y la confianza en el sistema. Recomendaría activamente una herramienta de monitoreo de suelos a sus clientes si esta demuestra una mejor precisión, facilita el uso y da resultados reales en el campo. Sin embargo, cree que lo que frenaría a los agricultores a adoptar este sistema sería el costo, la resistencia al cambio y la desconfianza en la tecnología. Le resultaría muy útil tener acceso remoto al historial de datos del suelo de varios clientes desde una sola plataforma, ya que esto permitiría escalar las actividades y depender menos de las visitas físicas. Para recomendar un sistema con confianza profesional, necesitaría una validación física y técnica, con pruebas en campo que demuestren casos reales comprobados.
 
-### 2.2.3 Análisis de entrevistas
+### 2.2.3. Análisis de entrevistas
 
 **1. Herramientas de Monitoreo y Diagnóstico del Suelo**
 
@@ -342,6 +346,8 @@ Resumen de la entrevista: Bruno Chaud, ingeniero agrónomo egresado de la Cayeta
 **Conclusión**
 
 El análisis conjunto de los agricultores (Segundo y Alicia) y el especialista (Frank) revela que el sector agrícola de la región de La Libertad depende casi por completo de prácticas empíricas, reactivas y visuales ("al ojo"), lo que trae consigo vulnerabilidades graves como pérdidas financieras masivas, problemas de riego impreciso y estragos por salinización del suelo. Existe una gran oportunidad en el mercado para introducir tecnologías de monitoreo y recomendación en tiempo real por un ticket promedio de entre 30 y 50 soles mensuales. Sin embargo, para superar la barrera de la desconfianza, la solución debe ofrecer una interfaz simplificada (alertas directas, semáforos, predicciones de rendimiento) y, lo más importante, debe demostrar su efectividad previamente en el campo para que el agricultor y su asesor técnico validen que los datos digitales coinciden exactamente con la realidad física del terreno.
+
+<div class="page"></div>
 
 ## 2.3. Needfinding
 
@@ -452,6 +458,8 @@ A continuación, se detalla la síntesis de sus cuadrantes:
 * **Pains (Esfuerzos/Dolores):** Le duele la pérdida de tiempo, energía y dinero en desplazamientos ineficientes. Le frustra la dependencia absoluta de la memoria y subjetividad del agricultor, la dificultad para generar historiales agronómicos por el registro manual, y el riesgo de daño a su prestigio profesional por una mala ejecución del cliente.
 * **Gains (Resultados/Beneficios):** Lo que resolvería sus problemas sería contar con un *Dashboard* centralizado para monitorear el suelo de todos sus clientes desde su laptop en tiempo real. Esto le permitiría respaldar científicamente sus decisiones con transparencia y aumentar directamente sus ingresos al poder manejar el doble de clientes de forma remota.
 
+<div class="page"></div>
+
 ## 2.4. Big Picture EventStorming
 
 En esta sección, el equipo presenta el desarrollo del **Big Picture Event Storming**, una dinámica colaborativa realizada para entender a profundidad el dominio del negocio (el sistema agronómico y la gestión de cultivos). El objetivo de esta sesión fue plasmar visualmente los eventos de dominio más significativos, trazar sus relaciones de causa y efecto, e identificar los procesos clave que conformarán la arquitectura de **AgroSafe**. 
@@ -501,7 +509,9 @@ El diagrama general expone el *landscape* completo del negocio a través de las 
 
 Esta primera aproximación visual de alto nivel demuestra cómo la solución tecnológica de **AgroSafe** actuará como el motor lógico que vincula los factores variables de la naturaleza con la ejecución precisa y automatizada en el campo.
 
-## 2.3.5. Ubiquitous Language
+<div class="page"></div>
+
+## 2.5. Ubiquitous Language
 
 En esta sección se define el **Ubiquitous Language** (Lenguaje Ubicuo) del proyecto AgroSafe (SATECHO). Tal como lo establece Eric Evans en su libro *Domain-Driven Design: Tackling Complexity in the Heart of Software*, la construcción y el mantenimiento de un glosario unificado es un pilar fundamental para evitar ambigüedades conceptuales y asegurar una comunicación exacta entre todos los miembros del equipo y los *stakeholders*.
 

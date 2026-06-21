@@ -339,6 +339,8 @@ El despliegue en hardware requiere un enfoque de actualización remota para evit
 
 4. **Sincronización:** Los dispositivos ESP32 están programados para consultar periódicamente un endpoint de control. Si detectan una versión superior, descargan el binario de forma segura y reinician el sistema con el nuevo firmware.
 
+<div class="page"></div>
+
 ## 6.2. Landing Page, Services & Applications Implementation
 
 Tras consolidar los cimientos estratégicos del proyecto —trasladando los requisitos de negocio hacia un diseño de arquitectura robusto (C4 y diagramas de clase) y validando la experiencia de usuario (UX) mediante prototipos de alta fidelidad— entramos en la fase de materialización digital. En este apartado, la abstracción se convierte en ejecución: cada componente de la solución, desde la lógica embebida en los sensores hasta la interfaz de gestión en la nube, se desarrolla bajo un estándar de ingeniería de software de alto nivel.
@@ -786,5 +788,438 @@ Luego de precisar las mejoras implementadas, adicionalmente, se priorizó el des
 
 #### 6.2.2.2. Aspect Leaders and Collaborations
 
+Durante el Sprint 2, la complejidad de la entrega se multiplicó exponencialmente al incorporar seis productos de software de forma simultánea: la segunda versión de la Landing Page, la versión final de la Aplicación Web, la primera versión del RESTful API, la primera versión de la Aplicación Móvil, la primera versión del Edge API y la primera versión de la Aplicación Embebida. Para gestionar este desafío de forma ordenada, el equipo adoptó el marco de trabajo **Team Software Process (TSP)**, que define con precisión los líderes de cada aspecto y sus colaboradores, reduciendo la ambigüedad en la toma de decisiones y eliminando las colas de espera que afectaron la velocidad del sprint anterior.
+
+| Team Member (Last Name, First Name) |  GitHub Username  | Landing Page v2 | Web App v2 | REST API | Mobile App | Edge API | Embedded |
+| :---------------------------------- | :----------------: | :---------: | :---------: | :---------: | :---------: | :---------: | :---------: |
+| Huamani Sánchez, José Diego       |  `ProgramadorHuamani`  | C | C | **L** | C | | |
+| Estrada Cajamune, Abraham Andrés        |     `Abraham0310`     | C | C | C | **L** | | C |
+| Gamio Upiachihua, Brenda Lucía         |     `B-Gamio`     | **L** | **L** | C | C | | |
+| Quispe Erasmo, Raul Ronaldo      |    `Raul-QE`   | | C | C | | **L** | C |
+| Palacios, Yasser Renteria        |      `Mitos20`     | C | C | C | C | C | **L** |
 
 #### 6.2.2.3. Sprint Backlog 2
+
+Este segundo sprint representa el hito de mayor densidad técnica del proyecto, con la integración vertical completa del ecosistema SATECHO: desde el firmware embebido en los sensores ESP32 hasta las interfaces web y móviles que consumen los datos en tiempo real. El backlog fue diseñado para cubrir simultáneamente seis productos de software bajo el principio de entrega de valor continua, priorizando la arquitectura de extremo a extremo (E2E) sobre funcionalidades aisladas.
+
+**Proyecto en Jira:** [https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1](https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1)
+
+![Sprint-Backlog-2 - SATECHO](./assets/images/sprint-2/Sprint-Backlog-2.png)
+
+# Sprint 2 – Sprint Backlog
+
+| Sprint 2 | Sprint Backlog 2 | | | | | | |
+|----------|-----------------|----------------|-------|-------------|-------------------|-------------|--------|
+| **User Story** | **Title** | **Work Item/Task** | **Title** | **Description** | **Estimation (SP)** | **Assigned to** | **Status** |
+| EP-001-US008 | US-08: View About-the-Product Video | EP-001-US008-T01 | Integrate product demo video section in landing page | As a visitor, I want to watch an explanatory video about SATECHO's product so that I can understand how the solution works before contacting a representative. | 2 | Brenda Gamio | Done |
+| EP-001-US009 | US-09: View Startup Team Members | EP-001-US009-T01 | Design and implement the team members section | As a visitor, I want to see the startup team members section so that I can know who is behind the product and build trust in the organization. | 2 | Brenda Gamio | Done |
+| EP-001-US010 | US-10: Browse Premium-Only Plans | EP-001-US010-T01 | Remove freemium tiers and update pricing section to premium model | As a visitor, I want to browse the available premium subscription plans so that I can evaluate the commercial offer before contacting the SATECHO team. | 1 | Yasser Palacios | Done |
+| EP-001-US004 | US-11: Complete Onboarding Wizard (Fix) | EP-001-US004-T05 | Implement irrigation zone removal with minimum zone validation | As a newly registered user, I want to remove an irrigation zone during onboarding so that I can correct my initial configuration before activating the system. | 2 | Abraham Estrada | Done |
+| | | EP-001-US004-T06 | Add removable protocol templates to onboarding wizard | | | Brenda Gamio | Done |
+| | | EP-001-US004-T07 | Validate personal data fields before proceeding to step 3 of onboarding | | | Brenda Gamio | Done |
+| EP-002-US002 | US-12: View Agronomist Analysis Dashboard | EP-002-US002-T01 | Implement analysis and soil thresholds management views for agronomist | As an agronomist, I want to view analysis dashboards and configure soil thresholds so that I can monitor critical crop parameters remotely. | 5 | Brenda Gamio | Done |
+| | | EP-002-US002-T02 | Develop account management and device monitoring views for agronomist | | | Brenda Gamio | Done |
+| | | EP-002-US002-T03 | Implement irrigation control and perimeter security views for agronomist dashboard | | | Brenda Gamio | Done |
+| EP-002-US003 | US-13: Manage Agronomist Profile and Plans | EP-002-US003-T01 | Implement profile management and notification settings for agronomist | As an agronomist, I want to manage my professional profile and notification preferences so that I receive relevant alerts from my assigned clients. | 3 | Brenda Gamio | Done |
+| | | EP-002-US003-T02 | Implement plan system view for agronomist account | | | Brenda Gamio | Done |
+| EP-002-US004 | US-14: Manage Priority Cases and Alerts | EP-002-US004-T01 | Develop priority cases queue and critical alert detail views for agronomist | As an agronomist, I want to review a prioritized queue of critical cases so that I can respond immediately to the most urgent situations in my clients' fields. | 3 | Brenda Gamio | Done |
+| EP-002-US005 | US-15: View Real-Time Telemetry Dashboard | EP-002-US005-T01 | Implement telemetry dashboard with salinity chart and security event log | As a farmer, I want to view real-time telemetry data including salinity and security events so that I have a complete picture of my field conditions. | 5 | Abraham Estrada | Done |
+| | | EP-002-US005-T02 | Add telemetry route and integrate TelemetryDashboardView into navigation | | | Abraham Estrada | Done |
+| EP-002-US006 | US-16: Monitor IoT Device Fleet | EP-002-US006-T01 | Implement DeviceFleetView with fleet monitoring, telemetry metrics, device actions and maintenance management | As a farmer, I want to monitor the health and status of all my IoT devices from a single view so that I can detect connectivity failures or maintenance needs proactively. | 5 | Abraham Estrada | Done |
+| | | EP-002-US006-T02 | Develop NotificationsRulesView for configuring alert thresholds per device | | | Abraham Estrada | Done |
+| EP-007-TS029 | TS-05: Implement IAM Bounded Context - REST API | EP-007-TS029-T01 | Implement domain model entities and rules for identity management | As a Developer, I want the system to have a complete Identity and Access Management bounded context so that authentication, authorization and user account lifecycle are centrally managed. | 8 | José Huamani | Done |
+| | | EP-007-TS029-T02 | Implement authentication and user use cases in application layer | | | José Huamani | Done |
+| | | EP-007-TS029-T03 | Implement persistence repositories and security configuration in infrastructure layer | | | José Huamani | Done |
+| | | EP-007-TS029-T04 | Expose REST API endpoints and request/response resources | | | José Huamani | Done |
+| | | EP-007-TS029-T05 | Add account verification and resend verification commands and endpoints | | | José Huamani | Done |
+| EP-007-TS030 | TS-06: Implement Onboarding Bounded Context - REST API | EP-007-TS030-T01 | Add domain layer commands, queries and events for farm and zone management | As a Developer, I want the system to have a complete Onboarding bounded context so that farmers can register their farms and irrigation zones through the REST API. | 5 | José Huamani | Done |
+| | | EP-007-TS030-T02 | Implement infrastructure persistence layer for Farm and IrrigationZone entities | | | Raul Quispe | Done |
+| | | EP-007-TS030-T03 | Implement command and query services for Farm and Zone management | | | Raul Quispe | Done |
+| | | EP-007-TS030-T04 | Add resources and command assemblers for farm and zone REST endpoints | | | José Huamani | Done |
+| EP-007-TS031 | TS-07: Implement MQTT Integration and BI Bounded Context - REST API | EP-007-TS031-T01 | Add MQTT actuator publisher and integrate with irrigation session commands | As a Developer, I want the backend to publish actuator commands via MQTT so that the irrigation hardware responds to commands from the platform. | 8 | José Huamani | Done |
+| | | EP-007-TS031-T02 | Implement SoilTelemetryMqttListener to consume telemetry from ESP32 devices | | | José Huamani | Done |
+| | | EP-007-TS031-T03 | Add query and resource models for fleet health, irrigation and notifications | | | Raul Quispe | Done |
+| EP-003-US001 | US-17: Scaffold Farmer Mobile App | EP-003-US001-T01 | Create initial Flutter project with feature-based bounded context architecture | As a farmer, I want to access a dedicated mobile application so that I can monitor my crops and control irrigation from my smartphone. | 5 | Abraham Estrada | Done |
+| | | EP-003-US001-T02 | Implement role-based navigation and login flow | | | Abraham Estrada | Done |
+| EP-003-US002 | US-18: Monitor Irrigation and Soil in Real-Time (Mobile) | EP-003-US002-T01 | Implement DeviceStatusList with 15-second polling for irrigation status | As a farmer, I want to see real-time status of my devices and active irrigation sessions on my mobile app so that I can make timely decisions in the field. | 8 | Abraham Estrada | Done |
+| | | EP-003-US002-T02 | Integrate real-time updates for irrigation sessions and sensor metrics | | | Abraham Estrada | Done |
+| | | EP-003-US002-T03 | Fix responsive layout and overflow issues across mobile screens | | | Abraham Estrada | Done |
+| EP-003-US003 | US-19: Access Agronomist Workspace (Mobile) | EP-003-US003-T01 | Implement agronomist workspace features: client tracking, alerts and schedule | As an agronomist, I want to access a dedicated workspace on the mobile app so that I can manage my clients, view critical alerts and organize my schedule. | 5 | Abraham Estrada | Done |
+| | | EP-003-US003-T02 | Connect mobile application to real REST API infrastructure | | | Abraham Estrada | Done |
+| EP-005-TS009 | TS-08: Implement Device Authentication - Edge API | EP-005-TS009-T01 | Define device entity and repository interface in domain layer | As a Developer, I want the Edge API to authenticate ESP32 devices via API key (MAC address) so that only registered devices can submit telemetry data. | 3 | Raul Quispe | Done |
+| | | EP-005-TS009-T02 | Implement authentication service and infrastructure persistence layer | | | Raul Quispe | Done |
+| | | EP-005-TS009-T03 | Expose device registration and authentication REST endpoints | | | Raul Quispe | Done |
+| EP-002-TS007 | TS-09: Implement Soil Data Capture - Edge API | EP-002-TS007-T01 | Define soil reading entity and domain service with boundary validation | As a Developer, I want the Edge API to receive, validate and persist soil telemetry from ESP32 devices so that the data can be forwarded reliably to the cloud backend. | 5 | Raul Quispe | Done |
+| | | EP-002-TS007-T02 | Implement MQTT publisher for soil readings and cloud sync service with heartbeat | | | Raul Quispe | Done |
+| | | EP-002-TS007-T03 | Expose soil monitoring REST endpoint with API key authentication | | | Raul Quispe | Done |
+| EP-003-TS006 | TS-10: Implement PIR Movement Classification - Edge API | EP-003-TS006-T01 | Define PIR event entity, classification domain service and repository | As a Developer, I want the Edge API to classify PIR events as perimeter security alerts so that critical security events are separated from normal activity. | 3 | Raul Quispe | Done |
+| | | EP-003-TS006-T02 | Implement MQTT publisher for PIR events and REST endpoint | | | Raul Quispe | Done |
+| EP-002-TS011 | TS-11: Implement Testing Suite - Edge API | EP-002-TS011-T01 | Add unit tests for SoilReadingService domain boundaries and PIR classification service | As a Developer, I want a comprehensive test suite for the Edge API so that regressions are detected automatically before each deployment. | 3 | Raul Quispe | Done |
+| | | EP-002-TS011-T02 | Add integration tests for soil reading application service using SQLite | | | Raul Quispe | Done |
+| | | EP-002-TS011-T03 | Add acceptance tests for device registration and soil monitoring REST endpoints | | | Raul Quispe | Done |
+| EP-006-TS012 | TS-12: Implement ESP32 Firmware - Event-Driven Architecture | EP-006-TS012-T01 | Implement sensor abstraction layer with FC28, HR202L, DHT11 and DS18B20 drivers | As a Developer, I want the ESP32 firmware to read all soil and ambient sensors in a FreeRTOS event-driven architecture so that no CPU cycles are wasted in polling loops. | 5 | Yasser Palacios | Done |
+| | | EP-006-TS012-T02 | Implement connectivity management and MQTT telemetry serialization | | | Yasser Palacios | Done |
+| | | EP-006-TS012-T03 | Implement actuator control module for irrigation valve management | | | Yasser Palacios | Done |
+| | | EP-006-TS012-T04 | Add safety mechanisms and watchdog timers for fault tolerance | | | Yasser Palacios | Done |
+| | | EP-006-TS012-T05 | Implement MAC address capture for device authentication with Edge API | | | Yasser Palacios | Done |
+
+#### 6.2.2.4. Development Evidence for Sprint Review
+
+En este Sprint 2, el alcance del desarrollo se expandió significativamente para cubrir la integración vertical completa del ecosistema SATECHO. Se materializaron las primeras versiones funcionales de los seis productos de software que conforman la solución: la versión actualizada de la Landing Page y la Aplicación Web, el RESTful API con sus primeros contextos acotados funcionales, la Aplicación Móvil con roles diferenciados para agricultor y agrónomo, el Edge API con procesamiento local de telemetría, y el firmware embebido para el ESP32 con arquitectura orientada a eventos. A continuación, se presenta el registro cronológico de commits que certifica la autoría, el propósito y la evolución del código fuente integrado satisfactoriamente en este sprint.
+
+| Repository | Branch | Commit Id | Commit Message | Committed On |
+|---|---|---|---|---|
+| Landing-Page-SATECHO | feature/about-product-section | feat: add about-the-product video section | feat(hero): add product demo video integration to landing page. | 26/05/26 |
+| Landing-Page-SATECHO | feature/team-section | feat: add startup team members section | feat(team): add team members presentation section with roles and photos. | 26/05/26 |
+| Landing-Page-SATECHO | feature/premium-plans | feat: update plans to premium-only model | feat(pricing): remove freemium tiers and update subscription section to premium-only model. | 27/05/26 |
+| Web-Application-SATECHO | feature/error-pages | e2d08a8 | feat(error-pages): add styled 404 page and wildcard route handling. | 26/05/26 |
+| Web-Application-SATECHO | feature/onboarding | 6c89776 | feat(onboarding): add irrigation zone removal with minimum zone validation. | 26/05/26 |
+| Web-Application-SATECHO | feature/onboarding | 9b09c91 | feat(feature/onboarding): add removable protocol templates. | 28/05/26 |
+| Web-Application-SATECHO | feature/dashboard-agronomo | 99ed4fc | feat(feature/dashboard-agronomo): implement analysis and thresholds management views. | 28/05/26 |
+| Web-Application-SATECHO | feature/auth | 3ea9754 | fix(feature/auth): validate personal data before proceeding to step 3. | 28/05/26 |
+| Web-Application-SATECHO | feature/dashboard-agronomo | ccbede2 | feat(dashboard-agronomist): add priority cases queue and critical alert detail views. | 09/06/26 |
+| Web-Application-SATECHO | feature/dashboard-agronomo | 5d3a7d7 | feat(feature/dashboard-agronomo): implement account management, device monitoring and irrigation/security improvements. | 09/06/26 |
+| Web-Application-SATECHO | feature/dashboard-agronomo | ff10bef | feat(feature/dashboard-agronomo): implement profile management, plan system and notification settings. | 10/06/26 |
+| Web-Application-SATECHO | feature/dashboard | cc69724 | feat: add telemetry dashboard with salinity chart and security event log. | 15/06/26 |
+| Web-Application-SATECHO | feature/dashboard | 206a626 | feat: add telemetry route and import TelemetryDashboardView. | 15/06/26 |
+| Web-Application-SATECHO | feature/dashboard | f410c43 | feat(feature/dashboard): add DeviceFleetView with fleet monitoring, telemetry metrics, device actions, maintenance management and responsive UI. | 18/06/26 |
+| Web-Application-SATECHO | feature/dashboard | 4925205 | feat(feature/dashboard): add NotificationsRulesView with script, template and css. | 18/06/26 |
+| Web-Application-SATECHO | main | 334ce29 | chore: update deployed connection. | 20/06/26 |
+| Web-API-Service-SATECHO | main | d8d4491 | build: rename artifact to com.satecho.agrosafe.platform. | 26/05/26 |
+| Web-API-Service-SATECHO | feature/shared | dba183a | feat(shared): add domain event and exception handling infrastructure with RabbitMQ integration. | 27/05/26 |
+| Web-API-Service-SATECHO | feature/shared | 2911ef1 | feat(shared): add security configuration for API with CSRF disabled and Swagger access. | 27/05/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | 2990c3b | feature/bc-iam(domain): core domain model entities and rules for identity management. | 29/05/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | 470c49a | feature/bc-iam(application): implement authentication and user use cases. | 29/05/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | 26c0193 | feature/bc-iam(interfaces): expose rest api endpoints and request/response resources. | 29/05/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | 0db5b61 | feat(iam): enhance security and persistence layers with role and user entities, update logging practices. | 03/06/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | 04206cd | feat(iam): refactor controllers to use application services and improve response handling. | 03/06/26 |
+| Web-API-Service-SATECHO | feature/onboarding | 0da1be3 | feat(onboarding): add domain layer with commands, queries and events classes for farm and zone management. | 09/06/26 |
+| Web-API-Service-SATECHO | feature/onboarding | d48de1a | feat(onboarding): implement infrastructure persistence layer for Farm and IrrigationZone entities with corresponding assemblers and repositories. | 09/06/26 |
+| Web-API-Service-SATECHO | feature/onboarding | 2dbbcf7 | feat(onboarding): implement command and query services for Farm and Zone management. | 09/06/26 |
+| Web-API-Service-SATECHO | feature/onboarding | a3062ac | feat(onboarding): add resources and command assemblers for farm and zone management. | 09/06/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | ce68c91 | feat(iam): add commands for account verification and user role management. | 10/06/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | 6c671e4 | feat(iam): implement user and role persistence layers with corresponding assemblers and repositories. | 10/06/26 |
+| Web-API-Service-SATECHO | feature/bc-iam | a98637c | feat(iam): integrate resend email service and update user verification logic. | 10/06/26 |
+| Web-API-Service-SATECHO | feature/bi | d025614 | feat(bi): add MQTT actuator publisher and integrate with irrigation session commands. | 15/06/26 |
+| Web-API-Service-SATECHO | feature/bi | 3fdc3f5 | feat(bi): add SoilTelemetryMqttListener and SoilTelemetry handling via MQTT. | 15/06/26 |
+| Web-API-Service-SATECHO | feature/bi | 03d4f9c | feat(bi): update MQTT actuator commands and add edge API key configuration. | 15/06/26 |
+| Web-API-Service-SATECHO | main | 879addd | fix(merge): resolve conflict markers in IAM and Onboarding files. | 16/06/26 |
+| Mobile-Application-SATECHO | main | e2e08f5 | first commit. | 30/05/26 |
+| Mobile-Application-SATECHO | feature/farmer | e45c3f1 | feat: scaffold farmer mobile app. | 30/05/26 |
+| Mobile-Application-SATECHO | feature/agronomist | f59f88c | feat: add agronomist workspace features. | 08/06/26 |
+| Mobile-Application-SATECHO | feature/auth | e1fdb74 | feat: add mock login and role selection. | 08/06/26 |
+| Mobile-Application-SATECHO | feature/auth | a761b89 | feat: add role based navigation smoke tests. | 08/06/26 |
+| Mobile-Application-SATECHO | develop | ca29d07 | merge(develop): integrate agronomist workspace features and real API infrastructure. | 12/06/26 |
+| Mobile-Application-SATECHO | feature/devices | 1836328 | feat(devices, irrigation): DeviceStatusList + 15s polling for irrigation status. | 12/06/26 |
+| Mobile-Application-SATECHO | feature/ui | 66bcf26 | fix(ui): responsive layout — fix overflows and adaptive padding. | 12/06/26 |
+| Mobile-Application-SATECHO | feature/irrigation | 9a0f91f | feat(irrigation): integrate real-time updates for irrigation sessions and sensor metrics. | 15/06/26 |
+| Mobile-Application-SATECHO | develop | d6b834e | refactor(structure): reorganize to feature-based bounded contexts. | 20/06/26 |
+| Edge-API-SATECHO | main | 908bfdc | first commit. | 15/06/26 |
+| Edge-API-SATECHO | develop | 5017544 | add initial main function and entry point. | 15/06/26 |
+| Edge-API-SATECHO | feature/chore-shared-infrastructure | ba75fed | feat(shared): implement cloud sync service with telemetry and heartbeat functionality. | 16/06/26 |
+| Edge-API-SATECHO | feature/soil-data-capture | dd99912 | feat(soil): add soil reading entity, repository, and MQTT publisher. | 16/06/26 |
+| Edge-API-SATECHO | feature/device-authentication | da894e1 | feat(iam): add device entity, repository, and authentication service. | 16/06/26 |
+| Edge-API-SATECHO | feature/movement-classification | f83d65c | feat(pir): add PIR event handling, define entities, models, and services for event classification and MQTT publishing. | 16/06/26 |
+| Edge-API-SATECHO | feature/unit-tests | 9019e7f | feat(tests): add unit tests for PIR and soil reading services. | 21/06/26 |
+| Edge-API-SATECHO | feature/integration-tests | b15921f | feat(tests): add integration tests for soil reading application service. | 21/06/26 |
+| Edge-API-SATECHO | feature/acceptance-tests | 1bd047c | test: add unit tests for device registration and soil monitoring APIs. | 21/06/26 |
+| Embedded-Application-SATECHO | main | 0da17ab | feat: add connectivity management, safety mechanisms, sensor abstraction, and telemetry serialization. | 15/06/26 |
+| Embedded-Application-SATECHO | main | 1f65733 | refactor: sensor and telemetry modules for event-driven architecture. | 15/06/26 |
+| Embedded-Application-SATECHO | main | 75cc57b | refactor: actuator control and telemetry for event-driven architecture. | 15/06/26 |
+| Embedded-Application-SATECHO | main | d6538be | feat: update capturing mac address. | 21/06/26 |
+
+#### 6.2.2.5. Testing Suite Evidence for Sprint Review
+
+Durante este segundo sprint, el equipo consolidó su primera suite de pruebas automatizadas centrada en el **Edge API**, el componente más crítico de la cadena de ingesta de datos, dado que actúa como filtro y validador de toda la telemetría proveniente del hardware embebido antes de ser sincronizada con la nube. La decisión de priorizar el Edge para las pruebas responde a que cualquier error en la validación de rangos o en la autenticación de dispositivos se propaga hacia todos los sistemas superiores. Las pruebas se implementaron con **pytest** bajo tres capas:
+
+**Capa 1 - Pruebas Unitarias de Dominio (Domain Layer)**
+
+Validan las reglas de negocio del servicio `SoilReadingService`, asegurando que ningún valor de sensor fuera de rango pueda persistirse en el sistema.
+
+| Archivo de Test | Escenario de Prueba | Resultado Esperado |
+|---|---|---|
+| `tests/domain/test_soil_reading_service.py` | Lectura con todos los campos válidos | Entidad creada con `is_valid = True` |
+| `tests/domain/test_soil_reading_service.py` | Humedad en límites [0%, 100%] | Sin excepción |
+| `tests/domain/test_soil_reading_service.py` | Humedad fuera de rango (-0.1, 100.1) | `ValueError` con mensaje "moisture" |
+| `tests/domain/test_soil_reading_service.py` | Conductividad eléctrica en límites [0, 20 dS/m] | Sin excepción |
+| `tests/domain/test_soil_reading_service.py` | Conductividad fuera de rango (-1, 20.1) | `ValueError` con mensaje "ec" |
+| `tests/domain/test_soil_reading_service.py` | pH en límites [0, 14] | Sin excepción |
+| `tests/domain/test_soil_reading_service.py` | pH fuera de rango (-0.1, 14.1) | `ValueError` con mensaje "ph" |
+| `tests/domain/test_soil_reading_service.py` | Temperatura en límites [-10°C, 60°C] | Sin excepción |
+| `tests/domain/test_soil_reading_service.py` | Valores no numéricos en campos de sensor | `ValueError` con mensaje "Sensor values must be numeric" |
+| `tests/domain/test_soil_reading_service.py` | `recorded_at` como string ISO 8601 | Campo parseado correctamente con timezone UTC |
+| `tests/domain/test_soil_reading_service.py` | `recorded_at` nulo | Asignación automática de timestamp UTC actual |
+| `tests/domain/test_pir_classification_service.py` | Clasificación de eventos PIR por tipo | Evento clasificado correctamente (intrusión vs movimiento normal) |
+
+**Capa 2 - Pruebas de Integración (Application Layer)**
+
+Validan la interacción entre el servicio de aplicación y la capa de persistencia con una base de datos SQLite de prueba, verificando el ciclo completo de almacenamiento y recuperación.
+
+| Archivo de Test | Escenario de Prueba | Resultado Esperado |
+|---|---|---|
+| `tests/application/test_soil_reading_application_service.py` | Registrar una lectura válida y recuperarla por ID | Lectura persistida con todos los campos correctos |
+| `tests/application/test_soil_reading_application_service.py` | Consultar lecturas por `device_id` | Lista de lecturas filtradas correctamente |
+
+**Capa 3 - Pruebas de Aceptación de API (Interfaces Layer)**
+
+Validan el comportamiento del cliente HTTP contra los endpoints REST del Edge API, cubriendo los escenarios de autenticación, validación de payload y respuestas de error.
+
+| Archivo de Test | Escenario de Prueba | Código HTTP Esperado |
+|---|---|---|
+| `tests/interfaces/test_soil_api.py` | POST `/api/v1/soil-monitoring/readings` sin API Key | `401 Unauthorized` |
+| `tests/interfaces/test_soil_api.py` | POST sin `device_id` en header | `401 Unauthorized` |
+| `tests/interfaces/test_soil_api.py` | POST sin `farm_id` en body | `400 Bad Request` |
+| `tests/interfaces/test_soil_api.py` | POST con campos ESP32 válidos (`humidity_fc28`, `salinity_hr202l`, `soil_temp_ds18b20`) | `201 Created` con respuesta JSON completa |
+| `tests/interfaces/test_soil_api.py` | POST con campos legacy válidos (`moisture`, `ec`, `temperature`) | `201 Created` |
+| `tests/interfaces/test_soil_api.py` | POST con valor de sensor fuera de rango (moisture=999) | `400 Bad Request` con mensaje "moisture" |
+| `tests/interfaces/test_iam_api.py` | POST `/api/v1/iam/devices` para registrar nuevo dispositivo | `201 Created` con `device_id` y `api_key` |
+| `tests/interfaces/test_iam_api.py` | GET `/api/v1/iam/devices` para listar dispositivos registrados | `200 OK` con lista de dispositivos |
+
+#### 6.2.2.6. Execution Evidence for Sprint Review
+
+Esta sección consolida la evidencia de ejecución de todos los productos digitales entregados en el Sprint 2, presentando capturas de pantalla representativas de los flujos implementados en cada componente de la solución SATECHO.
+
+#### Landing Page (v2)
+
+La segunda versión de la Landing Page incorpora tres cambios estratégicos: la sección de video demostrativo del producto, la sección del equipo de la startup y la migración completa al modelo comercial premium (eliminando las opciones freemium). Estos cambios consolidan la propuesta de valor y la transparencia organizacional ante los potenciales clientes.
+
+**Video About-the-Product**
+
+Sección audiovisual integrada que demuestra el flujo operativo completo de SATECHO, desde la lectura de sensores hasta la visualización en el dashboard, validando la propuesta de valor ante visitantes indecisos.
+
+![About-Product-Video-Section](./assets/images/sprint-2/About-Product-Video-Section.png)
+
+**Team Section**
+
+Sección institucional que presenta al equipo fundador de SATECHO con fotografías y roles, construyendo confianza y credibilidad ante potenciales clientes del sector agrícola.
+
+![Team-Section](./assets/images/sprint-2/Team-Section.png)
+
+**Planes Premium**
+
+Versión actualizada de la sección de planes de pago, exclusivamente con opciones premium que reflejan la inversión en hardware IoT y soporte técnico especializado requeridos por el modelo de negocio.
+
+![Premium-Plans-Section](./assets/images/sprint-2/Premium-Plans-Section.png)
+
+#### Web Application (v2)
+
+La versión final de la Aplicación Web amplía significativamente el alcance funcional con vistas especializadas para ambos segmentos objetivo: el agricultor y el agrónomo.
+
+Mediante el siguiente vídeo, se evidencian los flujos implementados en este sprint:
+
+![Referential Video - Web Application v2](./assets/images/sprint-2/Web-Application-v2-Execution-Evidence.png)
+
+**Web Application v2 - SATECHO:** [Web Application v2 - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint2-web-app)
+
+**Dashboard Agrónomo - Análisis y Umbrales**
+
+Vista especializada para el ingeniero agrónomo que permite monitorear análisis de suelo y configurar umbrales críticos por cultivo, habilitando alertas automáticas ante condiciones adversas.
+
+![Agronomist-Analysis-Dashboard](./assets/images/sprint-2/Agronomist-Analysis-Dashboard.png)
+
+**Dashboard Agrónomo - Gestión de Cuenta y Dispositivos**
+
+Panel de administración que centraliza la gestión de cuenta del agrónomo, el monitoreo de dispositivos IoT de sus clientes asignados y el control de sesiones de riego activas.
+
+![Agronomist-Account-Devices-View](./assets/images/sprint-2/Agronomist-Account-Devices-View.png)
+
+**Dashboard Agrónomo - Cola de Casos Prioritarios**
+
+Vista de gestión de urgencias que organiza las alertas críticas de todos los clientes del agrónomo en una cola priorizada, con acceso directo al detalle de cada incidente.
+
+![Priority-Cases-Queue-View](./assets/images/sprint-2/Priority-Cases-Queue-View.png)
+
+**Dashboard Agrónomo - Gestión de Perfil y Planes**
+
+Módulo de configuración personal del agrónomo que permite actualizar datos profesionales, preferencias de notificación y el plan de suscripción activo.
+
+![Agronomist-Profile-Plans-View](./assets/images/sprint-2/Agronomist-Profile-Plans-View.png)
+
+**Dashboard Agricultor - Telemetría en Tiempo Real**
+
+Vista de monitoreo continuo con gráficos de salinidad del suelo y registro histórico de eventos de seguridad perimetral, consolidando las métricas más críticas para la toma de decisiones.
+
+![Telemetry-Dashboard-View](./assets/images/sprint-2/Telemetry-Dashboard-View.png)
+
+**Dashboard Agricultor - Flota de Dispositivos IoT**
+
+Vista de inventario operativo que centraliza el estado de conexión, las métricas de telemetría, las acciones disponibles y el historial de mantenimiento de toda la flota ESP32 desplegada en el campo.
+
+![Device-Fleet-View](./assets/images/sprint-2/Device-Fleet-View.png)
+
+**Reglas de Notificación**
+
+Vista de configuración de alertas que permite al agricultor definir umbrales personalizados por dispositivo y tipo de métrica, determinando qué condiciones disparan notificaciones al móvil.
+
+![Notification-Rules-View](./assets/images/sprint-2/Notification-Rules-View.png)
+
+#### Mobile Application
+
+La primera versión de la Aplicación Móvil implementa los flujos principales para ambos roles de usuario, con arquitectura Clean Architecture orientada a funcionalidades (feature-based bounded contexts) y conexión al REST API real.
+
+Mediante el siguiente vídeo, se evidencian los flujos implementados en este sprint:
+
+![Referential Video - Mobile Application](./assets/images/sprint-2/Mobile-Application-Execution-Evidence.png)
+
+**Mobile Application - SATECHO:** [Mobile Application - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint2-mobile-app)
+
+**Login y Selección de Rol**
+
+Pantalla de autenticación con selección de rol (agricultor / agrónomo) que redirige al usuario al workspace correspondiente según sus permisos asignados en el backend.
+
+![Mobile-Login-Role-Selection](./assets/images/sprint-2/Mobile-Login-Role-Selection.png)
+
+**Dashboard del Agricultor**
+
+Centro de control móvil que muestra el estado de las parcelas, las métricas de telemetría del suelo en tiempo real y las sesiones de riego activas con actualización automática cada 15 segundos.
+
+![Mobile-Farmer-Dashboard](./assets/images/sprint-2/Mobile-Farmer-Dashboard.png)
+
+**Estado de Dispositivos e Irrigación**
+
+Lista de dispositivos IoT con indicadores de conectividad en tiempo real y controles directos para iniciar o detener sesiones de riego de forma remota desde el campo.
+
+![Mobile-Device-Status-Irrigation](./assets/images/sprint-2/Mobile-Device-Status-Irrigation.png)
+
+**Workspace del Agrónomo**
+
+Vista de seguimiento de clientes, gestión de alertas críticas asignadas y agenda de visitas técnicas, optimizando la operativa diaria del consultor agrícola desde su dispositivo móvil.
+
+![Mobile-Agronomist-Workspace](./assets/images/sprint-2/Mobile-Agronomist-Workspace.png)
+
+#### Edge API
+
+La primera versión del Edge API implementa tres módulos bajo Clean Architecture: autenticación de dispositivos (IAM), captura de telemetría del suelo (Soil) y clasificación de eventos de seguridad perimetral (PIR).
+
+![Edge-API-Execution-Evidence](./assets/images/sprint-2/Edge-API-Execution-Evidence.png)
+
+#### Embedded Application (ESP32)
+
+La primera versión del firmware SATECHO implementa una arquitectura FreeRTOS completamente orientada a eventos (0% bucles de polling), con cuatro sensores activos: FC28 (humedad de suelo, GPIO33), HR202L (salinidad/CE, GPIO14/32), DHT11 (temperatura ambiente, GPIO26) y DS18B20 (temperatura de suelo, GPIO25), junto con un sensor PIR de seguridad perimetral (GPIO27).
+
+![Embedded-Application-Execution-Evidence](./assets/images/sprint-2/Embedded-Application-Execution-Evidence.png)
+
+#### 6.2.2.7. Services Documentation Evidence for Sprint Review
+
+Durante este Sprint 2, se desplegó la primera versión funcional del **RESTful API** de SATECHO, construida en Java con Spring Boot bajo una arquitectura de Domain-Driven Design (DDD) con Clean Architecture. La documentación interactiva de los endpoints se expone mediante **Swagger UI / OpenAPI 3.0**, accesible en la instancia de Azure App Service.
+
+Los contextos acotados implementados en este sprint y sus endpoints principales son los siguientes:
+
+**Bounded Context: IAM (Identity & Access Management)**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | `/api/v1/authentication/sign-up` | Registro de nuevo usuario (agricultor o agrónomo) |
+| POST | `/api/v1/authentication/sign-in` | Autenticación y obtención de JWT token |
+| POST | `/api/v1/authentication/verify-account` | Verificación de cuenta mediante token de email |
+| POST | `/api/v1/authentication/resend-verification` | Reenvío del email de verificación |
+| GET | `/api/v1/users/{id}` | Consulta de datos del usuario autenticado |
+
+**Bounded Context: Onboarding**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | `/api/v1/farms` | Creación de una nueva granja/parcela para el agricultor |
+| GET | `/api/v1/farms/{farmId}` | Consulta de datos de una granja específica |
+| GET | `/api/v1/farms/user/{userId}` | Listado de todas las granjas de un usuario |
+| POST | `/api/v1/farms/{farmId}/irrigation-zones` | Creación de zona de riego dentro de una granja |
+| GET | `/api/v1/farms/{farmId}/irrigation-zones` | Listado de zonas de riego de una granja |
+| DELETE | `/api/v1/farms/{farmId}/irrigation-zones/{zoneId}` | Eliminación de una zona de riego |
+
+**Bounded Context: BI (Business Intelligence / MQTT Integration)**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| GET | `/api/v1/fleet/health` | Estado de salud general de la flota de dispositivos IoT |
+| GET | `/api/v1/irrigation/sessions/active` | Sesiones de riego activas en tiempo real |
+| GET | `/api/v1/notifications/critical` | Alertas críticas pendientes de revisión |
+| POST | `/api/v1/irrigation/sessions/{sessionId}/command` | Envío de comando de actuador vía MQTT (start/stop irrigación) |
+
+La documentación interactiva de los endpoints se expone mediante Swagger UI, permitiendo a los desarrolladores del frontend y del equipo de QA probar los contratos directamente desde el navegador sin necesidad de herramientas adicionales.
+
+![Swagger-API-Documentation](./assets/images/sprint-2/Swagger-API-Documentation.png)
+
+Adicionalmente, el **Edge API** expone los siguientes endpoints REST consumidos directamente por el firmware ESP32 y por el backend para sincronización de telemetría:
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | `/api/v1/iam/devices` | Registro de nuevo dispositivo ESP32 (obtención de API key) |
+| GET | `/api/v1/iam/devices` | Listado de dispositivos registrados |
+| POST | `/api/v1/soil-monitoring/readings` | Ingesta de lectura de telemetría de suelo desde ESP32 (autenticado por `X-API-Key`) |
+| POST | `/api/v1/security/pir-events` | Registro de evento de seguridad perimetral detectado por sensor PIR |
+
+#### 6.2.2.8. Software Deployment Evidence for Sprint Review
+
+En este sprint, el despliegue se extendió a cuatro plataformas adicionales para dar soporte a los nuevos componentes de la solución.
+
+**Backend REST API (Azure App Service)**
+
+El RESTful API construido en Java con Spring Boot se desplegó en Azure App Service mediante un proceso de empaquetado con Maven y publicación automática desde GitHub Actions.
+
+1. **Empaquetado:** Ejecución de `mvn clean package -DskipTests` para generar el artefacto `.jar` optimizado.
+
+2. **Pipeline de CI/CD:** Configuración del workflow de GitHub Actions que detecta cambios en la rama `main` y dispara el build y despliegue automático.
+
+3. **Publicación en Azure:** El artefacto `.jar` se envía a Azure App Service mediante el perfil de publicación configurado en los Secrets del repositorio.
+
+4. **Verificación:** Confirmación del despliegue exitoso mediante el endpoint `/actuator/health` de Spring Boot Actuator.
+
+![Backend-Azure-Deployment](./assets/images/sprint-2/Backend-Azure-Deployment.png)
+
+**Mobile Application (Firebase App Distribution)**
+
+La primera versión de la aplicación Flutter fue compilada y distribuida a los usuarios de prueba mediante Firebase App Distribution.
+
+1. **Compilación:** Generación del paquete `.apk` desde Android Studio con `flutter build apk --release`.
+
+2. **Carga en Firebase:** Subida del binario a la consola de Firebase en la sección App Distribution.
+
+3. **Distribución:** Envío de invitaciones a los testers del equipo para validación del flujo completo en dispositivos reales.
+
+![Mobile-Firebase-Distribution](./assets/images/sprint-2/Mobile-Firebase-Distribution.png)
+
+**Web Application (Vercel)**
+
+La versión v2 de la Aplicación Web mantuvo el despliegue continuo en Vercel, con actualización automática de la URL productiva al integrarse cambios en la rama `main`.
+
+![Web-Application-Vercel-Deployment](./assets/images/sprint-2/Web-Application-Vercel-Deployment.png)
+
+**Landing Page (GitHub Pages)**
+
+La versión v2 de la Landing Page fue publicada automáticamente en GitHub Pages al realizar el merge de los cambios a la rama `main` del repositorio correspondiente.
+
+![Landing-Page-GHPages-Deployment](./assets/images/sprint-2/Landing-Page-GHPages-Deployment.png)
+
+#### 6.2.2.9. Team Collaborations Insights during Sprint
+
+**Visión General del Sprint**
+
+El Sprint 2 representó el mayor desafío colaborativo del proyecto al requerir la coordinación simultánea de seis repositorios con interdependencias técnicas directas. Para gestionar esta complejidad sin generar bloqueos, el equipo implementó una sesión de kickoff asíncrona donde se definieron los contratos de API (payloads JSON) entre el Edge API, el backend y las aplicaciones cliente antes de comenzar cualquier implementación. Este enfoque de "contract-first" permitió que los cinco desarrolladores trabajaran en paralelo sin necesidad de esperar por servicios reales.
+
+**Landing Page v2 y Web Application v2**
+
+El trabajo sobre los dos productos frontales del ciclo continuó bajo el modelo de ramas de funcionalidad atomizadas con Pull Requests obligatorios. El mayor volumen de commits en este periodo se concentró en la expansión del dashboard para el rol de agrónomo, que requirió múltiples iteraciones de feedback entre el líder de aspecto y los colaboradores para asegurar la coherencia visual y funcional entre las vistas.
+
+![Team-Collaboration-Insights-Web-Application](./assets/images/sprint-2/Team-Collaboration-Insights-Web-Application-Sprint2.png)
+
+**REST API (Backend)**
+
+El backend comenzó su desarrollo en paralelo desde la primera semana del sprint, arrancando con los bounded contexts de IAM y Onboarding. La metodología de trabajo adoptó el patrón de "feature branches por contexto acotado", lo que permitió que cada capa (dominio, aplicación, infraestructura, interfaces) fuera desarrollada e integrada secuencialmente dentro de la misma rama, manteniendo el ciclo de feedback corto y los Pull Requests manejables en tamaño.
+
+![Team-Collaboration-Insights-Backend](./assets/images/sprint-2/Team-Collaboration-Insights-Backend-Sprint2.png)
+
+**Mobile Application**
+
+El equipo de la aplicación móvil arrancó desde cero con un scaffold inicial que estableció la arquitectura base (feature-based bounded contexts con Clean Architecture), sobre la cual se construyeron los flujos de agricultor y agrónomo de forma incremental. La decisión de utilizar el mock de roles antes de conectar el API real permitió validar la experiencia de usuario antes de que el backend estuviera disponible, reduciendo el tiempo de integración final.
+
+![Team-Collaboration-Insights-Mobile](./assets/images/sprint-2/Team-Collaboration-Insights-Mobile-Sprint2.png)
+
+**Edge API**
+
+El Edge API fue el repositorio con el proceso de desarrollo más estructurado del sprint, dado que siguió el ciclo completo de TDD (Test-Driven Development) para las tres capas de prueba: unitaria, integración y aceptación. Esta disciplina, aunque más lenta al inicio, garantizó que cada endpoint entregado tuviera cobertura de pruebas verificable antes de ser integrado al pipeline de comunicación con el firmware ESP32.
+
+![Team-Collaboration-Insights-Edge](./assets/images/sprint-2/Team-Collaboration-Insights-Edge-Sprint2.png)
+
+**Embedded Application**
+
+El firmware del ESP32 fue desarrollado de forma completamente independiente al inicio, adoptando una arquitectura FreeRTOS orientada a eventos que elimina los bucles de polling. La integración con el Edge API se realizó en la fase final del sprint mediante la implementación del módulo de captura de dirección MAC para la autenticación y la configuración del cliente MQTT para la publicación de telemetría hacia el broker Mosquitto del Edge.

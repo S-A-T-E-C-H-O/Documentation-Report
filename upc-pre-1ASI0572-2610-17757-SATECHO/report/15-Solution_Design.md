@@ -1,10 +1,10 @@
 # Capítulo V: Solution UI/UX Design
 
-## 5.1. Style Guidelines.
+## 5.1. Style Guidelines
 
 En esta sección se establecen las directrices visuales y de experiencia de usuario implementadas en la plataforma AgroSafe. El objetivo principal del diseño es transformar datos técnicos complejos provenientes de sensores IoT (humedad, conductividad eléctrica, pH, eventos perimetrales) en información clara, intuitiva y accionable para agricultores e ingenieros agrónomos, reduciendo la carga cognitiva y acelerando la toma de decisiones en campo.
 
-### 5.1.1. General Style Guidelines.
+### 5.1.1. General Style Guidelines
 
 Esta sección define el sistema integral de Style Guidelines de AgroSafe, que establece las bases visuales y comunicacionales de la plataforma en sus principales puntos de contacto: aplicación web, aplicación móvil y dispositivos IoT de campo. El objetivo es transformar datos técnicos complejos (humedad, conductividad eléctrica, pH, temperatura y eventos de seguridad perimetral) en información clara, intuitiva y accionable para agricultores e ingenieros agrónomos, reduciendo la carga cognitiva y acelerando la toma de decisiones en campo.
 
@@ -228,7 +228,9 @@ Cada decisión de estilo en AgroSafe está trazada explícitamente con los requi
 | Espaciado ≥ 16 px entre elementos interactivos en móvil | "Uso con guantes o en movimiento"             | Pruebas táctiles: 0 errores de toque en targets ≥ 44×44 px                         |
 | Tono sereno en alertas críticas                         | "Ansiedad por falsas alarmas o intrusión"     | Encuestas post-alerta: 87% de usuarios reportaron "calma para actuar" vs. "pánico" |
 
-## 5.1.2. Web, Mobile and IoT  Guidelines 
+<div class="page"></div>
+
+## 5.1.2. Web, Mobile and IoT Style Guidelines
 
 Este documento establece los estándares de diseño visual e interacción para el ecosistema SATECHO, asegurando coherencia, accesibilidad y eficiencia operativa en sus tres plataformas: Aplicación Web (Escritorio), Aplicación Móvil y Dispositivos IoT de campo.
 
@@ -310,7 +312,9 @@ Uso exclusivo de **Material Symbols (Rounded)**.
 - **Error States:** Mensajes de error siempre acompañados de un icono descriptivo y un color de soporte (Earth Red).
 - **Loading:** Spinners o esqueletos (Skeletons) siguiendo el tono de la marca para evitar la sensación de latencia.
 
-## 5.2. Information Architecture.
+<div class="page"></div>
+
+## 5.2. Information Architecture
 
 En esta sección el equipo plantea las decisiones y sustento que dirigen la manera como se organizará el contenido en las experiencias web y móvil de AgroSafe, incluyendo el Landing Page y las Aplicaciones. Dichas propuestas están orientadas a que los visitantes y usuarios se adapten con facilidad a la funcionalidad de cada producto y puedan encontrar todo aquello que necesiten sin esfuerzo cognitivo excesivo. Se incluyen las decisiones sobre los **Organization Systems**, **Labeling Systems**, **SEO Tags and Meta Tags**, **Navigation Systems** y **Searching Systems**, todas ellas trazadas explícitamente con las User Stories del Capítulo III y los Bounded Contexts definidos en el Event Storming.
 
@@ -1202,7 +1206,9 @@ Los eventos de navegación se instrumentan como KPIs para iterar sobre la UX:
 | **Navegación offline exitosa** | Comandos ejecutados tras recuperar conexión / comandos en cola offline | >95% | EP-004-US008, EP-003-TS025 |
 
 
-## 5.3. Landing Page UI Design.
+<div class="page"></div>
+
+## 5.3. Landing Page UI Design
 
 En esta sección, el equipo de diseño traduce las decisiones tomadas en torno a la experiencia de usuario (UX) y la arquitectura de la información en una propuesta de interfaz de usuario (UI) para la página de aterrizaje de **SATECHO**. El objetivo es comunicar de forma efectiva el valor de la agricultura de precisión tanto a agricultores como a agrónomos.
 
@@ -1301,7 +1307,9 @@ A continuación, se detalla cómo las decisiones de diseño se materializan en l
 *Figura 6: Landing Page Mock-up - Pie de página (Footer).*
 *   **Descripción de UI/UX:** El pie de página adopta una organización tópica estructurada en cuatro columnas (Empresa, Legal, Contacto y Redes/Idioma). Utiliza la tipografía secundaria *Inter* en un tamaño menor para optimizar el espacio sin perder legibilidad. Esta sección otorga soporte secundario y transparencia corporativa, alojando enlaces mandatorios como los términos de servicio, políticas de privacidad e información directa de contacto (teléfono y correo), asegurando una experiencia de usuario confiable y profesional.
 
-## 5.4. Applications UX/UI Design.
+<div class="page"></div>
+
+## 5.4. Applications UX/UI Design
 
 ### 5.4.1. Applications Wireframes.
 
@@ -1422,7 +1430,9 @@ Comienza cuando el usuario accede a la vista principal de la plataforma, donde p
 <br>
 
 
-## 5.5. Applications Prototyping.
+<div class="page"></div>
+
+## 5.5. Applications Prototyping
 
 En esta sección, se evidencian pruebas de uso del prototipo de la aplicación web. Además, se adjunta un video donde se usa el prototipo y las interacciones con el prototipo se basan en los User Flows descritos previamente.
 
@@ -1434,7 +1444,9 @@ En esta sección, se evidencian pruebas de uso del prototipo de la aplicación w
 
 Video demostrativo de la aplicación web: https://acortar.link/7YOBQ5 
 
-## 5.6. IoT Device Design.
+<div class="page"></div>
+
+## 5.6. IoT Device Design
 
 ### Diseño del dispositivo IoT
 Además del diseño de experiencia e interfaces de las aplicaciones web y móviles, es necesario detallar el diseño del dispositivo IoT encargado del monitoreo ambiental y agrícola mediante sensores de humedad de suelo, temperatura, humedad ambiental y detección de movimiento.
