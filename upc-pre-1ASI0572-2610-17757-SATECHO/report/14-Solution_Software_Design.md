@@ -4677,6 +4677,8 @@ _Contexto Supporting: Esencial para el modelo de negocio SaaS._
 
 _Contexto Supporting/Generic: Mantiene el "cuerpo" del sistema._
 
+<div class="page"></div>
+
 ### 4.1.2. Context Mapping
 
 En esta sección, explicamos y evidenciamos nuestro proceso de elaboración de un conjunto de context maps, los cuales visualizan las relaciones estructurales entre los bounded contexts identificados en nuestro proyecto. Para ello, revisamos minuciosamente la información recolectada durante el Event Storming y la elaboración de los Bounded Context Canvases, utilizándola para producir y refinar diseños candidatos. Este análisis estructural nos permite entender y alinear claramente los contextos para alcanzar los objetivos del negocio de manera eficiente, minimizando el acoplamiento técnico y maximizando la autonomía de los equipos de desarrollo.
@@ -4794,6 +4796,8 @@ Tras evaluar las alternativas, el equipo concluyó que la mejor aproximación es
 
     ![Context-Mapping-5](./assets/images/context-mapping/iot-device-management.png)
 
+<div class="page"></div>
+
 ### 4.1.3. Software Architecture
 
 #### 4.1.3.1. Software Architecture System Landscape Diagram
@@ -4820,7 +4824,9 @@ Distribución de la solución sobre infraestructura real: nodos ESP32 alimentado
 
 ![C4-Deployment Diagram](./assets/images/c4-diagrams/deployment-diagram.png)
 
-## 4.2. Strategic-Level Domain-Driven Design
+<div class="page"></div>
+
+## 4.2. Tactical-Level Domain-Driven Design
 
 ### 4.2.1. Bounded Context: Onboarding
 
