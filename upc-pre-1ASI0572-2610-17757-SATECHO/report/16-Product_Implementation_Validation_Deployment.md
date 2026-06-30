@@ -45,10 +45,10 @@ La solución SATECHO se descompone en repositorios modulares para facilitar el m
 | -------------------- | --------------------------------------------| 
 | Landing Page         | [https://github.com/S-A-T-E-C-H-O/Landing-Page-SATECHO](https://github.com/S-A-T-E-C-H-O/Landing-Page-SATECHO)                                            | 
 | Web Application      | [https://github.com/S-A-T-E-C-H-O/Web-Application-SATECHO](https://github.com/S-A-T-E-C-H-O/Web-Application-SATECHO)                                            |
-| Mobile Application   |                                             |
+| Mobile Application   | [https://github.com/S-A-T-E-C-H-O/Mobile-Application-SATECHO](https://github.com/S-A-T-E-C-H-O/Mobile-Application-SATECHO)                                            |
 | REST Services API    | [https://github.com/S-A-T-E-C-H-O/Web-API-Service-SATECHO](https://github.com/S-A-T-E-C-H-O/Web-API-Service-SATECHO)                                            |
-| Edge Services API    |                                             |
-| Embedded Application |                                             |
+| Edge Services API    | [https://github.com/S-A-T-E-C-H-O/Edge-API-Service-SATECHO](https://github.com/S-A-T-E-C-H-O/Edge-API-Service-SATECHO)                                            |
+| Embedded Application | [https://github.com/S-A-T-E-C-H-O/Embedded-Application-Satecho](https://github.com/S-A-T-E-C-H-O/Embedded-Application-Satecho)                                            |
 
 **GitFlow Workflow**
 
@@ -747,7 +747,7 @@ Luego de precisar las mejoras implementadas, adicionalmente, se priorizó el des
   </tr>
   <tr>
     <td>Location</td>
-    <td>Sesión Asíncrona organizada dentro de la plataforma de comunicación Discord</td>
+    <td>Asynchronous session organized within the Discord communication platform</td>
   </tr>
   <tr>
     <td>Prepared By</td>
@@ -759,11 +759,11 @@ Luego de precisar las mejoras implementadas, adicionalmente, se priorizó el des
   </tr>
   <tr>
     <td>Sprint 1 Review Summary</td>
-    <td>En relación al sprint pasado, el equio implemetó las secciones asociadas a la descripción del startup, descripción de la implementación, beneficios, planes de pago, formulario de contacto - esto con la finalidad de que los <em>leads</em> sepan el compromiso que tiene Satecho en la solución propuesta en la Landing Page. Por otra parte, se implementó secciones primordiales relacionadas al monitero de indicadores, Seguridad, Notificaciones, Suscripción, sección IoT para la aplicación web; esto progreso permitió al equipo completar la gran mayoría de funcionalidades Core previstas para la aplicación.</td>
+    <td>During the previous sprint, the team implemented the sections associated with the startup description, solution overview, benefits, payment plans, and contact form — with the purpose of communicating SATECHO's commitment to its proposed solution to <em>leads</em> on the Landing Page. Additionally, the team implemented key sections related to indicator monitoring, Security, Notifications, Subscription, and the IoT section for the web application; this progress allowed the team to complete the vast majority of the core features planned for the application.</td>
   </tr>
   <tr>
-    <td>Sprint 1 Restrospective Summary</td>
-    <td>De acuerdo a la sesión de retrospectiva realizada con todo el equipo de SATECHO, destacamos la proactividad y coordinación planificada entre cada uno de los miembros del equipo para alinear los avances previstos en relación al sprint 1 y poder llegar al objetivo de presentar una primera versión hacia nuestros stakeholders; sin embargo, unánimamente como puntos de mejora sentimos que, al ser demasiados entregables en un lapso de tiempo muy limitado, la dependencia de avance se centralizaba en una persona debido a que, como uno ya solía avanzar por su cuenta, había demoras por la magnitud de desarrollo - generando colas de espera para poder seguir continuando con más labores tanto a nivel de reporte como de implementación de los artefactos digitales. Es por ello que, a raíz de estas problemáticas, se restructuro la forma de planificación del trabajo centralizando de manera experimental el enfoque de trabajo <q>Team Software Process</q> para medir la capacidad de madurez y agilidad de los entregables a nivel de equipo y nos determina las brechas - mediante métricas de los aspectos positivos alcazandos como los niveles de mejora en relación a la colaboración y medición de entregables.</td>
+    <td>Sprint 1 Retrospective Summary</td>
+    <td>According to the retrospective session held with the entire SATECHO team, we highlighted the proactivity and planned coordination among all team members to align the expected progress for Sprint 1 and successfully present a first version to our stakeholders. However, we unanimously identified as areas for improvement that, given the large number of deliverables within a very limited timeframe, progress dependency became centralized on individual contributors — since members tended to work independently, the sheer magnitude of development caused delays and created bottlenecks for continuing both the report and the implementation of digital artifacts. As a result of these issues, the team restructured its work planning approach by experimentally adopting the <q>Team Software Process</q> framework to measure team-level delivery maturity and agility, identify gaps, and track improvements in collaboration and deliverable metrics through measurable outcomes.</td>
   </tr>
   <tr>
     <td colspan="2"><strong>Sprint Goal & User Stories</strong></td>
@@ -771,18 +771,18 @@ Luego de precisar las mejoras implementadas, adicionalmente, se priorizó el des
   <tr>
     <td>Sprint 2 Goal</td>
     <td>
-<strong>Nos enfocamos</strong> en ofrecer información clara en el vídeo "about-the-Product", una sección detallada sobre los integrantes del equipo de la startup Satecho y la eliminación de interacciones o secciones dedicadas a planes freemium para asegurar la solvencia y viabilidad comercial en el Landing Page; así como, proveer a los agricultores independientes e ingenieros agrónomos de herramientas en la versión final de la Web Application que incluyen vistas corregidas de autenticación para la autoconfiguración personalizada de perfiles con sus propios dispositivos IoT, además de vistas completas asociadas al monitoreo y un dashboard interactivo de datos; también, implementar funcionalidades principales para los agricultores y los ingenieros agrónomos, para sus dispositivos móviles mediante la Mobile Application, que incluyen para el primer rol la gestión de parcelas, control de riego, dashboard en tiempo real y registro de actividad, y para el segundo rol el seguimiento de clientes, alertas y agenda; además, la implementación de funcionalidades en las primeras versiones de la Embedded Application y el Edge API encargadas de la recolección, lectura, procesamiento local y filtrado de datos ambientales mediante sensores de tierra y humedad; e incrementar las posibilidades de implementar funcionalidades en el backend mediante la primera versión del RESTful API orientadas a dar soporte al control de riego, gestión de parcelas, registro de actividad, seguimiento de clientes, gestión de alertas críticas, sincronización offline de telemetría y automatización avanzada de fertirrigación. <br>
-<strong>Creemos que esto</strong> proporciona confianza a los visitantes y potenciales clientes del sector agrícola interesados en adquirir una solución tecnológica sostenible bajo un modelo premium; mayor rapidez en la toma de decisiones agronómicas basadas en evidencias científicas, eliminación de las suposiciones empíricas en los cultivos y un conocimiento veraz en tiempo real sobre el estado hídrico del suelo para los agricultores e ingenieros agrónomos usuarios de la plataforma web; mejora en la eficiencia operativa en la gestión y supervisión remota de múltiples parcelas agrícolas desde los dispositivos móviles de los agricultores y asesores técnicos independientes; la posibilidad de validar el flujo de ingesta, transmisión y consistencia de datos de telemetría en tiempo real desde el borde físico del hardware para el equipo de desarrollo; y, una mayor oportunidad para implementar funcionalidades relacionadas al control automático de electroválvulas, calibración de umbrales específicos por tipo de cultivo, generación automática de reportes técnicos en formato PDF y análisis cruzado de analíticas estratégicas de negocio para el equipo de desarrollo. <br>
-<strong>Esto se confirmará cuando</strong> nuevos visitantes decidan registrarse e interactuar con la propuesta de valor comercial premium en el Landing Page; los agricultores e ingenieros agrónomos puedan autoconfigurar sus perfiles vinculando exitosamente sus dispositivos IoT y tomar mejores decisiones hídricas analizando el dashboard de la Web Application; los agricultores y agrónomos utilicen las herramientas de control de riego, parcelas, agendas, alertas y seguimiento desde sus dispositivos móviles de forma rutinaria en las operaciones diarias del campo; el equipo de desarrollo implemente e integre con éxito la arquitectura vertical de extremo a extremo conformada por la Embedded Application, el Edge API, el RESTful API central, la Mobile Application y la versión final de la Web Application trabajando de manera cohesiva.
+<strong>Our focus is on</strong> delivering a complete agricultural monitoring experience with real-time IoT sensor data to independent farmers and agronomists, accessible from the Web Application and their mobile devices, backed by a premium value proposition visible on the Landing Page. <br>
+<strong>We believe it delivers</strong> faster soil-evidence-based irrigation and agronomic decision-making to farmers and agronomists on the platform, and greater product confidence to agricultural sector visitors evaluating the premium subscription plan. <br>
+<strong>This will be confirmed when</strong> farmers can view the hydric status of their parcels in real time and remotely activate irrigation from both the Web Application and the Mobile Application; when agronomists can supervise assigned client parcels and send agronomic recommendations through the platform; and when Landing Page visitors can evaluate SATECHO's premium value proposition and initiate the registration process without team intervention.
     </td>
   </tr>
   <tr>
     <td>Sprint 2 Velocity</td>
-    <td>POR CALCULAR</td>
+    <td>81</td>
   </tr>
   <tr>
     <td>Sum of Story Points</td>
-    <td>POR CALCULAR</td>
+    <td>81</td>
   </tr>
 </table>
 
@@ -804,7 +804,7 @@ Este segundo sprint representa el hito de mayor densidad técnica del proyecto, 
 
 **Proyecto en Jira:** [https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1](https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1)
 
-![Sprint-Backlog-2 - SATECHO](./assets/images/sprint-2/Sprint-Backlog-2.png)
+![Sprint-Backlog-2 - SATECHO](assets/images/sprint-2/Sprint-Backlog-2.png)
 
 # Sprint 2 – Sprint Backlog
 
@@ -1137,7 +1137,7 @@ Los contextos acotados implementados en este sprint y sus endpoints principales 
 
 La documentación interactiva de los endpoints se expone mediante Swagger UI, permitiendo a los desarrolladores del frontend y del equipo de QA probar los contratos directamente desde el navegador sin necesidad de herramientas adicionales.
 
-![Swagger-API-Documentation](./assets/images/sprint-2/Swagger-API-Documentation.png)
+![Swagger-API-Documentation](assets/images/sprint-2/Swagger-API-Documentation.png)
 
 Adicionalmente, el **Edge API** expone los siguientes endpoints REST consumidos directamente por el firmware ESP32 y por el backend para sincronización de telemetría:
 
@@ -1164,7 +1164,7 @@ El RESTful API construido en Java con Spring Boot se desplegó en Azure App Serv
 
 4. **Verificación:** Confirmación del despliegue exitoso mediante el endpoint `/actuator/health` de Spring Boot Actuator.
 
-![Backend-Azure-Deployment](./assets/images/sprint-2/Backend-Azure-Deployment.png)
+![Backend-Azure-Deployment](assets/images/sprint-2/Backend-Azure-Deployment.png)
 
 **Mobile Application (Firebase App Distribution)**
 
@@ -1200,25 +1200,25 @@ El Sprint 2 representó el mayor desafío colaborativo del proyecto al requerir 
 
 El trabajo sobre los dos productos frontales del ciclo continuó bajo el modelo de ramas de funcionalidad atomizadas con Pull Requests obligatorios. El mayor volumen de commits en este periodo se concentró en la expansión del dashboard para el rol de agrónomo, que requirió múltiples iteraciones de feedback entre el líder de aspecto y los colaboradores para asegurar la coherencia visual y funcional entre las vistas.
 
-![Team-Collaboration-Insights-Web-Application](./assets/images/sprint-2/Team-Collaboration-Insights-Web-Application-Sprint2.png)
+![Team-Collaboration-Insights-Web-Application](assets/images/sprint-2/Team-Collaboration-Insights-Web-Application-Sprint2.png)
 
 **REST API (Backend)**
 
 El backend comenzó su desarrollo en paralelo desde la primera semana del sprint, arrancando con los bounded contexts de IAM y Onboarding. La metodología de trabajo adoptó el patrón de "feature branches por contexto acotado", lo que permitió que cada capa (dominio, aplicación, infraestructura, interfaces) fuera desarrollada e integrada secuencialmente dentro de la misma rama, manteniendo el ciclo de feedback corto y los Pull Requests manejables en tamaño.
 
-![Team-Collaboration-Insights-Backend](./assets/images/sprint-2/Team-Collaboration-Insights-Backend-Sprint2.png)
+![Team-Collaboration-Insights-Backend](assets/images/sprint-2/Team-Collaboration-Insights-Backend-Sprint2.png)
 
 **Mobile Application**
 
 El equipo de la aplicación móvil arrancó desde cero con un scaffold inicial que estableció la arquitectura base (feature-based bounded contexts con Clean Architecture), sobre la cual se construyeron los flujos de agricultor y agrónomo de forma incremental. La decisión de utilizar el mock de roles antes de conectar el API real permitió validar la experiencia de usuario antes de que el backend estuviera disponible, reduciendo el tiempo de integración final.
 
-![Team-Collaboration-Insights-Mobile](./assets/images/sprint-2/Team-Collaboration-Insights-Mobile-Sprint2.png)
+![Team-Collaboration-Insights-Mobile](assets/images/sprint-2/Team-Collaboration-Insights-Mobile-Sprint2.png)
 
 **Edge API**
 
 El Edge API fue el repositorio con el proceso de desarrollo más estructurado del sprint, dado que siguió el ciclo completo de TDD (Test-Driven Development) para las tres capas de prueba: unitaria, integración y aceptación. Esta disciplina, aunque más lenta al inicio, garantizó que cada endpoint entregado tuviera cobertura de pruebas verificable antes de ser integrado al pipeline de comunicación con el firmware ESP32.
 
-![Team-Collaboration-Insights-Edge](./assets/images/sprint-2/Team-Collaboration-Insights-Edge-Sprint2.png)
+![Team-Collaboration-Insights-Edge](assets/images/sprint-2/Team-Collaboration-Insights-Edge-Sprint2.png)
 
 **Embedded Application**
 
