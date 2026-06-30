@@ -68,6 +68,17 @@
   <tr><td>6.13.0</td><td>14/05/2026</td><td>Gamio Upiachihua, Brenda Lucía y Quispe Erasmo, Raul Ronaldo</td><td>Registro del <strong>Services Documentation Evidence for Sprint Review</strong> (6.2.1.7).</td></tr>
   <tr><td>6.14.0</td><td>14/05/2026</td><td>Renteria Palacios, Yasser</td><td>Registro del <strong>Software Deployment Evidence for Sprint Review</strong> (6.2.1.8).</td></tr>
   <tr><td>6.15.0</td><td>14/05/2026</td><td>Huamani Sánchez, José Diego</td><td>Registro de los <strong>Team Collaboration Insights during Sprint</strong> (6.2.1.9).</td></tr>
+  <tr><td>7.0.0</td><td>25/05/2026</td><td>Huamani Sánchez, José Diego</td><td>Desarrollo de la sección <strong>Sprint 2</strong> abarcando los puntos 6.2.2. Sprint 2 y 6.2.2.1. Sprint Planning 2</td></tr>
+  <tr><td>7.1.0</td><td>25/05/2026</td><td>Gamio Upiachihua, Brenda Lucía</td><td>Elaboración y designación del punto <strong>6.2.2.2. Aspect Leaders and Collaborators</strong></td></tr>
+  <tr><td>7.2.0</td><td>26/05/2026</td><td>Gamio Upiachihua, Brenda Lucía</td><td>Selección y redacción de los <em>User Stories</em> el cual el equipo SATECHO estará desarrollando para el presente Sprint (punto 6.2.2.3. Sprint Backlog)</td></tr>
+  <tr><td>7.3.0</td><td>09/06/2026</td><td>Quispe Erasmo, Raul Ronaldo</td><td>Elaboración de los puntos 6.2.2.4. Development Evidence for Sprint Review y 6.2.2.5. Testing Suite Evidence for Sprint Review</td></tr>
+  <tr><td>7.4.0</td><td>12/06/2026</td><td>Quispe Erasmo, Raul Ronaldo</td><td>Redacción de la sección 6.2.2.6. Execution Evidence for Sprint Review</td></tr>
+  <tr><td>7.5.0</td><td>13/06/2026</td><td>Palacios, Yasser Renteria</td><td>Elaboración de los puntos 6.2.2.7. Services Documentation Evidence for Sprint Review y 6.2.2.8. Software Deployment Evidence for Sprint Review</td></tr>
+  <tr><td>7.6.0</td><td>16/06/2026</td><td>Huamani Sánchez, José Diego</td><td>Redacción del punto 6.2.2.8. Team Collaboration Insights during Sprint -detallando los avances alcanzados por cada uno de los integrantes.</td></tr>
+  <tr><td>7.7.0</td><td>19/06/2026</td><td>Estrada Cajamune, Abraham Andrés</td><td>Elaboracion de la sección <strong>6.3. Validation Interviews</strong>, especificamente los puntos 6.3..1. Diseño de Entrevistas y 6.3.2. Registro de Entrevistas</td></tr>
+  <tr><td>7.8.0</td><td>19/06/2026</td><td>Quispe Erasmo, Raul Ronaldo</td><td>Redacción de punto 6.3.3. Evaluaciones según Heurísticas basados en la recopilación de opiniones recividas en las entrevistas de Validación registradas.</td></tr>
+  <tr><td>7.8.0</td><td>20/06/2026</td><td>Huamani Sánchez, José Diego</td><td>Redacción del wording introductorio del punto 6.4. Video About-the-Product asi como la integración del video explicativo sobre la funcionalidad y trazabilidad de uso de las aplicaciones.</td></tr>
+  <tr><td>7.9.0</td><td>21/06/2026</td><td>Palacios, Yasser Renteria</td><td>Actualizació de las Conclusiones, Bibliografía y Anexos acorde a la información y contexto utilizada para el desarrollo de este Sprint 2.</td></tr>
 </table>
 
 # Project Report Collaboration Insights
@@ -146,6 +157,34 @@ _Figura #1: Contribuciones por integrante realizados - TB1_
 ![Commits History - TB1](./assets/images/project-collaboration-insights/commits-history-tb1.png)
 
 _Figura #2: Historial de commits del repositorio - TB1_
+
+---
+
+**AV2 - Semana 12**
+
+Este ciclo ha marcado la transición crítica entre la conceptualización abstracta y el despliegue técnico del ecosistema SATECHO. El esfuerzo del equipo se ha balanceado bidireccionalmente: por un lado, se robustecieron los pilares estratégicos preexistentes; por el otro, se cristalizó la primera fase de desarrollo de nuestra solución IoT y sus plataformas de interacción.
+
+Los entregables clave que consolidan esta entrega comprenden:
+
+- **Optimización del Núcleo (Capítulos I - IV):** Refinamiento analítico del Lean UX Canvas, los modelos de EventStorming y el diseño de Domain-Driven Design (DDD) Táctico, garantizando una base arquitectónica sin fisuras.
+
+- **Gobernanza y Control Técnico:** Actualización rigurosa del Registro de Versiones, los Collaboration Insights y la sección de Student Outcome (corrigiendo iteraciones pasadas).
+
+- **Diseño de Experiencia e Identidad (Capítulo V):** Modelado integral de la UI/UX de la solución, abarcando desde las guías de estilo y arquitectura de información hasta el diseño visual de la Landing Page, las aplicaciones y la anatomía de los dispositivos IoT.
+
+- **Materialización del Software (Capítulo VI):** Implementación, validación y despliegue exitoso en producción de la primera versión funcional de la Landing Page y el frontend de la Aplicación Web, respaldados por la evidencia analítica del Sprint 1.
+
+- **Cierre Institucional:** Expansión y alineación formal de las conclusiones, referencias bibliográficas y anexos técnicos del proyecto.
+
+**Resumenes de colaboración - Github Analytics Insights:**
+
+![Project Report Collaboration Insights - AV2](./assets/images/project-collaboration-insights/project-collaboration-insights-av2.png)
+
+_Figura #1: Contribuciones por integrante realizados - AV2_
+
+![Commits History - AV2](./assets/images/project-collaboration-insights/commits-history-av2.png)
+
+_Figura #2: Historial de commits del repositorio - AV2_
 
 # Contenido
 
@@ -278,6 +317,15 @@ _Figura #2: Historial de commits del repositorio - TB1_
     - [6.2.2.6. Services Documentation Evidence for Sprint Review](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6226-services-documentation-evidence-for-sprint-review)  
     - [6.2.2.7. Software Deployment Evidence for Sprint Review](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6227-software-deployment-evidence-for-sprint-review)  
     - [6.2.2.8. Team Collaboration Insights during Sprint](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6228-team-collaboration-insights-during-sprint)  
+  - [6.2.3. Sprint 3](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#623-sprint-3)  
+    - [6.2.3.1. Sprint Planning 3](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6231-sprint-planning-3)  
+    - [6.2.3.2. Sprint Backlog 3](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6232-sprint-backlog-3)  
+    - [6.2.3.3. Development Evidence for Sprint Review](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6233-development-evidence-for-sprint-review)  
+    - [6.2.3.4. Testing Suite Evidence for Sprint Review](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6234-testing-suite-evidence-for-sprint-review)  
+    - [6.2.3.5. Execution Evidence for Sprint Review](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6235-execution-evidence-for-sprint-review)  
+    - [6.2.3.6. Services Documentation Evidence for Sprint Review](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6236-services-documentation-evidence-for-sprint-review)  
+    - [6.2.3.7. Software Deployment Evidence for Sprint Review](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6237-software-deployment-evidence-for-sprint-review)  
+    - [6.2.3.8. Team Collaboration Insights during Sprint](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#6238-team-collaboration-insights-during-sprint)  
 - [6.3. Validation Interviews](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#63-validation-interviews)  
   - [6.3.1. Diseño de Entrevistas](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#631-diseño-de-entrevistas)  
   - [6.3.2. Registro de Entrevistas](/upc-pre-1ASI0572-2610-17757-SATECHO/report/16-Product_Implementation_Validation_Deployment.md/#632-registro-de-entrevistas)  
