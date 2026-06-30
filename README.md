@@ -1,31 +1,44 @@
-<p align="center">
+<div align="center">
     <img src="upc-pre-1ASI0572-2610-17757-SATECHO/report/assets/images/logos/UPC-logo.png" width="100px" height="auto"/>
-</p>
-
-# Universidad Peruana de Ciencias Aplicadas
-
-Ingeniería de Software
-
-2026-01
-
-**1ASI0572 - Desarrollo de Soluciones IOT**
-
-**NRC:** 17757
-
-**Nombre del profesor:** Angel Augusto Velasquez Nuñez
-
-"Informe de Trabajo Final"
-
-**Nombre del startup:** S.A.T.E.C.H.O
-
-**Nombre del producto:** 
-
-**Relación de integrantes:**
-
-* U202110458 - Huamani Sánchez, José Diego
-* U202112164 - Estrada Cajamune, Abraham Andrés
-* U202120344 - Gamio Upiachihua, Brenda Lucía
-* U20211b682 - Quispe Erasmo, Raul Ronaldo
-* U202214130 - Palacios, Yasser Renteria
-
-Mayo, 2026
+    <h1>Universidad Peruana de Ciencias Aplicadas</h1>
+    <p>
+        <br>
+        Carrera de Ingeniería de Software
+        <br><br>
+        <strong>1ASI0572</strong>
+        <br><br>
+        <strong>Desarrollo de Soluciones IOT</strong>
+        <br><br>
+        <strong>NRC</strong>
+        <br><br>
+        17757
+        <br><br>
+        <strong>Informe del Trabajo Final</strong>
+        <br><br>
+        Docente
+        <br><br>
+        <strong>Velasquez Nuñez, Ángel Augusto</strong>
+        <br><br>
+        Equipo
+        <br><br>
+        <strong>SATECHO</strong>
+        <br><br>
+        Proyecto
+        <br><br>
+        <strong>Agrosafe</strong>
+        <br><br>
+        <strong>Integrantes</strong>
+        <br><br>
+        U202110458 - Huamani Sánchez, José Diego
+        <br><br>
+        U202112164 - Estrada Cajamune, Abraham Andrés
+        <br><br>
+        U202120344 - Gamio Upiachihua, Brenda Lucía
+        <br><br>
+        U20211b682 - Quispe Erasmo, Raul Ronaldo
+        <br><br>
+        U202214130 - Palacios, Yasser Renteria
+        <br><br>
+    </p>
+    <strong>Periodo 202601</strong>
+</div>
