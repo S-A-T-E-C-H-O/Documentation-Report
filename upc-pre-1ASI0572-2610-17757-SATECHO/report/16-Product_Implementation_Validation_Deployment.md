@@ -463,15 +463,15 @@ A continuación, se presenta la tabla con las tareas designadas junto con cada u
 | | | EP-002-US001-T03 | Implement parcel selector on the dashboard | | | Raul Quispe | To-Do |
 | | | EP-002-US001-T04 | Integrate visual alerts for out-of-range values | | | Brenda Gamio | To-Do |
 | | | EP-002-US001-T05 | Perform dashboard performance testing with real-time data | | | Jose Huamani | To-Do |
-| EP-007-TS021 | TS-01: Implement Lazy Loading and Code Splitting for Dashboard Modules | EP-007-TS021-T01 | Configure lazy loading for dashboard modules | As a Developer, I want the system to implement lazy loading of dashboard modules so that the initial load time is reduced. | 5 | Yasser Palacios | To-Do |
-| | | EP-007-TS021-T02 | Implement code splitting by routes and critical components | | | Abraham Estrada | To-Do |
-| | | EP-007-TS021-T03 | Measure and document improvement in initial load times | | | Raul Quispe | To-Do |
-| EP-007-TS022 | TS-02: Implement Global State Management for Dashboard | EP-007-TS022-T01 | Select and integrate a global state manager in the web frontend | As a Developer, I want to implement a global state manager on the web frontend so that sensor data, alerts, and configuration are synchronized between components without redundant API calls. | 5 | Brenda Gamio | To-Do |
-| | | EP-007-TS022-T02 | Centralize sensor data and alerts state | | | Jose Huamani | To-Do |
-| | | EP-007-TS022-T03 | Eliminate redundant API calls through shared state | | | Yasser Palacios | To-Do |
-| EP-007-TS027 | TS-03: Internationalization Support | EP-007-TS027-T01 | Configure the internationalization library (i18n) in the project | As a Developer, I want the system to support internationalization so that the platform can be used comfortably without language barriers. | 3 | Abraham Estrada | To-Do |
-| | | EP-007-TS027-T02 | Implement dynamic language switching and translation files | | | Raul Quispe | To-Do |
-| EP-007-TS028 | TS-04: Accessibility Compliance | EP-007-TS028-T01 | Implement ARIA labels across all interface components | As a Developer, I want the system to comply with accessibility standards so that users with disabilities can access all features without barriers. | 3 | Brenda Gamio | To-Do |
+| EP-007-TS001 | TS-01: Implement Lazy Loading and Code Splitting for Dashboard Modules | EP-007-TS001-T01 | Configure lazy loading for dashboard modules | As a Developer, I want the system to implement lazy loading of dashboard modules so that the initial load time is reduced. | 5 | Yasser Palacios | To-Do |
+| | | EP-007-TS001-T02 | Implement code splitting by routes and critical components | | | Abraham Estrada | To-Do |
+| | | EP-007-TS001-T03 | Measure and document improvement in initial load times | | | Raul Quispe | To-Do |
+| EP-007-TS002 | TS-02: Implement Global State Management for Dashboard | EP-007-TS002-T01 | Select and integrate a global state manager in the web frontend | As a Developer, I want to implement a global state manager on the web frontend so that sensor data, alerts, and configuration are synchronized between components without redundant API calls. | 5 | Brenda Gamio | To-Do |
+| | | EP-007-TS002-T02 | Centralize sensor data and alerts state | | | Jose Huamani | To-Do |
+| | | EP-007-TS002-T03 | Eliminate redundant API calls through shared state | | | Yasser Palacios | To-Do |
+| EP-007-TS003 | TS-03: Internationalization Support | EP-007-TS003-T01 | Configure the internationalization library (i18n) in the project | As a Developer, I want the system to support internationalization so that the platform can be used comfortably without language barriers. | 3 | Abraham Estrada | To-Do |
+| | | EP-007-TS003-T02 | Implement dynamic language switching and translation files | | | Raul Quispe | To-Do |
+| EP-007-TS004 | TS-04: Accessibility Compliance | EP-007-TS004-T01 | Implement ARIA labels across all interface components | As a Developer, I want the system to comply with accessibility standards so that users with disabilities can access all features without barriers. | 3 | Brenda Gamio | To-Do |
 
 #### 6.2.1.4. Development Evidence for Sprint Review
 
@@ -852,8 +852,8 @@ Este segundo sprint representa el hito de mayor densidad técnica del proyecto, 
 | EP-002-TS007 | TS-09: Implement Soil Data Capture - Edge API | EP-002-TS007-T01 | Define soil reading entity and domain service with boundary validation | As a Developer, I want the Edge API to receive, validate and persist soil telemetry from ESP32 devices so that the data can be forwarded reliably to the cloud backend. | 5 | Raul Quispe | Done |
 | | | EP-002-TS007-T02 | Implement MQTT publisher for soil readings and cloud sync service with heartbeat | | | Raul Quispe | Done |
 | | | EP-002-TS007-T03 | Expose soil monitoring REST endpoint with API key authentication | | | Raul Quispe | Done |
-| EP-003-TS006 | TS-10: Implement PIR Movement Classification - Edge API | EP-003-TS006-T01 | Define PIR event entity, classification domain service and repository | As a Developer, I want the Edge API to classify PIR events as perimeter security alerts so that critical security events are separated from normal activity. | 3 | Raul Quispe | Done |
-| | | EP-003-TS006-T02 | Implement MQTT publisher for PIR events and REST endpoint | | | Raul Quispe | Done |
+| EP-003-TS001 | TS-10: Implement PIR Movement Classification - Edge API | EP-003-TS001-T01 | Define PIR event entity, classification domain service and repository | As a Developer, I want the Edge API to classify PIR events as perimeter security alerts so that critical security events are separated from normal activity. | 3 | Raul Quispe | Done |
+| | | EP-003-TS001-T02 | Implement MQTT publisher for PIR events and REST endpoint | | | Raul Quispe | Done |
 | EP-002-TS011 | TS-11: Implement Testing Suite - Edge API | EP-002-TS011-T01 | Add unit tests for SoilReadingService domain boundaries and PIR classification service | As a Developer, I want a comprehensive test suite for the Edge API so that regressions are detected automatically before each deployment. | 3 | Raul Quispe | Done |
 | | | EP-002-TS011-T02 | Add integration tests for soil reading application service using SQLite | | | Raul Quispe | Done |
 | | | EP-002-TS011-T03 | Add acceptance tests for device registration and soil monitoring REST endpoints | | | Raul Quispe | Done |
