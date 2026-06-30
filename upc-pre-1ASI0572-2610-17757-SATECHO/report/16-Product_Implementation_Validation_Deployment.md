@@ -1222,4 +1222,117 @@ El Edge API fue el repositorio con el proceso de desarrollo más estructurado de
 
 **Embedded Application**
 
+### 6.2.3. Sprint 3
+
+Este tercer sprint cierra el ciclo de valor del MVP SATECHO completando la cadena de alerta proactiva de extremo a extremo: desde la detección de movimiento en el ESP32 y la superación de umbrales de suelo en el Edge API, hasta la entrega de notificaciones push en el dispositivo móvil del agricultor. El sprint integra el motor de alertas de suelo (salinity, temperatura, estrés hídrico), el servicio de notificaciones push vía FCM, la sincronización de eventos PIR con el cloud, la autenticación biométrica y la integración MQTT en tiempo real en la Mobile Application.
+
+#### 6.2.3.1. Sprint Planning 3
+
+<table>
+  <tr>
+    <td>Sprint #</td>
+    <td>Sprint 3</td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>Sprint Planning Background</strong></td>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td>2026-06-23</td>
+  </tr>
+  <tr>
+    <td>Time</td>
+    <td>22:00 p.m (GMT-5)</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>Asynchronous session organized within the Discord communication platform</td>
+  </tr>
+  <tr>
+    <td>Prepared By</td>
+    <td>Huamani Sánchez, José Diego</td>
+  </tr>
+  <tr>
+    <td>Attendees (to planning meeting)</td>
+    <td>Estrada Cajamune, Abraham Andrés / Gamio Upiachihua, Brenda Lucía / Quispe Erasmo, Raul Ronaldo / Palacios, Yasser Renteria</td>
+  </tr>
+  <tr>
+    <td>Sprint 2 Review Summary</td>
+    <td>During Sprint 2, the team completed the full vertical integration of the SATECHO ecosystem across six simultaneous software products: Landing Page v2 (product demo video, team section, premium-only plans), Web Application v2 (agronomist dashboards, real-time telemetry and device fleet views for farmers), REST API v1 (IAM, Onboarding, and BI bounded contexts with MQTT integration), Mobile Application v1 (farmer and agronomist workspaces with role-based navigation and real API connectivity), Edge API v1 (device authentication, soil telemetry ingestion, PIR event classification, and a full three-layer test suite), and Embedded Firmware v1 (FreeRTOS event-driven architecture with FC28, HR202L, DS18B20, DHT11, and PIR sensors, plus irrigation valve control).</td>
+  </tr>
+  <tr>
+    <td>Sprint 2 Retrospective Summary</td>
+    <td>The adoption of the Team Software Process (TSP) framework in Sprint 2 proved effective in reducing bottlenecks by clarifying aspect leadership across six repositories, enabling five contributors to work in parallel. The contract-first API approach — agreeing on JSON payloads before implementation — was identified as the key enabler for parallel development without integration delays. For Sprint 3, the team maintains the TSP structure and redirects its focus toward closing the alert pipeline end-to-end rather than introducing new product scopes, keeping the sprint goal tightly bounded to observable farmer outcomes.</td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>Sprint Goal & User Stories</strong></td>
+  </tr>
+  <tr>
+    <td>Sprint 3 Goal</td>
+    <td>
+<strong>Our focus is on</strong> completing the proactive alert pipeline — delivering PIR perimeter intrusion detection with push notifications, critical soil alerts (salinity and temperature), and real-time MQTT updates to the Mobile Application. <br>
+<strong>We believe it delivers</strong> immediate, eyes-free awareness to independent farmers who need to respond to field threats and crop-damage risks without actively monitoring any screen, protecting crops and property around the clock. <br>
+<strong>This will be confirmed when</strong> a farmer receives a push notification on their mobile device within 30 seconds of a PIR person-detection event on their parcel; when a farmer receives a critical salinity or temperature push notification within 30 seconds of a threshold breach; and when farmers can review the full classified security event history, configure active surveillance zones, and authenticate irrigation commands with biometrics from the Mobile Application.
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 3 Velocity</td>
+    <td>67</td>
+  </tr>
+  <tr>
+    <td>Sum of Story Points</td>
+    <td>67</td>
+  </tr>
+</table>
+
+#### 6.2.3.2. Aspect Leaders and Collaborations
+
+Sprint 3 consolidates the alert and notification pipeline across the REST API, Mobile Application, Edge API, and Embedded layers. The TSP structure is maintained from Sprint 2, with the same aspect leaders redirecting their focus toward the remaining components required for MVP closure. No Landing Page changes are scoped for this sprint.
+
+| Team Member (Last Name, First Name) | GitHub Username | Web App v3 | REST API v2 | Mobile App v2 | Edge API v2 | Embedded v2 |
+| :---------------------------------- | :----------------: | :---------: |:-----------:| :---------: | :---------: | :---------: |
+| Huamani Sánchez, José Diego | `ProgramadorHuamani` | C |    **L**    | | | |
+| Estrada Cajamune, Abraham Andrés | `Abraham0310` | C |      C      | **L** | | |
+| Gamio Upiachihua, Brenda Lucía | `B-Gamio` | **L** |      C      | C | | |
+| Quispe Erasmo, Raul Ronaldo | `Raul-QE` | |      C      | | **L** | |
+| Palacios, Yasser Renteria | `Mitos20` | |             | C | C | **L** |
+
+#### 6.2.3.3. Sprint Backlog 3
+
+Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-002-TS004), el servicio de notificaciones push (EP-008-TS018), la sincronización de eventos PIR hacia el cloud (EP-003-TS007, EP-005-TS015), el subscriber de actuador con buffer offline (EP-005-TS019), y las mejoras clave de la Mobile Application: autenticación biométrica, integración MQTT en tiempo real y visualización de eventos de seguridad.
+
+**Proyecto en Jira:** [https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1](https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1)
+
+![Sprint-Backlog-3 - SATECHO](assets/images/sprint-3/Sprint-Backlog-3.png)
+
+# Sprint 3 – Sprint Backlog
+
+| Sprint 3 | Sprint Backlog 3 | | | | | | |
+|---|---|---|---|---|---|---|---|
+| **User Story** | **Title** | **Work Item/Task** | **Title** | **Description** | **Estimation (SP)** | **Assigned to** | **Status** |
+| EP-002-TS004 | TS-01: Implement Soil Alert Engine (Backend) | EP-002-TS004-T01 | Implement AlertEngineService consuming SoilReadingCreated events from RabbitMQ | As a Developer, I want an engine that evaluates each soil reading against configurable thresholds and generates typed alerts automatically so that critical conditions trigger timely notifications. | 8 | José Huamani | To-do |
+| | | EP-002-TS004-T02 | Implement ThresholdRepository with default thresholds per sensor type (moisture, EC, temperature) | | | José Huamani | To-do |
+| | | EP-002-TS004-T03 | Implement hysteresis logic and automatic RESOLVED transition when values return to safe range | | | José Huamani | To-do |
+| EP-008-TS018 | TS-02: Implement Push Notification Service (Backend) | EP-008-TS018-T01 | Implement NotificationApplicationService with @RabbitListener for AlertCreated events | As a Developer, I want a service that processes alert events and sends push notifications via FCM so that farmers are notified in real time. | 5 | José Huamani | To-do |
+| | | EP-008-TS018-T02 | Integrate Firebase Admin SDK and implement FCM device token storage and dispatch logic | | | José Huamani | To-do |
+| EP-003-TS008 | TS-03: Implement PIR Debounce and Filtering (Embedded) | EP-003-TS008-T01 | Add PIR_DEBOUNCE_MS=3000 to satecho_config.h and debounce check to mqttCommandTask using millis() | As a Developer, I want the ESP32 to discard duplicate PIR triggers within 3000ms so that a single physical motion event does not generate multiple alerts. | 3 | Yasser Palacios | To-do |
+| EP-003-TS007 | TS-04: Implement Edge PIR API + Cloud Sync | EP-003-TS007-T01 | Implement _sync_pir_once() calling cloud_client.post_security_event() per PIR event with synced=False | As a Developer, I want the Edge to synchronize classified PIR events to the cloud backend individually via periodic sync so that security data is reliably propagated. | 5 | Raul Quispe | To-do |
+| | | EP-003-TS007-T02 | Integrate PIR sync into _run_loop() alongside soil sync using asyncio.gather() | | | Raul Quispe | To-do |
+| EP-005-TS015 | TS-05: Implement Edge PIR Cloud Sync | EP-005-TS015-T01 | Verify _sync_pir_once() marks events synced=True on 2xx response and retains synced=False on failure | As a Developer, I want PIR events with synced=False to be individually sent to the cloud in each 60-second sync cycle so that no security events are lost. | 3 | Raul Quispe | To-do |
+| EP-005-TS019 | TS-06: Implement Edge Actuator Command Subscriber with Offline Buffer | EP-005-TS019-T01 | Implement actuator_command_subscriber.py with MQTT subscription on agrosafe/+/devices/+/actuator/command | As a Developer, I want the Edge to forward actuator commands to the ESP32 when online and buffer them when the device is temporarily disconnected so that commands are not lost. | 5 | Raul Quispe | To-do |
+| | | EP-005-TS019-T02 | Implement device_tracker.py with mark_seen(), is_online() (ONLINE_WINDOW_SECONDS=60), and buffer drain on reconnect | | | Raul Quispe | To-do |
+| EP-008-US020 | US-01: Critical Alert Push Notifications | EP-008-US020-T01 | Implement FCM token registration endpoint and token persistence from Mobile App on login | As a farmer, I want to receive push notifications when critical alerts are detected so that I can act quickly even when the app is closed. | 5 | Abraham Estrada | To-do |
+| | | EP-008-US020-T02 | Validate end-to-end push delivery: soil threshold breach → AlertCreated → FCM → device notification | | | Abraham Estrada | To-do |
+| EP-008-US021 | US-02: In-App Notification Center | EP-008-US021-T01 | Implement NotificationsScreen in Flutter with chronological list, mark-as-read action, and badge decrement on navigation bar | As a farmer, I want to view a history of all received alerts and mark them as read so that I can review them at my convenience. | 3 | Abraham Estrada | To-do |
+| EP-002-US005 | US-03: Receive Critical Salinity Alerts | EP-002-US005-T01 | Wire EC > 5 dS/m threshold into AlertEngineService and confirm AlertCreated event triggers FCM push with message "Critical salinity in parcel [name]" | As a farmer, I want to receive alerts when the electrical conductivity of my soil exceeds the critical threshold so that I can prevent crop damage. | 3 | José Huamani | To-do |
+| EP-002-US006 | US-04: Receive Critical Temperature Alerts | EP-002-US006-T01 | Wire soil temperature > 40°C threshold into AlertEngineService and confirm AlertCreated event triggers FCM push notification | As a farmer, I want to be alerted if soil temperature exceeds dangerous levels so that I can protect my crops. | 3 | José Huamani | To-do |
+| EP-003-US001 | US-05: Receive Intrusion Alerts | EP-003-US001-T01 | Implement SecurityAlert creation on PERSON classification received from cloud PIR sync, publish to RabbitMQ for FCM dispatch with message "Person detected in [parcel name]" | As a farmer, I want to receive an alert when the PIR sensor detects a person on my parcel so that I can protect my crops. | 5 | Brenda Gamio | To-do |
+| EP-003-US002 | US-06: View Security Event History | EP-003-US002-T01 | Implement security history table in Web App with PERSON/ANIMAL/WIND classification filter, pulse duration, frequency per minute, and CSV export | As a farmer, I want to view the history of classified PIR events so that I can understand the activity on my parcels. | 3 | Brenda Gamio | To-do |
+| EP-003-US003 | US-07: Configure Security Zones | EP-003-US003-T01 | Implement zone enable/disable toggle bound to zone_id; suppress alert generation for disabled zones | As a farmer, I want to configure which zones of my farm have active PIR monitoring so that I can customize surveillance coverage. | 3 | Brenda Gamio | To-do |
+| EP-004-US007 | US-08: View Security Events in Mobile App | EP-004-US007-T01 | Implement SecurityScreen in Flutter with event classification list (PERSON/ANIMAL/WIND), timestamp, and pulse duration; ensure push notification is delivered via FCM when app is closed | As a farmer, I want to review PIR events from the mobile app and receive intrusion push notifications even when the app is not open. | 3 | Abraham Estrada | To-do |
+| EP-002-TS008 | TS-07: Biometric Authentication (Mobile App) | EP-002-TS008-T01 | Integrate local_auth package for fingerprint/Face ID; store and retrieve JWT via FlutterSecureStorage on successful biometric verification | As a Developer, I want to integrate biometric authentication in the Flutter app so that critical irrigation actions require secure identity confirmation. | 5 | Abraham Estrada | To-do |
+| | | EP-002-TS008-T02 | Handle biometrics unavailable (disable option) and 3-consecutive-failure fallback to password login | | | Abraham Estrada | To-do |
+| EP-004-TS010 | TS-08: MQTT Mobile Integration (Real Time) | EP-004-TS010-T01 | Implement MqttService singleton using mqtt_client package; subscribe to agrosafe/{farmId}/devices/{deviceId}/status and update SensorBloc via event | As a Developer, I want to integrate MQTT in the Flutter app so that real-time sensor state updates are received without polling every 15 seconds. | 5 | Abraham Estrada | To-do |
+| | | EP-004-TS010-T02 | Implement exponential backoff reconnection with up to 5 retry attempts on MQTT connection loss | | | Abraham Estrada | To-do |
+
 El firmware del ESP32 fue desarrollado de forma completamente independiente al inicio, adoptando una arquitectura FreeRTOS orientada a eventos que elimina los bucles de polling. La integración con el Edge API se realizó en la fase final del sprint mediante la implementación del módulo de captura de dirección MAC para la autenticación y la configuración del cliente MQTT para la publicación de telemetría hacia el broker Mosquitto del Edge.
