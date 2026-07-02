@@ -804,7 +804,7 @@ Este segundo sprint representa el hito de mayor densidad técnica del proyecto, 
 
 **Proyecto en Jira:** [https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1](https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1)
 
-![Sprint-Backlog-2 - SATECHO](assets/images/sprint-2/Sprint-Backlog-2.png)
+![Sprint-Backlog-2 - SATECHO](./assets/images/sprint-2/Sprint-Backlog-2.png)
 
 # Sprint 2 – Sprint Backlog
 
@@ -1142,7 +1142,7 @@ Los contextos acotados implementados en este sprint y sus endpoints principales 
 
 La documentación interactiva de los endpoints se expone mediante Swagger UI, permitiendo a los desarrolladores del frontend y del equipo de QA probar los contratos directamente desde el navegador sin necesidad de herramientas adicionales.
 
-![Swagger-API-Documentation](assets/images/sprint-2/Swagger-API-Documentation.png)
+![Swagger-API-Documentation](./assets/images/sprint-2/Swagger-API-Documentation.png)
 
 Adicionalmente, el **Edge API** expone los siguientes endpoints REST consumidos directamente por el firmware ESP32 y por el backend para sincronización de telemetría:
 
@@ -1169,7 +1169,7 @@ El RESTful API construido en Java con Spring Boot se desplegó en Azure App Serv
 
 4. **Verificación:** Confirmación del despliegue exitoso mediante el endpoint `/actuator/health` de Spring Boot Actuator.
 
-![Backend-Azure-Deployment](assets/images/sprint-2/Backend-Azure-Deployment.png)
+![Backend-Azure-Deployment](./assets/images/sprint-2/Backend-Azure-Deployment.png)
 
 **Mobile Application (Firebase App Distribution)**
 
@@ -1205,25 +1205,25 @@ El Sprint 2 representó el mayor desafío colaborativo del proyecto al requerir 
 
 El trabajo sobre los dos productos frontales del ciclo continuó bajo el modelo de ramas de funcionalidad atomizadas con Pull Requests obligatorios. El mayor volumen de commits en este periodo se concentró en la expansión del dashboard para el rol de agrónomo, que requirió múltiples iteraciones de feedback entre el líder de aspecto y los colaboradores para asegurar la coherencia visual y funcional entre las vistas.
 
-![Team-Collaboration-Insights-Web-Application](assets/images/sprint-2/Team-Collaboration-Insights-Web-Application-Sprint2.png)
+![Team-Collaboration-Insights-Web-Application](./assets/images/sprint-2/Team-Collaboration-Insights-Web-Application-Sprint2.png)
 
 **REST API (Backend)**
 
 El backend comenzó su desarrollo en paralelo desde la primera semana del sprint, arrancando con los bounded contexts de IAM y Onboarding. La metodología de trabajo adoptó el patrón de "feature branches por contexto acotado", lo que permitió que cada capa (dominio, aplicación, infraestructura, interfaces) fuera desarrollada e integrada secuencialmente dentro de la misma rama, manteniendo el ciclo de feedback corto y los Pull Requests manejables en tamaño.
 
-![Team-Collaboration-Insights-Backend](assets/images/sprint-2/Team-Collaboration-Insights-Backend-Sprint2.png)
+![Team-Collaboration-Insights-Backend](./assets/images/sprint-2/Team-Collaboration-Insights-Backend-Sprint2.png)
 
 **Mobile Application**
 
 El equipo de la aplicación móvil arrancó desde cero con un scaffold inicial que estableció la arquitectura base (feature-based bounded contexts con Clean Architecture), sobre la cual se construyeron los flujos de agricultor y agrónomo de forma incremental. La decisión de utilizar el mock de roles antes de conectar el API real permitió validar la experiencia de usuario antes de que el backend estuviera disponible, reduciendo el tiempo de integración final.
 
-![Team-Collaboration-Insights-Mobile](assets/images/sprint-2/Team-Collaboration-Insights-Mobile-Sprint2.png)
+![Team-Collaboration-Insights-Mobile](./assets/images/sprint-2/Team-Collaboration-Insights-Mobile-Sprint2.png)
 
 **Edge API**
 
 El Edge API fue el repositorio con el proceso de desarrollo más estructurado del sprint, dado que siguió el ciclo completo de TDD (Test-Driven Development) para las tres capas de prueba: unitaria, integración y aceptación. Esta disciplina, aunque más lenta al inicio, garantizó que cada endpoint entregado tuviera cobertura de pruebas verificable antes de ser integrado al pipeline de comunicación con el firmware ESP32.
 
-![Team-Collaboration-Insights-Edge](assets/images/sprint-2/Team-Collaboration-Insights-Edge-Sprint2.png)
+![Team-Collaboration-Insights-Edge](./assets/images/sprint-2/Team-Collaboration-Insights-Edge-Sprint2.png)
 
 **Embedded Application**
 
@@ -1308,7 +1308,7 @@ Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-00
 
 **Proyecto en Jira:** [https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1](https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1)
 
-![Sprint-Backlog-3 - SATECHO](assets/images/sprint-3/Sprint-Backlog-3.png)
+![Sprint-Backlog-3 - SATECHO](./assets/images/sprint-3/Sprint-Backlog-3.png)
 
 # Sprint 3 – Sprint Backlog
 
