@@ -257,3 +257,4 @@ El _Product Backlog_ detallado lo puede observa en la siguiente tabla:
 | **98** | EP-007-TS002 | Integration Test Suite (Backend) | As a Developer, I want to implement integration tests against real endpoints so that API regressions are detected before merging. | 5 |
 | **99** | EP-007-TS003 | Component Tests (Web Frontend) | As a Developer, I want to implement Vitest component tests for critical Vue.js components so that UI rendering correctness is verified. | 3 |
 | **100** | EP-007-TS004 | Widget Tests (Flutter Mobile App) | As a Developer, I want to implement widget tests for critical Flutter screens so that rendering and state management are verified. | 3 |
+
