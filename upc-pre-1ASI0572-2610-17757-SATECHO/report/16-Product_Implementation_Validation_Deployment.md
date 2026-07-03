@@ -1341,3 +1341,27 @@ Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-00
 | | | EP-004-TS002-T02 | Implement exponential backoff reconnection with up to 5 retry attempts on MQTT connection loss | | | Abraham Estrada | To-do |
 
 El firmware del ESP32 fue desarrollado de forma completamente independiente al inicio, adoptando una arquitectura FreeRTOS orientada a eventos que elimina los bucles de polling. La integración con el Edge API se realizó en la fase final del sprint mediante la implementación del módulo de captura de dirección MAC para la autenticación y la configuración del cliente MQTT para la publicación de telemetría hacia el broker Mosquitto del Edge.
+
+#### 6.2.2.4. Development Evidence for Sprint Review
+
+#### 6.2.2.5. Testing Suite Evidence for Sprint Review
+
+#### 6.2.2.6. Execution Evidence for Sprint Review
+
+#### 6.2.2.7. Services Documentation Evidence for Sprint Review
+
+#### 6.2.2.8. Software Deployment Evidence for Sprint Review
+
+#### 6.2.2.9. Team Collaborations Insights during Sprint
+
+## 6.3. Validation Interviews
+
+En este espacio se consolidan cada una de las preguntas dirigidas a nuestros segmentos objetivos como vienen a ser los **Agricultores** como los **Ingenieros Agrónomos**, así como la evidencia preliminar de cada opnión recopilada en relación a la usabilidad y experiencia del mismo usuario utilizando cada una de las aplicaciones centradas en agilizar de manera digital su operatividad manual en el cuidado de las plantas. Cada opinión esta dimensionada por _frags_ de videos con su indicativo de _timing_ para dar mayor veracidad y enfoque en los puntos objetivos y ciertas observaciones que nos dejaron como oportunidades de mejora.
+
+### 6.3.1. Diseño de Entrevistas
+
+### 6.3.2. Registro de Entrevistas
+
+### 6.3.3. Evaluaciones según heurísticas
+
+## 6.4. Video About-the-Product
