@@ -357,7 +357,7 @@ Para garantizar una entrega continua y controlada, la implementación se ha orqu
 
 ### 6.2.1. Sprint 1
 
-Dentro de este primer sprint, detallamos el proceso completo de implementación, pruebas, documentación y despliegue de los distintos componentes que conforman la solución DittoBox. Esto incluye el desarrollo de nuestra Landing Page, que sirve como punto de entrada y presentación de nuestro producto al público general, así como la implementación de los Servicios Web, Aplicaciones Web, Aplicaciones Móviles y Aplicaciones Embebidas que constituyen el núcleo funcional de nuestra propuesta.
+Dentro de este primer sprint, detallamos el proceso completo de implementación, pruebas, documentación y despliegue de los distintos componentes que conforman la solución SATECHO. Esto incluye el desarrollo de nuestra Landing Page, que sirve como punto de entrada y presentación de nuestro producto al público general, así como la implementación de los Servicios Web, Aplicaciones Web, Aplicaciones Móviles y Aplicaciones Embebidas que constituyen el núcleo funcional de nuestra propuesta.
 
 A lo largo de esta sección, explicamos cómo hemos abordado cada fase del ciclo de vida del desarrollo de software para estos componentes, desde la planificación inicial y el diseño, hasta la ejecución de pruebas y el despliegue en entornos de producción. Detallamos las tecnologías utilizadas, los desafíos enfrentados y las soluciones implementadas para asegurar que cada componente cumpla con los requisitos establecidos y proporcione una experiencia de usuario óptima.
 
@@ -442,49 +442,49 @@ A continuación, se presenta la tabla con las tareas designadas junto con cada u
 | Sprint 1 | Sprint Backlog 1 | | | | | | |
 |----------|-----------------|----------------|-------|-------------|-------------------|-------------|--------|
 | **User Story** | **Title** | **Work Item/Task** | **Title** | **Description** | **Estimation (SP)** | **Assigned to** | **Status** |
-| EP-001-US001 | US-01: Browse Landing Page Content | EP-001-US001-T01 | Design the main structure and content of the landing page | As a visitor, I want to browse landing page content so that I can understand the product's value proposition and available plans. | 2 | Jose Huamani | Done |
-| | | EP-001-US001-T02 | Implement the plans and value proposition section | | | Yasser Palacios | Done |
-| EP-001-US005 | US-02: Browse Landing as Agronomist Visitor | EP-001-US005-T01 | Develop the benefits section for agronomist consultants | As an agronomist visitor, I want to browse the landing page so that I can see the benefits tailored to consultants. | 1 | Brenda Gamio | Done |
-| EP-001-US006 | US-03: Watch Product Demo Video | EP-001-US006-T01 | Integrate and configure the product demo video player | As a visitor, I want to watch the product demo video so that I can understand real-world use cases before signing up. | 1 | Abraham Estrada | Done |
-| EP-001-US007 | US-04: Request Commercial Demo | EP-001-US007-T01 | Develop the commercial demo request form | As a visitor, I want to request a commercial demo so that a representative can contact me to evaluate the solution. | 2 | Raul Quispe | Done |
-| | | EP-001-US007-T02 | Implement request notification and confirmation | | | Jose Huamani | Done |
-| EP-001-US002 | US-05: Register as Lead | EP-001-US002-T01 | Develop account creation logic for new users | As a visitor, I want to register as a lead so that I can create my account and start the onboarding process. | 3 | Yasser Palacios | Done |
-| | | EP-001-US002-T02 | Implement security validations on the registration form | | | Abraham Estrada | Done |
-| | | EP-001-US002-T03 | Redirect the user to the onboarding flow after successful registration | | | Raul Quispe | Done |
-| EP-001-US003 | US-06: Verify Email Account | EP-001-US003-T01 | Implement verification email dispatch with token | As a newly registered user, I want to verify my email account so that I can confirm my identity and activate my access. | 3 | Brenda Gamio | Done |
-| | | EP-001-US003-T02 | Develop account validation and activation flow | | | Jose Huamani | Done |
-| | | EP-001-US003-T03 | Handle token expiration and verification email resend | | | Yasser Palacios | In-Progress |
-| EP-001-US004 | US-07: Complete Onboarding Wizard | EP-001-US004-T01 | Design and implement the initial setup wizard | As a newly registered user, I want to complete the onboarding wizard so that I can configure my plot data, irrigation zones, and get guided into the platform from day one. | 5 | Abraham Estrada | Done |
-| | | EP-001-US004-T02 | Develop the plot configuration and crop data step | | | Raul Quispe | Done |
-| | | EP-001-US004-T03 | Implement irrigation zone configuration in the wizard | | | Brenda Gamio | In-Progress |
-| | | EP-001-US004-T04 | Integrate welcome screen and platform end guide | | | Jose Huamani | To-Do |
-| EP-002-US001 | US-08: View Real-Time Soil Dashboard | EP-002-US001-T01 | Implement real-time soil moisture and temperature visualization | As an agriculturist, I want to view the real-time soil dashboard so that I can monitor moisture, EC, pH, and temperature of my parcels at any time. | 8 | Yasser Palacios | In-Progress |
-| | | EP-002-US001-T02 | Develop EC and pH widgets with real-time updates | | | Abraham Estrada | In-Progress |
+| EP-001-US008 | US-01: Browse Landing Page as Farmer Visitor | EP-001-US008-T01 | Design the main structure and content of the landing page | As a farmer visitor, I want to browse landing page content so that I can understand AgroSafe's value proposition and available plans. | 2 | Jose Huamani | Done |
+| | | EP-001-US008-T02 | Implement the plans and value proposition section | | | Yasser Palacios | Done |
+| EP-001-US009 | US-02: Browse Landing Page as Agronomist Visitor | EP-001-US009-T01 | Develop the benefits section for agronomist consultants | As an agronomist visitor, I want to browse the landing page so that I can see the benefits tailored to consultants. | 1 | Brenda Gamio | Done |
+| *(sin US equivalente en §3.1)* | US-03: Watch Product Demo Video | EP-001-EXT01-T01 | Integrate and configure the product demo video player | As a visitor, I want to watch the product demo video so that I can understand real-world use cases before signing up. | 1 | Abraham Estrada | Done |
+| *(sin US equivalente en §3.1)* | US-04: Request Commercial Demo | EP-001-EXT02-T01 | Develop the commercial demo request form | As a visitor, I want to request a commercial demo so that a representative can contact me to evaluate the solution. | 2 | Raul Quispe | Done |
+| | | EP-001-EXT02-T02 | Implement request notification and confirmation | | | Jose Huamani | Done |
+| EP-001-US001 | US-05: Farmer Registration | EP-001-US001-T01 | Develop account creation logic for new users | As a visitor, I want to register on the platform with my personal data so that I can access the monitoring features. | 3 | Yasser Palacios | Done |
+| | | EP-001-US001-T02 | Implement security validations on the registration form | | | Abraham Estrada | Done |
+| | | EP-001-US001-T03 | Redirect the user to the onboarding flow after successful registration | | | Raul Quispe | Done |
+| EP-001-US002 | US-06: Account Email Verification | EP-001-US002-T01 | Implement verification email dispatch with token | As a newly registered farmer, I want to verify my account via email so that I can activate it and access the system. | 3 | Brenda Gamio | Done |
+| | | EP-001-US002-T02 | Develop account validation and activation flow | | | Jose Huamani | Done |
+| | | EP-001-US002-T03 | Handle token expiration and verification email resend | | | Yasser Palacios | In-Progress |
+| EP-001-US005 | US-07: Register Farm and First Parcel | EP-001-US005-T01 | Design and implement the initial setup wizard | As a farmer, I want to register my farm and first parcel during onboarding so that I can start monitoring my crops. | 5 | Abraham Estrada | Done |
+| | | EP-001-US005-T02 | Develop the plot configuration and crop data step | | | Raul Quispe | Done |
+| | | EP-001-US005-T03 | Implement irrigation zone configuration in the wizard | | | Brenda Gamio | In-Progress |
+| | | EP-001-US005-T04 | Integrate welcome screen and platform end guide | | | Jose Huamani | To-Do |
+| EP-002-US001 | US-08: View Soil Monitoring Dashboard | EP-002-US001-T01 | Implement real-time soil moisture and temperature visualization | As a farmer, I want to view the current state of my soil sensors on the dashboard so that I can monitor my crops in real time. | 8 | Yasser Palacios | In-Progress |
+| | | EP-002-US001-T02 | Develop EC and ambient temperature widgets with real-time updates | | | Abraham Estrada | In-Progress |
 | | | EP-002-US001-T03 | Implement parcel selector on the dashboard | | | Raul Quispe | To-Do |
 | | | EP-002-US001-T04 | Integrate visual alerts for out-of-range values | | | Brenda Gamio | To-Do |
 | | | EP-002-US001-T05 | Perform dashboard performance testing with real-time data | | | Jose Huamani | To-Do |
-| EP-007-TS001 | TS-01: Implement Lazy Loading and Code Splitting for Dashboard Modules | EP-007-TS001-T01 | Configure lazy loading for dashboard modules | As a Developer, I want the system to implement lazy loading of dashboard modules so that the initial load time is reduced. | 5 | Yasser Palacios | To-Do |
-| | | EP-007-TS001-T02 | Implement code splitting by routes and critical components | | | Abraham Estrada | To-Do |
-| | | EP-007-TS001-T03 | Measure and document improvement in initial load times | | | Raul Quispe | To-Do |
-| EP-007-TS002 | TS-02: Implement Global State Management for Dashboard | EP-007-TS002-T01 | Select and integrate a global state manager in the web frontend | As a Developer, I want to implement a global state manager on the web frontend so that sensor data, alerts, and configuration are synchronized between components without redundant API calls. | 5 | Brenda Gamio | To-Do |
-| | | EP-007-TS002-T02 | Centralize sensor data and alerts state | | | Jose Huamani | To-Do |
-| | | EP-007-TS002-T03 | Eliminate redundant API calls through shared state | | | Yasser Palacios | To-Do |
-| EP-007-TS003 | TS-03: Internationalization Support | EP-007-TS003-T01 | Configure the internationalization library (i18n) in the project | As a Developer, I want the system to support internationalization so that the platform can be used comfortably without language barriers. | 3 | Abraham Estrada | To-Do |
-| | | EP-007-TS003-T02 | Implement dynamic language switching and translation files | | | Raul Quispe | To-Do |
-| EP-007-TS004 | TS-04: Accessibility Compliance | EP-007-TS004-T01 | Implement ARIA labels across all interface components | As a Developer, I want the system to comply with accessibility standards so that users with disabilities can access all features without barriers. | 3 | Brenda Gamio | To-Do |
+| *(sin TS equivalente en §3.1)* | TS-01: Implement Lazy Loading and Code Splitting for Dashboard Modules | EP-001-EXT03-T01 | Configure lazy loading for dashboard modules | As a Developer, I want the system to implement lazy loading of dashboard modules so that the initial load time is reduced. | 5 | Yasser Palacios | To-Do |
+| | | EP-001-EXT03-T02 | Implement code splitting by routes and critical components | | | Abraham Estrada | To-Do |
+| | | EP-001-EXT03-T03 | Measure and document improvement in initial load times | | | Raul Quispe | To-Do |
+| *(sin TS equivalente en §3.1)* | TS-02: Implement Global State Management for Dashboard | EP-001-EXT04-T01 | Select and integrate a global state manager in the web frontend | As a Developer, I want to implement a global state manager on the web frontend so that sensor data, alerts, and configuration are synchronized between components without redundant API calls. | 5 | Brenda Gamio | To-Do |
+| | | EP-001-EXT04-T02 | Centralize sensor data and alerts state | | | Jose Huamani | To-Do |
+| | | EP-001-EXT04-T03 | Eliminate redundant API calls through shared state | | | Yasser Palacios | To-Do |
+| *(sin TS equivalente en §3.1)* | TS-03: Internationalization Support | EP-001-EXT05-T01 | Configure the internationalization library (i18n) in the project | As a Developer, I want the system to support internationalization so that the platform can be used comfortably without language barriers. | 3 | Abraham Estrada | To-Do |
+| | | EP-001-EXT05-T02 | Implement dynamic language switching and translation files | | | Raul Quispe | To-Do |
+| *(sin TS equivalente en §3.1)* | TS-04: Accessibility Compliance | EP-001-EXT06-T01 | Implement ARIA labels across all interface components | As a Developer, I want the system to comply with accessibility standards so that users with disabilities can access all features without barriers. | 3 | Brenda Gamio | To-Do |
+
+*Nota de alineación: los IDs de User Story de esta tabla fueron corregidos para coincidir con el backlog vigente de la sección 3.1. Las filas marcadas "(sin US/TS equivalente en §3.1)" corresponden a trabajo efectivamente entregado en este sprint (video demo, formulario de demo comercial, lazy loading, i18n, accesibilidad) que no tiene una historia formal correspondiente en el backlog actual — se conservan como evidencia histórica de implementación bajo IDs internos `EP-001-EXTxx`.*
 
 #### 6.2.1.4. Development Evidence for Sprint Review
 
 Este apartado constituye el compendio de evidencia técnica y operativa que respalda los hitos alcanzados durante este primer ciclo de desarrollo, donde la materialización del software se ha concentrado en desplegar las versiones iniciales de la Landing Page y la Aplicación Web para sentar las bases de interacción y gobernanza de la plataforma. En ese sentido, el esfuerzo del equipo se distribuyó estratégicamente de manera simultánea; por un lado, se consolidó la Landing Page como una vitrina digital de alto impacto con diseño internacionalizado y contenido visual que integra con éxito los módulos de beneficios, planes de suscripción y redirecciones interactivas, mientras que, por otro lado, se desarrolló la Aplicación Web bajo un riguroso enfoque de Domain-Driven Design (DDD) validado provisionalmente mediante la simulación de servicios con Beeceptor, desplegando las interfaces críticas. Finalmente, como garantía de transparencia, rigor de ingeniería y control de configuración, este bloque sirve de antesala para el registro cronológico de _commits_ que certifica la autoría, el propósito y la evolución del código fuente integrado satisfactoriamente en este sprint.
 
+*Nota de evidencia: la tabla de commits de Landing_Page-SATECHO fue corregida. Los SHAs citados previamente (2392bd0, d3b8b7d, d78a3f6, 7216027, e0b8e0f, 0fbd062) no existen en el repositorio actual — su historial real solo comienza el 27/05/26, después del cierre formal de este sprint (15/05/26). El repositorio fue reiniciado en algún punto entre la demo de Sprint 1 y este cierre de documentación; las secciones visuales mostradas en la demo (Hero, Beneficios, Planes) se construyeron sobre una copia de trabajo cuyo historial de commits original ya no es recuperable. A continuación se listan los únicos commits reales trazables para esta ventana, que corresponden al reinicio del repositorio, no a las features completas descritas en el video de la demo:*
+
 | Repository              | Branch                   | Commit Id                                | Commit Message                                                                                                 | Commited On |
 |-------------------------|--------------------------|------------------------------------------|----------------------------------------------------------------------------------------------------------------|-------------|
-| Landing-Page-SATECHO   | main                   | 2392bd0 | chore: initial commit.                                                                                         | 12/05/26    |
-| Landing-Page-SATECHO   | feature/navigation-bar              | d3b8b7d | feat(navigation): add the navigation bar about the differents section into the landing page that the visitors can watch commit.                                                    | 12/05/26    |
-| Landing-Page-SATECHO   | feature/hero-section           | d78a3f6 | feat(hero): add the main content about the phareses and a little description about the SATECHO product commit.                                  | 12/05/26    |
-| Landing-Page-SATECHO   | feature/stadistics-benefits-section      | 7216027 | feat(stadistics): add the quantitative values about the benefits to use the SATECHO Solution representing into these section commit.                                                                                         | 12/05/26    |
-| Landing-Page-SATECHO   | feature/information-architecture                   | e0b8e0f | Merge pull request #3 from S-A-T-E-C-H-O/feature/stadistics-benefits-section                                                          | 12/05/26    |
-| Landing-Page-SATECHO   | develop                   | 0fbd062 | Build(hosting): execute initial deployment of landing.                             | 14/05/26    |
+| Landing_Page-SATECHO   | main                   | e4639f8 | Initial commit.                                                                                         | 27/05/26    |
+| Landing_Page-SATECHO   | main              | b5ce321 | chore(configuration): add the metadata about the SATECHO landing page.                    | 29/05/26    |
 | Web-Application-SATECHO    | main                   | 14a4ba0 | Initial commit        | 13/05/26    |
 | Web-Application-SATECHO    | feature/initial-config                 | 8941169 | feat: complete initial frontend configuration        | 13/05/26    |
 | Web-Application-SATECHO    | feature/auth                   | 695ff43 | refactor(auth): componentize registration flow and improve verification viewsstadistics-benefits-section        | 14/05/26    |
@@ -804,74 +804,79 @@ Este segundo sprint representa el hito de mayor densidad técnica del proyecto, 
 
 **Proyecto en Jira:** [https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1](https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1)
 
-![Sprint-Backlog-2 - SATECHO](assets/images/sprint-2/Sprint-Backlog-2.png)
+![Sprint-Backlog-2 - SATECHO](./assets/images/sprint-2/Sprint-Backlog-2.png)
 
 # Sprint 2 – Sprint Backlog
 
 | Sprint 2 | Sprint Backlog 2 | | | | | | |
 |----------|-----------------|----------------|-------|-------------|-------------------|-------------|--------|
 | **User Story** | **Title** | **Work Item/Task** | **Title** | **Description** | **Estimation (SP)** | **Assigned to** | **Status** |
-| EP-001-US008 | US-08: View About-the-Product Video | EP-001-US008-T01 | Integrate product demo video section in landing page | As a visitor, I want to watch an explanatory video about SATECHO's product so that I can understand how the solution works before contacting a representative. | 2 | Brenda Gamio | Done |
-| EP-001-US009 | US-09: View Startup Team Members | EP-001-US009-T01 | Design and implement the team members section | As a visitor, I want to see the startup team members section so that I can know who is behind the product and build trust in the organization. | 2 | Brenda Gamio | Done |
-| EP-001-US010 | US-10: Browse Premium-Only Plans | EP-001-US010-T01 | Remove freemium tiers and update pricing section to premium model | As a visitor, I want to browse the available premium subscription plans so that I can evaluate the commercial offer before contacting the SATECHO team. | 1 | Yasser Palacios | Done |
-| EP-001-US004 | US-11: Complete Onboarding Wizard (Fix) | EP-001-US004-T05 | Implement irrigation zone removal with minimum zone validation | As a newly registered user, I want to remove an irrigation zone during onboarding so that I can correct my initial configuration before activating the system. | 2 | Abraham Estrada | Done |
-| | | EP-001-US004-T06 | Add removable protocol templates to onboarding wizard | | | Brenda Gamio | Done |
-| | | EP-001-US004-T07 | Validate personal data fields before proceeding to step 3 of onboarding | | | Brenda Gamio | Done |
-| EP-002-US002 | US-12: View Agronomist Analysis Dashboard | EP-002-US002-T01 | Implement analysis and soil thresholds management views for agronomist | As an agronomist, I want to view analysis dashboards and configure soil thresholds so that I can monitor critical crop parameters remotely. | 5 | Brenda Gamio | Done |
-| | | EP-002-US002-T02 | Develop account management and device monitoring views for agronomist | | | Brenda Gamio | Done |
-| | | EP-002-US002-T03 | Implement irrigation control and perimeter security views for agronomist dashboard | | | Brenda Gamio | Done |
-| EP-002-US003 | US-13: Manage Agronomist Profile and Plans | EP-002-US003-T01 | Implement profile management and notification settings for agronomist | As an agronomist, I want to manage my professional profile and notification preferences so that I receive relevant alerts from my assigned clients. | 3 | Brenda Gamio | Done |
-| | | EP-002-US003-T02 | Implement plan system view for agronomist account | | | Brenda Gamio | Done |
-| EP-002-US004 | US-14: Manage Priority Cases and Alerts | EP-002-US004-T01 | Develop priority cases queue and critical alert detail views for agronomist | As an agronomist, I want to review a prioritized queue of critical cases so that I can respond immediately to the most urgent situations in my clients' fields. | 3 | Brenda Gamio | Done |
-| EP-002-US005 | US-15: View Real-Time Telemetry Dashboard | EP-002-US005-T01 | Implement telemetry dashboard with salinity chart and security event log | As a farmer, I want to view real-time telemetry data including salinity and security events so that I have a complete picture of my field conditions. | 5 | Abraham Estrada | Done |
-| | | EP-002-US005-T02 | Add telemetry route and integrate TelemetryDashboardView into navigation | | | Abraham Estrada | Done |
-| EP-002-US006 | US-16: Monitor IoT Device Fleet | EP-002-US006-T01 | Implement DeviceFleetView with fleet monitoring, telemetry metrics, device actions and maintenance management | As a farmer, I want to monitor the health and status of all my IoT devices from a single view so that I can detect connectivity failures or maintenance needs proactively. | 5 | Abraham Estrada | Done |
-| | | EP-002-US006-T02 | Develop NotificationsRulesView for configuring alert thresholds per device | | | Abraham Estrada | Done |
-| EP-007-TS029 | TS-05: Implement IAM Bounded Context - REST API | EP-007-TS029-T01 | Implement domain model entities and rules for identity management | As a Developer, I want the system to have a complete Identity and Access Management bounded context so that authentication, authorization and user account lifecycle are centrally managed. | 8 | José Huamani | Done |
-| | | EP-007-TS029-T02 | Implement authentication and user use cases in application layer | | | José Huamani | Done |
-| | | EP-007-TS029-T03 | Implement persistence repositories and security configuration in infrastructure layer | | | José Huamani | Done |
-| | | EP-007-TS029-T04 | Expose REST API endpoints and request/response resources | | | José Huamani | Done |
-| | | EP-007-TS029-T05 | Add account verification and resend verification commands and endpoints | | | José Huamani | Done |
-| EP-007-TS030 | TS-06: Implement Onboarding Bounded Context - REST API | EP-007-TS030-T01 | Add domain layer commands, queries and events for farm and zone management | As a Developer, I want the system to have a complete Onboarding bounded context so that farmers can register their farms and irrigation zones through the REST API. | 5 | José Huamani | Done |
-| | | EP-007-TS030-T02 | Implement infrastructure persistence layer for Farm and IrrigationZone entities | | | Raul Quispe | Done |
-| | | EP-007-TS030-T03 | Implement command and query services for Farm and Zone management | | | Raul Quispe | Done |
-| | | EP-007-TS030-T04 | Add resources and command assemblers for farm and zone REST endpoints | | | José Huamani | Done |
-| EP-007-TS031 | TS-07: Implement MQTT Integration and BI Bounded Context - REST API | EP-007-TS031-T01 | Add MQTT actuator publisher and integrate with irrigation session commands | As a Developer, I want the backend to publish actuator commands via MQTT so that the irrigation hardware responds to commands from the platform. | 8 | José Huamani | Done |
-| | | EP-007-TS031-T02 | Implement SoilTelemetryMqttListener to consume telemetry from ESP32 devices | | | José Huamani | Done |
-| | | EP-007-TS031-T03 | Add query and resource models for fleet health, irrigation and notifications | | | Raul Quispe | Done |
-| EP-003-US001 | US-17: Scaffold Farmer Mobile App | EP-003-US001-T01 | Create initial Flutter project with feature-based bounded context architecture | As a farmer, I want to access a dedicated mobile application so that I can monitor my crops and control irrigation from my smartphone. | 5 | Abraham Estrada | Done |
-| | | EP-003-US001-T02 | Implement role-based navigation and login flow | | | Abraham Estrada | Done |
-| EP-003-US002 | US-18: Monitor Irrigation and Soil in Real-Time (Mobile) | EP-003-US002-T01 | Implement DeviceStatusList with 15-second polling for irrigation status | As a farmer, I want to see real-time status of my devices and active irrigation sessions on my mobile app so that I can make timely decisions in the field. | 8 | Abraham Estrada | Done |
-| | | EP-003-US002-T02 | Integrate real-time updates for irrigation sessions and sensor metrics | | | Abraham Estrada | Done |
-| | | EP-003-US002-T03 | Fix responsive layout and overflow issues across mobile screens | | | Abraham Estrada | Done |
-| EP-003-US003 | US-19: Access Agronomist Workspace (Mobile) | EP-003-US003-T01 | Implement agronomist workspace features: client tracking, alerts and schedule | As an agronomist, I want to access a dedicated workspace on the mobile app so that I can manage my clients, view critical alerts and organize my schedule. | 5 | Abraham Estrada | Done |
-| | | EP-003-US003-T02 | Connect mobile application to real REST API infrastructure | | | Abraham Estrada | Done |
-| EP-005-TS009 | TS-08: Implement Device Authentication - Edge API | EP-005-TS009-T01 | Define device entity and repository interface in domain layer | As a Developer, I want the Edge API to authenticate ESP32 devices via API key (MAC address) so that only registered devices can submit telemetry data. | 3 | Raul Quispe | Done |
-| | | EP-005-TS009-T02 | Implement authentication service and infrastructure persistence layer | | | Raul Quispe | Done |
-| | | EP-005-TS009-T03 | Expose device registration and authentication REST endpoints | | | Raul Quispe | Done |
-| EP-002-TS007 | TS-09: Implement Soil Data Capture - Edge API | EP-002-TS007-T01 | Define soil reading entity and domain service with boundary validation | As a Developer, I want the Edge API to receive, validate and persist soil telemetry from ESP32 devices so that the data can be forwarded reliably to the cloud backend. | 5 | Raul Quispe | Done |
-| | | EP-002-TS007-T02 | Implement MQTT publisher for soil readings and cloud sync service with heartbeat | | | Raul Quispe | Done |
-| | | EP-002-TS007-T03 | Expose soil monitoring REST endpoint with API key authentication | | | Raul Quispe | Done |
-| EP-003-TS001 | TS-10: Implement PIR Movement Classification - Edge API | EP-003-TS001-T01 | Define PIR event entity, classification domain service and repository | As a Developer, I want the Edge API to classify PIR events as perimeter security alerts so that critical security events are separated from normal activity. | 3 | Raul Quispe | Done |
+| *(sin US equivalente en §3.1)* | US-08: View About-the-Product Video | EP-002-EXT07-T01 | Integrate product demo video section in landing page | As a visitor, I want to watch an explanatory video about SATECHO's product so that I can understand how the solution works before contacting a representative. | 2 | Brenda Gamio | Done |
+| *(sin US equivalente en §3.1)* | US-09: View Startup Team Members | EP-002-EXT08-T01 | Design and implement the team members section | As a visitor, I want to see the startup team members section so that I can know who is behind the product and build trust in the organization. | 2 | Brenda Gamio | Done |
+| *(sin US equivalente en §3.1)* | US-10: Browse Premium-Only Plans | EP-002-EXT09-T01 | Remove freemium tiers and update pricing section to premium model | As a visitor, I want to browse the available premium subscription plans so that I can evaluate the commercial offer before contacting the SATECHO team. | 1 | Yasser Palacios | Done |
+| EP-001-US005 | US-11: Register Farm and First Parcel (Fix) | EP-001-US005-T05 | Implement irrigation zone removal with minimum zone validation | As a newly registered user, I want to remove an irrigation zone during onboarding so that I can correct my initial configuration before activating the system. | 2 | Abraham Estrada | Done |
+| | | EP-001-US005-T06 | Add removable protocol templates to onboarding wizard | | | Brenda Gamio | Done |
+| | | EP-001-US005-T07 | Validate personal data fields before proceeding to step 3 of onboarding | | | Brenda Gamio | Done |
+| *(bundle: EP-009-US003, EP-009-US006, EP-010-US001, EP-002-US004)* | US-12: View Agronomist Analysis Dashboard | EP-002-EXT10-T01 | Implement analysis and soil thresholds management views for agronomist | As an agronomist, I want to view analysis dashboards and configure soil thresholds so that I can monitor critical crop parameters remotely. | 5 | Brenda Gamio | Done |
+| | | EP-002-EXT10-T02 | Develop account management and device monitoring views for agronomist | | | Brenda Gamio | Done |
+| | | EP-002-EXT10-T03 | Implement irrigation control and perimeter security views for agronomist dashboard | | | Brenda Gamio | Done |
+| *(bundle: EP-001-US004; sin plan de suscripción para agrónomo en §3.1)* | US-13: Manage Agronomist Profile and Plans | EP-002-EXT11-T01 | Implement profile management and notification settings for agronomist | As an agronomist, I want to manage my professional profile and notification preferences so that I receive relevant alerts from my assigned clients. | 3 | Brenda Gamio | Done |
+| | | EP-002-EXT11-T02 | Implement plan system view for agronomist account | | | Brenda Gamio | Done |
+| EP-009-US005 | US-14: View Priority Cases | EP-009-US005-T01 | Develop priority cases queue and critical alert detail views for agronomist | As an agronomist, I want to view a priority cases panel so that I can attend to the most critical situations among my clients first. | 3 | Brenda Gamio | Done |
+| *(bundle: EP-002-US001 enhancement + EP-003-US002)* | US-15: View Real-Time Telemetry Dashboard | EP-002-EXT12-T01 | Implement telemetry dashboard with salinity chart and security event log | As a farmer, I want to view real-time telemetry data including salinity and security events so that I have a complete picture of my field conditions. | 5 | Abraham Estrada | Done |
+| | | EP-002-EXT12-T02 | Add telemetry route and integrate TelemetryDashboardView into navigation | | | Abraham Estrada | Done |
+| EP-010-US001 | US-16: View Device Inventory | EP-010-US001-T01 | Implement DeviceFleetView with fleet monitoring, telemetry metrics, device actions and maintenance management | As a fleet administrator, I want to view all registered devices and their real-time status so that I can manage the hardware fleet. | 5 | Abraham Estrada | Done |
+| | | EP-010-US001-T02 | Develop NotificationsRulesView for configuring alert thresholds per device | | | Abraham Estrada | Done |
+| EP-001-TS001 | TS-05: Implement IAM Bounded Context - REST API | EP-001-TS001-T01 | Implement domain model entities and rules for identity management | As a Developer, I want to implement the identity and access management module with JWT authentication so that all endpoints are protected. | 8 | José Huamani | Done |
+| | | EP-001-TS001-T02 | Implement authentication and user use cases in application layer | | | José Huamani | Done |
+| | | EP-001-TS001-T03 | Implement persistence repositories and security configuration in infrastructure layer | | | José Huamani | Done |
+| | | EP-001-TS001-T04 | Expose REST API endpoints and request/response resources | | | José Huamani | Done |
+| | | EP-001-TS001-T05 | Add account verification and resend verification commands and endpoints | | | José Huamani | Done |
+| EP-001-TS002 | TS-06: Implement Onboarding Bounded Context - REST API | EP-001-TS002-T01 | Add domain layer commands, queries and events for farm and zone management | As a Developer, I want to implement the registration, email verification, and farm/parcel creation endpoints so that the onboarding flow is fully supported. | 5 | José Huamani | Done |
+| | | EP-001-TS002-T02 | Implement infrastructure persistence layer for Farm and IrrigationZone entities | | | Raul Quispe | Done |
+| | | EP-001-TS002-T03 | Implement command and query services for Farm and Zone management | | | Raul Quispe | Done |
+| | | EP-001-TS002-T04 | Add resources and command assemblers for farm and zone REST endpoints | | | José Huamani | Done |
+| EP-002-TS001 | TS-07: Implement MQTT Integration and BI Bounded Context - REST API (bundle: EP-002-TS003) | EP-002-TS001-T01 | Add MQTT actuator publisher and integrate with irrigation session commands | As a Developer, I want to implement the REST endpoint for receiving and storing telemetry readings from the Edge so that sensor data is persisted in the cloud. | 8 | José Huamani | Done |
+| | | EP-002-TS001-T02 | Implement SoilTelemetryMqttListener to consume telemetry from ESP32 devices | | | José Huamani | Done |
+| | | EP-002-TS001-T03 | Add query and resource models for fleet health, irrigation and notifications | | | Raul Quispe | Done |
+| EP-004-TS001 | US-17: Scaffold Farmer Mobile App (Flutter DDD Architecture) | EP-004-TS001-T01 | Create initial Flutter project with feature-based bounded context architecture | As a Developer, I want to implement a DDD architecture in Flutter with role-based routing and dependency injection so that multiple user profiles are fully supported. | 5 | Abraham Estrada | Done |
+| | | EP-004-TS001-T02 | Implement role-based navigation and login flow | | | Abraham Estrada | Done |
+| *(bundle: EP-004-US001, EP-004-US002)* | US-18: Monitor Irrigation and Soil in Real-Time (Mobile) | EP-002-EXT13-T01 | Implement DeviceStatusList with 15-second polling for irrigation status | As a farmer, I want to see real-time status of my devices and active irrigation sessions on my mobile app so that I can make timely decisions in the field. | 8 | Abraham Estrada | Done |
+| | | EP-002-EXT13-T02 | Integrate real-time updates for irrigation sessions and sensor metrics | | | Abraham Estrada | Done |
+| | | EP-002-EXT13-T03 | Fix responsive layout and overflow issues across mobile screens | | | Abraham Estrada | Done |
+| *(bundle: EP-009-US008; sin shell de agrónomo equivalente en EP-004 §3.1)* | US-19: Access Agronomist Workspace (Mobile) | EP-002-EXT14-T01 | Implement agronomist workspace features: client tracking, alerts and schedule | As an agronomist, I want to access a dedicated workspace on the mobile app so that I can manage my clients, view critical alerts and organize my schedule. | 5 | Abraham Estrada | Done |
+| | | EP-002-EXT14-T02 | Connect mobile application to real REST API infrastructure | | | Abraham Estrada | Done |
+| EP-005-TS002 | TS-08: Implement Device Authentication - Edge API | EP-005-TS002-T01 | Define device entity and repository interface in domain layer | As a Developer, I want to implement device authentication on the Edge using device_id and MAC address as an API key so that only authorized devices can communicate. | 3 | Raul Quispe | Done |
+| | | EP-005-TS002-T02 | Implement authentication service and infrastructure persistence layer | | | Raul Quispe | Done |
+| | | EP-005-TS002-T03 | Expose device registration and authentication REST endpoints | | | Raul Quispe | Done |
+| EP-005-TS003 | TS-09: Implement Soil Data Capture - Edge API | EP-005-TS003-T01 | Define soil reading entity and domain service with boundary validation | As a Developer, I want to implement the Edge soil endpoint that supports both native ESP32 and legacy field names so that firmware versions are interoperable. | 5 | Raul Quispe | Done |
+| | | EP-005-TS003-T02 | Implement MQTT publisher for soil readings and cloud sync service with heartbeat | | | Raul Quispe | Done |
+| | | EP-005-TS003-T03 | Expose soil monitoring REST endpoint with API key authentication | | | Raul Quispe | Done |
+| EP-003-TS001 | TS-10: Implement PIR Movement Classification - Edge API | EP-003-TS001-T01 | Define PIR event entity, classification domain service and repository | As a Developer, I want to implement the PIR classification algorithm on the Edge so that events are categorized before being persisted. | 3 | Raul Quispe | Done |
 | | | EP-003-TS001-T02 | Implement MQTT publisher for PIR events and REST endpoint | | | Raul Quispe | Done |
-| EP-002-TS011 | TS-11: Implement Testing Suite - Edge API | EP-002-TS011-T01 | Add unit tests for SoilReadingService domain boundaries and PIR classification service | As a Developer, I want a comprehensive test suite for the Edge API so that regressions are detected automatically before each deployment. | 3 | Raul Quispe | Done |
-| | | EP-002-TS011-T02 | Add integration tests for soil reading application service using SQLite | | | Raul Quispe | Done |
-| | | EP-002-TS011-T03 | Add acceptance tests for device registration and soil monitoring REST endpoints | | | Raul Quispe | Done |
-| EP-006-TS012 | TS-12: Implement ESP32 Firmware - Event-Driven Architecture | EP-006-TS012-T01 | Implement sensor abstraction layer with FC28, HR202L, DHT11 and DS18B20 drivers | As a Developer, I want the ESP32 firmware to read all soil and ambient sensors in a FreeRTOS event-driven architecture so that no CPU cycles are wasted in polling loops. | 5 | Yasser Palacios | Done |
-| | | EP-006-TS012-T02 | Implement connectivity management and MQTT telemetry serialization | | | Yasser Palacios | Done |
-| | | EP-006-TS012-T03 | Implement actuator control module for irrigation valve management | | | Yasser Palacios | Done |
-| | | EP-006-TS012-T04 | Add safety mechanisms and watchdog timers for fault tolerance | | | Yasser Palacios | Done |
-| | | EP-006-TS012-T05 | Implement MAC address capture for device authentication with Edge API | | | Yasser Palacios | Done |
+| *(sin TS equivalente en §3.1 — cobertura de pruebas Edge no está en el backlog vigente)* | TS-11: Implement Testing Suite - Edge API | EP-002-EXT15-T01 | Add unit tests for SoilReadingService domain boundaries and PIR classification service | As a Developer, I want a comprehensive test suite for the Edge API so that regressions are detected automatically before each deployment. | 3 | Raul Quispe | Done |
+| | | EP-002-EXT15-T02 | Add integration tests for soil reading application service using SQLite | | | Raul Quispe | Done |
+| | | EP-002-EXT15-T03 | Add acceptance tests for device registration and soil monitoring REST endpoints | | | Raul Quispe | Done |
+| *(bundle: EP-002-MS001–MS006, EP-003-MS001, EP-010-MS001 — ID de épica EP-006 era incorrecto, no corresponde a Embedded)* | TS-12: Implement ESP32 Firmware - Event-Driven Architecture | EP-002-EXT16-T01 | Implement sensor abstraction layer with FC28, HR202L, DHT11 and DS18B20 drivers | As a Developer, I want the ESP32 firmware to read all soil and ambient sensors in a FreeRTOS event-driven architecture so that no CPU cycles are wasted in polling loops. | 5 | Yasser Palacios | Done |
+| | | EP-002-EXT16-T02 | Implement connectivity management and MQTT telemetry serialization | | | Yasser Palacios | Done |
+| | | EP-002-EXT16-T03 | Implement actuator control module for irrigation valve management | | | Yasser Palacios | Done |
+| | | EP-002-EXT16-T04 | Add safety mechanisms and watchdog timers for fault tolerance | | | Yasser Palacios | Done |
+| | | EP-002-EXT16-T05 | Implement MAC address capture for device authentication with Edge API | | | Yasser Palacios | Done |
+
+*Nota de alineación: los IDs de esta tabla fueron corregidos para coincidir con el backlog vigente de la sección 3.1. El Epic EP-003 cambió de alcance entre revisiones del backlog — en esta iteración representaba "scaffolding de la Mobile App", y en la sección 3.1 vigente representa el dominio de seguridad PIR — por eso las historias EP-003-US001/002/003 originales fueron remapeadas a sus equivalentes reales (EP-004-TS001, bundle EP-004-US001/US002, bundle EP-009-US008) y no al EP-003 actual. Las filas marcadas "(sin equivalente en §3.1)" o "(bundle: ...)" corresponden a trabajo entregado en este sprint sin una historia formal 1:1 en el backlog vigente, o que cubre varias historias actuales a la vez; se conservan bajo IDs internos `EP-002-EXTxx` como evidencia histórica.*
 
 #### 6.2.2.4. Development Evidence for Sprint Review
 
 En este Sprint 2, el alcance del desarrollo se expandió significativamente para cubrir la integración vertical completa del ecosistema SATECHO. Se materializaron las primeras versiones funcionales de los seis productos de software que conforman la solución: la versión actualizada de la Landing Page y la Aplicación Web, el RESTful API con sus primeros contextos acotados funcionales, la Aplicación Móvil con roles diferenciados para agricultor y agrónomo, el Edge API con procesamiento local de telemetría, y el firmware embebido para el ESP32 con arquitectura orientada a eventos. A continuación, se presenta el registro cronológico de commits que certifica la autoría, el propósito y la evolución del código fuente integrado satisfactoriamente en este sprint.
 
+*Nota de evidencia: las filas de Landing_Page-SATECHO fueron corregidas — la tabla original tenía el mensaje de commit desplazado a la columna "Commit Id" (sin SHA real) y fechas (26-27/05/26) que no coinciden con el historial real del repositorio. No se encontró en el historial real un commit específico para "remove freemium tiers"; esa fila se retira por no ser verificable.*
+
 | Repository | Branch | Commit Id | Commit Message | Committed On |
 |---|---|---|---|---|
-| Landing-Page-SATECHO | feature/about-product-section | feat: add about-the-product video section | feat(hero): add product demo video integration to landing page. | 26/05/26 |
-| Landing-Page-SATECHO | feature/team-section | feat: add startup team members section | feat(team): add team members presentation section with roles and photos. | 26/05/26 |
-| Landing-Page-SATECHO | feature/premium-plans | feat: update plans to premium-only model | feat(pricing): remove freemium tiers and update subscription section to premium-only model. | 27/05/26 |
+| Landing_Page-SATECHO | feature/hero | c3cae67 | feat(header): add the navigation and header section about the AgroSafe landing page. | 16/06/26 |
+| Landing_Page-SATECHO | feature/about-us | 9469b17 | feat(about-us): add the about-us section explaining the product's value proposition for farmers and leads. | 16/06/26 |
+| Landing_Page-SATECHO | feature/about-the-team | 2bd028b | feat(about-the-team): add the about-the-team section including the video with team member profiles. | 16/06/26 |
+| Landing_Page-SATECHO | main | c3430fc | feat: add video about the team and about the product. | 22/06/26 |
 | Web-Application-SATECHO | feature/error-pages | e2d08a8 | feat(error-pages): add styled 404 page and wildcard route handling. | 26/05/26 |
 | Web-Application-SATECHO | feature/onboarding | 6c89776 | feat(onboarding): add irrigation zone removal with minimum zone validation. | 26/05/26 |
 | Web-Application-SATECHO | feature/onboarding | 9b09c91 | feat(feature/onboarding): add removable protocol templates. | 28/05/26 |
@@ -1137,7 +1142,7 @@ Los contextos acotados implementados en este sprint y sus endpoints principales 
 
 La documentación interactiva de los endpoints se expone mediante Swagger UI, permitiendo a los desarrolladores del frontend y del equipo de QA probar los contratos directamente desde el navegador sin necesidad de herramientas adicionales.
 
-![Swagger-API-Documentation](assets/images/sprint-2/Swagger-API-Documentation.png)
+![Swagger-API-Documentation](./assets/images/sprint-2/Swagger-API-Documentation.png)
 
 Adicionalmente, el **Edge API** expone los siguientes endpoints REST consumidos directamente por el firmware ESP32 y por el backend para sincronización de telemetría:
 
@@ -1164,7 +1169,7 @@ El RESTful API construido en Java con Spring Boot se desplegó en Azure App Serv
 
 4. **Verificación:** Confirmación del despliegue exitoso mediante el endpoint `/actuator/health` de Spring Boot Actuator.
 
-![Backend-Azure-Deployment](assets/images/sprint-2/Backend-Azure-Deployment.png)
+![Backend-Azure-Deployment](./assets/images/sprint-2/Backend-Azure-Deployment.png)
 
 **Mobile Application (Firebase App Distribution)**
 
@@ -1200,25 +1205,25 @@ El Sprint 2 representó el mayor desafío colaborativo del proyecto al requerir 
 
 El trabajo sobre los dos productos frontales del ciclo continuó bajo el modelo de ramas de funcionalidad atomizadas con Pull Requests obligatorios. El mayor volumen de commits en este periodo se concentró en la expansión del dashboard para el rol de agrónomo, que requirió múltiples iteraciones de feedback entre el líder de aspecto y los colaboradores para asegurar la coherencia visual y funcional entre las vistas.
 
-![Team-Collaboration-Insights-Web-Application](assets/images/sprint-2/Team-Collaboration-Insights-Web-Application-Sprint2.png)
+![Team-Collaboration-Insights-Web-Application](./assets/images/sprint-2/Team-Collaboration-Insights-Web-Application-Sprint2.png)
 
 **REST API (Backend)**
 
 El backend comenzó su desarrollo en paralelo desde la primera semana del sprint, arrancando con los bounded contexts de IAM y Onboarding. La metodología de trabajo adoptó el patrón de "feature branches por contexto acotado", lo que permitió que cada capa (dominio, aplicación, infraestructura, interfaces) fuera desarrollada e integrada secuencialmente dentro de la misma rama, manteniendo el ciclo de feedback corto y los Pull Requests manejables en tamaño.
 
-![Team-Collaboration-Insights-Backend](assets/images/sprint-2/Team-Collaboration-Insights-Backend-Sprint2.png)
+![Team-Collaboration-Insights-Backend](./assets/images/sprint-2/Team-Collaboration-Insights-Backend-Sprint2.png)
 
 **Mobile Application**
 
 El equipo de la aplicación móvil arrancó desde cero con un scaffold inicial que estableció la arquitectura base (feature-based bounded contexts con Clean Architecture), sobre la cual se construyeron los flujos de agricultor y agrónomo de forma incremental. La decisión de utilizar el mock de roles antes de conectar el API real permitió validar la experiencia de usuario antes de que el backend estuviera disponible, reduciendo el tiempo de integración final.
 
-![Team-Collaboration-Insights-Mobile](assets/images/sprint-2/Team-Collaboration-Insights-Mobile-Sprint2.png)
+![Team-Collaboration-Insights-Mobile](./assets/images/sprint-2/Team-Collaboration-Insights-Mobile-Sprint2.png)
 
 **Edge API**
 
 El Edge API fue el repositorio con el proceso de desarrollo más estructurado del sprint, dado que siguió el ciclo completo de TDD (Test-Driven Development) para las tres capas de prueba: unitaria, integración y aceptación. Esta disciplina, aunque más lenta al inicio, garantizó que cada endpoint entregado tuviera cobertura de pruebas verificable antes de ser integrado al pipeline de comunicación con el firmware ESP32.
 
-![Team-Collaboration-Insights-Edge](assets/images/sprint-2/Team-Collaboration-Insights-Edge-Sprint2.png)
+![Team-Collaboration-Insights-Edge](./assets/images/sprint-2/Team-Collaboration-Insights-Edge-Sprint2.png)
 
 **Embedded Application**
 
@@ -1299,28 +1304,28 @@ Sprint 3 consolidates the alert and notification pipeline across the REST API, M
 
 #### 6.2.3.3. Sprint Backlog 3
 
-Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-002-TS004), el servicio de notificaciones push (EP-008-TS018), la sincronización de eventos PIR hacia el cloud (EP-003-TS007, EP-005-TS015), el subscriber de actuador con buffer offline (EP-005-TS019), y las mejoras clave de la Mobile Application: autenticación biométrica, integración MQTT en tiempo real y visualización de eventos de seguridad.
+Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-002-TS002), el servicio de notificaciones push (EP-008-TS001), la sincronización de eventos PIR hacia el cloud (EP-003-TS002, EP-005-TS005), el subscriber de actuador con buffer offline (EP-005-TS007), y las mejoras clave de la Mobile Application: autenticación biométrica (EP-002-TS004), integración MQTT en tiempo real (EP-004-TS002) y visualización de eventos de seguridad.
 
 **Proyecto en Jira:** [https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1](https://satecho.atlassian.net/jira/software/projects/SCRUM/boards/1)
 
-![Sprint-Backlog-3 - SATECHO](assets/images/sprint-3/Sprint-Backlog-3.png)
+![Sprint-Backlog-3 - SATECHO](./assets/images/sprint-3/Sprint-Backlog-3.png)
 
 # Sprint 3 – Sprint Backlog
 
 | Sprint 3 | Sprint Backlog 3 | | | | | | |
 |---|---|---|---|---|---|---|---|
 | **User Story** | **Title** | **Work Item/Task** | **Title** | **Description** | **Estimation (SP)** | **Assigned to** | **Status** |
-| EP-002-TS004 | TS-01: Implement Soil Alert Engine (Backend) | EP-002-TS004-T01 | Implement AlertEngineService consuming SoilReadingCreated events from RabbitMQ | As a Developer, I want an engine that evaluates each soil reading against configurable thresholds and generates typed alerts automatically so that critical conditions trigger timely notifications. | 8 | José Huamani | To-do |
-| | | EP-002-TS004-T02 | Implement ThresholdRepository with default thresholds per sensor type (moisture, EC, temperature) | | | José Huamani | To-do |
-| | | EP-002-TS004-T03 | Implement hysteresis logic and automatic RESOLVED transition when values return to safe range | | | José Huamani | To-do |
-| EP-008-TS018 | TS-02: Implement Push Notification Service (Backend) | EP-008-TS018-T01 | Implement NotificationApplicationService with @RabbitListener for AlertCreated events | As a Developer, I want a service that processes alert events and sends push notifications via FCM so that farmers are notified in real time. | 5 | José Huamani | To-do |
-| | | EP-008-TS018-T02 | Integrate Firebase Admin SDK and implement FCM device token storage and dispatch logic | | | José Huamani | To-do |
-| EP-003-TS008 | TS-03: Implement PIR Debounce and Filtering (Embedded) | EP-003-TS008-T01 | Add PIR_DEBOUNCE_MS=3000 to satecho_config.h and debounce check to mqttCommandTask using millis() | As a Developer, I want the ESP32 to discard duplicate PIR triggers within 3000ms so that a single physical motion event does not generate multiple alerts. | 3 | Yasser Palacios | To-do |
-| EP-003-TS007 | TS-04: Implement Edge PIR API + Cloud Sync | EP-003-TS007-T01 | Implement _sync_pir_once() calling cloud_client.post_security_event() per PIR event with synced=False | As a Developer, I want the Edge to synchronize classified PIR events to the cloud backend individually via periodic sync so that security data is reliably propagated. | 5 | Raul Quispe | To-do |
-| | | EP-003-TS007-T02 | Integrate PIR sync into _run_loop() alongside soil sync using asyncio.gather() | | | Raul Quispe | To-do |
-| EP-005-TS015 | TS-05: Implement Edge PIR Cloud Sync | EP-005-TS015-T01 | Verify _sync_pir_once() marks events synced=True on 2xx response and retains synced=False on failure | As a Developer, I want PIR events with synced=False to be individually sent to the cloud in each 60-second sync cycle so that no security events are lost. | 3 | Raul Quispe | To-do |
-| EP-005-TS019 | TS-06: Implement Edge Actuator Command Subscriber with Offline Buffer | EP-005-TS019-T01 | Implement actuator_command_subscriber.py with MQTT subscription on agrosafe/+/devices/+/actuator/command | As a Developer, I want the Edge to forward actuator commands to the ESP32 when online and buffer them when the device is temporarily disconnected so that commands are not lost. | 5 | Raul Quispe | To-do |
-| | | EP-005-TS019-T02 | Implement device_tracker.py with mark_seen(), is_online() (ONLINE_WINDOW_SECONDS=60), and buffer drain on reconnect | | | Raul Quispe | To-do |
+| EP-002-TS002 | TS-01: Implement Soil Alert Engine (Backend) | EP-002-TS002-T01 | Implement AlertEngineService consuming SoilReadingCreated events from RabbitMQ | As a Developer, I want an engine that evaluates each soil reading against configurable thresholds and generates typed alerts automatically so that critical conditions trigger timely notifications. | 8 | José Huamani | To-do |
+| | | EP-002-TS002-T02 | Implement ThresholdRepository with default thresholds per sensor type (moisture, EC, temperature) | | | José Huamani | To-do |
+| | | EP-002-TS002-T03 | Implement hysteresis logic and automatic RESOLVED transition when values return to safe range | | | José Huamani | To-do |
+| EP-008-TS001 | TS-02: Implement Push Notification Service (Backend) | EP-008-TS001-T01 | Implement NotificationApplicationService with @RabbitListener for AlertCreated events | As a Developer, I want a service that processes alert events and sends push notifications via FCM so that farmers are notified in real time. | 5 | José Huamani | To-do |
+| | | EP-008-TS001-T02 | Integrate Firebase Admin SDK and implement FCM device token storage and dispatch logic | | | José Huamani | To-do |
+| EP-003-TS003 | TS-03: Implement PIR Debounce and Filtering (Embedded) | EP-003-TS003-T01 | Add PIR_DEBOUNCE_MS=3000 to satecho_config.h and debounce check to mqttCommandTask using millis() | As a Developer, I want the ESP32 to discard duplicate PIR triggers within 3000ms so that a single physical motion event does not generate multiple alerts. | 3 | Yasser Palacios | To-do |
+| EP-003-TS002 | TS-04: Implement Edge PIR API + Cloud Sync | EP-003-TS002-T01 | Implement _sync_pir_once() calling cloud_client.post_security_event() per PIR event with synced=False | As a Developer, I want the Edge to synchronize classified PIR events to the cloud backend individually via periodic sync so that security data is reliably propagated. | 5 | Raul Quispe | To-do |
+| | | EP-003-TS002-T02 | Integrate PIR sync into _run_loop() alongside soil sync using asyncio.gather() | | | Raul Quispe | To-do |
+| EP-005-TS005 | TS-05: Implement Edge PIR Cloud Sync | EP-005-TS005-T01 | Verify _sync_pir_once() marks events synced=True on 2xx response and retains synced=False on failure | As a Developer, I want PIR events with synced=False to be individually sent to the cloud in each 60-second sync cycle so that no security events are lost. | 3 | Raul Quispe | To-do |
+| EP-005-TS007 | TS-06: Implement Edge Actuator Command Subscriber with Offline Buffer | EP-005-TS007-T01 | Implement actuator_command_subscriber.py with MQTT subscription on agrosafe/+/devices/+/actuator/command | As a Developer, I want the Edge to forward actuator commands to the ESP32 when online and buffer them when the device is temporarily disconnected so that commands are not lost. | 5 | Raul Quispe | To-do |
+| | | EP-005-TS007-T02 | Implement device_tracker.py with mark_seen(), is_online() (ONLINE_WINDOW_SECONDS=60), and buffer drain on reconnect | | | Raul Quispe | To-do |
 | EP-008-US020 | US-01: Critical Alert Push Notifications | EP-008-US020-T01 | Implement FCM token registration endpoint and token persistence from Mobile App on login | As a farmer, I want to receive push notifications when critical alerts are detected so that I can act quickly even when the app is closed. | 5 | Abraham Estrada | To-do |
 | | | EP-008-US020-T02 | Validate end-to-end push delivery: soil threshold breach → AlertCreated → FCM → device notification | | | Abraham Estrada | To-do |
 | EP-008-US021 | US-02: In-App Notification Center | EP-008-US021-T01 | Implement NotificationsScreen in Flutter with chronological list, mark-as-read action, and badge decrement on navigation bar | As a farmer, I want to view a history of all received alerts and mark them as read so that I can review them at my convenience. | 3 | Abraham Estrada | To-do |
@@ -1330,9 +1335,33 @@ Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-00
 | EP-003-US002 | US-06: View Security Event History | EP-003-US002-T01 | Implement security history table in Web App with PERSON/ANIMAL/WIND classification filter, pulse duration, frequency per minute, and CSV export | As a farmer, I want to view the history of classified PIR events so that I can understand the activity on my parcels. | 3 | Brenda Gamio | To-do |
 | EP-003-US003 | US-07: Configure Security Zones | EP-003-US003-T01 | Implement zone enable/disable toggle bound to zone_id; suppress alert generation for disabled zones | As a farmer, I want to configure which zones of my farm have active PIR monitoring so that I can customize surveillance coverage. | 3 | Brenda Gamio | To-do |
 | EP-004-US007 | US-08: View Security Events in Mobile App | EP-004-US007-T01 | Implement SecurityScreen in Flutter with event classification list (PERSON/ANIMAL/WIND), timestamp, and pulse duration; ensure push notification is delivered via FCM when app is closed | As a farmer, I want to review PIR events from the mobile app and receive intrusion push notifications even when the app is not open. | 3 | Abraham Estrada | To-do |
-| EP-002-TS008 | TS-07: Biometric Authentication (Mobile App) | EP-002-TS008-T01 | Integrate local_auth package for fingerprint/Face ID; store and retrieve JWT via FlutterSecureStorage on successful biometric verification | As a Developer, I want to integrate biometric authentication in the Flutter app so that critical irrigation actions require secure identity confirmation. | 5 | Abraham Estrada | To-do |
-| | | EP-002-TS008-T02 | Handle biometrics unavailable (disable option) and 3-consecutive-failure fallback to password login | | | Abraham Estrada | To-do |
-| EP-004-TS010 | TS-08: MQTT Mobile Integration (Real Time) | EP-004-TS010-T01 | Implement MqttService singleton using mqtt_client package; subscribe to agrosafe/{farmId}/devices/{deviceId}/status and update SensorBloc via event | As a Developer, I want to integrate MQTT in the Flutter app so that real-time sensor state updates are received without polling every 15 seconds. | 5 | Abraham Estrada | To-do |
-| | | EP-004-TS010-T02 | Implement exponential backoff reconnection with up to 5 retry attempts on MQTT connection loss | | | Abraham Estrada | To-do |
+| EP-002-TS004 | TS-07: Biometric Authentication (Mobile App) | EP-002-TS004-T01 | Integrate local_auth package for fingerprint/Face ID; store and retrieve JWT via FlutterSecureStorage on successful biometric verification | As a Developer, I want to integrate biometric authentication in the Flutter app so that critical irrigation actions require secure identity confirmation. | 5 | Abraham Estrada | To-do |
+| | | EP-002-TS004-T02 | Handle biometrics unavailable (disable option) and 3-consecutive-failure fallback to password login | | | Abraham Estrada | To-do |
+| EP-004-TS002 | TS-08: MQTT Mobile Integration (Real Time) | EP-004-TS002-T01 | Implement MqttService singleton using mqtt_client package; subscribe to agrosafe/{farmId}/devices/{deviceId}/status and update SensorBloc via event | As a Developer, I want to integrate MQTT in the Flutter app so that real-time sensor state updates are received without polling every 15 seconds. | 5 | Abraham Estrada | To-do |
+| | | EP-004-TS002-T02 | Implement exponential backoff reconnection with up to 5 retry attempts on MQTT connection loss | | | Abraham Estrada | To-do |
 
 El firmware del ESP32 fue desarrollado de forma completamente independiente al inicio, adoptando una arquitectura FreeRTOS orientada a eventos que elimina los bucles de polling. La integración con el Edge API se realizó en la fase final del sprint mediante la implementación del módulo de captura de dirección MAC para la autenticación y la configuración del cliente MQTT para la publicación de telemetría hacia el broker Mosquitto del Edge.
+
+#### 6.2.2.4. Development Evidence for Sprint Review
+
+#### 6.2.2.5. Testing Suite Evidence for Sprint Review
+
+#### 6.2.2.6. Execution Evidence for Sprint Review
+
+#### 6.2.2.7. Services Documentation Evidence for Sprint Review
+
+#### 6.2.2.8. Software Deployment Evidence for Sprint Review
+
+#### 6.2.2.9. Team Collaborations Insights during Sprint
+
+## 6.3. Validation Interviews
+
+En este espacio se consolidan cada una de las preguntas dirigidas a nuestros segmentos objetivos como vienen a ser los **Agricultores** como los **Ingenieros Agrónomos**, así como la evidencia preliminar de cada opnión recopilada en relación a la usabilidad y experiencia del mismo usuario utilizando cada una de las aplicaciones centradas en agilizar de manera digital su operatividad manual en el cuidado de las plantas. Cada opinión esta dimensionada por _frags_ de videos con su indicativo de _timing_ para dar mayor veracidad y enfoque en los puntos objetivos y ciertas observaciones que nos dejaron como oportunidades de mejora.
+
+### 6.3.1. Diseño de Entrevistas
+
+### 6.3.2. Registro de Entrevistas
+
+### 6.3.3. Evaluaciones según heurísticas
+
+## 6.4. Video About-the-Product
