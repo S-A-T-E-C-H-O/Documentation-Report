@@ -988,18 +988,6 @@ Esta sección consolida la evidencia de ejecución de todos los productos digita
 
 La segunda versión de la Landing Page incorpora tres cambios estratégicos: la sección de video demostrativo del producto, la sección del equipo de la startup y la migración completa al modelo comercial premium (eliminando las opciones freemium). Estos cambios consolidan la propuesta de valor y la transparencia organizacional ante los potenciales clientes.
 
-**Video About-the-Product**
-
-Sección audiovisual integrada que demuestra el flujo operativo completo de SATECHO, desde la lectura de sensores hasta la visualización en el dashboard, validando la propuesta de valor ante visitantes indecisos.
-
-![About-Product-Video-Section](./assets/images/sprint-2/About-Product-Video-Section.png)
-
-**Team Section**
-
-Sección institucional que presenta al equipo fundador de SATECHO con fotografías y roles, construyendo confianza y credibilidad ante potenciales clientes del sector agrícola.
-
-![Team-Section](./assets/images/sprint-2/Team-Section.png)
-
 **Planes Premium**
 
 Versión actualizada de la sección de planes de pago, exclusivamente con opciones premium que reflejan la inversión en hardware IoT y soporte técnico especializado requeridos por el modelo de negocio.
@@ -1010,17 +998,13 @@ Versión actualizada de la sección de planes de pago, exclusivamente con opcion
 
 La versión final de la Aplicación Web amplía significativamente el alcance funcional con vistas especializadas para ambos segmentos objetivo: el agricultor y el agrónomo.
 
-Mediante el siguiente vídeo, se evidencian los flujos implementados en este sprint:
-
-![Referential Video - Web Application v2](./assets/images/sprint-2/Web-Application-v2-Execution-Evidence.png)
-
-**Web Application v2 - SATECHO:** [Web Application v2 - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint2-web-app)
-
 **Dashboard Agrónomo - Análisis y Umbrales**
 
 Vista especializada para el ingeniero agrónomo que permite monitorear análisis de suelo y configurar umbrales críticos por cultivo, habilitando alertas automáticas ante condiciones adversas.
 
 ![Agronomist-Analysis-Dashboard](./assets/images/sprint-2/Agronomist-Analysis-Dashboard.png)
+
+![Agronomist-Analysis-Dashboard](./assets/images/sprint-2/Agronomist-Analysis-Dashboard2.png)
 
 **Dashboard Agrónomo - Gestión de Cuenta y Dispositivos**
 
@@ -1028,23 +1012,21 @@ Panel de administración que centraliza la gestión de cuenta del agrónomo, el 
 
 ![Agronomist-Account-Devices-View](./assets/images/sprint-2/Agronomist-Account-Devices-View.png)
 
+![Agronomist-Account-Devices-View](./assets/images/sprint-2/Agronomist-Account-Devices-View2.png)
+
 **Dashboard Agrónomo - Cola de Casos Prioritarios**
 
 Vista de gestión de urgencias que organiza las alertas críticas de todos los clientes del agrónomo en una cola priorizada, con acceso directo al detalle de cada incidente.
 
 ![Priority-Cases-Queue-View](./assets/images/sprint-2/Priority-Cases-Queue-View.png)
 
-**Dashboard Agrónomo - Gestión de Perfil y Planes**
-
-Módulo de configuración personal del agrónomo que permite actualizar datos profesionales, preferencias de notificación y el plan de suscripción activo.
-
-![Agronomist-Profile-Plans-View](./assets/images/sprint-2/Agronomist-Profile-Plans-View.png)
-
 **Dashboard Agricultor - Telemetría en Tiempo Real**
 
 Vista de monitoreo continuo con gráficos de salinidad del suelo y registro histórico de eventos de seguridad perimetral, consolidando las métricas más críticas para la toma de decisiones.
 
 ![Telemetry-Dashboard-View](./assets/images/sprint-2/Telemetry-Dashboard-View.png)
+
+![Telemetry-Dashboard-View](./assets/images/sprint-2/Telemetry-Dashboard-View2.png)
 
 **Dashboard Agricultor - Flota de Dispositivos IoT**
 
@@ -1061,12 +1043,6 @@ Vista de configuración de alertas que permite al agricultor definir umbrales pe
 #### Mobile Application
 
 La primera versión de la Aplicación Móvil implementa los flujos principales para ambos roles de usuario, con arquitectura Clean Architecture orientada a funcionalidades (feature-based bounded contexts) y conexión al REST API real.
-
-Mediante el siguiente vídeo, se evidencian los flujos implementados en este sprint:
-
-![Referential Video - Mobile Application](./assets/images/sprint-2/Mobile-Application-Execution-Evidence.png)
-
-**Mobile Application - SATECHO:** [Mobile Application - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint2-mobile-app)
 
 **Login y Selección de Rol**
 
@@ -1315,30 +1291,30 @@ Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-00
 | Sprint 3 | Sprint Backlog 3 | | | | | | |
 |---|---|---|---|---|---|---|---|
 | **User Story** | **Title** | **Work Item/Task** | **Title** | **Description** | **Estimation (SP)** | **Assigned to** | **Status** |
-| EP-002-TS002 | TS-01: Implement Soil Alert Engine (Backend) | EP-002-TS002-T01 | Implement AlertEngineService consuming SoilReadingCreated events from RabbitMQ | As a Developer, I want an engine that evaluates each soil reading against configurable thresholds and generates typed alerts automatically so that critical conditions trigger timely notifications. | 8 | José Huamani | To-do |
-| | | EP-002-TS002-T02 | Implement ThresholdRepository with default thresholds per sensor type (moisture, EC, temperature) | | | José Huamani | To-do |
-| | | EP-002-TS002-T03 | Implement hysteresis logic and automatic RESOLVED transition when values return to safe range | | | José Huamani | To-do |
-| EP-008-TS001 | TS-02: Implement Push Notification Service (Backend) | EP-008-TS001-T01 | Implement NotificationApplicationService with @RabbitListener for AlertCreated events | As a Developer, I want a service that processes alert events and sends push notifications via FCM so that farmers are notified in real time. | 5 | José Huamani | To-do |
-| | | EP-008-TS001-T02 | Integrate Firebase Admin SDK and implement FCM device token storage and dispatch logic | | | José Huamani | To-do |
-| EP-003-TS003 | TS-03: Implement PIR Debounce and Filtering (Embedded) | EP-003-TS003-T01 | Add PIR_DEBOUNCE_MS=3000 to satecho_config.h and debounce check to mqttCommandTask using millis() | As a Developer, I want the ESP32 to discard duplicate PIR triggers within 3000ms so that a single physical motion event does not generate multiple alerts. | 3 | Yasser Palacios | To-do |
-| EP-003-TS002 | TS-04: Implement Edge PIR API + Cloud Sync | EP-003-TS002-T01 | Implement _sync_pir_once() calling cloud_client.post_security_event() per PIR event with synced=False | As a Developer, I want the Edge to synchronize classified PIR events to the cloud backend individually via periodic sync so that security data is reliably propagated. | 5 | Raul Quispe | To-do |
-| | | EP-003-TS002-T02 | Integrate PIR sync into _run_loop() alongside soil sync using asyncio.gather() | | | Raul Quispe | To-do |
-| EP-005-TS005 | TS-05: Implement Edge PIR Cloud Sync | EP-005-TS005-T01 | Verify _sync_pir_once() marks events synced=True on 2xx response and retains synced=False on failure | As a Developer, I want PIR events with synced=False to be individually sent to the cloud in each 60-second sync cycle so that no security events are lost. | 3 | Raul Quispe | To-do |
-| EP-005-TS007 | TS-06: Implement Edge Actuator Command Subscriber with Offline Buffer | EP-005-TS007-T01 | Implement actuator_command_subscriber.py with MQTT subscription on agrosafe/+/devices/+/actuator/command | As a Developer, I want the Edge to forward actuator commands to the ESP32 when online and buffer them when the device is temporarily disconnected so that commands are not lost. | 5 | Raul Quispe | To-do |
-| | | EP-005-TS007-T02 | Implement device_tracker.py with mark_seen(), is_online() (ONLINE_WINDOW_SECONDS=60), and buffer drain on reconnect | | | Raul Quispe | To-do |
-| EP-008-US020 | US-01: Critical Alert Push Notifications | EP-008-US020-T01 | Implement FCM token registration endpoint and token persistence from Mobile App on login | As a farmer, I want to receive push notifications when critical alerts are detected so that I can act quickly even when the app is closed. | 5 | Abraham Estrada | To-do |
-| | | EP-008-US020-T02 | Validate end-to-end push delivery: soil threshold breach → AlertCreated → FCM → device notification | | | Abraham Estrada | To-do |
-| EP-008-US021 | US-02: In-App Notification Center | EP-008-US021-T01 | Implement NotificationsScreen in Flutter with chronological list, mark-as-read action, and badge decrement on navigation bar | As a farmer, I want to view a history of all received alerts and mark them as read so that I can review them at my convenience. | 3 | Abraham Estrada | To-do |
-| EP-002-US005 | US-03: Receive Critical Salinity Alerts | EP-002-US005-T01 | Wire EC > 5 dS/m threshold into AlertEngineService and confirm AlertCreated event triggers FCM push with message "Critical salinity in parcel [name]" | As a farmer, I want to receive alerts when the electrical conductivity of my soil exceeds the critical threshold so that I can prevent crop damage. | 3 | José Huamani | To-do |
-| EP-002-US006 | US-04: Receive Critical Temperature Alerts | EP-002-US006-T01 | Wire soil temperature > 40°C threshold into AlertEngineService and confirm AlertCreated event triggers FCM push notification | As a farmer, I want to be alerted if soil temperature exceeds dangerous levels so that I can protect my crops. | 3 | José Huamani | To-do |
-| EP-003-US001 | US-05: Receive Intrusion Alerts | EP-003-US001-T01 | Implement SecurityAlert creation on PERSON classification received from cloud PIR sync, publish to RabbitMQ for FCM dispatch with message "Person detected in [parcel name]" | As a farmer, I want to receive an alert when the PIR sensor detects a person on my parcel so that I can protect my crops. | 5 | Brenda Gamio | To-do |
-| EP-003-US002 | US-06: View Security Event History | EP-003-US002-T01 | Implement security history table in Web App with PERSON/ANIMAL/WIND classification filter, pulse duration, frequency per minute, and CSV export | As a farmer, I want to view the history of classified PIR events so that I can understand the activity on my parcels. | 3 | Brenda Gamio | To-do |
-| EP-003-US003 | US-07: Configure Security Zones | EP-003-US003-T01 | Implement zone enable/disable toggle bound to zone_id; suppress alert generation for disabled zones | As a farmer, I want to configure which zones of my farm have active PIR monitoring so that I can customize surveillance coverage. | 3 | Brenda Gamio | To-do |
-| EP-004-US007 | US-08: View Security Events in Mobile App | EP-004-US007-T01 | Implement SecurityScreen in Flutter with event classification list (PERSON/ANIMAL/WIND), timestamp, and pulse duration; ensure push notification is delivered via FCM when app is closed | As a farmer, I want to review PIR events from the mobile app and receive intrusion push notifications even when the app is not open. | 3 | Abraham Estrada | To-do |
-| EP-002-TS004 | TS-07: Biometric Authentication (Mobile App) | EP-002-TS004-T01 | Integrate local_auth package for fingerprint/Face ID; store and retrieve JWT via FlutterSecureStorage on successful biometric verification | As a Developer, I want to integrate biometric authentication in the Flutter app so that critical irrigation actions require secure identity confirmation. | 5 | Abraham Estrada | To-do |
-| | | EP-002-TS004-T02 | Handle biometrics unavailable (disable option) and 3-consecutive-failure fallback to password login | | | Abraham Estrada | To-do |
-| EP-004-TS002 | TS-08: MQTT Mobile Integration (Real Time) | EP-004-TS002-T01 | Implement MqttService singleton using mqtt_client package; subscribe to agrosafe/{farmId}/devices/{deviceId}/status and update SensorBloc via event | As a Developer, I want to integrate MQTT in the Flutter app so that real-time sensor state updates are received without polling every 15 seconds. | 5 | Abraham Estrada | To-do |
-| | | EP-004-TS002-T02 | Implement exponential backoff reconnection with up to 5 retry attempts on MQTT connection loss | | | Abraham Estrada | To-do |
+| EP-002-TS002 | TS-01: Implement Soil Alert Engine (Backend) | EP-002-TS002-T01 | Implement AlertEngineService consuming SoilReadingCreated events from RabbitMQ | As a Developer, I want an engine that evaluates each soil reading against configurable thresholds and generates typed alerts automatically so that critical conditions trigger timely notifications. | 8 | José Huamani | Done |
+| | | EP-002-TS002-T02 | Implement ThresholdRepository with default thresholds per sensor type (moisture, EC, temperature) | | | José Huamani | Done |
+| | | EP-002-TS002-T03 | Implement hysteresis logic and automatic RESOLVED transition when values return to safe range | | | José Huamani | Done |
+| EP-008-TS001 | TS-02: Implement Push Notification Service (Backend) | EP-008-TS001-T01 | Implement NotificationApplicationService with @RabbitListener for AlertCreated events | As a Developer, I want a service that processes alert events and sends push notifications via FCM so that farmers are notified in real time. | 5 | José Huamani | Done |
+| | | EP-008-TS001-T02 | Integrate Firebase Admin SDK and implement FCM device token storage and dispatch logic | | | José Huamani | Done |
+| EP-003-TS003 | TS-03: Implement PIR Debounce and Filtering (Embedded) | EP-003-TS003-T01 | Add PIR_DEBOUNCE_MS=3000 to satecho_config.h and debounce check to mqttCommandTask using millis() | As a Developer, I want the ESP32 to discard duplicate PIR triggers within 3000ms so that a single physical motion event does not generate multiple alerts. | 3 | Yasser Palacios | Done |
+| EP-003-TS002 | TS-04: Implement Edge PIR API + Cloud Sync | EP-003-TS002-T01 | Implement _sync_pir_once() calling cloud_client.post_security_event() per PIR event with synced=False | As a Developer, I want the Edge to synchronize classified PIR events to the cloud backend individually via periodic sync so that security data is reliably propagated. | 5 | Raul Quispe | Done |
+| | | EP-003-TS002-T02 | Integrate PIR sync into _run_loop() alongside soil sync using asyncio.gather() | | | Raul Quispe | Done |
+| EP-005-TS005 | TS-05: Implement Edge PIR Cloud Sync | EP-005-TS005-T01 | Verify _sync_pir_once() marks events synced=True on 2xx response and retains synced=False on failure | As a Developer, I want PIR events with synced=False to be individually sent to the cloud in each 60-second sync cycle so that no security events are lost. | 3 | Raul Quispe | Done |
+| EP-005-TS007 | TS-06: Implement Edge Actuator Command Subscriber with Offline Buffer | EP-005-TS007-T01 | Implement actuator_command_subscriber.py with MQTT subscription on agrosafe/+/devices/+/actuator/command | As a Developer, I want the Edge to forward actuator commands to the ESP32 when online and buffer them when the device is temporarily disconnected so that commands are not lost. | 5 | Raul Quispe | Done |
+| | | EP-005-TS007-T02 | Implement device_tracker.py with mark_seen(), is_online() (ONLINE_WINDOW_SECONDS=60), and buffer drain on reconnect | | | Raul Quispe | Done |
+| EP-008-US020 | US-01: Critical Alert Push Notifications | EP-008-US020-T01 | Implement FCM token registration endpoint and token persistence from Mobile App on login | As a farmer, I want to receive push notifications when critical alerts are detected so that I can act quickly even when the app is closed. | 5 | Abraham Estrada | Done |
+| | | EP-008-US020-T02 | Validate end-to-end push delivery: soil threshold breach → AlertCreated → FCM → device notification | | | Abraham Estrada | Done |
+| EP-008-US021 | US-02: In-App Notification Center | EP-008-US021-T01 | Implement NotificationsScreen in Flutter with chronological list, mark-as-read action, and badge decrement on navigation bar | As a farmer, I want to view a history of all received alerts and mark them as read so that I can review them at my convenience. | 3 | Abraham Estrada | Done |
+| EP-002-US005 | US-03: Receive Critical Salinity Alerts | EP-002-US005-T01 | Wire EC > 5 dS/m threshold into AlertEngineService and confirm AlertCreated event triggers FCM push with message "Critical salinity in parcel [name]" | As a farmer, I want to receive alerts when the electrical conductivity of my soil exceeds the critical threshold so that I can prevent crop damage. | 3 | José Huamani | Done |
+| EP-002-US006 | US-04: Receive Critical Temperature Alerts | EP-002-US006-T01 | Wire soil temperature > 40°C threshold into AlertEngineService and confirm AlertCreated event triggers FCM push notification | As a farmer, I want to be alerted if soil temperature exceeds dangerous levels so that I can protect my crops. | 3 | José Huamani | Done |
+| EP-003-US001 | US-05: Receive Intrusion Alerts | EP-003-US001-T01 | Implement SecurityAlert creation on PERSON classification received from cloud PIR sync, publish to RabbitMQ for FCM dispatch with message "Person detected in [parcel name]" | As a farmer, I want to receive an alert when the PIR sensor detects a person on my parcel so that I can protect my crops. | 5 | Brenda Gamio | Done |
+| EP-003-US002 | US-06: View Security Event History | EP-003-US002-T01 | Implement security history table in Web App with PERSON/ANIMAL/WIND classification filter, pulse duration, frequency per minute, and CSV export | As a farmer, I want to view the history of classified PIR events so that I can understand the activity on my parcels. | 3 | Brenda Gamio | Done |
+| EP-003-US003 | US-07: Configure Security Zones | EP-003-US003-T01 | Implement zone enable/disable toggle bound to zone_id; suppress alert generation for disabled zones | As a farmer, I want to configure which zones of my farm have active PIR monitoring so that I can customize surveillance coverage. | 3 | Brenda Gamio | Done |
+| EP-004-US007 | US-08: View Security Events in Mobile App | EP-004-US007-T01 | Implement SecurityScreen in Flutter with event classification list (PERSON/ANIMAL/WIND), timestamp, and pulse duration; ensure push notification is delivered via FCM when app is closed | As a farmer, I want to review PIR events from the mobile app and receive intrusion push notifications even when the app is not open. | 3 | Abraham Estrada | Done |
+| EP-002-TS004 | TS-07: Biometric Authentication (Mobile App) | EP-002-TS004-T01 | Integrate local_auth package for fingerprint/Face ID; store and retrieve JWT via FlutterSecureStorage on successful biometric verification | As a Developer, I want to integrate biometric authentication in the Flutter app so that critical irrigation actions require secure identity confirmation. | 5 | Abraham Estrada | Done |
+| | | EP-002-TS004-T02 | Handle biometrics unavailable (disable option) and 3-consecutive-failure fallback to password login | | | Abraham Estrada | Done |
+| EP-004-TS002 | TS-08: MQTT Mobile Integration (Real Time) | EP-004-TS002-T01 | Implement MqttService singleton using mqtt_client package; subscribe to agrosafe/{farmId}/devices/{deviceId}/status and update SensorBloc via event | As a Developer, I want to integrate MQTT in the Flutter app so that real-time sensor state updates are received without polling every 15 seconds. | 5 | Abraham Estrada | Done |
+| | | EP-004-TS002-T02 | Implement exponential backoff reconnection with up to 5 retry attempts on MQTT connection loss | | | Abraham Estrada | Done |
 
 El firmware del ESP32 fue desarrollado de forma completamente independiente al inicio, adoptando una arquitectura FreeRTOS orientada a eventos que elimina los bucles de polling. La integración con el Edge API se realizó en la fase final del sprint mediante la implementación del módulo de captura de dirección MAC para la autenticación y la configuración del cliente MQTT para la publicación de telemetría hacia el broker Mosquitto del Edge.
 
@@ -1449,29 +1425,21 @@ Esta sección consolida la evidencia de ejecución de todos los productos digita
 
 La versión final de la Aplicación Web incorpora la gestión administrativa de usuarios y fincas, la visualización de suscripciones y facturación, la integración con el backend real en Azure Container Apps, y los KPIs del agricultor en el dashboard.
 
-![Referential Video - Web Application v3](./assets/images/sprint-3/Web-Application-v3-Execution-Evidence.png)
-
-**Web Application v3 - SATECHO:** [Web Application v3 - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint3-web-app)
-
-**Farmer KPIs Dashboard** - Dashboard del agricultor con KPIs en tiempo real: salud de cultivos, eficiencia de riego y métricas de producción.
-
-![Farmer-KPIs-Dashboard](./assets/images/sprint-3/Farmer-KPIs-Dashboard.png)
-
-**Admin - Gestión de Usuarios y Fincas** - Panel de administración para gestionar usuarios, fincas y monitorear la actividad.
-
-![Admin-User-Farm-Management](./assets/images/sprint-3/Admin-User-Farm-Management.png)
-
 **Suscripciones y Facturación** - Vista de gestión de suscripciones con planes activos, historial de facturación y estado de pagos.
 
 ![Billing-Subscription-View](./assets/images/sprint-3/Billing-Subscription-View.png)
+
+![Billing-Subscription-View](./assets/images/sprint-3/Billing-Subscription-View2.png)
 
 #### Mobile Application (v2)
 
 La segunda versión de la App Móvil incorpora monitoreo de suelo, formulación de zonas de riego, reportes rápidos, seguridad perimetral, edición de perfil y onboarding inicial.
 
-![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence.png)
+![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence.jpeg)
 
-**Mobile Application v2:** [Mobile App v2 - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint3-mobile-app)
+![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence2.jpeg)
+
+![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence3.jpeg)
 
 **Onboarding Inicial** - Asistente de configuración inicial para nuevos usuarios.
 
