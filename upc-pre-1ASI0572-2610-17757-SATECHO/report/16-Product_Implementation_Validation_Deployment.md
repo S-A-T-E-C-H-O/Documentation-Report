@@ -1,4 +1,4 @@
-# Capítulo VI: Product Implementation, Validation & Deployment
+﻿# Capítulo VI: Product Implementation, Validation & Deployment
 
 ## 6.1. Software Configuration Management
 
@@ -1342,17 +1342,302 @@ Este tercer sprint prioriza la integración del motor de alertas de suelo (EP-00
 
 El firmware del ESP32 fue desarrollado de forma completamente independiente al inicio, adoptando una arquitectura FreeRTOS orientada a eventos que elimina los bucles de polling. La integración con el Edge API se realizó en la fase final del sprint mediante la implementación del módulo de captura de dirección MAC para la autenticación y la configuración del cliente MQTT para la publicación de telemetría hacia el broker Mosquitto del Edge.
 
-#### 6.2.2.4. Development Evidence for Sprint Review
+#### 6.2.3.4. Development Evidence for Sprint Review
 
-#### 6.2.2.5. Testing Suite Evidence for Sprint Review
+En este Sprint 3, el alcance del desarrollo se enfocó en completar la cadena de alerta proactiva de extremo a extremo, integrando el motor de alertas de suelo, el servicio de notificaciones push vía FCM, la sincronización de eventos PIR con el cloud, la autenticación biométrica y la integración MQTT en tiempo real en la Mobile Application. A continuación, se presenta el registro cronológico de commits que certifica la autoría, el propósito y la evolución del código fuente integrado satisfactoriamente en este sprint.
 
-#### 6.2.2.6. Execution Evidence for Sprint Review
+| Repository | Branch | Commit Id | Commit Message | Committed On |
+|---|---|---|---|---|
+| **Web-Service-SATECHO** | feature/advisory | 4f02fd5 | feat(advisory): add domain models and commands for visit scheduling and recommendations | 01/07/26 |
+| Web-Service-SATECHO | feature/bi | 6dd3421 | feat(bi): add domain models and resources for fleet health, user suspension, and analytics queries | 01/07/26 |
+| Web-Service-SATECHO | feature/subscriptions | ef5d163 | feat(subscriptions): add domain models and resources for billing cycles, invoice statuses, and subscription management | 01/07/26 |
+| Web-Service-SATECHO | release/v0.15.0 | 293e1e6 | chore: merge branch 'feature/subscriptions' into develop | 01/07/26 |
+| Web-Service-SATECHO | feature/alert-service | 770e6f7 | feat(alerts): implement alert management system with domain models, services, and REST endpoints | 01/07/26 |
+| Web-Service-SATECHO | release/v0.16.0 | fbb56fa | chore: merge branch 'feature/alert-service' into develop | 01/07/26 |
+| Web-Service-SATECHO | feature/device-notification | daaa771 | feat(notification): implement device token registration and alert notification handling | 01/07/26 |
+| Web-Service-SATECHO | release/v0.17.0 | 238c3b7 | chore: merge branch 'feature/device-notification' into develop | 01/07/26 |
+| Web-Service-SATECHO | feature/telemetry-test | fbe589c | feat(tests): add unit tests for AlertCommandServiceImpl to evaluate telemetry readings | 01/07/26 |
+| Web-Service-SATECHO | release/v0.18.0 | 6d63abd | chore: merge branch 'release/v0.18.0' | 01/07/26 |
+| Web-Service-SATECHO | feature/agonomist-advisory | b72d8ea | feat(alerts): enhance alert evaluation and management with telemetry reading handling and access control | 02/07/26 |
+| Web-Service-SATECHO | release/v0.19.0 | 0cbfa2e | chore: merge branch 'feature/agonomist-advisory' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/client-management | af717fe | feat(client-management): implement client assignment and field visit management with associated resources and commands | 02/07/26 |
+| Web-Service-SATECHO | release/v0.20.0 | 0268b1f | chore: merge branch 'feature/client-management' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/dashboard-resume | 0a3711c | feat(analytics): implement farmer dashboard and parcel comparison endpoints with associated services and resources | 02/07/26 |
+| Web-Service-SATECHO | release/v0.21.0 | c939ea5 | chore: merge branch 'feature/dashboard-resume' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/subsscription-plans | 2d393d4 | feat(subscription): implement subscription management with billing and invoicing functionality | 02/07/26 |
+| Web-Service-SATECHO | release/v0.22.0 | 3ad79f8 | chore: merge branch 'feature/subsscription-plans' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/device-management | 968944a | feat(notification): enhance notification handling with user authorization checks and refactor code structure | 02/07/26 |
+| Web-Service-SATECHO | release/v0.23.0 | 99918e6 | chore: merge branch 'feature/device-management' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/forgot-password-management | 766cd27 | feat(forgot-password): implement password reset functionality with email notifications and user commands | 02/07/26 |
+| Web-Service-SATECHO | release/v0.24.0 | 3815db3 | chore: merge branch 'feature/forgot-password-management' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/device-management | 8efbfad | feat(device-management): update device registration to enforce plan limits and refactor command handling | 02/07/26 |
+| Web-Service-SATECHO | release/v0.25.0 | be6836f | chore: merge branch 'feature/device-management' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/zone-detection | 5ac0c72 | feat(security): implement zone detection toggle functionality and enhance ownership checks | 02/07/26 |
+| Web-Service-SATECHO | release/v0.26.0 | d0452cb | chore: merge branch 'feature/zone-detection' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/testing-endpoints | 50c0744 | feat(tests): add unit tests for ClientCommandServiceImpl and ParcelComparisonQueryServiceImpl | 02/07/26 |
+| Web-Service-SATECHO | release/v0.27.0 | 4afd4c1 | chore: merge branch 'feature/testing-endpoints' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/activity-log | 72f6d44 | feat(activity-log): implement activity log service and controller for farm events | 02/07/26 |
+| Web-Service-SATECHO | release/v0.28.0 | 8ff7573 | chore: merge branch 'feature/activity-log' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/dashboard-admin | d2e15a8 | feat(admin-dashboard): enhance metrics and registrations trend endpoints with new data and calculations | 02/07/26 |
+| Web-Service-SATECHO | release/v0.29.0 | 3b27a71 | chore: merge branch 'feature/dashboard-admin' into develop | 02/07/26 |
+| Web-Service-SATECHO | feature/irrigation-start | 73447c5 | feat(irrigation): enhance actuator actions and add event publishing for irrigation commands | 02/07/26 |
+| Web-Service-SATECHO | release/v0.30.0 | 6ffa2da | chore: merge branch 'release/v0.30.0' | 02/07/26 |
+| Web-Application-SATECHO | feature/simplify-farmer-onboarding | f69e5b5 | feat: simplify farmer onboarding | 22/06/26 |
+| Web-Application-SATECHO | feature/real-backend-integration | 0f675fa | feat: connect frontend to Azure backend | 23/06/26 |
+| Web-Application-SATECHO | feature/real-data-farmer-dashboard | e2bf9a4 | feat: use real data in farmer dashboard | 23/06/26 |
+| Web-Application-SATECHO | feature/admin-view | 3ac4650 | feat(admin): implement user and farm management API and store | 04/07/26 |
+| Web-Application-SATECHO | feature/subscriptions-view | b983aba | feat(billing): implement billing API and store for subscription management | 04/07/26 |
+| Web-Application-SATECHO | codex/connect-containerapps-backend | f401a19 | chore: connect frontend to container apps backend | 04/07/26 |
+| Web-Application-SATECHO | codex/local-env-containerapps-backend | d870230 | docs: use container apps backend for local env | 04/07/26 |
+| Web-Application-SATECHO | feature/kpis-implementations | d715de3 | feat(dashboard): add farmer KPIs and update dashboard state management | 05/07/26 |
+| Mobile-Application-SATECHO | develop | 2c73b45 | fix(auth): block navigation when sign-in fails | 22/06/26 |
+| Mobile-Application-SATECHO | main | ccba995 | feat(android): use SATECHO leaf launcher icon | 22/06/26 |
+| Mobile-Application-SATECHO | main | 4bbc9ce | fix(android): allow release builds to reach HTTP backend | 22/06/26 |
+| Mobile-Application-SATECHO | feature/initial-configuration-onboarding | a3cbd43 | chore: merge branch 'feature/initial-configuration-onboarding' into develop. Related to EP-012-US027 | 03/07/26 |
+| Mobile-Application-SATECHO | feature/configuration-perimeter-security | 68aaeb4 | chore: merge branch 'feature/configuration-perimeter-security' into develop. Related to EP-003-US002 | 03/07/26 |
+| Mobile-Application-SATECHO | feature/configuration-quick-reports | 2364a3a | chore: merge branch 'feature/configuration-quick-reports' into develop. Related to EP-004-US007 | 03/07/26 |
+| Mobile-Application-SATECHO | feature/visualization-soil-monitoring | 6d51848 | chore: merge branch 'feature/visualization-soil-monitoring' into develop. Related to EP-001-US004 | 03/07/26 |
+| Mobile-Application-SATECHO | feature/formulation-zones | e5d4c99 | chores: merge branch 'feature/formulation-zones' into develop. Related to EP-004-US005 | 03/07/26 |
+| Mobile-Application-SATECHO | develop | 857a632 | feat: add edit profile functionality with name and password update | 03/07/26 |
+| Mobile-Application-SATECHO | develop | cbf18b5 | chore: sync final mobile source | 04/07/26 |
+| Mobile-Application-SATECHO | develop | bf1f08a | chore: point mobile app to new backend | 04/07/26 |
+| Mobile-Application-SATECHO | main | a9cde0f | chore: merge develop into main | 04/07/26 |
+| Edge-API-SATECHO | feature/iam | ecf9b4a | feat(application): add the entities to define the headers to the table to save the data | 02/07/26 |
+| Edge-API-SATECHO | feature/iam | 80adc1b | refactor(interfaces): overwrite the endpoints expose to the client | 02/07/26 |
+| Edge-API-SATECHO | release/1.1.0 | 43f56f3 | Merge branch 'release/1.1.0'. Related to EP-003-TS001/002 | 03/07/26 |
+| Edge-API-SATECHO | release/1.1.0 | d97aefa | chore(shared): add the uses cases and parameters to define the shared logic about cloud client | 03/07/26 |
+| Edge-API-SATECHO | release/1.1.0 | 922b413 | feat(shared): add the async services communication and ingest data | 03/07/26 |
+| Edge-API-SATECHO | release/1.2.0 | 85675c0 | feat(shared): add the Actuator command subscriber with an offline buffer | 03/07/26 |
+| Edge-API-SATECHO | release/1.2.0 | c6e093c | feat(test): add the unit test to validate the software | 03/07/26 |
+| Embedded-Application-SATECHO | todo | 267e783 | refactor: Remove heartbeat timer and update telemetry to publish raw data via MQTT | 02/07/26 |
+| Embedded-Application-SATECHO | todo | 6ac0b07 | refactor(esp32): migrate to compact driver scheme + coherent MQTT->edge path | 02/07/26 |
 
-#### 6.2.2.7. Services Documentation Evidence for Sprint Review
+#### 6.2.3.5. Testing Suite Evidence for Sprint Review
 
-#### 6.2.2.8. Software Deployment Evidence for Sprint Review
+Durante el Sprint 3, el equipo amplió significativamente la cobertura de pruebas automatizadas, abarcando tanto el backend REST API como el Edge API.
 
-#### 6.2.2.9. Team Collaborations Insights during Sprint
+**Backend (Java / Spring Boot - JUnit5 & Mockito)**
+
+Se implementaron pruebas unitarias para los nuevos servicios y controladores desarrollados en este sprint, asegurando que las reglas de negocio del motor de alertas, la gestión de notificaciones, la administración de clientes y las comparaciones de parcelas funcionen correctamente.
+
+| Archivo de Test / Clase | Escenario de Prueba | Resultado Esperado |
+|---|---|---|
+| AlertCommandServiceImplTest | Evaluación de lectura de telemetría contra umbrales | Alerta generada correctamente cuando excede el umbral |
+| AlertCommandServiceImplTest | Lectura de telemetría dentro de rango seguro | No se genera alerta |
+| AlertCommandServiceImplTest | Transición automática a estado RESOLVED | Estado de alerta actualizado a RESOLVED |
+| ClientCommandServiceImplTest | Asignación de cliente a ingeniero agrónomo | Cliente asignado con validación de duplicados |
+| ParcelComparisonQueryServiceImplTest | Comparación de parcelas por métricas de suelo | Resultados correctos con datos históricos |
+
+**Edge API (Python / pytest)**
+
+Se añadieron nuevas pruebas unitarias que validan la lógica de sincronización de eventos PIR y el subscriber de comandos de actuador con buffer offline.
+
+| Archivo de Test | Escenario de Prueba | Resultado Esperado |
+|---|---|---|
+| tests/domain/test_pir_sync_service.py | Sincronización individual de evento PIR con synced=False | Evento marcado synced=True tras respuesta 2xx |
+| tests/domain/test_pir_sync_service.py | Sincronización fallida (error de red) | Evento retiene synced=False para reintento |
+| tests/domain/test_actuator_subscriber.py | Comando de actuador recibido con dispositivo online | Comando reenviado inmediatamente al ESP32 |
+| tests/domain/test_actuator_subscriber.py | Comando recibido con dispositivo offline | Comando almacenado en buffer para entrega diferida |
+| tests/domain/test_device_tracker.py | Dispositivo reporta actividad dentro de 60s | is_online() retorna True |
+| tests/domain/test_device_tracker.py | Sin actividad por más de 60 segundos | is_online() retorna False |
+
+#### 6.2.3.6. Execution Evidence for Sprint Review
+
+Esta sección consolida la evidencia de ejecución de todos los productos digitales entregados en el Sprint 3.
+
+#### Web Application (v3)
+
+La versión final de la Aplicación Web incorpora la gestión administrativa de usuarios y fincas, la visualización de suscripciones y facturación, la integración con el backend real en Azure Container Apps, y los KPIs del agricultor en el dashboard.
+
+![Referential Video - Web Application v3](./assets/images/sprint-3/Web-Application-v3-Execution-Evidence.png)
+
+**Web Application v3 - SATECHO:** [Web Application v3 - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint3-web-app)
+
+**Farmer KPIs Dashboard** - Dashboard del agricultor con KPIs en tiempo real: salud de cultivos, eficiencia de riego y métricas de producción.
+
+![Farmer-KPIs-Dashboard](./assets/images/sprint-3/Farmer-KPIs-Dashboard.png)
+
+**Admin - Gestión de Usuarios y Fincas** - Panel de administración para gestionar usuarios, fincas y monitorear la actividad.
+
+![Admin-User-Farm-Management](./assets/images/sprint-3/Admin-User-Farm-Management.png)
+
+**Suscripciones y Facturación** - Vista de gestión de suscripciones con planes activos, historial de facturación y estado de pagos.
+
+![Billing-Subscription-View](./assets/images/sprint-3/Billing-Subscription-View.png)
+
+#### Mobile Application (v2)
+
+La segunda versión de la App Móvil incorpora monitoreo de suelo, formulación de zonas de riego, reportes rápidos, seguridad perimetral, edición de perfil y onboarding inicial.
+
+![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence.png)
+
+**Mobile Application v2:** [Mobile App v2 - Video](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202110458_upc_edu_pe/sprint3-mobile-app)
+
+**Onboarding Inicial** - Asistente de configuración inicial para nuevos usuarios.
+
+![Initial-Onboarding-Wizard](./assets/images/sprint-3/Initial-Onboarding-Wizard.png)
+
+**Monitoreo de Suelo** - Métricas de suelo en tiempo real (humedad, temperatura, conductividad eléctrica).
+
+![Soil-Monitoring-View](./assets/images/sprint-3/Soil-Monitoring-View.png)
+
+**Seguridad Perimetral** - Configuración de zonas de seguridad con sensor PIR y activación/desactivación por zona.
+
+![Perimeter-Security-Config](./assets/images/sprint-3/Perimeter-Security-Config.png)
+
+**Formulación de Zonas de Riego** - Configuración avanzada de zonas de riego por cultivo y tipo de suelo.
+
+![Irrigation-Zones-Formulation](./assets/images/sprint-3/Irrigation-Zones-Formulation.png)
+
+**Reportes Rápidos** - Reportes ejecutivos con métricas clave del estado de los cultivos.
+
+![Quick-Reports-View](./assets/images/sprint-3/Quick-Reports-View.png)
+
+**Edición de Perfil** - Configuración de cuenta para actualizar nombre, contraseña y preferencias.
+
+![Edit-Profile](./assets/images/sprint-3/Edit-Profile.png)
+
+#### Edge API (v2) - Sincronización de eventos PIR hacia el cloud, comunicación asíncrona y subscriber de comandos con buffer offline.
+
+![Edge-API-v2-Execution-Evidence](./assets/images/sprint-3/Edge-API-v2-Execution-Evidence.png)
+
+#### Embedded Application (ESP32 v2) - Migración a drivers compactos con ruta MQTT->Edge coherente, eliminando heartbeat timer.
+
+![Embedded-Application-v2-Execution-Evidence](./assets/images/sprint-3/Embedded-Application-v2-Execution-Evidence.png)
+
+#### 6.2.3.7. Services Documentation Evidence for Sprint Review
+
+Durante el Sprint 3, el REST API expandió significativamente su superficie de exposición con nuevos bounded contexts. Documentación interactiva disponible mediante Swagger UI / OpenAPI 3.0 en Azure.
+
+**Bounded Context: Advisory (Agronomist Advisory)**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | /api/v1/advisory/visits | Programación de visita técnica de agrónomo |
+| GET | /api/v1/advisory/visits/{visitId} | Detalle de visita programada |
+| GET | /api/v1/advisory/visits/agronomist/{id} | Visitas asignadas a un agrónomo |
+| POST | /api/v1/advisory/recommendations | Envío de recomendación agronómica |
+
+**Bounded Context: Alerts (Alert Management)**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | /api/v1/alerts/evaluate | Evaluación de telemetría contra umbrales |
+| GET | /api/v1/alerts/{alertId} | Detalle de alerta generada |
+| GET | /api/v1/alerts/farm/{farmId} | Alertas activas e históricas de una finca |
+| PATCH | /api/v1/alerts/{alertId}/resolve | Resolución manual de alerta |
+
+**Bounded Context: Notifications (Push Notifications)**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | /api/v1/notifications/device-token | Registro de token FCM para dispositivo móvil |
+| POST | /api/v1/notifications/send | Envío manual de notificación push |
+| GET | /api/v1/notifications/user/{userId} | Historial de notificaciones enviadas |
+| PATCH | /api/v1/notifications/{id}/read | Marcado de notificación como leída |
+
+**Bounded Context: Subscription Management**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | /api/v1/subscriptions | Creación de suscripción |
+| GET | /api/v1/subscriptions/{id} | Detalle de suscripción |
+| GET | /api/v1/subscriptions/user/{userId} | Suscripciones de un usuario |
+| POST | /api/v1/billing/invoices | Generación de factura |
+| GET | /api/v1/billing/invoices/{id} | Detalle de factura |
+
+**Bounded Context: Zone Detection & Security**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | /api/v1/security/zones/{zoneId}/toggle | Activar/desactivar zona de detección |
+| GET | /api/v1/security/zones/farm/{farmId} | Zonas de seguridad configuradas |
+| POST | /api/v1/security/zones | Crear nueva zona de seguridad |
+
+**Bounded Context: Activity Log**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| GET | /api/v1/activity-log/farm/{farmId} | Historial de eventos de una finca |
+| GET | /api/v1/activity-log/user/{userId} | Historial de actividad de un usuario |
+
+**Bounded Context: Admin Dashboard**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| GET | /api/v1/admin/metrics | Métricas globales (usuarios, fincas, dispositivos) |
+| GET | /api/v1/admin/registrations/trend | Tendencia de registros de nuevos usuarios |
+| GET | /api/v1/admin/users | Listado paginado de usuarios registrados |
+
+**Bounded Context: Irrigation Control (Enhanced)**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | /api/v1/irrigation/sessions/{id}/start | Inicio de riego con evento de actuador |
+| POST | /api/v1/irrigation/sessions/{id}/stop | Detención de sesión de riego |
+| GET | /api/v1/irrigation/sessions/farm/{farmId} | Historial de sesiones de riego |
+
+**Edge API (v2) - Nuevos endpoints**
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | /api/v1/security/pir-events | Registro de evento PIR desde ESP32 |
+| GET | /api/v1/security/pir-events/unsynced | Eventos PIR pendientes de sincronización |
+| POST | /api/v1/actuator/command | Comando de actuador con buffer offline |
+| GET | /api/v1/devices/{deviceId}/status | Estado online/offline del dispositivo |
+
+#### 6.2.3.8. Software Deployment Evidence for Sprint Review
+
+En este Sprint 3, el despliegue se consolidó para todos los componentes, con énfasis en la migración del backend a Azure Container Apps.
+
+**Backend REST API (Azure App Service -> Azure Container Apps)**
+
+El RESTful API migró a Azure Container Apps para mejor escalabilidad y gestión de contenedores.
+
+1. **Containerización:** Se actualizó el Dockerfile para crear imagen Docker optimizada con el .jar de Maven.
+2. **Azure Container Registry:** La imagen se publicó en ACR.
+3. **Azure Container Apps:** Se configuró el entorno con revisiones automáticas y escalado horizontal.
+4. **CI/CD Pipeline:** El workflow de GitHub Actions construye, publica en ACR y despliega automáticamente.
+
+![Backend-Container-Apps-Deployment](./assets/images/sprint-3/Backend-Container-Apps-Deployment.png)
+
+**Web Application (Vercel - Continuous Deployment)**
+
+La versión v3 mantuvo el despliegue continuo en Vercel desde la rama main.
+
+![Web-Application-Vercel-v3-Deployment](./assets/images/sprint-3/Web-Application-Vercel-v3-Deployment.png)
+
+**Mobile Application (Firebase App Distribution - v2)**
+
+La segunda versión de la app Flutter se distribuyó mediante Firebase App Distribution, apuntando al nuevo backend.
+
+![Mobile-Firebase-v2-Distribution](./assets/images/sprint-3/Mobile-Firebase-v2-Distribution.png)
+
+#### 6.2.3.9. Team Collaborations Insights during Sprint
+
+**Visión General**
+
+El Sprint 3 cerró el ciclo de desarrollo del MVP de SATECHO, consolidando las funcionalidades de los seis productos. El equipo mantuvo la estructura TSP con líderes de aspecto definidos y enfoque contract-first.
+
+**Web Application v3** - Yasser Palacios (Mitos20) integró la conexión con el backend real en Azure y Container Apps; Brenda Gamio (B-Gamio) implementó vistas administrativas, facturación y KPIs del dashboard.
+
+![Team-Collaboration-Insights-Web-Application](./assets/images/sprint-3/Team-Collaboration-Insights-Web-Application-Sprint3.png)
+
+**REST API (Backend v2)** - 18 releases (v0.13.0 a v0.30.0) en 48 horas por Brenda Gamio (B-Gamio): Advisory, BI, Subscriptions, Alert Service, Device Notifications, Telemetry Tests, Client Management, Dashboard Resume, Subscription Plans, Forgot Password, Zone Detection, Activity Log, Admin Dashboard e Irrigation Start.
+
+![Team-Collaboration-Insights-Backend](./assets/images/sprint-3/Team-Collaboration-Insights-Backend-Sprint3.png)
+
+**Mobile Application v2** - Abraham Estrada (Abraham0310) lideró el desarrollo integrando feature branches de monitoreo de suelo, seguridad perimetral, zonas de riego y reportes rápidos. Yasser Palacios realizó la sincronización final.
+
+![Team-Collaboration-Insights-Mobile](./assets/images/sprint-3/Team-Collaboration-Insights-Mobile-Sprint3.png)
+
+**Edge API v2** - Raul Quispe (Raul-QE) implementó sincronización PIR cloud, comunicación asíncrona y subscriber de actuador con buffer offline. Versiones v1.1.0 y v1.2.0 con pruebas unitarias.
+
+![Team-Collaboration-Insights-Edge](./assets/images/sprint-3/Team-Collaboration-Insights-Edge-Sprint3.png)
+
+**Embedded Application v2** - Brenda Gamio (B-Gamio) actualizó el firmware a drivers compactos con ruta MQTT->Edge coherente, eliminando el heartbeat timer.
+
+![Team-Collaboration-Insights-Embedded](./assets/images/sprint-3/Team-Collaboration-Insights-Embedded-Sprint3.png)
 
 ## 6.3. Validation Interviews
 
