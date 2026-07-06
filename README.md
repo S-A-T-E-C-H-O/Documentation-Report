@@ -40,5 +40,6 @@
         U202214130 - Palacios, Yasser Renteria
         <br><br>
     </p>
-    <strong>Periodo 202601</strong>
+    <strong>Periodo 202601</strong><br>
+    <strong>Julio 2026</strong>
 </div>
