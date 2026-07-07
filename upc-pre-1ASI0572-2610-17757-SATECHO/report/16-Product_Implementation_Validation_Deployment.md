@@ -1567,19 +1567,19 @@ El RESTful API migró a Azure Container Apps para mejor escalabilidad y gestión
 3. **Azure Container Apps:** Se configuró el entorno con revisiones automáticas y escalado horizontal.
 4. **CI/CD Pipeline:** El workflow de GitHub Actions construye, publica en ACR y despliega automáticamente.
 
-![Backend-Container-Apps-Deployment](./assets/images/sprint-3/Backend-Container-Apps-Deployment.png)
+![Backend-Container-Apps-Deployment](./assets/images/sprint-3/BackDep.png)
 
 **Web Application (Vercel - Continuous Deployment)**
 
 La versión v3 mantuvo el despliegue continuo en Vercel desde la rama main.
 
-![Web-Application-Vercel-v3-Deployment](./assets/images/sprint-3/Web-Application-Vercel-v3-Deployment.png)
+![Web-Application-Vercel-v3-Deployment](./assets/images/sprint-3/WebDep.png)
 
 **Mobile Application (Firebase App Distribution - v2)**
 
 La segunda versión de la app Flutter se distribuyó mediante Firebase App Distribution, apuntando al nuevo backend.
 
-![Mobile-Firebase-v2-Distribution](./assets/images/sprint-3/Mobile-Firebase-v2-Distribution.png)
+![Mobile-Firebase-v2-Distribution](./assets/images/sprint-3/MobileDep.png)
 
 #### 6.2.3.9. Team Collaborations Insights during Sprint
 
