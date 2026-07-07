@@ -1739,7 +1739,341 @@ En particular, previo a entrevistar a nuestros usuarios, consideramos importante
 
 ### 6.3.2. Registro de Entrevistas
 
+
+<table>
+  <tr>
+    <th colspan="2" style="text-align:center;">Entrevista #1</th>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Adrián Valerio</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>25</td>
+  </tr>
+  <tr>
+    <td><strong>Distrito</strong></td>
+    <td>Surco</td>
+  </tr>
+  
+  <tr>
+    <td><strong>Fecha de entrevista</strong></td>
+    <td>6 de julio de 2026</td>
+  </tr>
+  <tr>
+    <td><strong>Evidencia</strong></td>
+    <td>
+      <div align="center">
+        <img src="./assets/images/sprint-3/validation-interview-2.png" alt="validation_interview_1" style="width:%; max-width:1300px; height:500px; object-fit:cover; object-position:center; display:block; margin:0 auto;">
+      </div>
+    </td>
+  </tr>
+  <tr>
+ <td><strong>Link</strong></td>
+    <td><a href="https://acortar.link/XrMIfO">https://acortar.link/XrMIfO</a></td>
+  </tr>
+  <tr>
+    <td><strong>Timing donde inicia la entrevista</strong></td>
+    <td>0:03 min</td>
+  </tr>
+  <tr>
+    <td><strong>Duración de la entrevista</strong></td>
+    <td>5 minutos y 34 segundos</td>
+  </tr>
+  <tr>
+    <td><strong>Resumen</strong></td>
+    <td>La entrevista de validación se realizó con Adrián Valerio para evaluar *AgroSafe*, una solución de monitoreo inteligente de suelo con proyección a riego automatizado e irrigación.
+
+Durante la demostración se presentó la *landing page, donde se explica la propuesta de valor, misión, visión, características principales, planes de suscripción y opciones para descargar la aplicación o registrarse. También se mostró el flujo de registro como **farmer*, incluyendo la creación de cuenta, configuración de propiedad agrícola, zona de irrigación, tipo de cultivo y visualización del dashboard.
+
+En la plataforma web se evidenciaron funciones como el monitoreo de humedad, conductividad eléctrica, pH y temperatura, además del control de válvulas, historial de irrigación, gestión de zonas, seguridad perimetral, dispositivos IoT, notificaciones, perfil y suscripción. También se mencionó que el backend está desarrollado con endpoints REST en Swagger y que la base de datos ya se encuentra desplegada.
+
+Además, se presentó la aplicación móvil, donde el usuario puede registrarse, configurar su cultivo y acceder a un dashboard reducido para revisar zonas de irrigación, dispositivos IoT, alertas, recomendaciones y perfil.
+
+Adrián valoró positivamente el proyecto, destacando que los *colores y fuentes* son adecuados para la identidad de la startup y el tipo de servicio ofrecido. También resaltó que la página web está bien estructurada, no está sobrecargada de información y muestra solo lo necesario para el usuario. Respecto a la app móvil, indicó que mantiene una versión más compacta y funcional, adecuada para su formato. Finalmente, señaló que no tenía comentarios negativos, ya que considera que el producto cumple con las necesidades de un usuario interesado en el servicio.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th colspan="2" style="text-align:center;">Entrevista #2</th>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Paolo Carrillo</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>27</td>
+  </tr>
+  <tr>
+    <td><strong>Distrito</strong></td>
+    <td>Cercado de Lima</td>
+  </tr>
+
+  <tr>
+    <td><strong>Fecha de entrevista</strong></td>
+    <td>6 de julio de 2026</td>
+  </tr>
+  <tr>
+    <td><strong>Evidencia</strong></td>
+    <td>
+      <div align="center">
+        <img src="./assets/images/sprint-3/validation-interview-1.png" alt="validation_interview_2" style="width:%; max-width:1300px; height:500px; object-fit:cover; object-position:center; display:block; margin:0 auto;">
+      </div>
+    </td>
+  </tr>
+  <tr>
+     <td><strong>Link</strong></td>
+    <td><a href="https://acortar.link/gDSQWj">https://acortar.link/gDSQWj</a></td>
+  </tr>
+  <tr>
+    <td><strong>Timing donde inicia la entrevista</strong></td>
+    <td>0:01 min</td>
+  </tr>
+  <tr>
+    <td><strong>Duración de la entrevista</strong></td>
+    <td>8 minutos y 15 segundos</td>
+  </tr>
+  <tr>
+    <td><strong>Resumen</strong></td>
+    <td>La entrevista de validación se realizó con *Paolo Carrillo* para evaluar *AgroSafe, producto del grupo **Desatecho*, enfocado en el monitoreo inteligente del suelo e irrigación para agricultores.
+
+Durante la demostración se presentó la *landing page, donde se explican secciones como “Sobre nosotros”, propuesta de valor, misión, visión, video del equipo, características de la aplicación, planes de suscripción y descarga para Play Store y App Store. También se mostró el flujo de registro como **farmer*, incluyendo la creación de cuenta, inicio de sesión, registro de propiedad agrícola, ubicación, cantidad de hectáreas, zona de irrigación y tipo de cultivo.
+
+Luego se explicó el *dashboard web*, donde el agricultor puede visualizar un resumen de su zona de cultivo, consumo de agua, necesidad de riego, pH, sensores, dispositivos, alertas críticas y zonas de irrigación registradas. También se presentaron funciones como monitoreo de humedad, conductividad eléctrica, pH, temperatura, seguridad perimetral, gestión de dispositivos IoT, estado de batería, conexión online/offline y configuración de notificaciones.
+
+Además, se mencionó que el sistema cuenta con una *base de datos integrada* a la aplicación web y se mostró la versión móvil, que mantiene funciones similares a la web, como visualización de zonas de irrigación, estado de dispositivos, alertas y tareas.
+
+Paolo valoró positivamente el proyecto, destacando que le pareció *interesante, útil y ordenado*. Señaló que la interfaz es intuitiva, fácil de manejar y que la aplicación móvil está bien adaptada para celular. Finalmente, indicó que, si necesitara una herramienta de este tipo, sí la descargaría porque le parece una solución útil para agricultores.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th colspan="2" style="text-align:center;">Entrevista #3</th>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Mauricio Torres</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>32</td>
+  </tr>
+  <tr>
+    <td><strong>Distrito</strong></td>
+    <td>Pucusana</td>
+  </tr>
+  <tr>
+    <td><strong>Fecha de entrevista</strong></td>
+    <td>6 de julio de 2026</td>
+  </tr>
+  <tr>
+    <td><strong>Evidencia</strong></td>
+    <td>
+      <div align="center">
+        <img src="./assets/images/sprint-3/validation-interview-3.png" alt="validation_interview_3" style="width:%; max-width:1300px; height:500px; object-fit:cover; object-position:center; display:block; margin:0 auto;">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Link</strong></td>
+    <td><a href="https://acortar.link/guLygb">https://acortar.link/guLygb</a></td>
+  </tr>
+  <tr>
+    <td><strong>Timing donde inicia la entrevista</strong></td>
+    <td>0:01 min</td>
+  </tr>
+  <tr>
+    <td><strong>Duración de la entrevista</strong></td>
+    <td>7 minutos y 42 segundos</td>
+  </tr>
+  <tr>
+    <td><strong>Resumen</strong></td>
+    <td>La entrevista de validación se realizó con *Mauricio* para evaluar *AgroSafe*, una solución de monitoreo inteligente de suelos e irrigación para agricultores.
+
+Durante la demostración se presentó la *landing page, donde se explica qué es AgroSafe, la sección “Sobre nosotros”, propuesta de valor, misión, visión, video del equipo, características principales, testimonios, planes de suscripción y opciones para descargar la aplicación en Play Store y App Store. También se mostraron los botones de acción para **registrarse* e *iniciar sesión*.
+
+Luego se explicó el flujo de registro como *farmer*, donde el usuario ingresa sus datos personales, crea una cuenta, inicia sesión y completa un formulario con información de su parcela, ubicación, cantidad de hectáreas, zona de irrigación y tipo de cultivo.
+
+Después se presentó el *dashboard web*, en el que el agricultor puede visualizar información resumida sobre sus hectáreas, consumo de agua, ciclos de irrigación, monitoreo del suelo, dispositivos conectados y zonas de irrigación. También se mostró la posibilidad de agregar nuevas zonas de cultivo, como zona norte o sur, y asociarlas a diferentes productos agrícolas.
+
+Asimismo, se explicaron funciones adicionales como la *seguridad perimetral*, que permitiría detectar personas o animales mediante dispositivos IoT, la gestión de sensores para humedad, pH, minerales u otros indicadores, y la configuración de notificaciones. También se mencionó que la base de datos está conectada con la aplicación web.
+
+Finalmente, se presentó la *aplicación móvil*, descrita como una adaptación de la versión web, pero con la información más resumida y organizada para celulares. En ella se pueden visualizar zonas, dispositivos, alertas y datos principales de la parcela.
+
+Mauricio valoró positivamente el proyecto, destacando que la aplicación tiene una *interfaz bonita, clara y bien organizada*. También resaltó que la información se presenta de manera resumida, pero sin perder detalle. Además, consideró importante el uso de notificaciones dentro de la aplicación y concluyó que AgroSafe le parece una muy buena aplicación y un buen desarrollo web.
+</td>
+  </tr>
+</table>
+
 ### 6.3.3. Evaluaciones según heurísticas
+
+Esta sección contiene el proceso de evaluación de las sesiones de validación basado en heurísticas, considerando principios de usabilidad, arquitectura de información e inclusive design aplicados a la experiencia propuesta para AgroSafe. Los hallazgos se elaboraron a partir de las pantallas observadas durante la validación y de la información recopilada en las entrevistas registradas previamente.
+
+**UX Heuristics & Principles Evaluation**  
+**Usability - Inclusive Design - Information Architecture**
+
+|                      |                                                               |
+| -------------------- | ------------------------------------------------------------- |
+| **CARRERA**          | Ingeniería de Software                                        |
+| **CURSO**            | Desarrollo de Soluciones IoT                                  |
+| **SECCIÓN**          | 17757                                                         |
+| **PROFESORES**       | Todos                                                         |
+| **AUDITOR**          | UI-Topic                                                      |
+| **CLIENTE(S)**       | Adrián Valerio, Paolo Carrillo y Mauricio Torres              |
+
+---
+
+**SITE o APP A EVALUAR:** AgroSafe - Landing Page, Aplicación Web y Aplicación Móvil
+
+---
+
+**TAREAS A EVALUAR:**
+
+El alcance de esta evaluación incluye la revisión de la usabilidad de las siguientes tareas:
+
+1. Registro e inicio de sesión de un usuario nuevo.
+2. Configuración inicial de la propiedad agrícola.
+3. Registro de zonas de irrigación y tipo de cultivo.
+4. Consulta del dashboard web con indicadores del cultivo.
+5. Revisión del módulo de seguridad perimetral.
+6. Gestión de dispositivos IoT y configuración de notificaciones.
+7. Gestión del perfil de usuario y datos de cuenta.
+8. Consulta del resumen de plan, dispositivos activos y reporte de cuenta.
+
+No están incluidas en esta versión de la evaluación las siguientes tareas:
+
+1. Integración física con sensores IoT en campo.
+2. Activación real de electroválvulas desde hardware.
+3. Validación de pagos o suscripciones en producción.
+4. Recepción de notificaciones push o WhatsApp en dispositivos reales.
+
+---
+
+**ESCALA DE SEVERIDAD:**
+
+Los errores serán puntuados tomando en cuenta la siguiente escala de severidad:
+
+| Nivel | Descripción |
+| ----- | ----------- |
+| 1 | Problema superficial: puede ser fácilmente superado por el usuario o ocurre con muy poca frecuencia. No necesita ser arreglado a no ser que exista disponibilidad de tiempo. |
+| 2 | Problema menor: puede ocurrir un poco más frecuentemente o es un poco más difícil de superar para el usuario. Se le debería asignar una prioridad baja resolverlo de cara al siguiente release. |
+| 3 | Problema mayor: ocurre frecuentemente o los usuarios no son capaces de resolverlo. Es importante que sea corregido y se le debe asignar una prioridad alta. |
+| 4 | Problema muy grave: un error de gran impacto que impide al usuario continuar con el uso de la herramienta. Es imperativo que sea corregido antes del lanzamiento. |
+
+---
+
+**TABLA RESUMEN:**
+
+| # | Problema | Escala de severidad | Heurística/Principio violada(o) |
+| - | -------- | ------------------- | ------------------------------- |
+| 1 | Inconsistencia de idioma en acciones críticas de acceso | 2 | Inclusive Design - Lenguaje claro y consistente / Usability - Coincidencia con el mundo real |
+| 2 | Jerarquía insuficiente entre acciones de guardado y finalización de configuración | 2 | Usability - Prevención de errores / Information Architecture - Is it understandable? |
+| 3 | Superposición de textos en tarjetas de seguridad perimetral | 3 | Usability - Visibilidad del estado del sistema / Inclusive Design - Legibilidad |
+| 4 | Datos incompletos o placeholders visibles en el perfil de cuenta | 3 | Usability - Visibilidad del estado del sistema / Information Architecture - Is it trustworthy? |
+| 5 | Información de actividad reciente presentada con baja legibilidad | 2 | Inclusive Design - Legibilidad y accesibilidad / Information Architecture - Findability |
+
+---
+
+**DESCRIPCIÓN DE PROBLEMAS:**
+
+Los siguientes hallazgos provienen de la inspección heurística de la aplicación web desplegada y de las pantallas usadas durante las entrevistas de validación. Cada problema incluye la captura que ilustra la observación, así como una recomendación aplicable para el siguiente ciclo de mejora.
+
+**PROBLEMA #1:** Inconsistencia de idioma en acciones críticas de acceso
+
+Severidad: 2  
+Heurística violada: Inclusive Design - Lenguaje claro y consistente / Usability - Coincidencia con el mundo real
+
+Problema:
+
+En la pantalla de inicio de sesión se muestran textos en inglés como "Keep me signed in", "Forgot my password", "Log in" y "Create account". Considerando que los usuarios entrevistados pertenecen al contexto local peruano y que AgroSafe está orientado a agricultores, esta mezcla de idioma puede generar fricción inicial, especialmente en acciones sensibles como mantener sesión iniciada, recuperar contraseña o crear una cuenta. El problema no bloquea el acceso, pero reduce la familiaridad y claridad de la experiencia.
+
+<p align="center">
+  <img src="./assets/images/sprint-3/heuristic-login.png" alt="heuristic-login" style="width:100%; max-width:720px;">
+</p>
+
+Recomendación:
+
+Unificar el idioma de la interfaz de autenticación al español para el público objetivo principal. Además, usar textos directos como "Mantener sesión iniciada", "Olvidé mi contraseña", "Iniciar sesión" y "Crear cuenta", manteniendo consistencia con el resto de la plataforma.
+
+---
+
+**PROBLEMA #2:** Jerarquía insuficiente entre acciones de guardado y finalización de configuración
+
+Severidad: 2  
+Heurística violada: Usability - Prevención de errores / Information Architecture - Is it understandable?
+
+Problema:
+
+En la pantalla "Irrigation zones", el usuario puede elegir entre "Save and continue later" y "Complete configuration". Aunque la acción final aparece en verde, ambas opciones se encuentran en la misma zona inferior y tienen tamaños similares, lo que puede generar dudas sobre la diferencia entre guardar temporalmente y cerrar definitivamente la configuración. En el contexto de registro de parcelas y zonas de cultivo, esto puede provocar que el usuario complete el flujo sin haber añadido todas sus zonas de riego.
+
+<p align="center">
+  <img src="./assets/images/sprint-3/heuristic-irrigation-zones.png" alt="heuristic-irrigation-zones" style="width:100%; max-width:720px;">
+</p>
+
+Recomendación:
+
+Agregar una confirmación previa antes de completar la configuración, indicando cuántas zonas han sido registradas y permitiendo volver a editar si falta información. También se recomienda reforzar la diferencia visual entre "Guardar y continuar después" y "Completar configuración", dejando la acción final como primaria solo cuando los datos mínimos esperados estén completos.
+
+---
+
+**PROBLEMA #3:** Superposición de textos en tarjetas de seguridad perimetral
+
+Severidad: 3  
+Heurística violada: Usability - Visibilidad del estado del sistema / Inclusive Design - Legibilidad
+
+Problema:
+
+En el módulo "Perimeter Security", la tarjeta de estado muestra textos superpuestos entre "Configured", "Settings loaded" y "from Azure". Esta superposición impide leer correctamente el estado real del sistema y afecta una sección crítica para el usuario: la seguridad de su propiedad. La pantalla también muestra "0 unreviewed event" y "No perimeter events have been reported yet", pero la tarjeta de configuración no comunica con claridad si el módulo está realmente listo para operar.
+
+<p align="center">
+  <img src="./assets/images/sprint-3/heuristic-perimeter-security.png" alt="heuristic-perimeter-security" style="width:100%; max-width:720px;">
+</p>
+
+Recomendación:
+
+Revisar el layout responsivo de las tarjetas para evitar colisiones entre número, título y descripción. Se recomienda definir alturas mínimas, separar el estado principal de la descripción secundaria y validar la pantalla en anchos intermedios. Para un módulo crítico, el estado debe ser legible con mensajes como "Configurado correctamente" y "Ajustes cargados desde Azure" en líneas claramente diferenciadas.
+
+---
+
+**PROBLEMA #4:** Datos incompletos o placeholders visibles en el perfil de cuenta
+
+Severidad: 3  
+Heurística violada: Usability - Visibilidad del estado del sistema / Information Architecture - Is it trustworthy?
+
+Problema:
+
+En la pantalla "My account", el resumen de cuenta muestra valores incompletos como "Member since Unknown" y el panel de actividad reciente indica "Account activity history is not available from the backend yet". Estos mensajes exponen detalles técnicos o estados no resueltos del sistema al usuario final, lo que puede reducir la confianza en la plataforma. Para agricultores que evalúan una herramienta de monitoreo y seguridad, la percepción de estabilidad y confiabilidad es especialmente importante.
+
+<p align="center">
+  <img src="./assets/images/sprint-3/heuristic-my-account.png" alt="heuristic-my-account" style="width:100%; max-width:720px;">
+</p>
+
+Recomendación:
+
+Reemplazar placeholders técnicos por estados orientados al usuario. Por ejemplo, mostrar "Fecha de registro no disponible" con una breve explicación o esconder el campo hasta que el backend entregue el dato. Para actividad reciente, usar un estado vacío controlado como "Aún no hay actividad registrada en tu cuenta" en lugar de mencionar limitaciones internas del backend.
+
+---
+
+**PROBLEMA #5:** Información de actividad reciente presentada con baja legibilidad
+
+Severidad: 2  
+Heurística violada: Inclusive Design - Legibilidad y accesibilidad / Information Architecture - Findability
+
+Problema:
+
+En el panel "Recent activity" de la pantalla de cuenta, el texto aparece distribuido en líneas muy estrechas, haciendo que una frase corta se fragmente palabra por palabra. Esto dificulta la lectura rápida y hace que el usuario perciba la sección como poco cuidada. Además, la pantalla combina información relevante de perfil, plan, seguridad, actividad y zona de peligro en una misma vista, por lo que una mala legibilidad reduce la capacidad del usuario para encontrar información importante.
+
+<p align="center">
+  <img src="./assets/images/sprint-3/heuristic-my-account.png" alt="heuristic-my-account-recent-activity" style="width:100%; max-width:720px;">
+</p>
+
+Recomendación:
+
+Aumentar el ancho útil del contenido dentro del panel o reemplazar el texto largo por un estado vacío más breve. También se recomienda revisar el grid lateral para que las tarjetas secundarias no obliguen a textos excesivamente angostos. Un mensaje como "Aún no hay actividad reciente" sería más claro, más breve y más fácil de escanear.
 
 ## 6.4. Video About-the-Product
 
