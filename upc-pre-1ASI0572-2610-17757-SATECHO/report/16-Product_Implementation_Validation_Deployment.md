@@ -1613,6 +1613,130 @@ En este espacio se consolidan cada una de las preguntas dirigidas a nuestros seg
 
 ### 6.3.1. Diseño de Entrevistas
 
+Antes de realizar las entrevistas, consideramos necesario realizar un análisis previo que nos permita entender mejor a nuestros públicos objetivo. Para ello, hemos diseñado una serie de preguntas específicas para cada segmento (ingenieros agrónomos y agricultores independientes), con el fin de orientar nuestras entrevistas de manera más eficiente y alineada a sus realidades operativas y profesionales.
+
+En particular, previo a entrevistar a nuestros usuarios, consideramos importante contar con el prototipo funcional interconectado de nuestra solución. Este prototipo será probado por usuarios reales de ambos segmentos, y en ese contexto proponemos una batería de preguntas cualitativas orientadas a observar el uso de la solución (lectura de telemetría de suelo, control remoto de riego, configuración de umbrales, visualización de alertas y seguridad perimetral), identificar posibles puntos de fricción y validar nuestras suposiciones de diseño y valor agronómico.  
+
+**Segmento 1 — Ingenieros Agrónomos**
+
+1) **Primera impresión y Landing Page B2B**
+   
+- ¿Cómo describirías tu experiencia inicial al navegar por la Landing Page diseñada especialmente para asesores técnicos y cooperativas?
+  
+- ¿La propuesta de valor sobre cómo Agrosafe te ayudará a reducir viajes por carretera y optimizar tus consultorías quedó clara desde el primer vistazo?
+  
+- ¿Qué elementos visuales de la página web te transmitieron profesionalismo científico y cuáles te generaron dudas?
+
+2) **Inicio de sesión y Dashboard Multi-cliente (Pantalla Principal)**
+   
+- Al iniciar sesión en la aplicación web, ¿qué fue lo primero que capturó tu atención en el panel resumen de flotas/parcelas de tus clientes?
+- 
+- ¿Pudiste identificar con rapidez y mediante los códigos visuales cuáles parcelas se encontraban en estado crítico o bajo estrés hídrico/salino urgente hoy mismo?
+- 
+- ¿Qué mejoras sugerirías en la pantalla principal para priorizar tus rutas de asesoría o tus recomendaciones del día?
+
+3) **Navegación general en la Web App**
+   
+- ¿Lograste moverte a través del sistema web sin asistencia previa? ¿Hubo alguna sección donde la secuencia de clics se sintiera confusa?
+  
+- ¿Qué tan intuitivo fue encontrar las secciones de Historiales de Telemetría, Gestión de Clientes, Plantillas de Umbrales y Reportes Técnicos?
+  
+- ¿El acceso al centro de ayuda o documentación técnica del software fue fácil de localizar dentro de la interfaz web?
+
+4) **Configuración colaborativa de cultivos y umbrales avanzados**
+   
+- ¿Cómo fue tu experiencia al interactuar con el panel de configuración de umbrales personalizados de humedad (%), conductividad eléctrica (dS/m), temperatura (°C) y pH?
+  
+- ¿Te resultó claro el flujo para crear una "Plantilla Maestra" de umbrales según el tipo de cultivo (arándanos, paltas, sandías) y desplegarla masivamente en las parcelas de tus clientes?
+  
+- ¿Qué datos o variables agronómicas añadirías o eliminarías de este panel web para agilizar tu toma de decisiones técnicas?
+  
+5) **Auditoría técnica, reportes y confirmaciones**
+   
+- ¿El flujo para redactar y enviar una recomendación técnica adjuntando gráficos históricos automáticos hacia el celular del agricultor fue evidente y confiable?
+  
+- ¿Te genera confianza el registro de actividad (log) que te permite auditar con precisión las horas exactas y la duración del encendido/apagado de las electroválvulas por parte del agricultor?
+  
+- ¿Los mensajes informativos y de confirmación del sistema web son lo suficientemente claros para validar que tus cambios ya se propagaron al dispositivo físico?
+
+6) **Usabilidad y apariencia visual**
+   
+- ¿La aplicación web se percibe rápida y fluida al renderizar grandes volúmenes de datos históricos en los gráficos de líneas?
+
+- ¿En qué momento sentiste lentitud en la carga?
+  
+- ¿Qué opinas de la paleta de colores, tipografía y distribución del panel web?
+  
+- ¿Sientes que la interfaz web reduce tu fatiga visual durante el análisis prolongado de datos?
+
+7) **Seguridad, transparencia y "Caja Negra"**
+
+- Al configurar umbrales que salen del rango seguro del catálogo, el sistema te solicita una confirmación explícita. ¿Este mecanismo te transmite seguridad o lo percibes como una interrupción en el flujo de trabajo?
+  
+- ¿Qué te haría sentir mayor respaldo profesional al usar el software (transparencia en las fórmulas de los índices de estrés, registros de auditoría de datos, mTLS entre el borde y la nube)?
+
+8) **Interés y adopción profesional futura**
+   
+- ¿Consideras que esta aplicación web enriquecerá tu reputación científica y te permitirá duplicar tu cartera de clientes asesorados de forma remota? ¿Por qué?
+  
+- ¿Qué integraciones clave (p. ej., con APIs meteorológicas globales o sistemas de facturación estacional) harían que esta herramienta web sea imprescindible para tu consultoría independiente?
+  
+**Segmento 2 — Agricultores Independientes**
+
+1) **Primera impresión, Landing Page y Registro**
+
+- ¿Cómo describirías tu experiencia inicial al ingresar a la Landing Page de Agrosafe desde tu smartphone?
+  
+- ¿El mensaje sobre el ahorro de agua (20%) y la protección contra intrusos mediante detección térmica te resultó fácil de entender y convincente?
+  
+- Al realizar el registro inicial y el wizard de bienvenida (onboarding), ¿el flujo para ingresar los datos de tu primera parcela y cultivo fue claro desde el teléfono?
+
+2) **Inicio de sesión y pantalla principal (Dashboard Móvil)**
+
+- Al iniciar sesión en la app móvil, ¿pudiste identificar de inmediato el estado actual de tu cultivo a través de las tarjetas con la interfaz de colores tipo "semáforo" (rojo, amarillo, verde)?
+  
+- ¿Las alertas sobre las condiciones críticas del suelo (estrés hídrico, alta salinidad) o alertas perimetrales se entienden de un solo vistazo en la pantalla de inicio?
+  
+- ¿Qué reordenarías en el tablero principal de tu celular para que puedas ver lo que te interesa más rápido apenas entras a la aplicación?
+ 
+3) **Navegación general en smartphone**
+
+- ¿Pudiste moverte por las secciones de la aplicación móvil (Monitoreo, Alertas, Seguridad, Facturación) sin necesidad de recibir asistencia externa? ¿En qué pantalla te sentiste confundido?
+  
+- ¿Qué tan fácil y evidente fue localizar la sección de configuración de preferencias de notificaciones dentro del menú de tu perfil?
+ 
+4) **Control remoto y formularios operativos**
+
+- ¿Cómo fue tu experiencia interactuando con el botón para activar o detener la electroválvula de riego a distancia desde tu teléfono?El sistema solicita confirmación biométrica (huella digital o Face ID) antes de enviar la orden de riego.
+
+- ¿Este paso te dio tranquilidad o te pareció una traba innecesaria para operar en el día a día?¿Qué opinas de la sección para revisar tu historial de consumo hídrico y reportes de riego semanales en la pantalla móvil?
+ 
+5) **Gestión de Alertas y Canales de Comunicación**
+
+- ¿El flujo para recibir las alertas críticas directamente en tu WhatsApp te resultó útil y oportuno? 
+  
+- ¿Qué comentarios tienes sobre la redacción y claridad del mensaje?
+  
+- Cuando el sensor térmico perimetral detectó movimiento, ¿la notificación te ayudó a diferenciar de inmediato si se trataba de una persona, un animal o una falsa alarma provocada por el viento?¿Qué tanto valor aporta a tu tranquilidad saber que el sistema te enviará una alerta de emergencia a tu WhatsApp o celular solo en las horas críticas que tú mismo programaste en el Modo Vigilancia Nocturna?Usabilidad en ruta y Resiliencia (Modo Offline)
+  
+- Dado que la señal en los campos de cultivo suele ser inestable, ¿cómo percibiste el rendimiento de la aplicación móvil cuando simulamos una pérdida de conexión (uso del Modo Offline)?
+  
+- ¿El indicador visual en la pantalla que te avisa que estás trabajando sin internet te dio la seguridad de que tus datos de humedad estaban protegidos localmente y se enviarían después?
+  
+- ¿Qué simplificarías en el diseño visual de la interfaz móvil para que sea más cómodo de operar bajo la luz directa del sol en pleno campo?
+
+6) **Seguridad, Facturación y Confianza**
+
+- Al interactuar con las pantallas de gestión de planes (Básico vs. Premium) e historial de facturas, ¿los precios y límites de dispositivos permitidos por tu plan fueron totalmente transparentes?
+  
+- ¿Qué tan seguro te sientes sabiendo que la aplicación nunca guarda tus datos bancarios ni números de tarjeta en sus bases de datos propias?
+
+7) **Interés, Retorno de Inversión y Uso Futuro**
+
+- Sientes que delegar el monitoreo continuo a estos sensores y automatizar el riego te permitirá ahorrar tiempo físico y reducir los costos de agua y fertilizantes en tu campaña? ¿Por qué?
+  
+- ¿Qué requerimiento o certificación técnica adicional (por ejemplo, validación de una universidad agraria local) necesitarías ver en la plataforma para tomar la decisión definitiva de pagar la suscripción mensual de Agrosafe?
+
 ### 6.3.2. Registro de Entrevistas
 
 ### 6.3.3. Evaluaciones según heurísticas
