@@ -1435,43 +1435,41 @@ La versión final de la Aplicación Web incorpora la gestión administrativa de 
 
 La segunda versión de la App Móvil incorpora monitoreo de suelo, formulación de zonas de riego, reportes rápidos, seguridad perimetral, edición de perfil y onboarding inicial.
 
-![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence.jpeg)
-
-![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence2.jpeg)
-
-![Referential Video - Mobile Application v2](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence3.jpeg)
-
 **Onboarding Inicial** - Asistente de configuración inicial para nuevos usuarios.
 
-![Initial-Onboarding-Wizard](./assets/images/sprint-3/Initial-Onboarding-Wizard.png)
+![Initial-Onboarding-Wizard](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence.jpeg)
+
+![Initial-Onboarding-Wizard](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence2.jpeg)
+
+![Initial-Onboarding-Wizard](./assets/images/sprint-3/Mobile-Application-v2-Execution-Evidence3.jpeg)
 
 **Monitoreo de Suelo** - Métricas de suelo en tiempo real (humedad, temperatura, conductividad eléctrica).
 
-![Soil-Monitoring-View](./assets/images/sprint-3/Soil-Monitoring-View.png)
+![Soil-Monitoring-View](./assets/images/sprint-3/Soil-Monitoring-View.jpeg)
+
+![Soil-Monitoring-View](./assets/images/sprint-3/Soil-Monitoring-View2.jpeg)
 
 **Seguridad Perimetral** - Configuración de zonas de seguridad con sensor PIR y activación/desactivación por zona.
 
-![Perimeter-Security-Config](./assets/images/sprint-3/Perimeter-Security-Config.png)
+![Perimeter-Security-Config](./assets/images/sprint-3/Perimeter-Security-Config.jpeg)
+
+![Perimeter-Security-Config](./assets/images/sprint-3/Perimeter-Security-Config2.jpeg)
 
 **Formulación de Zonas de Riego** - Configuración avanzada de zonas de riego por cultivo y tipo de suelo.
 
-![Irrigation-Zones-Formulation](./assets/images/sprint-3/Irrigation-Zones-Formulation.png)
+![Irrigation-Zones-Formulation](./assets/images/sprint-3/Irrigation-Zones-Formulation.jpeg)
+
+![Irrigation-Zones-Formulation](./assets/images/sprint-3/Irrigation-Zones-Formulation2.jpeg)
 
 **Reportes Rápidos** - Reportes ejecutivos con métricas clave del estado de los cultivos.
 
-![Quick-Reports-View](./assets/images/sprint-3/Quick-Reports-View.png)
+![Quick-Reports-View](./assets/images/sprint-3/Quick-Reports-View.jpeg)
+
+![Quick-Reports-View](./assets/images/sprint-3/Quick-Reports-View2.jpeg)
 
 **Edición de Perfil** - Configuración de cuenta para actualizar nombre, contraseña y preferencias.
 
 ![Edit-Profile](./assets/images/sprint-3/Edit-Profile.png)
-
-#### Edge API (v2) - Sincronización de eventos PIR hacia el cloud, comunicación asíncrona y subscriber de comandos con buffer offline.
-
-![Edge-API-v2-Execution-Evidence](./assets/images/sprint-3/Edge-API-v2-Execution-Evidence.png)
-
-#### Embedded Application (ESP32 v2) - Migración a drivers compactos con ruta MQTT->Edge coherente, eliminando heartbeat timer.
-
-![Embedded-Application-v2-Execution-Evidence](./assets/images/sprint-3/Embedded-Application-v2-Execution-Evidence.png)
 
 #### 6.2.3.7. Services Documentation Evidence for Sprint Review
 
