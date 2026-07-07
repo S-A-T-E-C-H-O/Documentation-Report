@@ -198,6 +198,70 @@ _Figura #1: Contribuciones por integrante realizados - AV2_
 
 _Figura #2: Historial de commits del repositorio - AV2_
 
+---
+
+**TB2 - Semana 15**
+
+Durante esta fase final, el equipo SATECHO se enfocó estratégicamente en consolidar el cierre operativo del ciclo de vida del proyecto el cual ya se encontraba planificado desde hace 14 semanas desde que inicio su fundación. Este hito contempló la consolidación de la versión definitiva del informe, el despliegue final de todo el ecosistema de software y hardware, y la documentación exhaustiva del último sprint de desarrollo.
+
+Los entregables finales se estructuran en las siguientes categorías:
+
+1. **Gestión Documental e Informes Globales**
+   
+- **Informe Final del Proyecto:** Incorporación y cierre del Registro de Versiones, el reporte consolidado _Project Report Collaboration Insights_ y la sección estratégica de _Student Outcome_.
+
+- **Refinamiento de Artefactos Core:** Revisión, corrección y mejora de la línea base del proyecto, incluyendo:
+
+  - Lenguaje Ubicuo y Bibliografía formal.
+
+  - Conclusiones y Recomendaciones del proyecto.
+  
+  - Sprint Backlogs (1, 2 y 3) y Sprint Plannings (1 y 2).
+  
+  - Alineación de carátula, anexos y formato general del reporte bajo estándares institucionales.
+
+2. **Ingeniería de Software y Evidencias de Sprint (Capítulo VI)**
+
+Consolidación integral del **Capítulo VI: Product Implementation, Validation & Deployment**, enfocado en el cierre técnico:
+
+- **Sección 6.2.3. Sprint 3:** Detalle completo del último ciclo de desarrollo que abarca:
+  
+  - Sprint Planning 3 y asignación de Aspect Leaders and Collaborators.
+  
+  - Evidencias técnicas: Development, Testing Suite, Execution, y Services Documentation Evidence.
+   
+  - Software Deployment Evidence y métricas de retrospectiva en Team Collaboration Insights for Sprint Review.
+  
+- **Sección 6.3. Validation Interviews:** Registro y análisis final de las entrevistas de validación técnica y funcional realizadas con los usuarios objetivo.
+
+3. **Despliegue de Arquitectura y Ecosistema de Soluciones**
+
+Se habilitó y desplegó la versión productiva final de los componentes clave del alcance de SATECHO:
+
+- **Web Application & Mobile Application** (Interfaces de usuario).
+
+- **Web Services & Edge Service** (Capa de servicios y lógica de negocio).
+
+- **Supplies Keeper** (Dispositivo embebido / Hardware core del proyecto).
+
+4. **Cierre Ejecutivo y Recursos Multimedia**
+
+- **Material de Exposición:** Keynote final, video institucional About-the-Team y video demostrativo About-the-Product.
+
+- **Gobernanza y Desempeño:** Individual Member Performance Report emitido y firmado por el Team Leader.
+
+- **Paquete de Cierre:** Archivo comprimido (.zip) complementario que indexa el código fuente de los proyectos de software, videos en alta resolución y documentación anexa requerida para la entrega formal.
+
+**Resumenes de colaboración - Github Analytics Insights:**
+
+![Project Report Collaboration Insights - TB2](./assets/images/project-collaboration-insights/project-collaboration-insights-tb2.png)
+
+_Figura #1: Contribuciones por integrante realizados - TB2_
+
+![Commits History - TB2](./assets/images/project-collaboration-insights/commits-history-tb2.png)
+
+_Figura #2: Historial de commits del repositorio - TB2_
+
 # Contenido
 
 ## Capítulo I: Introducción  
