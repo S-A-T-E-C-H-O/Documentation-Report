@@ -86,13 +86,13 @@
   <tr><td>8.4.0</td><td>29/06/2026</td><td>Estrada Cajamune, Abraham Andrés</td><td>Elaboración del punto 6.2.3.5. Testing Suite Evidence for Sprint Review</td></tr>
   <tr><td>8.5.0</td><td>29/06/2026</td><td>Gamio Upiachihua, Brenda Lucía</td><td>Elaboración del wording introductorio del 6.3. Validation Interviews</td></tr>
   <tr><td>8.6.0</td><td>30/06/2026</td><td>Huamani Sánchez, José Diego</td><td>Formulación y redacción de las preguntas para el punto 6.3.1. Diseño de Entrevistas</td></tr>
-  <tr><td>8.7.0</td><td>03/05/2026</td><td>Estrada Cajamune, Abraham Andrés</td><td>Desarrollo del punto de 6.3.2. Registro de Entrevistas.</td></tr>
-  <tr><td>8.8.0</td><td>03/05/2026</td><td>Estrada Cajamune, Abraham Andrés</td><td>Elaboración del punto 6.3.3. Evaluaciones según heurísticas.</td></tr>
-  <tr><td>8.8.0</td><td>04/05/2026</td><td>Quispe Erasmo, Raul Ronaldo</td><td>Elaboración del 6.2.3.6. Execution Evidence for Sprint Review</td></tr>
-  <tr><td>8.9.0</td><td>04/05/2026</td><td>Palacios, Yasser Renteria</td><td>Elaboración del 6.4. Video About-the-Product.</td></tr>
-  <tr><td>8.10.0</td><td>05/05/2026</td><td>Palacios, Yasser Renteria</td><td>Redacción del 6.2.3.7 Services Documentation Evidence for Sprint Review.</td></tr>
-  <tr><td>8.11.0</td><td>05/05/2026</td><td>Palacios, Yasser Renteria</td><td>Redacción del 6.2.3.8 Software Deployment Evidence for Sprint Review.</td></tr>
-  <tr><td>8.12.0</td><td>06/05/2026</td><td>Palacios, Yasser Renteria</td><td>Elaboración del 6.2.3.9. Team Collaboration Insights during Sprint.</td></tr>
+  <tr><td>8.7.0</td><td>03/07/2026</td><td>Estrada Cajamune, Abraham Andrés</td><td>Desarrollo del punto de 6.3.2. Registro de Entrevistas.</td></tr>
+  <tr><td>8.8.0</td><td>03/07/2026</td><td>Estrada Cajamune, Abraham Andrés</td><td>Elaboración del punto 6.3.3. Evaluaciones según heurísticas.</td></tr>
+  <tr><td>8.8.0</td><td>04/07/2026</td><td>Quispe Erasmo, Raul Ronaldo</td><td>Elaboración del 6.2.3.6. Execution Evidence for Sprint Review</td></tr>
+  <tr><td>8.9.0</td><td>04/07/2026</td><td>Palacios, Yasser Renteria</td><td>Elaboración del 6.4. Video About-the-Product.</td></tr>
+  <tr><td>8.10.0</td><td>05/07/2026</td><td>Palacios, Yasser Renteria</td><td>Redacción del 6.2.3.7 Services Documentation Evidence for Sprint Review.</td></tr>
+  <tr><td>8.11.0</td><td>05/07/2026</td><td>Palacios, Yasser Renteria</td><td>Redacción del 6.2.3.8 Software Deployment Evidence for Sprint Review.</td></tr>
+  <tr><td>8.12.0</td><td>06/07/2026</td><td>Palacios, Yasser Renteria</td><td>Elaboración del 6.2.3.9. Team Collaboration Insights during Sprint.</td></tr>
 </table>
 
 # Project Report Collaboration Insights
