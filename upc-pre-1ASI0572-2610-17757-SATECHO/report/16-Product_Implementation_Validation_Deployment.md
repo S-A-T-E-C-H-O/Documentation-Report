@@ -1618,3 +1618,16 @@ En este espacio se consolidan cada una de las preguntas dirigidas a nuestros seg
 ### 6.3.3. Evaluaciones según heurísticas
 
 ## 6.4. Video About-the-Product
+
+El video institucional About-the-Product ha sido estructurado con el objetivo estratégico de consolidar y exhibir la propuesta de valor integral de SATECHO, ofreciendo un recorrido técnico y funcional que demuestra la sinergia de su ecosistema tecnológico a través de una landing page optimizada para el posicionamiento en el mercado, una plataforma web administrativa desarrollada en Vue.js para la gestión inteligente del sector agrícola, y un ecosistema móvil que combina una solución nativa de alto rendimiento con un aplicativo multiplataforma en Flutter para el monitoreo analítico en tiempo real. Esta narrativa audiovisual guía al espectador a través del user journey principal de la plataforma, evidenciando cómo la automatización y la captura de datos mediante sensores resuelven problemáticas críticas en la gestión de insumos agrícolas, para finalmente validar el impacto real del proyecto mediante la integración del feedback cualitativo y los testimonios clave recopilados de los usuarios finales durante las sesiones de validación.
+
+**Información del Video:**
+
+- **Nombre del archivo:** upc pre 202610 1asi0572 17757 SATECHO about the product sprint 3
+- **Duración:** 00:08:09
+- **Plataforma Multimedia:** YouTube
+- **Enlaces de acceso:** [https://youtu.be/7N3unkg6OP0](https://youtu.be/7N3unkg6OP0)
+
+**Evidencia de Publicación:**
+
+![About the Product - SATECHO](./assets/images/About-the-product/About-the-Product-Screeshoot.png)
